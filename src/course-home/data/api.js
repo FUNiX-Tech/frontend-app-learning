@@ -103,6 +103,7 @@ function normalizeCourseHomeCourseMetadata(metadata) {
 }
 
 export function normalizeOutlineBlocks(courseId, blocks) {
+  console.log(blocks);
   const models = {
     courses: {},
     sections: {},
@@ -147,9 +148,11 @@ export function normalizeOutlineBlocks(courseId, blocks) {
           title: block.display_name,
         };
         break;
-
+      case 'vertical':
+        models.sequences[block.id] = block
+        break;
       default:
-        logInfo(`Unexpected course block type: ${block.type} with ID ${block.id}.  Expected block types are course, chapter, and sequential.`);
+        logInfo(`Unexpected course block type: ${block.type} with ID ${block.id}.  Expected block types are course, chapter, vertical and sequential.`);
     }
   });
 
