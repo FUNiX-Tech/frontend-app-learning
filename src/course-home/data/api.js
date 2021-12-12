@@ -103,7 +103,6 @@ function normalizeCourseHomeCourseMetadata(metadata) {
 }
 
 export function normalizeOutlineBlocks(courseId, blocks) {
-  console.log(blocks);
   const models = {
     courses: {},
     sections: {},
@@ -146,6 +145,7 @@ export function normalizeOutlineBlocks(courseId, blocks) {
           // link to the MFE ourselves).
           showLink: !!block.legacy_web_url,
           title: block.display_name,
+          sequenceIds: block.children || []
         };
         break;
       case 'vertical':

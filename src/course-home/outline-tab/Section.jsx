@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import SequenceLink from './SequenceLink';
 import { useModel } from '../../generic/model-store';
+import CollapsibleSequenceLink from './CollapsibleSequenceLink';
 
 import genericMessages from '../../generic/messages';
 import messages from './messages';
@@ -97,13 +98,13 @@ function Section({
       >
         <ol className="list-unstyled">
           {sequenceIds.map((sequenceId, index) => (
-            <SequenceLink
-              key={sequenceId}
-              id={sequenceId}
-              courseId={courseId}
-              sequence={sequences[sequenceId]}
-              first={index === 0}
-            />
+            <CollapsibleSequenceLink
+                key={sequenceId}
+                id={sequenceId}
+                courseId={courseId}
+                sequences={sequences}
+                first={index === 0}
+              />
           ))}
         </ol>
       </Collapsible>

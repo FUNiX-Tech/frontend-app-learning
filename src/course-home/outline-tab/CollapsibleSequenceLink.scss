@@ -1,0 +1,10 @@
+.collapsible-sequence-link {
+	&-container {
+		& .collapsible-trigger {
+			display: block;
+		}
+		& .collapsible-icon {
+			display: none
+		}
+	}
+}
