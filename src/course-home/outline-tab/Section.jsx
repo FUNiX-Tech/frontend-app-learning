@@ -104,6 +104,7 @@ function Section({
                 courseId={courseId}
                 sequences={sequences}
                 first={index === 0}
+                expand={expand}
               />
           ))}
         </ol>

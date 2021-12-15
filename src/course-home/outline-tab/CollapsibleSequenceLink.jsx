@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
@@ -25,6 +25,7 @@ function CollapsibleSequenceLink({
   courseId,
   first,
   sequences,
+  expand
 }) {
   const sequence = sequences[id];
   const {
@@ -42,7 +43,11 @@ function CollapsibleSequenceLink({
   const {
     canLoadCourseware,
   } = useModel('courseHomeMeta', courseId);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(expand);
+
+  useEffect(() => {
+    setOpen(expand);
+  }, [expand]);
 
   const timezoneFormatArgs = userTimezone ? { timeZone: userTimezone } : {};
 
@@ -185,6 +190,7 @@ CollapsibleSequenceLink.propTypes = {
   intl: intlShape.isRequired,
   courseId: PropTypes.string.isRequired,
   first: PropTypes.bool.isRequired,
+  expand: PropTypes.bool.isRequired,
   sequences: PropTypes.shape().isRequired,
 };
 
