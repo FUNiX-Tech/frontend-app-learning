@@ -13,7 +13,6 @@ import { faCheckCircle as fasCheckCircle, faMinus, faPlus } from '@fortawesome/f
 import { faCheckCircle as farCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import SequenceLink from './SequenceLink';
 import EffortEstimate from '../../shared/effort-estimate';
 import { useModel } from '../../generic/model-store';
 import messages from './messages';
@@ -138,22 +137,43 @@ function CollapsibleSequenceLink({
         //   />
         // )}
       >
-        <ol className="list-unstyled">
-          {sequenceIds.map((sequenceId) => (
-            <li>
-              <div className={classNames('', { 'mt-2': !first })}>
-                <div className="row w-100 m-0">
-                <div className="col-auto p-0">
+        <ol className="list-unstyled" style={{paddingLeft: '1.5rem'}}>
+          {sequenceIds.map((sequenceId) => {
+            const sequence = sequences[sequenceId];
+
+            return (
+              <li key={sequenceId}>
+                <div className={classNames('', { 'mt-2': !first })}>
+                  <div className="row w-100 m-0">
+                    <div className="col-auto p-0">
+                      {sequence.complete ? (
+                        <FontAwesomeIcon
+                        icon={fasCheckCircle}
+                        fixedWidth
+                        className="float-left text-success mt-1"
+                        aria-hidden="true"
+                        title={intl.formatMessage(messages.completedAssignment)}
+                        />
+                      ) : (
+                        <FontAwesomeIcon
+                          icon={farCheckCircle}
+                          fixedWidth
+                          className="float-left text-gray-400 mt-1"
+                          aria-hidden="true"
+                          title={intl.formatMessage(messages.incompleteAssignment)}
+                        />
+                      )}
+                    </div>
+                    <div className="col-10 p-0 ml-3 text-break">
+                      <span className="align-middle">
+                        <Link to={`/course/${courseId}/${sequenceId}`}>{sequence.display_name}</Link>
+                      </span>
+                    </div>
+                  </div>
                 </div>
-                <div className="col-10 p-0 ml-3 text-break">
-                  <span className="align-middle">
-                    <Link to={`/course/${courseId}/${sequenceId}`}>{sequences[sequenceId].display_name}</Link>
-                  </span>
-                </div>
-                </div>
-              </div>
-          </li>
-          ))}
+            </li>
+            )
+          })}
         </ol>
       </Collapsible>
     </li>
