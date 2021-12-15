@@ -145,11 +145,14 @@ export function normalizeOutlineBlocks(courseId, blocks) {
           // link to the MFE ourselves).
           showLink: !!block.legacy_web_url,
           title: block.display_name,
+          sequenceIds: block.children || []
         };
         break;
-
+      case 'vertical':
+        models.sequences[block.id] = block
+        break;
       default:
-        logInfo(`Unexpected course block type: ${block.type} with ID ${block.id}.  Expected block types are course, chapter, and sequential.`);
+        logInfo(`Unexpected course block type: ${block.type} with ID ${block.id}.  Expected block types are course, chapter, vertical and sequential.`);
     }
   });
 
