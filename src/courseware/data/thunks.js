@@ -37,13 +37,11 @@ import {
  *
  * @param {*} learningSequencesModels  Normalized model from normalizeLearningSequencesData
  * @param {*} courseBlocksModels       Normalized model from normalizeBlocks
- * @param {bool} isMasquerading        Is Masquerading being used?
  */
-function mergeLearningSequencesWithCourseBlocks(learningSequencesModels, courseBlocksModels, isMasquerading) {
+function mergeLearningSequencesWithCourseBlocks(learningSequencesModels, courseBlocksModels) {
   // If there's no Learning Sequences API data yet (not active for this course),
-  // send back the course blocks model as-is. Likewise, Learning Sequences
-  // doesn't currently handle masquerading properly for content groups.
-  if (isMasquerading || learningSequencesModels === null) {
+  // send back the course blocks model as-is.
+  if (learningSequencesModels === null) {
     return courseBlocksModels;
   }
   const mergedModels = {
@@ -100,11 +98,6 @@ function mergeLearningSequencesWithCourseBlocks(learningSequencesModels, courseB
       legacyWebUrl: blocksSequence.legacyWebUrl,
       unitIds: blocksSequence.unitIds,
     };
-
-    // Add back-references to this sequence for all child units.
-    blocksSequence.unitIds.forEach(childUnitId => {
-      mergedModels.units[childUnitId].sequenceId = sequenceId;
-    });
   });
 
   // List of Sections comes from Learning Sequences.
@@ -151,7 +144,6 @@ export function fetchCourse(courseId) {
         } = mergeLearningSequencesWithCourseBlocks(
           learningSequencesOutlineResult.value,
           courseBlocksResult.value,
-          courseMetadataResult.value.isMasquerading,
         );
 
         // This updates the course with a sectionIds array from the blocks data.
