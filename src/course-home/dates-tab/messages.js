@@ -29,6 +29,27 @@ const messages = defineMessages({
     id: 'learning.dates.badge.verifiedOnly',
     defaultMessage: 'Verified only',
   },
+  setWeeklyGoal: {
+    id: 'learning.outline.setWeeklyGoal',
+    defaultMessage: 'Set a weekly learning goal',
+  },
+  setWeeklyGoalDetail: {
+    id: 'learning.outline.setWeeklyGoalDetail',
+    defaultMessage: 'Setting a goal motivates you to finish the course. You can always change it later.',
+  },
+  setGoal: {
+    id: 'learning.outline.setGoal',
+    defaultMessage: 'To start, set a course goal by selecting the option below that best describes your learning plan.',
+  },
+  setGoalReminder: {
+    id: 'learning.outline.setGoalReminder',
+    defaultMessage: 'Set a goal reminder',
+  },
+  setLearningGoalButtonScreenReaderText: {
+    id: 'learning.outline.goalButton.casual.title',
+    defaultMessage: 'Set a learning goal style.',
+    description: 'screen reader text informing learner they can select an intensity of learning goal',
+  },
 });
 
 export default messages;
