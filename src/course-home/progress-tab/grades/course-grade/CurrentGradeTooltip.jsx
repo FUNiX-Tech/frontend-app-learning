@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
-import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import {
+  getLocale, injectIntl, intlShape, isRtl,
+} from '@edx/frontend-platform/i18n';
 import { OverlayTrigger, Popover } from '@edx/paragon';
 
 import { useModel } from '../../../../generic/model-store';
@@ -23,6 +25,14 @@ function CurrentGradeTooltip({ intl, tooltipClassName }) {
 
   const currentGrade = Number((visiblePercent * 100).toFixed(0));
 
+  let currentGradeDirection = currentGrade < 50 ? '' : '-';
+
+  const isLocaleRtl = isRtl(getLocale());
+
+  if (isLocaleRtl) {
+    currentGradeDirection = currentGrade < 50 ? '-' : '';
+  }
+
   return (
     <>
       <OverlayTrigger
@@ -37,16 +47,16 @@ function CurrentGradeTooltip({ intl, tooltipClassName }) {
         )}
       >
         <g>
-          <circle cx={`${Math.min(...[currentGrade, 100])}%`} cy="50%" r="8.5" fill="transparent" />
-          <rect className="grade-bar__divider" x={`${Math.min(...[currentGrade, 100])}%`} style={{ transform: 'translateY(2.61em)' }} />
+          <circle cx={`${Math.min(...[isLocaleRtl ? 100 - currentGrade : currentGrade, 100])}%`} cy="50%" r="8.5" fill="transparent" />
+          <rect className="grade-bar__divider" x={`${Math.min(...[isLocaleRtl ? 100 - currentGrade : currentGrade, 100])}%`} style={{ transform: 'translateY(2.61em)' }} />
         </g>
       </OverlayTrigger>
       <text
         className="x-small"
         textAnchor={currentGrade < 50 ? 'start' : 'end'}
-        x={`${Math.min(...[currentGrade, 100])}%`}
+        x={`${Math.min(...[isLocaleRtl ? 100 - currentGrade : currentGrade, 100])}%`}
         y="20px"
-        style={{ transform: `translateX(${currentGrade < 50 ? '' : '-'}3.4em)` }}
+        style={{ transform: `translateX(${currentGradeDirection}3.4em)` }}
       >
         {intl.formatMessage(messages.currentGradeLabel)}
       </text>
