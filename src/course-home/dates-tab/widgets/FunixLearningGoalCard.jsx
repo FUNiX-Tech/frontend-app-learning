@@ -5,6 +5,8 @@ import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import classnames from 'classnames';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 import messages from '../messages';
 import { saveGoal } from '../../data';
 
@@ -31,6 +33,7 @@ function FunixLearningGoalCard({
 
   const [weekDays, setWeekDays] = useState(goalWeekdays);
   const [hoursPerDay, setHoursPerDay] = useState(goalHoursPerDay);
+  const MySwal = withReactContent(Swal);
 
   const handleSelect = (index) => {
     const newArray = [...weekDays];
@@ -45,6 +48,26 @@ function FunixLearningGoalCard({
   };
 
   const handleSubmit = async () => {
+    if (weekDays.every(el => !el)) {
+      MySwal.fire({
+        title: <strong>False!</strong>,
+        html: <i>Select weekdays!</i>,
+        icon: 'error',
+      });
+
+      return;
+    }
+
+    if (hoursPerDay <= 0 || hoursPerDay > 24) {
+      MySwal.fire({
+        title: <strong>False!</strong>,
+        html: <i>Select study hours each day in range 1 to 24!</i>,
+        icon: 'error',
+      });
+
+      return;
+    }
+
     await saveGoal(courseId, hoursPerDay, weekDays);
     global.location.reload();
   };
