@@ -3,27 +3,34 @@ import React, { useState } from 'react';
 import { Card, Input } from '@edx/paragon';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import classnames from 'classnames';
-// import WeekdayPicker from 'react-weekday-picker';
+import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import messages from '../messages';
-// import '../../outline-tab/widgets/FlagButton.scss';
+import { saveGoal } from '../../data';
 
 import './FunixLearningGoalCard.scss';
 
 const DATE_TEXT = [
-  'Sun',
   'Mon',
   'Tue',
   'Wed',
   'Thu',
   'Fri',
   'Sat',
+  'Sun',
 ];
 
 function FunixLearningGoalCard({
+  goalHoursPerDay,
+  goalWeekdays,
   intl,
 }) {
-  const [weekDays, setWeekDays] = useState([true, true, true, true, true, false, false]);
-  const [hoursPerDay, setHoursPerDay] = useState(2.5);
+  const {
+    courseId,
+  } = useSelector(state => state.courseHome);
+
+  const [weekDays, setWeekDays] = useState(goalWeekdays);
+  const [hoursPerDay, setHoursPerDay] = useState(goalHoursPerDay);
 
   const handleSelect = (index) => {
     const newArray = [...weekDays];
@@ -37,8 +44,9 @@ function FunixLearningGoalCard({
     setHoursPerDay(value);
   };
 
-  const handleSubmit = () => {
-    console.log(hoursPerDay, weekDays);
+  const handleSubmit = async () => {
+    await saveGoal(courseId, hoursPerDay, weekDays);
+    global.location.reload();
   };
 
   return (
@@ -103,8 +111,12 @@ function FunixLearningGoalCard({
 
 FunixLearningGoalCard.propTypes = {
   intl: intlShape.isRequired,
+  goalHoursPerDay: PropTypes.number,
+  goalWeekdays: PropTypes.arrayOf(PropTypes.bool),
 };
 
 FunixLearningGoalCard.defaultProps = {
+  goalHoursPerDay: 2.5,
+  goalWeekdays: [true, true, true, true, true, false, false],
 };
 export default injectIntl(FunixLearningGoalCard);

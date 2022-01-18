@@ -29,6 +29,8 @@ function DatesTab({ intl }) {
 
   const {
     courseDateBlocks,
+    goalHoursPerDay,
+    goalWeekdays,
   } = useModel('dates', courseId);
 
   /** [MM-P2P] Experiment */
@@ -66,7 +68,10 @@ function DatesTab({ intl }) {
           <Timeline mmp2p={mmp2p} />
         </div>
         <div className="col col-12 col-md-5">
-          <FunixLearningGoalCard />
+          <FunixLearningGoalCard
+            goalHoursPerDay={goalHoursPerDay}
+            goalWeekdays={goalWeekdays}
+          />
         </div>
       </div>
     </>
