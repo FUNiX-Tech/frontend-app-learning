@@ -30,20 +30,48 @@ const messages = defineMessages({
     defaultMessage: 'Verified only',
   },
   setWeekdayText: {
-    id: 'learning.dates.setWeekdayText',
+    id: 'learning.goal.setWeekdayText',
     defaultMessage: 'Select weekdays you want to study',
   },
   setWeekdayDetail: {
-    id: 'learning.dates.setWeekdayDetail',
-    defaultMessage: 'At least four days a week',
+    id: 'learning.goal.setWeekdayDetail',
+    defaultMessage: 'At least three days a week',
   },
   setHourDailyText: {
-    id: 'learning.dates.setHourDailyText',
+    id: 'learning.goal.setHourDailyText',
     defaultMessage: 'Select study hours each day',
   },
   setHourDailyDetail: {
-    id: 'learning.dates.setHourDailyText',
+    id: 'learning.goal.setHourDailyyDetail',
     defaultMessage: 'At least 2.5 hours per day',
+  },
+  mon: {
+    id: 'learning.goal.mon',
+    defaultMessage: 'Mon',
+  },
+  tue: {
+    id: 'learning.goal.tue',
+    defaultMessage: 'Tue',
+  },
+  wed: {
+    id: 'learning.goal.wed',
+    defaultMessage: 'Wed',
+  },
+  thu: {
+    id: 'learning.goal.thu',
+    defaultMessage: 'Thu',
+  },
+  fri: {
+    id: 'learning.goal.fri',
+    defaultMessage: 'Fri',
+  },
+  sat: {
+    id: 'learning.goal.sat',
+    defaultMessage: 'Sat',
+  },
+  sun: {
+    id: 'learning.goal.sun',
+    defaultMessage: 'Sun',
   },
 });
 

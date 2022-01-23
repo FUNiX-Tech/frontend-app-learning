@@ -12,16 +12,6 @@ import { saveGoal } from '../../data';
 
 import './FunixLearningGoalCard.scss';
 
-const DATE_TEXT = [
-  'Mon',
-  'Tue',
-  'Wed',
-  'Thu',
-  'Fri',
-  'Sat',
-  'Sun',
-];
-
 function FunixLearningGoalCard({
   goalHoursPerDay,
   goalWeekdays,
@@ -34,6 +24,16 @@ function FunixLearningGoalCard({
   const [weekDays, setWeekDays] = useState(goalWeekdays);
   const [hoursPerDay, setHoursPerDay] = useState(goalHoursPerDay);
   const MySwal = withReactContent(Swal);
+
+  const DATE_TEXT = [
+    intl.formatMessage(messages.mon),
+    intl.formatMessage(messages.tue),
+    intl.formatMessage(messages.wed),
+    intl.formatMessage(messages.thu),
+    intl.formatMessage(messages.fri),
+    intl.formatMessage(messages.sat),
+    intl.formatMessage(messages.sun),
+  ];
 
   const handleSelect = (index) => {
     const newArray = [...weekDays];
