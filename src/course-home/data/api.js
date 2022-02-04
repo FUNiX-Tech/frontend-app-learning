@@ -148,11 +148,11 @@ export function normalizeOutlineBlocks(courseId, blocks) {
           // link to the MFE ourselves).
           showLink: !!block.legacy_web_url,
           title: block.display_name,
-          sequenceIds: block.children || []
+          sequenceIds: block.children || [],
         };
         break;
       case 'vertical':
-        models.sequences[block.id] = block
+        models.sequences[block.id] = block;
         break;
       default:
         logInfo(`Unexpected course block type: ${block.type} with ID ${block.id}.  Expected block types are course, chapter, vertical and sequential.`);
@@ -438,11 +438,12 @@ export async function unsubscribeFromCourseGoal(token) {
     .then(res => camelCaseObject(res));
 }
 
-export async function postSetGoal(courseId, hoursPerDay, weekDays) {
+export async function postSetGoal(courseId, hoursPerDay, weekDays, targetUserId) {
   const url = new URL(`${getConfig().LMS_BASE_URL}/api/course_home/set_goal`);
   return getAuthenticatedHttpClient().post(url.href, {
     course_id: courseId,
     hours_per_day: hoursPerDay,
     week_days: weekDays,
+    target_user_id: targetUserId,
   });
 }

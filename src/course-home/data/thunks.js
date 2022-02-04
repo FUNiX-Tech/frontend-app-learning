@@ -140,6 +140,6 @@ export function processEvent(eventData, getTabData) {
   };
 }
 
-export async function saveGoal(courseId, hoursPerDay, weekDays) {
-  return postSetGoal(courseId, hoursPerDay, weekDays);
+export async function saveGoal(courseId, hoursPerDay, weekDays, targetUserId) {
+  return postSetGoal(courseId, hoursPerDay, weekDays, targetUserId);
 }
