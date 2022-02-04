@@ -19,6 +19,7 @@ function FunixDatesTab({ intl }) {
   const {
     goalHoursPerDay,
     goalWeekdays,
+    username,
   } = useModel('dates', courseId);
 
   /** [MM-P2P] Experiment */
@@ -26,7 +27,7 @@ function FunixDatesTab({ intl }) {
   return (
     <>
       <div role="heading" aria-level="1" className="h2 my-3">
-        {intl.formatMessage(messages.title)}
+        {intl.formatMessage(messages.title, { username })}
       </div>
       <div className="row">
         <div className="col col-12 col-md-7">
