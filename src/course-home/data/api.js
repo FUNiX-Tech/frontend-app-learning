@@ -196,10 +196,14 @@ export async function getCourseHomeCourseMetadata(courseId) {
 // Just uncomment the next few lines and the immediate 'return' in the function below
 // import { Factory } from 'rosie';
 // import './__factories__';
-export async function getDatesTabData(courseId) {
+export async function getDatesTabData(courseId, targetUserId) {
   // return camelCaseObject(Factory.build('datesTabData'));
   // const url = `${getConfig().LMS_BASE_URL}/api/course_home/dates/${courseId}`;
-  const url = `${getConfig().LMS_BASE_URL}/api/course_home/dates-funix/${courseId}`;
+  let url = `${getConfig().LMS_BASE_URL}/api/course_home/dates-funix/${courseId}`;
+
+  if (targetUserId) {
+    url += `/${targetUserId}/`;
+  }
 
   try {
     const { data } = await getAuthenticatedHttpClient().get(url);
