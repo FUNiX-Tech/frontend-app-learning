@@ -9,6 +9,7 @@ import DetailedGrades from './grades/detailed-grades/DetailedGrades';
 import GradeSummary from './grades/grade-summary/GradeSummary';
 import ProgressHeader from './ProgressHeader';
 import RelatedLinks from './related-links/RelatedLinks';
+import GradeBarGraph from './grade-graph/GradeBarGraph';
 
 import { useModel } from '../../generic/model-store';
 
@@ -40,6 +41,7 @@ function ProgressTab() {
           <OnMobile>
             <CertificateStatus />
           </OnMobile>
+          <GradeBarGraph />
           <CourseGrade />
           <div className={`grades my-4 p-4 rounded shadow-sm ${applyLockedOverlay}`} aria-hidden={gradesFeatureIsFullyLocked}>
             <GradeSummary />
