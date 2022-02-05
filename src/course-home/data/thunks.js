@@ -76,8 +76,8 @@ export function fetchTab(courseId, tab, getTabData, targetUserId) {
   };
 }
 
-export function fetchDatesTab(courseId) {
-  return fetchTab(courseId, 'dates', getDatesTabData);
+export function fetchDatesTab(courseId, targetUserId) {
+  return fetchTab(courseId, 'dates', getDatesTabData, parseInt(targetUserId, 10) || targetUserId);
 }
 
 export function fetchProgressTab(courseId, targetUserId) {
@@ -140,6 +140,6 @@ export function processEvent(eventData, getTabData) {
   };
 }
 
-export async function saveGoal(courseId, hoursPerDay, weekDays) {
-  return postSetGoal(courseId, hoursPerDay, weekDays);
+export async function saveGoal(courseId, hoursPerDay, weekDays, targetUserId) {
+  return postSetGoal(courseId, hoursPerDay, weekDays, targetUserId);
 }

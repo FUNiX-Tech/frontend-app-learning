@@ -1,3 +1,4 @@
-import DatesTab from './DatesTab';
+// import DatesTab from './DatesTab';
+import FunixDatesTab from './FunixDatesTab';
 
-export default DatesTab;
+export default FunixDatesTab;
