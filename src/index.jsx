@@ -12,6 +12,15 @@ import { Switch } from 'react-router-dom';
 
 import { messages as footerMessages } from '@edx/frontend-component-footer';
 
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
 import appMessages from './i18n';
 import { UserMessagesProvider } from './generic/user-messages';
 
@@ -32,6 +41,16 @@ import NoticesProvider from './generic/notices';
 import PathFixesProvider from './generic/path-fixes';
 
 subscribe(APP_READY, () => {
+  // Init chart
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+  );
+
   ReactDOM.render(
     <AppProvider store={initializeStore()}>
       <PathFixesProvider>
