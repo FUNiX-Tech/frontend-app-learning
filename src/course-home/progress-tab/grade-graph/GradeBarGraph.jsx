@@ -17,7 +17,7 @@ function GradeBarGraph({ intl }) {
 
   const quizGrades = sectionScores
     .reduce((arr, el) => arr.concat(el.subsections || []), [])
-    .filter(el => el.assignmentType === 'Quiz');
+    .filter(el => (el.assignmentType || '').includes('Quiz'));
 
   const labels = quizGrades.map((el, index) => `Quiz ${index + 1}`);
   const dataGrade = quizGrades.map(el => Math.round(el.percentGraded * 100));
