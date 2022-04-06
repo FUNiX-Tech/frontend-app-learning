@@ -15,14 +15,26 @@ function GradeBarGraph({ intl }) {
     sectionScores,
   } = useModel('progress', courseId);
 
-  const quizGrades = sectionScores
-    .reduce((arr, el) => arr.concat(el.subsections || []), [])
-    .filter(el => (el.assignmentType || '').includes('Quiz'));
+  const sectionScoresFlat = sectionScores
+    .reduce((arr, el) => arr.concat(el.subsections || []), []);
+
+  const quizGrades = sectionScoresFlat.filter(el => (el.assignmentType || '').includes('Quiz'));
 
   const labels = quizGrades.map((el, index) => `Quiz ${index + 1}`);
   const dataGrade = quizGrades.map(el => Math.round(el.percentGraded * 100));
   const tooltipTitles = quizGrades.map(el => el.displayName);
   const tooltipAfterLabel = quizGrades.map(el => `${el.numPointsEarned} / ${el.numPointsPossible}`);
+
+  // Add Progress test
+  const progressTestGrades = sectionScoresFlat.filter(el => (el.assignmentType || '').includes('Progress test') || (el.assignmentType || '').includes('PT'));
+
+  // Add data for progress test to graph
+  progressTestGrades.forEach((el, index) => {
+    labels.push(`PT ${index + 1}`);
+    dataGrade.push(Math.round(el.percentGraded * 100));
+    tooltipTitles.push(el.displayName);
+    tooltipAfterLabel.push(`${el.numPointsEarned} / ${el.numPointsPossible}`);
+  });
 
   // Calculate total grade
   let sumNumPointsPossible = 0;
