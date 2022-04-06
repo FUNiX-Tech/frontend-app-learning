@@ -24,6 +24,23 @@ function GradeBarGraph({ intl }) {
   const tooltipTitles = quizGrades.map(el => el.displayName);
   const tooltipAfterLabel = quizGrades.map(el => `${el.numPointsEarned} / ${el.numPointsPossible}`);
 
+  // Calculate total grade
+  let sumNumPointsPossible = 0;
+  let sumGrade = 0;
+
+  quizGrades.forEach((el) => {
+    sumNumPointsPossible += el.numPointsPossible;
+    sumGrade += el.numPointsEarned;
+  });
+
+  const totalGrade = Math.round((sumGrade / sumNumPointsPossible) * 100);
+
+  // Push total grade to the end of the array
+  labels.push('Quiz Total');
+  dataGrade.push(totalGrade);
+  tooltipTitles.push('Quiz Total');
+  tooltipAfterLabel.push(`${sumGrade} / ${sumNumPointsPossible}`);
+
   const data = {
     labels,
     datasets: [{
