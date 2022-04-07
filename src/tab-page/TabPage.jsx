@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import { getAuthenticatedUser } from '@edx/frontend-platform/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router';
 
@@ -38,6 +39,34 @@ function TabPage({ intl, ...props }) {
     start,
     title,
   } = useModel(metadataModel, courseId);
+
+  const { email } = getAuthenticatedUser();
+
+  useEffect(() => {
+    // check if dome have #hflivechat element
+    if (!document.getElementById('hflivechat')) {
+      // Add audio element with display none to prevent autoplay
+      const audio = document.createElement('audio');
+      audio.setAttribute('style', 'display:none');
+      audio.setAttribute('src', 'https://hf.funix.edu.vn/sounds/chime.mp3');
+      audio.setAttribute('type', 'audio/mpeg');
+      // Add audio element to body
+      document.body.appendChild(audio);
+
+      // Add jquery
+      const jquery = document.createElement('script');
+      jquery.src = 'https://code.jquery.com/jquery-3.3.1.min.js';
+      document.body.appendChild(jquery);
+
+      const hfScript = document.createElement('script');
+      hfScript.setAttribute('src', 'https://hf.funix.edu.vn/hf40-livechat/hf40-livechat.js');
+      hfScript.addEventListener('load', () => {
+        // eslint-disable-next-line no-undef
+        initHF40('https://hf.funix.edu.vn', false, email);
+      });
+      document.head.appendChild(hfScript);
+    }
+  }, []);
 
   if (courseStatus === 'loading') {
     return (
