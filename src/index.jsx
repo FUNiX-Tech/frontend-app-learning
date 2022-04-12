@@ -105,7 +105,7 @@ subscribe(APP_READY, () => {
                   '/course/:courseId/static/:staticId',
                 ]}
                 render={({ match }) => (
-                  <TabContainer tab="courseware" fetch={fetchCourse} slice="courseware">
+                  <TabContainer tab={`static_tab_${match.params.staticId}`} fetch={fetchCourse} slice="courseware">
                     <StaticPage
                       courseId={match.params.courseId}
                       staticId={match.params.staticId}
