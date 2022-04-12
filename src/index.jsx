@@ -39,6 +39,7 @@ import { fetchCourse } from './courseware/data';
 import initializeStore from './store';
 import NoticesProvider from './generic/notices';
 import PathFixesProvider from './generic/path-fixes';
+import StaticPage from './static-page/StaticPage';
 
 subscribe(APP_READY, () => {
   // Init chart
@@ -99,6 +100,19 @@ subscribe(APP_READY, () => {
                   <CourseExit />
                 </TabContainer>
               </PageRoute>
+              <PageRoute
+                path={[
+                  '/course/:courseId/static/:staticId',
+                ]}
+                render={({ match }) => (
+                  <TabContainer tab="courseware" fetch={fetchCourse} slice="courseware">
+                    <StaticPage
+                      courseId={match.params.courseId}
+                      staticId={match.params.staticId}
+                    />
+                  </TabContainer>
+                )}
+              />
               <PageRoute
                 path={[
                   '/course/:courseId/:sequenceId/:unitId',
