@@ -34,7 +34,9 @@ import GoalUnsubscribe from './course-home/goal-unsubscribe';
 import ProgressTab from './course-home/progress-tab/ProgressTab';
 import { TabContainer } from './tab-page';
 
-import { fetchDatesTab, fetchOutlineTab, fetchProgressTab } from './course-home/data';
+import {
+  fetchDatesTab, fetchOutlineTab, fetchProgressTab, fetchStaticTab,
+} from './course-home/data';
 import { fetchCourse } from './courseware/data';
 import initializeStore from './store';
 import NoticesProvider from './generic/notices';
@@ -105,7 +107,11 @@ subscribe(APP_READY, () => {
                   '/course/:courseId/static/:staticId',
                 ]}
                 render={({ match }) => (
-                  <TabContainer tab={`static_tab_${match.params.staticId}`} fetch={fetchCourse} slice="courseware">
+                  <TabContainer
+                    tab={`static_tab_${match.params.staticId}`}
+                    fetch={(courseId) => fetchStaticTab(courseId)}
+                    slice="courseHome"
+                  >
                     <StaticPage
                       courseId={match.params.courseId}
                       staticId={match.params.staticId}
