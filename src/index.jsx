@@ -34,11 +34,14 @@ import GoalUnsubscribe from './course-home/goal-unsubscribe';
 import ProgressTab from './course-home/progress-tab/ProgressTab';
 import { TabContainer } from './tab-page';
 
-import { fetchDatesTab, fetchOutlineTab, fetchProgressTab } from './course-home/data';
+import {
+  fetchDatesTab, fetchOutlineTab, fetchProgressTab, fetchStaticTab,
+} from './course-home/data';
 import { fetchCourse } from './courseware/data';
 import initializeStore from './store';
 import NoticesProvider from './generic/notices';
 import PathFixesProvider from './generic/path-fixes';
+import StaticPage from './static-page/StaticPage';
 
 subscribe(APP_READY, () => {
   // Init chart
@@ -99,6 +102,23 @@ subscribe(APP_READY, () => {
                   <CourseExit />
                 </TabContainer>
               </PageRoute>
+              <PageRoute
+                path={[
+                  '/course/:courseId/static/:staticId',
+                ]}
+                render={({ match }) => (
+                  <TabContainer
+                    tab={`static_tab_${match.params.staticId}`}
+                    fetch={(courseId) => fetchStaticTab(courseId)}
+                    slice="courseHome"
+                  >
+                    <StaticPage
+                      courseId={match.params.courseId}
+                      staticId={match.params.staticId}
+                    />
+                  </TabContainer>
+                )}
+              />
               <PageRoute
                 path={[
                   '/course/:courseId/:sequenceId/:unitId',

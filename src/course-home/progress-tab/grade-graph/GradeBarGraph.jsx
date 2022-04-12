@@ -18,39 +18,54 @@ function GradeBarGraph({ intl }) {
   const sectionScoresFlat = sectionScores
     .reduce((arr, el) => arr.concat(el.subsections || []), []);
 
-  const quizGrades = sectionScoresFlat.filter(el => (el.assignmentType || '').includes('Quiz'));
+  const labels = [];
+  const dataGrade = [];
+  const tooltipTitles = [];
+  const tooltipAfterLabel = [];
 
-  const labels = quizGrades.map((el, index) => `Quiz ${index + 1}`);
-  const dataGrade = quizGrades.map(el => Math.round(el.percentGraded * 100));
-  const tooltipTitles = quizGrades.map(el => el.displayName);
-  const tooltipAfterLabel = quizGrades.map(el => `${el.numPointsEarned} / ${el.numPointsPossible}`);
-
-  // Add Progress test
-  const progressTestGrades = sectionScoresFlat.filter(el => (el.assignmentType || '').includes('Progress test') || (el.assignmentType || '').includes('PT'));
-
-  // Add data for progress test to graph
-  progressTestGrades.forEach((el, index) => {
-    labels.push(`PT ${index + 1}`);
-    dataGrade.push(Math.round(el.percentGraded * 100));
-    tooltipTitles.push(el.displayName);
-    tooltipAfterLabel.push(`${el.numPointsEarned} / ${el.numPointsPossible}`);
+  // Get unique assignment type labels not null using set
+  const assignmentTypeSet = new Set();
+  sectionScoresFlat.forEach(({ assignmentType }) => {
+    if (assignmentType !== null) {
+      assignmentTypeSet.add(assignmentType);
+    }
   });
 
-  // Calculate total grade
+  const assignmentTypeArr = Array.from(assignmentTypeSet).map(assignmentType => {
+    if (assignmentType.split(' ').length >= 2) {
+      const assignmentTypeFirstLetter = assignmentType.split(' ').map(el => el[0]).join('');
+      return { label: assignmentTypeFirstLetter.toUpperCase(), assignmentType };
+    }
+    return { label: assignmentType, assignmentType };
+  });
+
   let sumNumPointsPossible = 0;
   let sumGrade = 0;
 
-  quizGrades.forEach((el) => {
-    sumNumPointsPossible += el.numPointsPossible;
-    sumGrade += el.numPointsEarned;
+  // Populate labels, dataGrade, and tooltipTitles each assignmentTypeArr
+  assignmentTypeArr.forEach(({ assignmentType, label }) => {
+    // Filter all sectionScoresFlat for each assignmentType
+    // eslint-disable-next-line max-len
+    const filteredSectionScoresFlat = sectionScoresFlat.filter(({ assignmentType: sectionAssignmentType }) => sectionAssignmentType === assignmentType);
+
+    // For each and process the dataGrade and tooltipTitles
+    filteredSectionScoresFlat.forEach((el, index) => {
+      labels.push(`${label} ${index + 1}`);
+      dataGrade.push(Math.round(el.percentGraded * 100));
+      tooltipTitles.push(el.displayName);
+      tooltipAfterLabel.push(`${el.numPointsEarned} / ${el.numPointsPossible}`);
+
+      sumNumPointsPossible += el.numPointsPossible;
+      sumGrade += el.numPointsEarned;
+    });
   });
 
   const totalGrade = Math.round((sumGrade / sumNumPointsPossible) * 100);
 
   // Push total grade to the end of the array
-  labels.push('Quiz Total');
+  labels.push('Total');
   dataGrade.push(totalGrade);
-  tooltipTitles.push('Quiz Total');
+  tooltipTitles.push('Total');
   tooltipAfterLabel.push(`${sumGrade} / ${sumNumPointsPossible}`);
 
   const data = {

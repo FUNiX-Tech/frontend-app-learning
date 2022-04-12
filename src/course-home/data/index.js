@@ -6,6 +6,7 @@ export {
   deprecatedSaveCourseGoal,
   saveWeeklyLearningGoal,
   saveGoal,
+  fetchStaticTab,
 } from './thunks';
 
 export { reducer } from './slice';
