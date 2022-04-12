@@ -26,7 +26,19 @@ function GradeBarGraph({ intl }) {
   const tooltipAfterLabel = quizGrades.map(el => `${el.numPointsEarned} / ${el.numPointsPossible}`);
 
   // Add Progress test
-  const progressTestGrades = sectionScoresFlat.filter(el => (el.assignmentType || '').includes('Progress test') || (el.assignmentType || '').includes('PT'));
+  const progressTestGrades = sectionScoresFlat.filter(lesson => {
+    const assignmentType = lesson.assignmentType || '';
+
+    // get combine of all first letter of each word in assignmentType
+    console.log(assignmentType.split(' ').length >= 2)
+    if (assignmentType.split(' ').length >= 1) {
+      const assignmentTypeFirstLetter = assignmentType.split(' ').map(el => el[0]).join('');
+
+      console.log(assignmentTypeFirstLetter);
+      return assignmentTypeFirstLetter.toUpperCase().includes('PT');
+    }
+    return assignmentType.includes('PT');
+  });
 
   // Add data for progress test to graph
   progressTestGrades.forEach((el, index) => {
