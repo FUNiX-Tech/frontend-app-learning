@@ -4,6 +4,7 @@ import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { getAuthenticatedUser } from '@edx/frontend-platform/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router';
+import { getConfig } from '@edx/frontend-platform';
 
 import Footer from '@edx/frontend-component-footer';
 import { Toast } from '@edx/paragon';
@@ -68,6 +69,27 @@ function TabPage({ intl, ...props }) {
       document.body.appendChild(jquery);
     }
   }, []);
+
+  useEffect(() => {
+    if (!document.getElementById('funix-feedback')) {
+      // Because the feedback style is depend on LMS style so we need to add it to the head
+      // Append link to style in body
+      const feedbackStyle = document.createElement('link');
+      feedbackStyle.setAttribute('rel', 'stylesheet');
+      feedbackStyle.setAttribute('href', `${getConfig().LMS_BASE_URL}/static/feedback/feedback.css`);
+
+      // Append link to head
+      document.head.appendChild(feedbackStyle);
+
+      const feedScript = document.createElement('script');
+      feedScript.setAttribute('src', `${getConfig().LMS_BASE_URL}/static/feedback/add_feedback.js`);
+      feedScript.addEventListener('load', () => {
+        // eslint-disable-next-line no-undef
+        initFUNiXFeedback(getConfig().LMS_BASE_URL);
+      });
+      document.head.appendChild(feedScript);
+    }
+  });
 
   if (courseStatus === 'loading') {
     return (
