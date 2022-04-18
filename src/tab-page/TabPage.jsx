@@ -71,7 +71,7 @@ function TabPage({ intl, ...props }) {
   }, []);
 
   useEffect(() => {
-    if (!document.getElementById('funix-feedback')) {
+    if (!document.getElementById('feed-back-script')) {
       // Because the feedback style is depend on LMS style so we need to add it to the head
       // Append link to style in body
       const feedbackStyle = document.createElement('link');
@@ -83,6 +83,7 @@ function TabPage({ intl, ...props }) {
 
       const feedScript = document.createElement('script');
       feedScript.setAttribute('src', `${getConfig().LMS_BASE_URL}/static/feedback/add_feedback.js`);
+      feedScript.setAttribute('id', 'feed-back-script');
       feedScript.addEventListener('load', () => {
         // eslint-disable-next-line no-undef
         initFUNiXFeedback(getConfig().LMS_BASE_URL);
