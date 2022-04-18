@@ -86,7 +86,7 @@ function TabPage({ intl, ...props }) {
       feedScript.setAttribute('id', 'feed-back-script');
       feedScript.addEventListener('load', () => {
         // eslint-disable-next-line no-undef
-        initFUNiXFeedback(getConfig().LMS_BASE_URL);
+        initFUNiXFeedback(getConfig().LMS_BASE_URL, true);
       });
       document.head.appendChild(feedScript);
     }
