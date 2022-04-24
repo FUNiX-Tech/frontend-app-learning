@@ -14,7 +14,8 @@ import WeeklyLearningGoalCard from './widgets/WeeklyLearningGoalCard';
 import CourseTools from './widgets/CourseTools';
 import { fetchOutlineTab } from '../data';
 import messages from './messages';
-import Section from './Section';
+// import Section from './Section';
+import SectionList from './SectionList';
 import ShiftDatesAlert from '../suggested-schedule-messaging/ShiftDatesAlert';
 import UpgradeNotification from '../../generic/upgrade-notification/UpgradeNotification';
 import UpgradeToShiftDatesAlert from '../suggested-schedule-messaging/UpgradeToShiftDatesAlert';
@@ -155,7 +156,13 @@ function OutlineTab({ intl }) {
                   </Button>
                 </div>
               </div>
-              <ol id="courseHome-outline" className="list-unstyled">
+              <SectionList
+                course={courses[rootCourseId]}
+                courseId={courseId}
+                sections={sections}
+                expandAll={expandAll}
+              />
+              {/* <ol id="courseHome-outline" className="list-unstyled">
                 {courses[rootCourseId].sectionIds.map((sectionId) => (
                   <Section
                     key={sectionId}
@@ -165,7 +172,7 @@ function OutlineTab({ intl }) {
                     section={sections[sectionId]}
                   />
                 ))}
-              </ol>
+              </ol> */}
             </>
           )}
         </div>
