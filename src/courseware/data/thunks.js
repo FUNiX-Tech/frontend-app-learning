@@ -21,6 +21,8 @@ import {
   fetchSequenceFailure,
 } from './slice';
 
+import { getOutlineTabData } from '../../course-home/data/api';
+
 /**
  * Combines the models from the Course Blocks and Learning Sequences API into a
  * new models obj that is returned. Does not mutate the models passed in.
@@ -130,7 +132,8 @@ export function fetchCourse(courseId) {
       getCourseMetadata(courseId),
       getCourseBlocks(courseId),
       getLearningSequencesOutline(courseId),
-    ]).then(([courseMetadataResult, courseBlocksResult, learningSequencesOutlineResult]) => {
+      getOutlineTabData(courseId),
+    ]).then(([courseMetadataResult, courseBlocksResult, learningSequencesOutlineResult, outlineTabDataResult]) => {
       if (courseMetadataResult.status === 'fulfilled') {
         dispatch(addModel({
           modelType: 'coursewareMeta',
@@ -138,6 +141,15 @@ export function fetchCourse(courseId) {
         }));
       }
 
+      if (outlineTabDataResult.status === 'fulfilled') {
+        dispatch(addModel({
+          modelType: 'outline',
+          model: {
+            id: courseId,
+            ...outlineTabDataResult.value,
+          },
+        }));
+      }
       if (courseBlocksResult.status === 'fulfilled') {
         const {
           courses, sections, sequences, units,

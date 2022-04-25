@@ -16,6 +16,7 @@ import { TabPage } from '../tab-page';
 
 import Course from './course';
 import { handleNextSectionCelebration } from './course/celebration';
+import SectionList from '../course-home/outline-tab/SectionList';
 
 const checkResumeRedirect = memoize((courseStatus, courseId, sequenceId, firstSequenceId) => {
   if (courseStatus === 'loaded' && !sequenceId) {
@@ -248,7 +249,9 @@ class CoursewareContainer extends Component {
       >
         <div className="row w-100">
           <div className="col-12 col-md-3">
-            
+            <SectionList
+              courseId={courseId}
+            />
           </div>
           <div className="col-12 col-md-9">
             <Course
