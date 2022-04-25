@@ -62,7 +62,7 @@ function Section({
           />
         )}
       </div>
-      <div className="col-10 ml-3 p-0 font-weight-bold text-dark-500">
+      <div className="col-9 ml-3 p-0 font-weight-bold text-dark-500">
         <span className="align-middle">{title}</span>
         <span className="sr-only">
           , {intl.formatMessage(complete ? messages.completedSection : messages.incompleteSection)}
