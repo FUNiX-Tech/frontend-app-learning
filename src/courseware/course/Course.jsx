@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
@@ -12,6 +13,7 @@ import { CelebrationModal, shouldCelebrateOnSectionLoad, WeeklyGoalCelebrationMo
 import ContentTools from './content-tools';
 import CourseBreadcrumbs from './CourseBreadcrumbs';
 import NotificationTrigger from './NotificationTrigger';
+import SectionList from '../../course-home/outline-tab/SectionList';
 
 import { useModel } from '../../generic/model-store';
 import useWindowSize, { responsiveBreakpoints } from '../../generic/tabs/useWindowSize';
@@ -134,24 +136,34 @@ function Course({
       </div>
 
       <AlertList topic="sequence" />
-      <Sequence
-        unitId={unitId}
-        sequenceId={sequenceId}
-        courseId={courseId}
-        unitNavigationHandler={unitNavigationHandler}
-        nextSequenceHandler={nextSequenceHandler}
-        previousSequenceHandler={previousSequenceHandler}
-        toggleNotificationTray={toggleNotificationTray}
-        isNotificationTrayVisible={isNotificationTrayVisible}
-        notificationTrayVisible={notificationTrayVisible}
-        notificationStatus={notificationStatus}
-        setNotificationStatus={setNotificationStatus}
-        onNotificationSeen={onNotificationSeen}
-        upgradeNotificationCurrentState={upgradeNotificationCurrentState}
-        setupgradeNotificationCurrentState={setupgradeNotificationCurrentState}
-        //* * [MM-P2P] Experiment */
-        mmp2p={MMP2P}
-      />
+      <div className="row w-100">
+        <div className="col-12 col-md-8">
+          <Sequence
+            unitId={unitId}
+            sequenceId={sequenceId}
+            courseId={courseId}
+            unitNavigationHandler={unitNavigationHandler}
+            nextSequenceHandler={nextSequenceHandler}
+            previousSequenceHandler={previousSequenceHandler}
+            toggleNotificationTray={toggleNotificationTray}
+            isNotificationTrayVisible={isNotificationTrayVisible}
+            notificationTrayVisible={notificationTrayVisible}
+            notificationStatus={notificationStatus}
+            setNotificationStatus={setNotificationStatus}
+            onNotificationSeen={onNotificationSeen}
+            upgradeNotificationCurrentState={upgradeNotificationCurrentState}
+            setupgradeNotificationCurrentState={setupgradeNotificationCurrentState}
+            //* * [MM-P2P] Experiment */
+            mmp2p={MMP2P}
+          />
+        </div>
+        <div className="col-12 col-md-4" id="section-list-container">
+          <SectionList
+            courseId={courseId}
+            relativeHeight
+          />
+        </div>
+      </div>
       <CelebrationModal
         courseId={courseId}
         isOpen={firstSectionCelebrationOpen}

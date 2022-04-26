@@ -402,6 +402,13 @@
 }
 
 // section list
+#section-list-container {
+  position: relative;
+}
 #section-list-container > ol {
+  max-height: 50vh;
   overflow-y: auto;
+
+  position: sticky;
+  top: 10px;
 }
