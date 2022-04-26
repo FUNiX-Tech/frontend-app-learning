@@ -9,25 +9,33 @@ import PropTypes from 'prop-types';
 import { useModel } from '../../generic/model-store';
 import Section from './Section';
 
+const MAX_HEIGHT_PERCENT = 50;
+
 function SectionList({
   courseId,
   expandAll,
   relativeHeight,
 }) {
   // console.log(courseId);
-  // const [height, setHeight] = useState(window.height);
-  // const resizeObserver = new ResizeObserver(() => {
-  //   // Get height of #section-list-container
-  //   const sectionListContainer = document.getElementById('section-list-container');
+  const [height, setHeight] = useState(window.height);
+  const resizeObserver = new ResizeObserver(() => {
+    // Get height of #section-list-container
+    const sectionListContainer = document.getElementById('section-list-container');
 
-  //   if (relativeHeight && sectionListContainer) {
-  //     const sectionListContainerHeight = sectionListContainer.offsetHeight;
-  //     setHeight(Math.round((sectionListContainerHeight / 100) * 60));
-  //   }
-  // });
+    if (relativeHeight && sectionListContainer) {
+      const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+
+      const vhHeight = Math.round((vh / 100) * MAX_HEIGHT_PERCENT);
+      const sectionListContainerHeight = sectionListContainer.offsetHeight;
+
+      const finalHeight = Math.min(vhHeight, Math.round((sectionListContainerHeight / 100) * MAX_HEIGHT_PERCENT));
+
+      setHeight(finalHeight);
+    }
+  });
 
   // start observing a DOM node
-  // resizeObserver.observe(document.body);
+  resizeObserver.observe(document.body);
   const {
     courseBlocks: {
       courses,
@@ -35,10 +43,10 @@ function SectionList({
     },
   } = useModel('outline', courseId);
 
-  // const style = {
-  //   maxHeight: `${height}px`,
-  // };
-  const style = {};
+  const style = {
+    maxHeight: `${height}px`,
+  };
+  // const style = {};
 
   const rootCourseId = courses && Object.keys(courses)[0];
 
