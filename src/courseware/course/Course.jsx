@@ -121,7 +121,7 @@ function Course({
           mmp2p={MMP2P}
         />
 
-        { shouldDisplayNotificationTriggerInCourse ? (
+        {/* { shouldDisplayNotificationTriggerInCourse ? (
           <NotificationTrigger
             courseId={courseId}
             toggleNotificationTray={toggleNotificationTray}
@@ -130,7 +130,7 @@ function Course({
             setNotificationStatus={setNotificationStatus}
             upgradeNotificationCurrentState={upgradeNotificationCurrentState}
           />
-        ) : null}
+        ) : null} */}
       </div>
 
       <AlertList topic="sequence" />

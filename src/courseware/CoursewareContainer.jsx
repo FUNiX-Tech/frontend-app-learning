@@ -248,12 +248,7 @@ class CoursewareContainer extends Component {
         metadataModel="coursewareMeta"
       >
         <div className="row w-100">
-          <div className="col-12 col-md-3">
-            <SectionList
-              courseId={courseId}
-            />
-          </div>
-          <div className="col-12 col-md-9">
+          <div className="col-12 col-md-8">
             <Course
               courseId={courseId}
               sequenceId={sequenceId}
@@ -261,6 +256,11 @@ class CoursewareContainer extends Component {
               nextSequenceHandler={this.handleNextSequenceClick}
               previousSequenceHandler={this.handlePreviousSequenceClick}
               unitNavigationHandler={this.handleUnitNavigationClick}
+            />
+          </div>
+          <div className="col-12 col-md-4" id="section-list-container">
+            <SectionList
+              courseId={courseId}
             />
           </div>
         </div>
