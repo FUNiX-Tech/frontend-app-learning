@@ -159,13 +159,15 @@ function Unit({
 
   return (
     <div className="unit">
-      <h1 className="mb-0 h3">{unit.title}</h1>
-      <h2 className="sr-only">{intl.formatMessage(messages['learn.header.h2.placeholder'])}</h2>
-      <BookmarkButton
-        unitId={unit.id}
-        isBookmarked={unit.bookmarked}
-        isProcessing={unit.bookmarkedUpdateState === 'loading'}
-      />
+      <div style={{ marginLeft: '-15px' }}>
+        <h1 className="mb-0 h3">{unit.title}</h1>
+        <h2 className="sr-only">{intl.formatMessage(messages['learn.header.h2.placeholder'])}</h2>
+        <BookmarkButton
+          unitId={unit.id}
+          isBookmarked={unit.bookmarked}
+          isProcessing={unit.bookmarkedUpdateState === 'loading'}
+        />
+      </div>
       { !mmp2p.state.isEnabled && contentTypeGatingEnabled && unit.containsContentTypeGatedContent && (
         <Suspense
           fallback={(
