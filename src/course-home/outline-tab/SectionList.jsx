@@ -12,14 +12,18 @@ import Section from './Section';
 function SectionList({
   courseId,
   expandAll,
+  relativeHeight,
 }) {
   // console.log(courseId);
   const [height, setHeight] = useState(window.height);
   const resizeObserver = new ResizeObserver(() => {
     // Get height of #section-list-container
     const sectionListContainer = document.getElementById('section-list-container');
-    const sectionListContainerHeight = sectionListContainer.offsetHeight;
-    setHeight(Math.round((sectionListContainerHeight / 100) * 60));
+
+    if (relativeHeight && sectionListContainer) {
+      const sectionListContainerHeight = sectionListContainer.offsetHeight;
+      setHeight(Math.round((sectionListContainerHeight / 100) * 60));
+    }
   });
 
   // start observing a DOM node
@@ -55,11 +59,13 @@ function SectionList({
 SectionList.propTypes = {
   courseId: PropTypes.string,
   expandAll: PropTypes.bool,
+  relativeHeight: PropTypes.bool,
 };
 
 SectionList.defaultProps = {
   courseId: '',
   expandAll: false,
+  relativeHeight: false,
 };
 
 export default SectionList;
