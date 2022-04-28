@@ -113,16 +113,6 @@ function Course({
         <title>{`${pageTitleBreadCrumbs.join(' | ')} | ${getConfig().SITE_NAME}`}</title>
       </Helmet>
       <div className="position-relative">
-        <CourseBreadcrumbs
-          courseId={courseId}
-          sectionId={section ? section.id : null}
-          sequenceId={sequenceId}
-          isStaff={course ? course.isStaff : null}
-          unitId={unitId}
-          //* * [MM-P2P] Experiment */
-          mmp2p={MMP2P}
-        />
-
         {/* { shouldDisplayNotificationTriggerInCourse ? (
           <NotificationTrigger
             courseId={courseId}
@@ -137,7 +127,16 @@ function Course({
 
       <AlertList topic="sequence" />
       <div className="row w-100">
-        <div className="col-12 col-md-8">
+        <div className="col-12 col-md-8 border-all">
+          <CourseBreadcrumbs
+            courseId={courseId}
+            sectionId={section ? section.id : null}
+            sequenceId={sequenceId}
+            isStaff={course ? course.isStaff : null}
+            unitId={unitId}
+            //* * [MM-P2P] Experiment */
+            mmp2p={MMP2P}
+          />
           <Sequence
             unitId={unitId}
             sequenceId={sequenceId}
