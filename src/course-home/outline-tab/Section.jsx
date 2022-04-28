@@ -42,8 +42,8 @@ function Section({
   }, []);
 
   const sectionTitle = (
-    <div className="row w-100 m-0">
-      <div className="col-auto p-0">
+    <div className="w-100 m-0">
+      <div className="p-0">
         {complete ? (
           <FontAwesomeIcon
             icon={fasCheckCircle}
@@ -62,7 +62,7 @@ function Section({
           />
         )}
       </div>
-      <div className="col-9 ml-3 p-0 font-weight-bold text-dark-500">
+      <div className="ml-3 p-0 font-weight-bold text-dark-500">
         <span className="align-middle">{title}</span>
         <span className="sr-only">
           , {intl.formatMessage(complete ? messages.completedSection : messages.incompleteSection)}
