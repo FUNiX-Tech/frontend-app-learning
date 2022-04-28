@@ -421,3 +421,19 @@
 
   margin-bottom: 3rem;
 }
+
+
+.sequence {
+  position: relative;
+
+  & #courseware-sequenceNavigation {
+    // max-height: 50vh;
+    overflow-y: auto;
+    position: sticky;
+    top: 0px;
+
+    & button {
+      background-color: white;
+    }
+  }
+}
