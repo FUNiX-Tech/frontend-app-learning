@@ -12,12 +12,18 @@ import {
 import { faCheckCircle as fasCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { faCheckCircle as farCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { history } from '@edx/frontend-platform';
 
 import EffortEstimate from '../../shared/effort-estimate';
 import { useModel } from '../../generic/model-store';
 import messages from './messages';
 // import genericMessages from '../../generic/messages';
 import './CollapsibleSequenceLink.scss';
+
+function handleHistoryClick(e, courseId, sequenceId, unitId) {
+  e.preventDefault();
+  history.push(`/course/${courseId}/${sequenceId}/${unitId}`);
+}
 
 function CollapsibleSequenceLink({
   id,
@@ -26,6 +32,7 @@ function CollapsibleSequenceLink({
   first,
   sequences,
   expand,
+  useHistory,
 }) {
   const sequence = sequences[id];
   const {
@@ -59,7 +66,21 @@ function CollapsibleSequenceLink({
   );
 
   if (canLoadCourseware === undefined) {
-    coursewareUrl = (<Link to={`/course/${courseId}/${id}`}>{title}</Link>);
+    if (useHistory) {
+      const firstSequence = sequenceIds[0] || id;
+      coursewareUrl = (
+        <Link
+          to={`/course/${courseId}/${id}/${firstSequence}`}
+          onClick={(e) => {
+            handleHistoryClick(e, courseId, id, firstSequence);
+          }}
+        >
+          {title}
+        </Link>
+      );
+    } else {
+      coursewareUrl = (<Link to={`/course/${courseId}/${id}`}>{title}</Link>);
+    }
   }
 
   const displayTitle = showLink ? coursewareUrl : title;
@@ -176,7 +197,7 @@ function CollapsibleSequenceLink({
                     </div>
                     <div className="col-8 p-0 ml-3 text-break">
                       <span className="align-middle">
-                        <Link to={`/course/${courseId}/${sequenceId}`}>{sequence.display_name}</Link>
+                        <Link to={`/course/${courseId}/${sequenceId}`}>{sequenceData.display_name}</Link>
                       </span>
                     </div>
                   </div>
@@ -197,6 +218,7 @@ CollapsibleSequenceLink.propTypes = {
   first: PropTypes.bool.isRequired,
   expand: PropTypes.bool.isRequired,
   sequences: PropTypes.shape().isRequired,
+  useHistory: PropTypes.bool.isRequired,
 };
 
 export default injectIntl(CollapsibleSequenceLink);

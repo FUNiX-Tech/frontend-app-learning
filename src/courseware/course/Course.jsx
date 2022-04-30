@@ -160,6 +160,7 @@ function Course({
           <SectionList
             courseId={courseId}
             relativeHeight
+            useHistory
           />
         </div>
       </div>

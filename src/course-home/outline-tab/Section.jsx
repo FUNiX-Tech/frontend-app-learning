@@ -6,7 +6,7 @@ import { faCheckCircle as fasCheckCircle, faMinus, faPlus } from '@fortawesome/f
 import { faCheckCircle as farCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import SequenceLink from './SequenceLink';
+// import SequenceLink from './SequenceLink';
 import { useModel } from '../../generic/model-store';
 import CollapsibleSequenceLink from './CollapsibleSequenceLink';
 
@@ -19,6 +19,7 @@ function Section({
   expand,
   intl,
   section,
+  useHistory,
 }) {
   const {
     complete,
@@ -99,13 +100,14 @@ function Section({
         <ol className="list-unstyled">
           {sequenceIds.map((sequenceId, index) => (
             <CollapsibleSequenceLink
-                key={sequenceId}
-                id={sequenceId}
-                courseId={courseId}
-                sequences={sequences}
-                first={index === 0}
-                expand={expand}
-              />
+              key={sequenceId}
+              id={sequenceId}
+              courseId={courseId}
+              sequences={sequences}
+              first={index === 0}
+              expand={expand}
+              useHistory={useHistory}
+            />
           ))}
         </ol>
       </Collapsible>
@@ -119,6 +121,7 @@ Section.propTypes = {
   expand: PropTypes.bool.isRequired,
   intl: intlShape.isRequired,
   section: PropTypes.shape().isRequired,
+  useHistory: PropTypes.bool.isRequired,
 };
 
 export default injectIntl(Section);
