@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
-import { Hyperlink, IconButton, Collapsible } from '@edx/paragon';
+import { Hyperlink, Collapsible } from '@edx/paragon';
 import {
   FormattedMessage,
   FormattedTime,
   injectIntl,
   intlShape,
 } from '@edx/frontend-platform/i18n';
-import { faCheckCircle as fasCheckCircle, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle as fasCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { faCheckCircle as farCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -17,7 +17,7 @@ import EffortEstimate from '../../shared/effort-estimate';
 import { useModel } from '../../generic/model-store';
 import messages from './messages';
 // import genericMessages from '../../generic/messages';
-import './CollapsibleSequenceLink.scss'
+import './CollapsibleSequenceLink.scss';
 
 function CollapsibleSequenceLink({
   id,
@@ -66,34 +66,34 @@ function CollapsibleSequenceLink({
 
   const sectionTitle = (
     <div className={classNames('', { 'mt-2': !first })}>
-    <div className="w-100 m-0">
-      <div className="p-0">
-        {complete ? (
-          <FontAwesomeIcon
-            icon={fasCheckCircle}
-            fixedWidth
-            className="float-left text-success mt-1"
-            aria-hidden="true"
-            title={intl.formatMessage(messages.completedAssignment)}
-          />
-        ) : (
-          <FontAwesomeIcon
-            icon={farCheckCircle}
-            fixedWidth
-            className="float-left text-gray-400 mt-1"
-            aria-hidden="true"
-            title={intl.formatMessage(messages.incompleteAssignment)}
-          />
-        )}
+      <div className="w-100 m-0">
+        <div className="p-0">
+          {complete ? (
+            <FontAwesomeIcon
+              icon={fasCheckCircle}
+              fixedWidth
+              className="float-left text-success mt-1"
+              aria-hidden="true"
+              title={intl.formatMessage(messages.completedAssignment)}
+            />
+          ) : (
+            <FontAwesomeIcon
+              icon={farCheckCircle}
+              fixedWidth
+              className="float-left text-gray-400 mt-1"
+              aria-hidden="true"
+              title={intl.formatMessage(messages.incompleteAssignment)}
+            />
+          )}
+        </div>
+        <div className="p-0 ml-3 text-break">
+          <span className="align-middle">{displayTitle}</span>
+          <span className="sr-only">
+            , {intl.formatMessage(complete ? messages.completedAssignment : messages.incompleteAssignment)}
+          </span>
+          <EffortEstimate className="ml-3 align-middle" block={sequence} />
+        </div>
       </div>
-      <div className="p-0 ml-3 text-break">
-        <span className="align-middle">{displayTitle}</span>
-        <span className="sr-only">
-          , {intl.formatMessage(complete ? messages.completedAssignment : messages.incompleteAssignment)}
-        </span>
-        <EffortEstimate className="ml-3 align-middle" block={sequence} />
-      </div>
-    </div>
       {due && (
         <div className="row w-100 m-0 ml-3 pl-3">
           <small className="text-body pl-2">
@@ -147,16 +147,16 @@ function CollapsibleSequenceLink({
         //   />
         // )}
       >
-        <ol className="list-unstyled" style={{paddingLeft: '1.5rem'}}>
+        <ol className="list-unstyled" style={{ paddingLeft: '1.5rem' }}>
           {sequenceIds.map((sequenceId) => {
-            const sequence = sequences[sequenceId];
+            const sequenceData = sequences[sequenceId];
 
             return (
               <li key={sequenceId}>
                 <div className={classNames('', { 'mt-2': !first })}>
                   <div className="row w-100 m-0">
                     <div className="col-auto p-0">
-                      {sequence.complete ? (
+                      {sequenceData.complete ? (
                         <FontAwesomeIcon
                           icon={fasCheckCircle}
                           fixedWidth
@@ -181,8 +181,8 @@ function CollapsibleSequenceLink({
                     </div>
                   </div>
                 </div>
-            </li>
-            )
+              </li>
+            );
           })}
         </ol>
       </Collapsible>
