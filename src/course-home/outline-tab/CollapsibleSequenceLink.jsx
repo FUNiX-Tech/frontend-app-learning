@@ -25,7 +25,7 @@ function CollapsibleSequenceLink({
   courseId,
   first,
   sequences,
-  expand
+  expand,
 }) {
   const sequence = sequences[id];
   const {
