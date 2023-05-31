@@ -40,8 +40,8 @@ function Section({
   useEffect(() => {
     setOpen(defaultOpen);
   }, []);
-console.log('sequenceId', sequenceId)
-  console.log('sequences', sequences)
+console.log('sequenceId', sequenceIds)
+
   const sectionTitle = (
     <div className="row w-100 m-0">
       <div className="col-auto p-0">
