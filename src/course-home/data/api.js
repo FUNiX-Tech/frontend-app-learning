@@ -186,7 +186,7 @@ export function normalizeOutlineBlocks(courseId, blocks) {
       });
     }
   });
- console.log('blocks',blocks);
+ console.log('models',models);
   return models;
 }
 
