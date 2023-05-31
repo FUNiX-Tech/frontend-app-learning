@@ -127,7 +127,7 @@ function OutlineTab({ intl }) {
     }
   }, [location.search]);
 console.log(useModel('outline', courseId))
-  console.log(courseId)
+  
   return (
     <>
       <div data-learner-type={learnerType} className="row w-100 mx-0 my-3 justify-content-between">
