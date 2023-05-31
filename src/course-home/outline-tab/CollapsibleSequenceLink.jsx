@@ -50,7 +50,7 @@ function CollapsibleSequenceLink({
   }, [expand]);
 
   const timezoneFormatArgs = userTimezone ? { timeZone: userTimezone } : {};
-	console.log('s',sequences)
+	
   // canLoadCourseware is true if the Courseware MFE is enabled, false otherwise
   const coursewareUrl = (
     canLoadCourseware
@@ -145,7 +145,7 @@ function CollapsibleSequenceLink({
         <ol className="list-unstyled" style={{ paddingLeft: '1.5rem' }}>
           {sequenceIds.map((sequenceId) => {
             const sequenceElement = sequences[sequenceId];
-		console.log(sequenceElement)
+		console.log(sequenceId)
             return (
               <li key={sequenceId}>
 	      	<h1>T</h1>
