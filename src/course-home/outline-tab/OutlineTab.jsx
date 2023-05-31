@@ -126,7 +126,7 @@ function OutlineTab({ intl }) {
       });
     }
   }, [location.search]);
-console.log(useModel('outline', courseId))
+
   
   return (
     <>
