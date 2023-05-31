@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
-import { Hyperlink, IconButton, Collapsible } from '@edx/paragon';
+import { Hyperlink, Collapsible } from '@edx/paragon';
 import {
   FormattedMessage,
   FormattedTime,
   injectIntl,
   intlShape,
 } from '@edx/frontend-platform/i18n';
-import { faCheckCircle as fasCheckCircle, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle as fasCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { faCheckCircle as farCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -17,7 +17,7 @@ import EffortEstimate from '../../shared/effort-estimate';
 import { useModel } from '../../generic/model-store';
 import messages from './messages';
 // import genericMessages from '../../generic/messages';
-import './CollapsibleSequenceLink.scss'
+import './CollapsibleSequenceLink.scss';
 
 function CollapsibleSequenceLink({
   id,
@@ -35,7 +35,7 @@ function CollapsibleSequenceLink({
     legacyWebUrl,
     showLink,
     title,
-    sequenceIds
+    sequenceIds,
   } = sequence;
   const {
     userTimezone,
@@ -59,63 +59,63 @@ function CollapsibleSequenceLink({
   );
   const displayTitle = showLink ? coursewareUrl : title;
 
-	const sectionTitle = (
-		<div className={classNames('', { 'mt-2': !first })}>
-		<div className="row w-100 m-0">
-			<div className="col-auto p-0">
-			{complete ? (
-				<FontAwesomeIcon
-				icon={fasCheckCircle}
-				fixedWidth
-				className="float-left text-success mt-1"
-				aria-hidden="true"
-				title={intl.formatMessage(messages.completedAssignment)}
-				/>
-			) : (
-				<FontAwesomeIcon
-				icon={farCheckCircle}
-				fixedWidth
-				className="float-left text-gray-400 mt-1"
-				aria-hidden="true"
-				title={intl.formatMessage(messages.incompleteAssignment)}
-				/>
-			)}
-			</div>
-			<div className="col-10 p-0 ml-3 text-break">
-        <span className="align-middle">{displayTitle}</span>
-        <span className="sr-only">
-          , {intl.formatMessage(complete ? messages.completedAssignment : messages.incompleteAssignment)}
-        </span>
-        <EffortEstimate className="ml-3 align-middle" block={sequence} />
-			</div>
-		</div>
-		{due && (
-			<div className="row w-100 m-0 ml-3 pl-3">
-			<small className="text-body pl-2">
-				<FormattedMessage
-				id="learning.outline.sequence-due"
-				defaultMessage="{description} due {assignmentDue}"
-				description="Used below an assignment title"
-				values={{
-					assignmentDue: (
-					<FormattedTime
-						key={`${id}-due`}
-						day="numeric"
-						month="short"
-						year="numeric"
-						timeZoneName="short"
-						value={due}
-						{...timezoneFormatArgs}
-					/>
-					),
-					description: description || '',
-				}}
-				/>
-			</small>
-			</div>
-		)}
-		</div>
-	);
+  const sectionTitle = (
+    <div className={classNames('', { 'mt-2': !first })}>
+      <div className="row w-100 m-0">
+        <div className="col-auto p-0">
+          {complete ? (
+            <FontAwesomeIcon
+              icon={fasCheckCircle}
+              fixedWidth
+              className="float-left text-success mt-1"
+              aria-hidden="true"
+              title={intl.formatMessage(messages.completedAssignment)}
+            />
+          ) : (
+            <FontAwesomeIcon
+              icon={farCheckCircle}
+              fixedWidth
+              className="float-left text-gray-400 mt-1"
+              aria-hidden="true"
+              title={intl.formatMessage(messages.incompleteAssignment)}
+            />
+          )}
+        </div>
+        <div className="col-10 p-0 ml-3 text-break">
+          <span className="align-middle">{displayTitle}</span>
+          <span className="sr-only">
+            , {intl.formatMessage(complete ? messages.completedAssignment : messages.incompleteAssignment)}
+          </span>
+          <EffortEstimate className="ml-3 align-middle" block={sequence} />
+        </div>
+      </div>
+      {due && (
+      <div className="row w-100 m-0 ml-3 pl-3">
+        <small className="text-body pl-2">
+          <FormattedMessage
+            id="learning.outline.sequence-due"
+            defaultMessage="{description} due {assignmentDue}"
+            description="Used below an assignment title"
+            values={{
+              assignmentDue: (
+                <FormattedTime
+                  key={`${id}-due`}
+                  day="numeric"
+                  month="short"
+                  year="numeric"
+                  timeZoneName="short"
+                  value={due}
+                  {...timezoneFormatArgs}
+                />
+              ),
+              description: description || '',
+            }}
+          />
+        </small>
+      </div>
+      )}
+    </div>
+  );
 
   return (
     <li className="collapsible-sequence-link-container">
@@ -142,22 +142,22 @@ function CollapsibleSequenceLink({
         //   />
         // )}
       >
-        <ol className="list-unstyled" style={{paddingLeft: '1.5rem'}}>
+        <ol className="list-unstyled" style={{ paddingLeft: '1.5rem' }}>
           {sequenceIds.map((sequenceId) => {
-            const sequence = sequences[sequenceId];
+            const sequenceElement = sequences[sequenceId];
 
             return (
               <li key={sequenceId}>
                 <div className={classNames('', { 'mt-2': !first })}>
                   <div className="row w-100 m-0">
                     <div className="col-auto p-0">
-                      {sequence.complete ? (
+                      {sequenceElement.complete ? (
                         <FontAwesomeIcon
-                        icon={fasCheckCircle}
-                        fixedWidth
-                        className="float-left text-success mt-1"
-                        aria-hidden="true"
-                        title={intl.formatMessage(messages.completedAssignment)}
+                          icon={fasCheckCircle}
+                          fixedWidth
+                          className="float-left text-success mt-1"
+                          aria-hidden="true"
+                          title={intl.formatMessage(messages.completedAssignment)}
                         />
                       ) : (
                         <FontAwesomeIcon
@@ -171,13 +171,13 @@ function CollapsibleSequenceLink({
                     </div>
                     <div className="col-10 p-0 ml-3 text-break">
                       <span className="align-middle">
-                        <Link to={`/course/${courseId}/${sequenceId}`}>{sequence.display_name}</Link>
+                        <Link to={`/course/${courseId}/${sequenceId}`}>{sequenceElement.display_name}</Link>
                       </span>
                     </div>
                   </div>
                 </div>
-            </li>
-            )
+              </li>
+            );
           })}
         </ol>
       </Collapsible>
