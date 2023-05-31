@@ -113,7 +113,7 @@ function normalizeCourseHomeCourseMetadata(metadata, rootSlug) {
 }
 
 export function normalizeOutlineBlocks(courseId, blocks) {
-  console.log('blocks',blocks);
+ 
   const models = {
     courses: {},
     sections: {},
@@ -186,7 +186,7 @@ export function normalizeOutlineBlocks(courseId, blocks) {
       });
     }
   });
-
+ console.log('blocks',blocks);
   return models;
 }
 
