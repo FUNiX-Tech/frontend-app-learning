@@ -50,7 +50,7 @@ function CollapsibleSequenceLink({
   }, [expand]);
 
   const timezoneFormatArgs = userTimezone ? { timeZone: userTimezone } : {};
-
+	console.log('s',sequences)
   // canLoadCourseware is true if the Courseware MFE is enabled, false otherwise
   const coursewareUrl = (
     canLoadCourseware
