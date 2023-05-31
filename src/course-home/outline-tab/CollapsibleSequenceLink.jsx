@@ -145,7 +145,7 @@ function CollapsibleSequenceLink({
         <ol className="list-unstyled" style={{ paddingLeft: '1.5rem' }}>
           {sequenceIds.map((sequenceId) => {
             const sequenceElement = sequences[sequenceId];
-		console.log(sequenceId)
+		console.log(sequenceElement)
             return (
               <li key={sequenceId}>
 	      	<h1>T</h1>
