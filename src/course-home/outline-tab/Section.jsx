@@ -40,7 +40,7 @@ function Section({
   useEffect(() => {
     setOpen(defaultOpen);
   }, []);
-console.log('sequenceId',section )
+
 
   const sectionTitle = (
     <div className="row w-100 m-0">
