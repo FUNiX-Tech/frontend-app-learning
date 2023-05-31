@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-
+import './LmsHtmlFragment.css';
 import { getConfig } from '@edx/frontend-platform';
 
 export default function LmsHtmlFragment({
