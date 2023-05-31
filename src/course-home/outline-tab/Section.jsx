@@ -70,8 +70,7 @@ function Section({
       </div>
     </div>
   );
-console.log('e',expand)
-console.log('s',section)
+
   return (
     <li>
       <Collapsible
