@@ -203,7 +203,9 @@ export async function getCourseHomeCourseMetadata(courseId, rootSlug) {
 // import './__factories__';
 export async function getDatesTabData(courseId) {
   // return camelCaseObject(Factory.build('datesTabData'));
-  const url = `${getConfig().LMS_BASE_URL}/api/course_home/dates/${courseId}`;
+  // const url = `${getConfig().LMS_BASE_URL}/api/course_home/dates/${courseId}`;
+  const url = `${getConfig().LMS_BASE_URL}/api/course_home/dates-funix/${courseId}`;
+
   try {
     const { data } = await getAuthenticatedHttpClient().get(url);
     return camelCaseObject(data);
