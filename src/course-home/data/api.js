@@ -113,7 +113,7 @@ function normalizeCourseHomeCourseMetadata(metadata, rootSlug) {
 }
 
 export function normalizeOutlineBlocks(courseId, blocks) {
- 
+ console.log(blocks)
   const models = {
     courses: {},
     sections: {},
