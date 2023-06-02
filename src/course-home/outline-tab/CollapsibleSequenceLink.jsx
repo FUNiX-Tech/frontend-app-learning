@@ -148,7 +148,7 @@ function CollapsibleSequenceLink({
 		console.log(sequenceElement)
             return (
               <li key={sequenceId}>
-	      	<h1>T</h1>
+	     
                 <div className={classNames('', { 'mt-2': !first })}>
                   <div className="row w-100 m-0">
                     <div className="col-auto p-0">
