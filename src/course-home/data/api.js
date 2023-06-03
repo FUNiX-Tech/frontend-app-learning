@@ -208,6 +208,7 @@ export async function getDatesTabData(courseId) {
 
   try {
     const { data } = await getAuthenticatedHttpClient().get(url);
+    console.log(data)
     return camelCaseObject(data);
   } catch (error) {
     const { httpErrorStatus } = error && error.customAttributes;
