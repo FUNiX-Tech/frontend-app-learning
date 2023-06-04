@@ -39,6 +39,7 @@ import LiveTab from './course-home/live-tab/LiveTab';
 import CourseAccessErrorPage from './generic/CourseAccessErrorPage';
 
 subscribe(APP_READY, () => {
+  console.log('fetchDatesTab', fetchDatesTab)
   ReactDOM.render(
     <AppProvider store={initializeStore()}>
       <Helmet>
