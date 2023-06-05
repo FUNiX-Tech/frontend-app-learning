@@ -78,9 +78,9 @@ function FunixLearningGoalCard({
       className="row w-100 m-0 mb-3 shadow-sm border-0"
       data-testid="weekly-learning-goal-card"
     >
-      <h1>card</h1>
-      {/* <Card.Body className="p-3 p-lg-3.5">
-        <h2 className="h4 mb-1 text-primary-500">{intl.formatMessage(messages.setHourDailyText)}</h2>
+      
+      <Card.Body className="p-3 p-lg-3.5">
+        {/* <h2 className="h4 mb-1 text-primary-500">{intl.formatMessage(messages.setHourDailyText)}</h2> */}
         <Card.Text
           className="text-gray-700 small mb-2.5"
         >
@@ -95,11 +95,11 @@ function FunixLearningGoalCard({
           onInput={(event) => { handleInput(event); }}
         />
         <br />
-        <h2 className="h4 mb-1 text-primary-500">{intl.formatMessage(messages.setWeekdayText)}</h2>
+        {/* <h2 className="h4 mb-1 text-primary-500">{intl.formatMessage(messages.setWeekdayText)}</h2> */}
         <Card.Text
           className="text-gray-700 small mb-2.5"
         >
-          {intl.formatMessage(messages.setWeekdayDetail)}
+          {/* {intl.formatMessage(messages.setWeekdayDetail)} */}
         </Card.Text>
         <div
           role="radiogroup"
@@ -128,7 +128,7 @@ function FunixLearningGoalCard({
         >
           Submit
         </button>
-      </Card.Body> */}
+      </Card.Body>
     </Card>
   );
 }
