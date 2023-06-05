@@ -78,15 +78,15 @@ function FunixLearningGoalCard({
       className="row w-100 m-0 mb-3 shadow-sm border-0"
       data-testid="weekly-learning-goal-card"
     >
-      <h1>card</h1>
-      {/* <Card.Body className="p-3 p-lg-3.5">
+     
+      <Card.Body className="p-3 p-lg-3.5">
         <h2 className="h4 mb-1 text-primary-500">{intl.formatMessage(messages.setHourDailyText)}</h2>
         <Card.Text
           className="text-gray-700 small mb-2.5"
         >
           {intl.formatMessage(messages.setHourDailyDetail)}
         </Card.Text>
-        <Input
+         {/*<Input
           min="1"
           max="24"
           step={0.5}
@@ -127,8 +127,8 @@ function FunixLearningGoalCard({
           onClick={handleSubmit}
         >
           Submit
-        </button>
-      </Card.Body> */}
+        </button>*/}
+      </Card.Body> 
     </Card>
   );
 }
