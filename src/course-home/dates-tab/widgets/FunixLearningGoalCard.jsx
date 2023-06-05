@@ -84,7 +84,7 @@ function FunixLearningGoalCard({
         {/* <Card.Text
           className="text-gray-700 small mb-2.5"
         > */}
-        <div>
+        <div className="text-gray-700 small mb-2.5">
           {intl.formatMessage(messages.setHourDailyDetail)}
         </div>
           
@@ -102,7 +102,7 @@ function FunixLearningGoalCard({
         {/* <Card.Text
           className="text-gray-700 small mb-2.5"
         > */}
-        <div>
+        <div className="text-gray-700 small mb-2.5">
           {intl.formatMessage(messages.setWeekdayDetail)}
         </div>
         {/* </Card.Text> */}
