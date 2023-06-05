@@ -86,14 +86,14 @@ function FunixLearningGoalCard({
         >
           {/* {intl.formatMessage(messages.setHourDailyDetail)} */}
         </Card.Text>
-        <Input
+        {/* <Input
           min="1"
           max="24"
           step={0.5}
           type="number"
           value={hoursPerDay}
           onInput={(event) => { handleInput(event); }}
-        />
+        /> */}
         <br />
         {/* <h2 className="h4 mb-1 text-primary-500">{intl.formatMessage(messages.setWeekdayText)}</h2> */}
         <Card.Text
@@ -121,13 +121,13 @@ function FunixLearningGoalCard({
             );
           })}
         </div>
-        <button
+        {/* <button
           className="btn btn-primary mb-1 mt-3"
           type="submit"
           onClick={handleSubmit}
         >
           Submit
-        </button>
+        </button> */}
       </Card.Body>
     </Card>
   );
