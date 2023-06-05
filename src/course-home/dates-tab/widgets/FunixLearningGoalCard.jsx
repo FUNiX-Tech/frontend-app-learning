@@ -142,4 +142,4 @@ FunixLearningGoalCard.defaultProps = {
   goalHoursPerDay: 2.5,
   goalWeekdays: [true, true, true, true, true, false, false],
 };
-export default injectIntl(FunixLearningGoalCard);
+export default FunixLearningGoalCard
