@@ -84,9 +84,12 @@ function FunixLearningGoalCard({
         {/* <Card.Text
           className="text-gray-700 small mb-2.5"
         > */}
+        <div>
           {intl.formatMessage(messages.setHourDailyDetail)}
+        </div>
+          
         {/* </Card.Text> */}
-        {/* <Input
+        <Input
           min="1"
           max="24"
           step={0.5}
@@ -94,7 +97,7 @@ function FunixLearningGoalCard({
           value={hoursPerDay}
           onInput={(event) => { handleInput(event); }}
         />
-        <br />
+         {/*<br />
         <h2 className="h4 mb-1 text-primary-500">{intl.formatMessage(messages.setWeekdayText)}</h2>
         <Card.Text
           className="text-gray-700 small mb-2.5"
