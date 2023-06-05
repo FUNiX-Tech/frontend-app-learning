@@ -34,7 +34,7 @@ function FunixLearningGoalCard({
     intl.formatMessage(messages.sat),
     intl.formatMessage(messages.sun),
   ];
-
+  console.log(DATE_TEXT)
   const handleSelect = (index) => {
     const newArray = [...weekDays];
     newArray[index] = !newArray[index];
