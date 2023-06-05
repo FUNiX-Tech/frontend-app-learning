@@ -15,6 +15,7 @@ import SuggestedScheduleHeader from '../suggested-schedule-messaging/SuggestedSc
 import ShiftDatesAlert from '../suggested-schedule-messaging/ShiftDatesAlert';
 import UpgradeToCompleteAlert from '../suggested-schedule-messaging/UpgradeToCompleteAlert';
 import UpgradeToShiftDatesAlert from '../suggested-schedule-messaging/UpgradeToShiftDatesAlert';
+import FunixLearningGoalCard from './widgets/FunixLearningGoalCard';
 
 function DatesTab({ intl }) {
   const {
@@ -28,6 +29,8 @@ function DatesTab({ intl }) {
 
   const {
     courseDateBlocks,
+    goalHoursPerDay,
+    goalWeekdays,
   } = useModel('dates', courseId);
 
   /** [MM-P2P] Experiment */
@@ -51,16 +54,26 @@ function DatesTab({ intl }) {
       <div role="heading" aria-level="1" className="h2 my-3">
         {intl.formatMessage(messages.title)}
       </div>
-      { /** [MM-P2P] Experiment */ }
-      {isSelfPaced && hasDeadlines && !mmp2p.state.isEnabled && (
-        <>
-          <ShiftDatesAlert model="dates" fetch={fetchDatesTab} />
-          <SuggestedScheduleHeader />
-          <UpgradeToCompleteAlert logUpgradeLinkClick={logUpgradeLinkClick} />
-          <UpgradeToShiftDatesAlert logUpgradeLinkClick={logUpgradeLinkClick} model="dates" />
-        </>
-      )}
-      <Timeline mmp2p={mmp2p} />
+      <div className="row">
+        { /** [MM-P2P] Experiment */ }
+        {isSelfPaced && hasDeadlines && !mmp2p.state.isEnabled && (
+          <>
+            <ShiftDatesAlert model="dates" fetch={fetchDatesTab} />
+            <SuggestedScheduleHeader />
+            <UpgradeToCompleteAlert logUpgradeLinkClick={logUpgradeLinkClick} />
+            <UpgradeToShiftDatesAlert logUpgradeLinkClick={logUpgradeLinkClick} model="dates" />
+          </>
+        )}
+        <div className="col col-12 col-md-7">
+          <Timeline mmp2p={mmp2p} />
+        </div>
+        <div className="col col-12 col-md-5">
+          <FunixLearningGoalCard
+            goalHoursPerDay={goalHoursPerDay}
+            goalWeekdays={goalWeekdays}
+          />
+        </div>
+      </div>
     </>
   );
 }

@@ -36,6 +36,22 @@ const messages = defineMessages({
     defaultMessage: 'Verified only',
     description: 'Shown as label for assignments which learner has no access to.',
   },
+  setWeekdayText: {
+    id: 'learning.dates.setWeekdayText',
+    defaultMessage: 'Select weekdays you want to study',
+  },
+  setWeekdayDetail: {
+    id: 'learning.dates.setWeekdayDetail',
+    defaultMessage: 'At least four days a week',
+  },
+  setHourDailyText: {
+    id: 'learning.dates.setHourDailyText',
+    defaultMessage: 'Select study hours each day',
+  },
+  setHourDailyDetail: {
+    id: 'learning.dates.setHourDailyText',
+    defaultMessage: 'At least 2.5 hours per day',
+  },
 });
 
 export default messages;

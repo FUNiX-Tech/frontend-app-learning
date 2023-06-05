@@ -11,6 +11,7 @@ import {
   postWeeklyLearningGoal,
   postDismissWelcomeMessage,
   postRequestCert,
+  postSetGoal,
   getLiveTabIframe,
 } from './api';
 
@@ -138,4 +139,8 @@ export function processEvent(eventData, getTabData) {
       });
     }
   };
+}
+
+export async function saveGoal(courseId, hoursPerDay, weekDays) {
+  return postSetGoal(courseId, hoursPerDay, weekDays);
 }
