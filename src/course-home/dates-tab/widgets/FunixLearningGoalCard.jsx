@@ -81,11 +81,11 @@ function FunixLearningGoalCard({
      
       <Card.Body className="p-3 p-lg-3.5">
         <h2 className="h4 mb-1 text-primary-500">{intl.formatMessage(messages.setHourDailyText)}</h2>
-        <Card.Text
+        {/* <Card.Text
           className="text-gray-700 small mb-2.5"
-        >
-          {/* {intl.formatMessage(messages.setHourDailyDetail)} */}
-        </Card.Text>
+        > */}
+          {intl.formatMessage(messages.setHourDailyDetail)}
+        {/* </Card.Text> */}
         {/* <Input
           min="1"
           max="24"
