@@ -106,7 +106,7 @@ function FunixLearningGoalCard({
           aria-labelledby="set-weekly-goal-h2"
           className="flag-button-container m-0 p-0"
         >
-          {DATE_TEXT.map((title, index) => {
+          {/* {DATE_TEXT.map((title, index) => {
             const isSelected = weekDays[index];
             return (
               <button
@@ -119,7 +119,7 @@ function FunixLearningGoalCard({
                 </div>
               </button>
             );
-          })}
+          })} */}
         </div>
         {/* <button
           className="btn btn-primary mb-1 mt-3"
