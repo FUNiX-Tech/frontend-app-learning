@@ -15,7 +15,7 @@ import SuggestedScheduleHeader from '../suggested-schedule-messaging/SuggestedSc
 import ShiftDatesAlert from '../suggested-schedule-messaging/ShiftDatesAlert';
 import UpgradeToCompleteAlert from '../suggested-schedule-messaging/UpgradeToCompleteAlert';
 import UpgradeToShiftDatesAlert from '../suggested-schedule-messaging/UpgradeToShiftDatesAlert';
-// import FunixLearningGoalCard from './widgets/FunixLearningGoalCard';
+import FunixLearningGoalCard from './widgets/FunixLearningGoalCard';
 
 function DatesTab({ intl }) {
   const {
