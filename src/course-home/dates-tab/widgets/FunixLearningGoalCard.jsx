@@ -84,7 +84,7 @@ function FunixLearningGoalCard({
         <Card.Text
           className="text-gray-700 small mb-2.5"
         >
-          {intl.formatMessage(messages.setHourDailyDetail)}
+          {/* {intl.formatMessage(messages.setHourDailyDetail)} */}
         </Card.Text>
         <Input
           min="1"
