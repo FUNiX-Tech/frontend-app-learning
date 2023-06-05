@@ -97,13 +97,15 @@ function FunixLearningGoalCard({
           value={hoursPerDay}
           onInput={(event) => { handleInput(event); }}
         />
-         {/*<br />
+         <br />
         <h2 className="h4 mb-1 text-primary-500">{intl.formatMessage(messages.setWeekdayText)}</h2>
-        <Card.Text
+        {/* <Card.Text
           className="text-gray-700 small mb-2.5"
-        >
+        > */}
+        <div>
           {intl.formatMessage(messages.setWeekdayDetail)}
-        </Card.Text>
+        </div>
+        {/* </Card.Text> */}
         <div
           role="radiogroup"
           aria-labelledby="set-weekly-goal-h2"
@@ -130,7 +132,7 @@ function FunixLearningGoalCard({
           onClick={handleSubmit}
         >
           Submit
-        </button>*/}
+        </button>
       </Card.Body> 
     </Card>
   );
