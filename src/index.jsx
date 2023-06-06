@@ -57,19 +57,9 @@ subscribe(APP_READY, () => {
                   <OutlineTab />
                 </TabContainer>
               </PageRoute>
-              <PageRoute path="/course/:courseId/live">
-                <TabContainer tab="lti_live" fetch={fetchLiveTab} slice="courseHome">
-                  <LiveTab />
-                </TabContainer>
-              </PageRoute>
               <PageRoute path="/course/:courseId/dates">
                 <TabContainer tab="dates" fetch={fetchDatesTab} slice="courseHome">
                   <DatesTab />
-                </TabContainer>
-              </PageRoute>
-              <PageRoute path="/course/:courseId/discussion/:path*">
-                <TabContainer tab="discussion" fetch={fetchDiscussionTab} slice="courseHome">
-                  <DiscussionTab />
                 </TabContainer>
               </PageRoute>
               <PageRoute

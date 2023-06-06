@@ -201,10 +201,14 @@ export async function getCourseHomeCourseMetadata(courseId, rootSlug) {
 // Just uncomment the next few lines and the immediate 'return' in the function below
 // import { Factory } from 'rosie';
 // import './__factories__';
-export async function getDatesTabData(courseId) {
+export async function getDatesTabData(courseId, targetUserId) {
   // return camelCaseObject(Factory.build('datesTabData'));
   // const url = `${getConfig().LMS_BASE_URL}/api/course_home/dates/${courseId}`;
-  const url = `${getConfig().LMS_BASE_URL}/api/course_home/dates-funix/${courseId}`;
+  let url = `${getConfig().LMS_BASE_URL}/api/course_home/dates-funix/${courseId}`;
+
+  if (targetUserId) {
+    url += `/${targetUserId}/`;
+  }
 
   try {
     const { data } = await getAuthenticatedHttpClient().get(url);
@@ -428,11 +432,12 @@ export async function unsubscribeFromCourseGoal(token) {
     .then(res => camelCaseObject(res));
 }
 
-export async function postSetGoal(courseId, hoursPerDay, weekDays) {
+export async function postSetGoal(courseId, hoursPerDay, weekDays, targetUserId) {
   const url = new URL(`${getConfig().LMS_BASE_URL}/api/course_home/set_goal`);
   return getAuthenticatedHttpClient().post(url.href, {
     course_id: courseId,
     hours_per_day: hoursPerDay,
     week_days: weekDays,
+    target_user_id: targetUserId,
   });
 }

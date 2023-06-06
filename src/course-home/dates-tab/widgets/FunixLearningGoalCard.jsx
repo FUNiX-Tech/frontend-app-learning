@@ -19,6 +19,7 @@ function FunixLearningGoalCard({
 }) {
   const {
     courseId,
+    targetUserId,
   } = useSelector(state => state.courseHome);
 
   const [weekDays, setWeekDays] = useState(goalWeekdays);
@@ -68,7 +69,7 @@ function FunixLearningGoalCard({
       return;
     }
 
-    await saveGoal(courseId, hoursPerDay, weekDays);
+    await saveGoal(courseId, hoursPerDay, weekDays, targetUserId);
     global.location.reload();
   };
 

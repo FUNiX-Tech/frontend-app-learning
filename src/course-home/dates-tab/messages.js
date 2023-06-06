@@ -18,8 +18,9 @@ const messages = defineMessages({
   },
   title: {
     id: 'learning.dates.title',
-    defaultMessage: 'Important dates',
+    defaultMessage: 'Important dates for {username}',
     description: 'The title of dates tab (course timeline).',
+  
   },
   today: {
     id: 'learning.dates.badge.today',

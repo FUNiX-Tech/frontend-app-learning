@@ -21,7 +21,7 @@
     "learning.dates.badge.completed": "Đã hoàn tất",
     "learning.dates.badge.dueNext": "Hạn tiếp theo",
     "learning.dates.badge.pastDue": "Trễ hạn",
-    "learning.dates.title": "Ngày quan trọng",
+    "learning.dates.title": "Ngày quan trọng của {username}",
     "learning.dates.badge.today": "Hôm nay",
     "learning.dates.badge.unreleased": "Chưa phát hành",
     "learning.dates.badge.verifiedOnly": "Chỉ xác minh",
