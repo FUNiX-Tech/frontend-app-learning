@@ -205,7 +205,7 @@ export async function getDatesTabData(courseId, targetUserId) {
   // return camelCaseObject(Factory.build('datesTabData'));
   // const url = `${getConfig().LMS_BASE_URL}/api/course_home/dates/${courseId}`;
   let url = `${getConfig().LMS_BASE_URL}/api/course_home/dates-funix/${courseId}`;
-
+  console.log(url)
   if (targetUserId) {
     url += `/${targetUserId}/`;
   }
