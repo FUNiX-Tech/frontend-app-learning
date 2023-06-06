@@ -57,11 +57,29 @@ subscribe(APP_READY, () => {
                   <OutlineTab />
                 </TabContainer>
               </PageRoute>
-              <PageRoute path="/course/:courseId/dates">
+              {/* <PageRoute path="/course/:courseId/dates">
                 <TabContainer tab="dates" fetch={fetchDatesTab} slice="courseHome">
                   <DatesTab />
                 </TabContainer>
-              </PageRoute>
+              </PageRoute> */}
+              <PageRoute
+                path={[
+                  '/course/:courseId/dates/:targetUserId/',
+                  '/course/:courseId/dates',
+                ]}
+                render={({ match }) => (
+                  <TabContainer
+                    tab="dates"
+                    fetch={(courseId) => {
+                      console.log('match ', match)
+                      return fetchDatesTab(courseId, match.params.targetUserId)
+                    }}
+                    slice="courseHome"
+                  >
+                    <DatesTab />
+                  </TabContainer>
+                )}
+              />
               <PageRoute
                 path={[
                   '/course/:courseId/progress/:targetUserId/',
@@ -71,7 +89,7 @@ subscribe(APP_READY, () => {
                   <TabContainer
                     tab="progress"
                     fetch={(courseId) => {
-                      console.log('match',match)
+                    
                       return fetchProgressTab(courseId, match.params.targetUserId)
                     }}
                     slice="courseHome"
