@@ -70,7 +70,10 @@ subscribe(APP_READY, () => {
                 render={({ match }) => (
                   <TabContainer
                     tab="progress"
-                    fetch={(courseId) => fetchProgressTab(courseId, match.params.targetUserId)}
+                    fetch={(courseId) => {
+                      console.log('match',match)
+                      return fetchProgressTab(courseId, match.params.targetUserId)
+                    }}
                     slice="courseHome"
                   >
                     <ProgressTab />
