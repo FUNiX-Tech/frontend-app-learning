@@ -4,7 +4,7 @@ import { breakpoints, useWindowSize } from '@edx/paragon';
 import { layoutGenerator } from 'react-break';
 import CertificateStatus from './certificate-status/CertificateStatus';
 import CourseCompletion from './course-completion/CourseCompletion';
-import CourseGrade from './grades/course-grade/CourseGrade';
+// import CourseGrade from './grades/course-grade/CourseGrade';
 import DetailedGrades from './grades/detailed-grades/DetailedGrades';
 import GradeSummary from './grades/grade-summary/GradeSummary';
 import ProgressHeader from './ProgressHeader';
@@ -43,7 +43,7 @@ function ProgressTab() {
       <ProgressHeader />
       <div className="row w-100 m-0">
         {/* Main body */}
-        <div className="col-12 col-md-8 p-0">
+        <div className="col-12 col-md-9 p-0">
           <CourseCompletion />
 
           {!wideScreen && <OnMobile><CertificateStatus /></OnMobile>}
@@ -51,16 +51,20 @@ function ProgressTab() {
      
           <GradeBarGraph />
 
-          <CourseGrade />
-          <div className={`grades my-4 p-4 rounded raised-card ${applyLockedOverlay}`} aria-hidden={gradesFeatureIsFullyLocked}>
+          {/* <CourseGrade /> */}
+          <div className={`grades my-4 p-4 rounded shadow-sm ${applyLockedOverlay}`} aria-hidden={gradesFeatureIsFullyLocked}>
+
             <GradeSummary />
             <DetailedGrades />
           </div>
         </div>
 
         {/* Side panel */}
+
         <div className="col-12 col-md-4 p-0 px-md-4">
           {wideScreen && <OnDesktop><CertificateStatus /></OnDesktop>}
+
+ 
           <RelatedLinks />
         </div>
       </div>
