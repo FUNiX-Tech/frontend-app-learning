@@ -31,7 +31,12 @@ function ProgressTab() {
     // But I'm leaving a larger refactor as an exercise to a future reader.
     return null;
   }
-
+  const layout = layoutGenerator({
+    mobile: 0,
+    desktop: 992,
+  });
+  const OnMobile = layout.is('mobile');
+  const OnDesktop = layout.isAtLeast('desktop');
   const wideScreen = windowWidth >= breakpoints.large.minWidth;
   return (
     <>
@@ -41,11 +46,9 @@ function ProgressTab() {
         <div className="col-12 col-md-8 p-0">
           <CourseCompletion />
 
-          {!wideScreen && <CertificateStatus />}
+          {!wideScreen && <OnMobile><CertificateStatus /></OnMobile>}
 
-          {/* <OnMobile>
-            <CertificateStatus />
-          </OnMobile> */}
+     
           <GradeBarGraph />
 
           <CourseGrade />
@@ -57,7 +60,7 @@ function ProgressTab() {
 
         {/* Side panel */}
         <div className="col-12 col-md-4 p-0 px-md-4">
-          {wideScreen && <CertificateStatus />}
+          {wideScreen && <OnDesktop><CertificateStatus /></OnDesktop>}
           <RelatedLinks />
         </div>
       </div>
