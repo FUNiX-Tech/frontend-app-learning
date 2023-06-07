@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { breakpoints, useWindowSize } from '@edx/paragon';
-
+import { layoutGenerator } from 'react-break';
 import CertificateStatus from './certificate-status/CertificateStatus';
 import CourseCompletion from './course-completion/CourseCompletion';
 import CourseGrade from './grades/course-grade/CourseGrade';
