@@ -9,6 +9,7 @@ import DetailedGrades from './grades/detailed-grades/DetailedGrades';
 import GradeSummary from './grades/grade-summary/GradeSummary';
 import ProgressHeader from './ProgressHeader';
 import RelatedLinks from './related-links/RelatedLinks';
+import GradeBarGraph from './grade-graph/GradeBarGraph';
 
 import { useModel } from '../../generic/model-store';
 
@@ -39,7 +40,14 @@ function ProgressTab() {
         {/* Main body */}
         <div className="col-12 col-md-8 p-0">
           <CourseCompletion />
+
           {!wideScreen && <CertificateStatus />}
+
+          <OnMobile>
+            <CertificateStatus />
+          </OnMobile>
+          <GradeBarGraph />
+
           <CourseGrade />
           <div className={`grades my-4 p-4 rounded raised-card ${applyLockedOverlay}`} aria-hidden={gradesFeatureIsFullyLocked}>
             <GradeSummary />

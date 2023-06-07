@@ -17,6 +17,15 @@ import { Helmet } from 'react-helmet';
 import { fetchDiscussionTab, fetchLiveTab } from './course-home/data/thunks';
 import DiscussionTab from './course-home/discussion-tab/DiscussionTab';
 
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
 import appMessages from './i18n';
 import { UserMessagesProvider } from './generic/user-messages';
 
@@ -39,7 +48,19 @@ import LiveTab from './course-home/live-tab/LiveTab';
 import CourseAccessErrorPage from './generic/CourseAccessErrorPage';
 
 subscribe(APP_READY, () => {
-  console.log('fetchDatesTab', fetchDatesTab)
+
+
+  // Init chart
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+  );
+
+
   ReactDOM.render(
     <AppProvider store={initializeStore()}>
       <Helmet>
