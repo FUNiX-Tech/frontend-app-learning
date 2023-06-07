@@ -43,9 +43,9 @@ function ProgressTab() {
 
           {!wideScreen && <CertificateStatus />}
 
-          <OnMobile>
+          {/* <OnMobile>
             <CertificateStatus />
-          </OnMobile>
+          </OnMobile> */}
           <GradeBarGraph />
 
           <CourseGrade />
