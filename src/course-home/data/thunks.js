@@ -77,6 +77,10 @@ export function fetchProgressTab(courseId, targetUserId) {
   return fetchTab(courseId, 'progress', getProgressTabData, parseInt(targetUserId, 10) || targetUserId);
 }
 
+export function fetchStaticTab(courseId) {
+  return fetchTab(courseId, 'static', async () => ({}));
+}
+
 export function fetchOutlineTab(courseId) {
   return fetchTab(courseId, 'outline', getOutlineTabData);
 }
