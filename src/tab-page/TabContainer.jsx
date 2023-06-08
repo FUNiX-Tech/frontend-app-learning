@@ -13,6 +13,7 @@ export default function TabContainer(props) {
     slice,
     tab,
   } = props;
+  console.log('props', props)
 
   const { courseId: courseIdFromUrl } = useParams();
   const dispatch = useDispatch();
