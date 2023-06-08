@@ -78,6 +78,7 @@ export function fetchProgressTab(courseId, targetUserId) {
 }
 
 export function fetchStaticTab(courseId) {
+  console.log('fetching static', courseId)
   return fetchTab(courseId, 'static', async () => ({}));
 }
 
