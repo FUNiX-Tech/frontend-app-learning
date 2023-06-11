@@ -40,11 +40,17 @@ function TabPage({ intl, ...props }) {
     title,
   } = useModel('courseHomeMeta', courseId);
 
-  const { email } = getAuthenticatedUser();
+  const user = getAuthenticatedUser();
+
+  let email;
+
+  if (user) {
+    email = user.email;
+  }
 
   useEffect(() => {
     // check if dome have #hflivechat element
-    if (!document.getElementById('hflivechat')) {
+    if (!document.getElementById('hflivechat') && email) {
       // Add audio element with display none to prevent autoplay
       const audio = document.createElement('audio');
       audio.setAttribute('style', 'display:none');
