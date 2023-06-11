@@ -54,7 +54,7 @@ function UpsellFBESoonCardContent({ accessExpirationDate, timezoneFormatArgs }) 
   );
 
   const benefitsOfUpgrading = (
-    <a className="inline-link-underline font-weight-bold" rel="noopener noreferrer" target="_blank" href="https://support.edx.org/hc/en-us/articles/360013426573-What-are-the-differences-between-audit-free-and-verified-paid-courses-">
+    <a className="inline-link-underline font-weight-bold" rel="noopener noreferrer" target="_blank" href="https://funix.gitbook.io/funix-documentation/">
       <FormattedMessage
         id="learning.generic.upgradeNotification.expirationVerifiedCert.benefits"
         defaultMessage="benefits of upgrading"
