@@ -41,7 +41,7 @@ function SectionList({
   const rootCourseId = courses && Object.keys(courses)[0];
 
   return (
-    <ol id="courseHome-utline" className="list-unstyled"  style={style}>
+    <ol id="courseHome-utline" className="list-unstyled"  >
       {courses[rootCourseId].sectionIds.map((sectionId) => (
         <Section
           key={sectionId}
