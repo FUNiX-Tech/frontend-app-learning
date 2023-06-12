@@ -89,6 +89,23 @@ function Course({
         <title>{`${pageTitleBreadCrumbs.join(' | ')} | ${getConfig().SITE_NAME}`}</title>
       </Helmet>
       <div className="position-relative d-flex align-items-start">
+        {/* <CourseBreadcrumbs
+          courseId={courseId}
+          sectionId={section ? section.id : null}
+          sequenceId={sequenceId}
+          isStaff={isStaff}
+          unitId={unitId}
+      
+          mmp2p={MMP2P}
+        /> */}
+        {shouldDisplayTriggers && (
+          <SidebarTriggers />
+        )}
+      </div>
+
+      <AlertList topic="sequence" />
+      <div className="row w-100">
+        <div className="col-12 col-md-8 broder-all" >
         <CourseBreadcrumbs
           courseId={courseId}
           sectionId={section ? section.id : null}
@@ -98,14 +115,6 @@ function Course({
           //* * [MM-P2P] Experiment */
           mmp2p={MMP2P}
         />
-        {shouldDisplayTriggers && (
-          <SidebarTriggers />
-        )}
-      </div>
-
-      <AlertList topic="sequence" />
-      <div className="row w-100">
-        <div className="col-12 col-md-8">
       <Sequence
         unitId={unitId}
         sequenceId={sequenceId}

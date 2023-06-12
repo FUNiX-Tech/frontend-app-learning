@@ -389,7 +389,7 @@
   padding-left: 0px !important;
   padding-right: 0px !important;
 
-  max-width: 90% !important;
+  max-width: 95% !important;
 }
 
 .unit-container {
@@ -414,3 +414,11 @@
   top: 10px;
 }
 
+.border-all {
+  border: solid 1px #eaeaea;
+  border-radius: 4px;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+
+  margin-bottom: 3rem;
+}
