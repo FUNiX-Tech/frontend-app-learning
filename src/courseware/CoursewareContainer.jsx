@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { history } from '@edx/frontend-platform';
 import { createSelector } from '@reduxjs/toolkit';
 import { defaultMemoize as memoize } from 'reselect';
-
+import SectionList from '../course-home/outline-tab/SectionList';
 import {
   checkBlockCompletion,
   fetchCourse,
@@ -313,7 +313,9 @@ class CoursewareContainer extends Component {
         /> */}
          <div className="row w-100">
           <div className="col-12 col-md-3">
-
+          <SectionList
+              courseId={courseId}
+            />
           </div>
           <div className="col-12 col-md-9">
             <Course

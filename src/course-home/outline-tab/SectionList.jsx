@@ -6,20 +6,26 @@ import PropTypes from 'prop-types';
 // } from '@edx/frontend-platform/i18n';
 
 import Section from './Section';
+import { useModel } from '../../generic/model-store';
 
 function SectionList({
-  course,
   courseId,
-  sections,
   expandAll,
 }) {
+  const {
+    courseBlocks: {
+      courses,
+      sections,
+    },
+  } = useModel('outline', courseId);
+  const rootCourseId = courses && Object.keys(courses)[0];
   return (
     <ol id="courseHome-outline" className="list-unstyled">
-      {course.sectionIds.map((sectionId) => (
+      {courses[rootCourseId].sectionIds.map((sectionId) => (
         <Section
           key={sectionId}
           courseId={courseId}
-          defaultOpen={sections[sectionId].resumeBlock}
+          defaultOpen={false}
           expand={expandAll}
           section={sections[sectionId]}
         />
@@ -29,10 +35,13 @@ function SectionList({
 }
 
 SectionList.propTypes = {
-  courseId: PropTypes.string.isRequired,
-  sections: PropTypes.shape().isRequired,
-  expandAll: PropTypes.bool.isRequired,
-  course: PropTypes.shape().isRequired,
+  courseId: PropTypes.string,
+  expandAll: PropTypes.bool,
+};
+
+SectionList.defaultProps = {
+  courseId: '',
+  expandAll: false,
 };
 
 export default SectionList;
