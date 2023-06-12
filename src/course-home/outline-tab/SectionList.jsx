@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import Section from './Section';
 import { useModel } from '../../generic/model-store';
 
-const MAX_HEIGHT_PERCENT = 50;
+const MAX_HEIGHT_PERCENT = 80;
 
 function SectionList({
   courseId,
