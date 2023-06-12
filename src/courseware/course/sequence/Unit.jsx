@@ -145,7 +145,7 @@ function Unit({
 
   return (
     <div className="unit">
-    div style={{ marginLeft: '-15px' }}>
+    <div style={{ marginLeft: '-15px' }}>
         <h1 className="mb-0 h3">{unit.title}</h1>
         <h2 className="sr-only">{intl.formatMessage(messages['learn.header.h2.placeholder'])}</h2>
         <BookmarkButton
