@@ -303,14 +303,29 @@ class CoursewareContainer extends Component {
         courseStatus={courseStatus}
         metadataModel="coursewareMeta"
       >
-        <Course
+        {/* <Course
           courseId={courseId}
           sequenceId={sequenceId}
           unitId={routeUnitId}
           nextSequenceHandler={this.handleNextSequenceClick}
           previousSequenceHandler={this.handlePreviousSequenceClick}
           unitNavigationHandler={this.handleUnitNavigationClick}
-        />
+        /> */}
+         <div className="row w-100">
+          <div className="col-12 col-md-3">
+
+          </div>
+          <div className="col-12 col-md-9">
+            <Course
+              courseId={courseId}
+              sequenceId={sequenceId}
+              unitId={routeUnitId}
+              nextSequenceHandler={this.handleNextSequenceClick}
+              previousSequenceHandler={this.handlePreviousSequenceClick}
+              unitNavigationHandler={this.handleUnitNavigationClick}
+            />
+          </div>
+        </div>
       </TabPage>
     );
   }
