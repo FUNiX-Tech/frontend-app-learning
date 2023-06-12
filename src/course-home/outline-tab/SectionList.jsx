@@ -9,24 +9,32 @@ import PropTypes from 'prop-types';
 import Section from './Section';
 import { useModel } from '../../generic/model-store';
 
+const MAX_HEIGHT_PERCENT = 50;
+
 function SectionList({
   courseId,
   expandAll,
   relativeHeight,
 }) {
 
-  // const [height, setHeight] = useState(window.innerHeight);
-  // const resizeObserver = new ResizeObserver(() => {
-  //   // Get height of #section-list-container
-  //   const sectionListContainer = document.getElementById('section-list-container');
-  //   if (relativeHeight && sectionListContainer) {
-  //     const sectionListContainerHeight = sectionListContainer.offsetHeight;
-  //     setHeight(Math.round((sectionListContainerHeight / 100) * 60));
-  //   }
-  // });
 
-  // start observing a DOM node
- // resizeObserver.observe(document.body);
+  const [height, setHeight] = useState(window.height);
+  const resizeObserver = new ResizeObserver(() => {
+    // Get height of #section-list-container
+    const sectionListContainer = document.getElementById('section-list-container');
+
+    if (relativeHeight && sectionListContainer) {
+      const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+
+      const vhHeight = Math.round((vh / 100) * MAX_HEIGHT_PERCENT);
+      const sectionListContainerHeight = sectionListContainer.offsetHeight;
+
+      const finalHeight = Math.min(vhHeight, Math.round((sectionListContainerHeight / 100) * MAX_HEIGHT_PERCENT));
+      setHeight(finalHeight);
+    }
+  });
+
+  resizeObserver.observe(document.body);
 
   const {
     courseBlocks: {
@@ -35,13 +43,15 @@ function SectionList({
     },
   } = useModel('outline', courseId);
 
-
+const style = {
+    maxHeight: `${height}px`,
+  };
 
 
   const rootCourseId = courses && Object.keys(courses)[0];
 
   return (
-    <ol id="courseHome-utline" className="list-unstyled"  >
+    <ol id="courseHome-utline" className="list-unstyled" style={style} >
       {courses[rootCourseId].sectionIds.map((sectionId) => (
         <Section
           key={sectionId}
