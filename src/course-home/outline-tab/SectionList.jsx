@@ -11,14 +11,17 @@ import { useModel } from '../../generic/model-store';
 function SectionList({
   courseId,
   expandAll,
+  relativeHeight,
 }) {
 
-  const [height, setHeight] = useState(window.height);
+  const [height, setHeight] = useState(window.innerHeight);
   const resizeObserver = new ResizeObserver(() => {
     // Get height of #section-list-container
     const sectionListContainer = document.getElementById('section-list-container');
-    const sectionListContainerHeight = sectionListContainer.offsetHeight;
-    setHeight(Math.round((sectionListContainerHeight / 100) * 60));
+    if (relativeHeight && sectionListContainer) {
+      const sectionListContainerHeight = sectionListContainer.offsetHeight;
+      setHeight(Math.round((sectionListContainerHeight / 100) * 60));
+    }
   });
 
   // start observing a DOM node
@@ -37,6 +40,7 @@ function SectionList({
 
 
   const rootCourseId = courses && Object.keys(courses)[0];
+
   return (
     <ol id="courseHome-utline" className="list-unstyled"  style={style}>
       {courses[rootCourseId].sectionIds.map((sectionId) => (
@@ -55,11 +59,13 @@ function SectionList({
 SectionList.propTypes = {
   courseId: PropTypes.string,
   expandAll: PropTypes.bool,
+  relativeHeight: PropTypes.bool,
 };
 
 SectionList.defaultProps = {
   courseId: '',
   expandAll: false,
+  relativeHeight: false,
 };
 
 export default SectionList;
