@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { history } from '@edx/frontend-platform';
 import { createSelector } from '@reduxjs/toolkit';
 import { defaultMemoize as memoize } from 'reselect';
-import SectionList from '../course-home/outline-tab/SectionList';
+
 import {
   checkBlockCompletion,
   fetchCourse,
@@ -303,32 +303,14 @@ class CoursewareContainer extends Component {
         courseStatus={courseStatus}
         metadataModel="coursewareMeta"
       >
-        {/* <Course
+          <Course
           courseId={courseId}
           sequenceId={sequenceId}
           unitId={routeUnitId}
           nextSequenceHandler={this.handleNextSequenceClick}
           previousSequenceHandler={this.handlePreviousSequenceClick}
           unitNavigationHandler={this.handleUnitNavigationClick}
-        /> */}
-         <div className="row w-100">
-         <div className="col-12 col-md-8">
-            <Course
-              courseId={courseId}
-              sequenceId={sequenceId}
-              unitId={routeUnitId}
-              nextSequenceHandler={this.handleNextSequenceClick}
-              previousSequenceHandler={this.handlePreviousSequenceClick}
-              unitNavigationHandler={this.handleUnitNavigationClick}
-            />
-          </div>
-          <div className="col-12 col-md-4" id="section-list-container">
-            <SectionList
-              courseId={courseId}
-              relativeHeight
-            />
-          </div>
-        </div>
+        />
       </TabPage>
     );
   }

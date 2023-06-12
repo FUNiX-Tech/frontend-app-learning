@@ -14,7 +14,7 @@ import ContentTools from './content-tools';
 import CourseBreadcrumbs from './CourseBreadcrumbs';
 import SidebarProvider from './sidebar/SidebarContextProvider';
 import SidebarTriggers from './sidebar/SidebarTriggers';
-
+import SectionList from '../../course-home/outline-tab/SectionList';
 import { useModel } from '../../generic/model-store';
 import { getSessionStorage, setSessionStorage } from '../../data/sessionStorage';
 
@@ -104,6 +104,8 @@ function Course({
       </div>
 
       <AlertList topic="sequence" />
+      <div className="row w-100">
+        <div className="col-12 col-md-8">
       <Sequence
         unitId={unitId}
         sequenceId={sequenceId}
@@ -114,6 +116,14 @@ function Course({
         //* * [MM-P2P] Experiment */
         mmp2p={MMP2P}
       />
+      </div>
+        <div className="col-12 col-md-4" id="section-list-container">
+          <SectionList
+            courseId={courseId}
+            relativeHeight
+          />
+        </div>
+      </div>
       <CelebrationModal
         courseId={courseId}
         isOpen={firstSectionCelebrationOpen}

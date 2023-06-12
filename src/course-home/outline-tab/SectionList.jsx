@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 // import {
@@ -14,18 +15,18 @@ function SectionList({
   relativeHeight,
 }) {
 
-  const [height, setHeight] = useState(window.innerHeight);
-  const resizeObserver = new ResizeObserver(() => {
-    // Get height of #section-list-container
-    const sectionListContainer = document.getElementById('section-list-container');
-    if (relativeHeight && sectionListContainer) {
-      const sectionListContainerHeight = sectionListContainer.offsetHeight;
-      setHeight(Math.round((sectionListContainerHeight / 100) * 60));
-    }
-  });
+  // const [height, setHeight] = useState(window.innerHeight);
+  // const resizeObserver = new ResizeObserver(() => {
+  //   // Get height of #section-list-container
+  //   const sectionListContainer = document.getElementById('section-list-container');
+  //   if (relativeHeight && sectionListContainer) {
+  //     const sectionListContainerHeight = sectionListContainer.offsetHeight;
+  //     setHeight(Math.round((sectionListContainerHeight / 100) * 60));
+  //   }
+  // });
 
   // start observing a DOM node
-  resizeObserver.observe(document.body);
+ // resizeObserver.observe(document.body);
 
   const {
     courseBlocks: {
@@ -34,9 +35,7 @@ function SectionList({
     },
   } = useModel('outline', courseId);
 
-  const style = {
-    maxHeight: `${height}px`,
-  };
+
 
 
   const rootCourseId = courses && Object.keys(courses)[0];
