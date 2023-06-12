@@ -382,3 +382,23 @@
 
 /** [MM-P2P] Experiment */
 @import "experiments/mm-p2p/index.scss";
+
+.container-xl {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+
+  max-width: 1700px !important;
+}
+
+.unit-container {
+  max-width: none !important;
+}
+
+.learning-header .course-title-lockup span:first-child {
+  padding-bottom: 5px;
+  padding-top: 5px;
+}
+
+.learning-header .course-title-lockup span {
+  padding-bottom: 5px;
+}
