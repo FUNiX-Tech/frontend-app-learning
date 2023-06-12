@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 // import {
 //   injectIntl,
@@ -12,15 +12,33 @@ function SectionList({
   courseId,
   expandAll,
 }) {
+
+  const [height, setHeight] = useState(window.height);
+  const resizeObserver = new ResizeObserver(() => {
+    // Get height of #section-list-container
+    const sectionListContainer = document.getElementById('section-list-container');
+    const sectionListContainerHeight = sectionListContainer.offsetHeight;
+    setHeight(Math.round((sectionListContainerHeight / 100) * 60));
+  });
+
+  // start observing a DOM node
+  resizeObserver.observe(document.body);
+
   const {
     courseBlocks: {
       courses,
       sections,
     },
   } = useModel('outline', courseId);
+
+  const style = {
+    maxHeight: `${height}px`,
+  };
+
+
   const rootCourseId = courses && Object.keys(courses)[0];
   return (
-    <ol id="courseHome-outline" className="list-unstyled">
+    <ol id="courseHome-utline" className="list-unstyled"  style={style}>
       {courses[rootCourseId].sectionIds.map((sectionId) => (
         <Section
           key={sectionId}
