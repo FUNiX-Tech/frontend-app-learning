@@ -19,6 +19,7 @@ function Section({
   expand,
   intl,
   section,
+  useHistory,
 }) {
   const {
     complete,
@@ -106,6 +107,7 @@ function Section({
               sequences={sequences}
               first={index === 0}
               expand={expand}
+              useHistory={useHistory}
             />
           ))}
         </ol>
@@ -120,6 +122,7 @@ Section.propTypes = {
   expand: PropTypes.bool.isRequired,
   intl: intlShape.isRequired,
   section: PropTypes.shape().isRequired,
+  useHistory: PropTypes.bool.isRequired,
 };
 
 export default injectIntl(Section);

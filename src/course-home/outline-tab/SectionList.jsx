@@ -15,6 +15,7 @@ function SectionList({
   courseId,
   expandAll,
   relativeHeight,
+  useHistory,
 }) {
 
 
@@ -59,6 +60,7 @@ const style = {
           defaultOpen={false}
           expand={expandAll}
           section={sections[sectionId]}
+          useHistory={useHistory}
         />
       ))}
     </ol>
@@ -69,12 +71,14 @@ SectionList.propTypes = {
   courseId: PropTypes.string,
   expandAll: PropTypes.bool,
   relativeHeight: PropTypes.bool,
+  useHistory: PropTypes.bool,
 };
 
 SectionList.defaultProps = {
   courseId: '',
   expandAll: false,
   relativeHeight: false,
+  useHistory: false,
 };
 
 export default SectionList;
