@@ -88,8 +88,8 @@ function Course({
       <Helmet>
         <title>{`${pageTitleBreadCrumbs.join(' | ')} | ${getConfig().SITE_NAME}`}</title>
       </Helmet>
-      <div className="position-relative d-flex align-items-start">
-        {/* <CourseBreadcrumbs
+       {/*<div className="position-relative d-flex align-items-start">
+        <CourseBreadcrumbs
           courseId={courseId}
           sectionId={section ? section.id : null}
           sequenceId={sequenceId}
@@ -97,11 +97,11 @@ function Course({
           unitId={unitId}
       
           mmp2p={MMP2P}
-        /> */}
+        /> 
         {shouldDisplayTriggers && (
           <SidebarTriggers />
         )}
-      </div>
+      </div>*/}
 
       <AlertList topic="sequence" />
       <div className="row w-100">
