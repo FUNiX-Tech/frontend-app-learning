@@ -404,3 +404,9 @@
 .learning-header .course-title-lockup span {
   padding-bottom: 5px;
 }
+
+// section list
+#section-list-container > ol {
+  max-height: 100vh;
+  overflow-y: auto;
+}
