@@ -38,6 +38,7 @@ function TabPage({ intl, ...props }) {
     title,
   } = useModel('courseHomeMeta', courseId);
 
+  console.time('loading_tabs')
   if (courseStatus === 'loading') {
     return (
       <>
@@ -49,14 +50,14 @@ function TabPage({ intl, ...props }) {
       </>
     );
   }
-
+  console.timeEnd('loading_tabs')
   if (courseStatus === 'denied') {
     const redirectUrl = getAccessDeniedRedirectUrl(courseId, activeTabSlug, courseAccess, start);
     if (redirectUrl) {
       return (<Redirect to={redirectUrl} />);
     }
   }
-
+  
   // Either a success state or a denied state that wasn't redirected above (some tabs handle denied states themselves,
   // like the outline tab handling unenrolled learners)
   if (courseStatus === 'loaded' || courseStatus === 'denied') {
