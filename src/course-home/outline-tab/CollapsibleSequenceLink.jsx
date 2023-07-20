@@ -12,12 +12,20 @@ import {
 import { faCheckCircle as fasCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { faCheckCircle as farCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { history } from '@edx/frontend-platform';
 
 import EffortEstimate from '../../shared/effort-estimate';
 import { useModel } from '../../generic/model-store';
 import messages from './messages';
 // import genericMessages from '../../generic/messages';
 import './CollapsibleSequenceLink.scss';
+
+
+function handleHistoryClick(e, courseId, sequenceId, unitId) {
+  e.preventDefault();
+  history.push(`/course/${courseId}/${sequenceId}/${unitId}`);
+}
+
 
 function CollapsibleSequenceLink({
   id,
@@ -26,6 +34,9 @@ function CollapsibleSequenceLink({
   first,
   sequences,
   expand,
+
+  useHistory,
+
 }) {
   const sequence = sequences[id];
   const {
@@ -52,17 +63,38 @@ function CollapsibleSequenceLink({
   const timezoneFormatArgs = userTimezone ? { timeZone: userTimezone } : {};
 	
   // canLoadCourseware is true if the Courseware MFE is enabled, false otherwise
-  const coursewareUrl = (
+  let coursewareUrl = (
     canLoadCourseware
       ? <Link to={`/course/${courseId}/${id}`}>{title}</Link>
       : <Hyperlink destination={legacyWebUrl}>{title}</Hyperlink>
   );
+
+  if (canLoadCourseware === undefined) {
+    if (useHistory) {
+      const firstSequence = sequenceIds[0] || id;
+      coursewareUrl = (
+        <Link
+          to={`/course/${courseId}/${id}/${firstSequence}`}
+          onClick={(e) => {
+            handleHistoryClick(e, courseId, id, firstSequence);
+          }}
+        >
+          {title}
+        </Link>
+      );
+    } else {
+      coursewareUrl = (<Link to={`/course/${courseId}/${id}`}>{title}</Link>);
+    }
+  }
+
   const displayTitle = showLink ? coursewareUrl : title;
 
   const sectionTitle = (
     <div className={classNames('', { 'mt-2': !first })}>
-      <div className="row w-100 m-0">
-        <div className="col-auto p-0">
+
+      <div className="w-100 m-0">
+        <div className="p-0">
+
           {complete ? (
             <FontAwesomeIcon
               icon={fasCheckCircle}
@@ -81,7 +113,9 @@ function CollapsibleSequenceLink({
             />
           )}
         </div>
-        <div className="col-10 p-0 ml-3 text-break">
+
+        <div className="p-0 ml-3 text-break">
+
           <span className="align-middle">{displayTitle}</span>
           <span className="sr-only">
             , {intl.formatMessage(complete ? messages.completedAssignment : messages.incompleteAssignment)}
@@ -90,29 +124,31 @@ function CollapsibleSequenceLink({
         </div>
       </div>
       {due && (
-      <div className="row w-100 m-0 ml-3 pl-3">
-        <small className="text-body pl-2">
-          <FormattedMessage
-            id="learning.outline.sequence-due"
-            defaultMessage="{description} due {assignmentDue}"
-            description="Used below an assignment title"
-            values={{
-              assignmentDue: (
-                <FormattedTime
-                  key={`${id}-due`}
-                  day="numeric"
-                  month="short"
-                  year="numeric"
-                  timeZoneName="short"
-                  value={due}
-                  {...timezoneFormatArgs}
-                />
-              ),
-              description: description || '',
-            }}
-          />
-        </small>
-      </div>
+
+        <div className="row w-100 m-0 ml-3 pl-3">
+          <small className="text-body pl-2">
+            <FormattedMessage
+              id="learning.outline.sequence-due"
+              defaultMessage="{description} due {assignmentDue}"
+              description="Used below an assignment title"
+              values={{
+                assignmentDue: (
+                  <FormattedTime
+                    key={`${id}-due`}
+                    day="numeric"
+                    month="short"
+                    year="numeric"
+                    timeZoneName="short"
+                    value={due}
+                    {...timezoneFormatArgs}
+                  />
+                ),
+                description: description || '',
+              }}
+            />
+          </small>
+        </div>
+
       )}
     </div>
   );
@@ -144,15 +180,20 @@ function CollapsibleSequenceLink({
       >
         <ol className="list-unstyled" style={{ paddingLeft: '1.5rem' }}>
           {sequenceIds.map((sequenceId) => {
-            const sequenceElement = sequences[sequenceId];
-		console.log(sequenceElement)
+
+            const sequenceData = sequences[sequenceId];
+
+
             return (
               <li key={sequenceId}>
 	     
                 <div className={classNames('', { 'mt-2': !first })}>
                   <div className="row w-100 m-0">
                     <div className="col-auto p-0">
-                      {sequenceElement.complete ? (
+
+
+                      {sequenceData.complete ? (
+
                         <FontAwesomeIcon
                           icon={fasCheckCircle}
                           fixedWidth
@@ -170,9 +211,11 @@ function CollapsibleSequenceLink({
                         />
                       )}
                     </div>
-                    <div className="col-10 p-0 ml-3 text-break">
+                    <div className="col-8 p-0 ml-3 text-break">
                       <span className="align-middle">
-                        <Link to={`/course/${courseId}/${sequenceId}`}>{sequenceElement.display_name}</Link>
+
+                        <Link to={`/course/${courseId}/${sequenceId}`}>{sequenceData.display_name}</Link>
+
                       </span>
                     </div>
                   </div>
@@ -193,6 +236,7 @@ CollapsibleSequenceLink.propTypes = {
   first: PropTypes.bool.isRequired,
   expand: PropTypes.bool.isRequired,
   sequences: PropTypes.shape().isRequired,
+  useHistory: PropTypes.bool.isRequired,
 };
 
 export default injectIntl(CollapsibleSequenceLink);

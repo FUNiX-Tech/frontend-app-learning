@@ -1,4 +1,7 @@
+
 import React, { useEffect, useState } from 'react';
+
+
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { useDispatch } from 'react-redux';
@@ -12,8 +15,13 @@ import Sequence from './sequence';
 import { CelebrationModal, shouldCelebrateOnSectionLoad, WeeklyGoalCelebrationModal } from './celebration';
 import ContentTools from './content-tools';
 import CourseBreadcrumbs from './CourseBreadcrumbs';
+
 import SidebarProvider from './sidebar/SidebarContextProvider';
 import SidebarTriggers from './sidebar/SidebarTriggers';
+
+import NotificationTrigger from './NotificationTrigger';
+import SectionList from '../../course-home/outline-tab/SectionList';
+
 
 import { useModel } from '../../generic/model-store';
 import { getSessionStorage, setSessionStorage } from '../../data/sessionStorage';
@@ -88,32 +96,61 @@ function Course({
       <Helmet>
         <title>{`${pageTitleBreadCrumbs.join(' | ')} | ${getConfig().SITE_NAME}`}</title>
       </Helmet>
-      <div className="position-relative d-flex align-items-start">
-        <CourseBreadcrumbs
-          courseId={courseId}
-          sectionId={section ? section.id : null}
-          sequenceId={sequenceId}
-          isStaff={isStaff}
-          unitId={unitId}
-          //* * [MM-P2P] Experiment */
-          mmp2p={MMP2P}
-        />
-        {shouldDisplayTriggers && (
-          <SidebarTriggers />
-        )}
+
+
+      <div className="position-relative">
+        {/* { shouldDisplayNotificationTriggerInCourse ? (
+          <NotificationTrigger
+            courseId={courseId}
+            toggleNotificationTray={toggleNotificationTray}
+            isNotificationTrayVisible={isNotificationTrayVisible}
+            notificationStatus={notificationStatus}
+            setNotificationStatus={setNotificationStatus}
+            upgradeNotificationCurrentState={upgradeNotificationCurrentState}
+          />
+        ) : null} */}
       </div>
 
       <AlertList topic="sequence" />
-      <Sequence
-        unitId={unitId}
-        sequenceId={sequenceId}
-        courseId={courseId}
-        unitNavigationHandler={unitNavigationHandler}
-        nextSequenceHandler={nextSequenceHandler}
-        previousSequenceHandler={previousSequenceHandler}
-        //* * [MM-P2P] Experiment */
-        mmp2p={MMP2P}
-      />
+      <div className="row w-100">
+        <div className="col-12 col-md-8 border-all">
+          <CourseBreadcrumbs
+            courseId={courseId}
+            sectionId={section ? section.id : null}
+            sequenceId={sequenceId}
+            isStaff={course ? course.isStaff : null}
+            unitId={unitId}
+            //* * [MM-P2P] Experiment */
+            mmp2p={MMP2P}
+          />
+          <Sequence
+            unitId={unitId}
+            sequenceId={sequenceId}
+            courseId={courseId}
+            unitNavigationHandler={unitNavigationHandler}
+            nextSequenceHandler={nextSequenceHandler}
+            previousSequenceHandler={previousSequenceHandler}
+            toggleNotificationTray={toggleNotificationTray}
+            isNotificationTrayVisible={isNotificationTrayVisible}
+            notificationTrayVisible={notificationTrayVisible}
+            notificationStatus={notificationStatus}
+            setNotificationStatus={setNotificationStatus}
+            onNotificationSeen={onNotificationSeen}
+            upgradeNotificationCurrentState={upgradeNotificationCurrentState}
+            setupgradeNotificationCurrentState={setupgradeNotificationCurrentState}
+            //* * [MM-P2P] Experiment */
+            mmp2p={MMP2P}
+          />
+        </div>
+        <div className="col-12 col-md-4" id="section-list-container">
+          <SectionList
+            courseId={courseId}
+            relativeHeight
+            useHistory
+          />
+        </div>
+      </div>
+
       <CelebrationModal
         courseId={courseId}
         isOpen={firstSectionCelebrationOpen}

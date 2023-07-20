@@ -83,7 +83,7 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  margin-bottom: 4rem;
+  // margin-bottom: 4rem;
 
   // On mobile, the unit container will be responsible
   // for container padding.
@@ -96,8 +96,8 @@
 
 .sequence {
   @media (min-width: map-get($grid-breakpoints, "sm")) {
-    border: solid 1px #eaeaea;
-    border-radius: 4px;
+    // border: solid 1px #eaeaea;
+    // border-radius: 4px;
   }
 }
 
@@ -146,7 +146,7 @@
     }
 
     &.complete {
-      background-color: #eef7e5;
+      background-color: #eef7e5 !important;
       color: $success;
     }
 
@@ -312,7 +312,7 @@
   }
 
   .next-button {
-    flex-basis: 75%;
+    flex-basis: 25%;
   }
 
   .previous-button {
@@ -382,3 +382,61 @@
 
 /** [MM-P2P] Experiment */
 @import "experiments/mm-p2p/index.scss";
+
+
+.container-xl {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+
+  max-width: 95% !important;
+}
+
+.unit-container {
+  max-width: none !important;
+}
+
+.learning-header .course-title-lockup span:first-child {
+  padding-bottom: 5px;
+  padding-top: 5px;
+}
+
+.learning-header .course-title-lockup span {
+  padding-bottom: 5px;
+}
+
+// section list
+#section-list-container {
+  position: relative;
+}
+#section-list-container > ol {
+  // max-height: 50vh;
+  overflow-y: auto;
+
+  position: sticky;
+  top: 10px;
+}
+
+.border-all {
+  border: solid 1px #eaeaea;
+  border-radius: 4px;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+
+  margin-bottom: 3rem;
+}
+
+
+.sequence {
+  position: relative;
+
+  & #courseware-sequenceNavigation {
+    // max-height: 50vh;
+    overflow-y: auto;
+    position: sticky;
+    top: 0px;
+
+    & button {
+      background-color: white;
+    }
+  }
+}

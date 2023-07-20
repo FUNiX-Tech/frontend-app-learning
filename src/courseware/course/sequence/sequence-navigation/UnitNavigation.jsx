@@ -28,7 +28,8 @@ function UnitNavigation({
   const renderNextButton = () => {
     const { exitActive, exitText } = getCourseExitNavigation(courseId, intl);
     const buttonOnClick = isLastUnit ? goToCourseExitPage : onClickNext;
-    const buttonText = (isLastUnit && exitText) ? exitText : intl.formatMessage(messages.nextButton);
+    // const buttonText = (isLastUnit && exitText) ? exitText : intl.formatMessage(messages.nextButton);
+    const buttonText = intl.formatMessage(messages.nextButton);
     const disabled = isLastUnit && !exitActive;
     const nextArrow = isRtl(getLocale()) ? faChevronLeft : faChevronRight;
     return (
@@ -38,9 +39,9 @@ function UnitNavigation({
         onClick={buttonOnClick}
         disabled={disabled}
       >
-        <UnitNavigationEffortEstimate sequenceId={sequenceId} unitId={unitId}>
-          {buttonText}
-        </UnitNavigationEffortEstimate>
+        {/* <UnitNavigationEffortEstimate sequenceId={sequenceId} unitId={unitId}>
+        </UnitNavigationEffortEstimate> */}
+        {buttonText}
         <FontAwesomeIcon icon={nextArrow} className="ml-2" size="sm" />
       </Button>
     );

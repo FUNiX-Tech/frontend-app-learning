@@ -23,23 +23,29 @@ import {
   fetchSequenceSuccess,
 } from './slice';
 
+
+import { getOutlineTabData } from '../../course-home/data/api';
+
 export function fetchCourse(courseId) {
   return async (dispatch) => {
     dispatch(fetchCourseRequest({ courseId }));
     Promise.allSettled([
       getCourseMetadata(courseId),
       getLearningSequencesOutline(courseId),
+
       getCourseHomeCourseMetadata(courseId, 'courseware'),
     ]).then(([
       courseMetadataResult,
       learningSequencesOutlineResult,
       courseHomeMetadataResult]) => {
+
       if (courseMetadataResult.status === 'fulfilled') {
         dispatch(addModel({
           modelType: 'coursewareMeta',
           model: courseMetadataResult.value,
         }));
       }
+
 
       if (courseHomeMetadataResult.status === 'fulfilled') {
         dispatch(addModel({
@@ -50,6 +56,7 @@ export function fetchCourse(courseId) {
           },
         }));
       }
+
 
       if (learningSequencesOutlineResult.status === 'fulfilled') {
         const {
