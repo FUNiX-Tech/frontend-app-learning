@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import { getAuthenticatedUser } from '@edx/frontend-platform/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router';
+import { getConfig } from '@edx/frontend-platform';
 
 import Footer from '@edx/frontend-component-footer';
 import { Toast } from '@edx/paragon';
@@ -36,8 +38,63 @@ function TabPage({ intl, ...props }) {
     org,
     start,
     title,
-  } = useModel('courseHomeMeta', courseId);
-console.time('loading_tabs')
+
+
+
+  } = useModel(metadataModel, courseId);
+
+  const { email } = getAuthenticatedUser();
+
+  useEffect(() => {
+    // check if dome have #hflivechat element
+    if (!document.getElementById('hflivechat')) {
+      // Add audio element with display none to prevent autoplay
+      const audio = document.createElement('audio');
+      audio.setAttribute('style', 'display:none');
+      audio.setAttribute('src', 'https://hf.funix.edu.vn/sounds/chime.mp3');
+      audio.setAttribute('type', 'audio/mpeg');
+      // Add audio element to body
+      document.body.appendChild(audio);
+
+      // Add jquery
+      const jquery = document.createElement('script');
+      jquery.src = 'https://code.jquery.com/jquery-3.3.1.min.js';
+      jquery.addEventListener('load', () => {
+        const hfScript = document.createElement('script');
+        hfScript.setAttribute('src', 'https://hf.funix.edu.vn/hf40-livechat/hf40-livechat.js');
+        hfScript.addEventListener('load', () => {
+          // eslint-disable-next-line no-undef
+          initHF40('https://hf.funix.edu.vn', false, email);
+        });
+        document.head.appendChild(hfScript);
+      });
+      document.body.appendChild(jquery);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!document.getElementById('feed-back-script')) {
+      // Because the feedback style is depend on LMS style so we need to add it to the head
+      // Append link to style in body
+      const feedbackStyle = document.createElement('link');
+      feedbackStyle.setAttribute('rel', 'stylesheet');
+      feedbackStyle.setAttribute('href', `${getConfig().LMS_BASE_URL}/static/feedback/feedback.css`);
+
+      // Append link to head
+      document.head.appendChild(feedbackStyle);
+
+      const feedScript = document.createElement('script');
+      feedScript.setAttribute('src', `${getConfig().LMS_BASE_URL}/static/feedback/add_feedback.js`);
+      feedScript.setAttribute('id', 'feed-back-script');
+      feedScript.addEventListener('load', () => {
+        // eslint-disable-next-line no-undef
+        initFUNiXFeedback(getConfig().LMS_BASE_URL, true);
+      });
+      document.head.appendChild(feedScript);
+    }
+  });
+
+  console.time('loading_tabs')
   if (courseStatus === 'loading') {
     return (
       <>
