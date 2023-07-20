@@ -51,7 +51,7 @@ function TabPage({ intl, ...props }) {
       // Add audio element with display none to prevent autoplay
       const audio = document.createElement('audio');
       audio.setAttribute('style', 'display:none');
-      audio.setAttribute('src', 'https://hf.funix.edu.vn/sounds/chime.mp3');
+      audio.setAttribute('src', 'https://askmentor.funix.edu.vn/sounds/chime.mp3');
       audio.setAttribute('type', 'audio/mpeg');
       // Add audio element to body
       document.body.appendChild(audio);
@@ -61,10 +61,10 @@ function TabPage({ intl, ...props }) {
       jquery.src = 'https://code.jquery.com/jquery-3.3.1.min.js';
       jquery.addEventListener('load', () => {
         const hfScript = document.createElement('script');
-        hfScript.setAttribute('src', 'https://hf.funix.edu.vn/hf40-livechat/hf40-livechat.js');
+        hfScript.setAttribute('src', 'https://askmentor.funix.edu.vn/hf40-livechat/hf40-livechat.js');
         hfScript.addEventListener('load', () => {
           // eslint-disable-next-line no-undef
-          initHF40('https://hf.funix.edu.vn', false, email);
+          initHF40('https://askmentor.funix.edu.vn', false, email);
         });
         document.head.appendChild(hfScript);
       });
