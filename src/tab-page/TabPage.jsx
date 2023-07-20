@@ -37,7 +37,7 @@ function TabPage({ intl, ...props }) {
     start,
     title,
   } = useModel('courseHomeMeta', courseId);
-
+console.time('loading_tabs')
   if (courseStatus === 'loading') {
     return (
       <>
@@ -49,7 +49,7 @@ function TabPage({ intl, ...props }) {
       </>
     );
   }
-
+  console.timeEnd('loading_tabs')
   if (courseStatus === 'denied') {
     const redirectUrl = getAccessDeniedRedirectUrl(courseId, activeTabSlug, courseAccess, start);
     if (redirectUrl) {
