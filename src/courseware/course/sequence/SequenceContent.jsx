@@ -103,12 +103,12 @@ function SequenceContent({
     } = data;
     if (type === 'plugin.resize' && payload.height > 0) {
             setIframeHeight(payload.height);
-        
-          
+
             // document.getElementById('unit-iframe').setAttribute('data-height', payload.height);     
     } 
   }, [unitId ,iframeHeight, setIframeHeight,loadedIframeId ]);
   useEventListener('message', receiveMessage);
+
 
   
   useEffect(() => {
@@ -123,6 +123,7 @@ function SequenceContent({
     }
   }, [iframeHeight]);
  
+
 
 
   return (
@@ -153,7 +154,6 @@ function SequenceContent({
       </div> */}
       {iframeURLS.map((e) => {
         const isLoaded = loadedIframeId === e.id;
-        
         return (
           <iframe
             id="unit-iframe"
@@ -162,13 +162,13 @@ function SequenceContent({
             allow={IFRAME_FEATURE_POLICY}
             allowFullScreen
             onLoad={() =>{
-            setLoad(false)
-              
+            setLoad(false)             
             }}
             scrolling="no"
             referrerPolicy="origin"
             style={{ display: isLoaded && !load ? 'block' : 'none'  , }}
             height={iframeHeightValues.find(h=>h.id === e.id)?.height }
+
            
           />
           

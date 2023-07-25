@@ -170,7 +170,7 @@ function CollapsibleSequenceLink({
         //   />
         // )}
       >
-        <ol className="list-unstyled" style={{ paddingLeft: '1.5rem' }}>
+        <ol className="list-unstyled" style={{ paddingLeft: '1rem' }}>
           {sequenceIds.map((sequenceId) => {
              const sequenceData = sequences[sequenceId];
 	
@@ -198,7 +198,7 @@ function CollapsibleSequenceLink({
                         />
                       )}
                     </div>
-                    <div className="col-8 p-0 ml-3 text-break">
+                    <div className="col p-0 ml-3 text-break">
                       <span className="align-middle">
                       <Link to={`/course/${courseId}/${sequenceId}`}>{sequenceData.display_name}</Link>
                       </span>
