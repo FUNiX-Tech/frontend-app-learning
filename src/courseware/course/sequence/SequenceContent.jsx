@@ -25,9 +25,8 @@ function SequenceContent({
   courseId,
   sequenceId,
   unitId,
-  unitLoadedHandler,
-  /** [MM-P2P] Experiment */
-  mmp2p,
+
+
 }) {
   const sequence = useModel('sequences', sequenceId);
 
@@ -56,13 +55,13 @@ function SequenceContent({
   }
 
   const unit = useModel('units', unitId);
-  if (!unitId || !unit) {
-    return (
-      <div>
-        {intl.formatMessage(messages.noContent)}
-      </div>
-    );
-  }
+  // if (!unitId || !unit) {
+  //   return (
+  //     <div>
+  //       {intl.formatMessage(messages.noContent)}
+  //     </div>
+  //   );
+  // }
 
   const { authenticatedUser } = useContext(AppContext);
   const view = authenticatedUser ? 'student_view' : 'public_view';

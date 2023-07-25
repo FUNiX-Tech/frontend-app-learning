@@ -181,9 +181,7 @@ function Sequence({
             gated={gated}
             sequenceId={sequenceId}
             unitId={unitId}
-            unitLoadedHandler={handleUnitLoaded}
-            /** [MM-P2P] Experiment */
-            mmp2p={mmp2p}
+
           />
           {unitHasLoaded && (
           <UnitNavigation
