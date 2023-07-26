@@ -84,9 +84,10 @@ function FunixLearningGoalCard({
         html: <i>Not selected before the today</i>,
         icon: 'error',
       });
+      return;
     }
 
-    await saveGoal(courseId, hoursPerDay, weekDays, targetUserId);
+    await saveGoal(courseId, hoursPerDay, weekDays, targetUserId,selectedDate);
     global.location.reload();
   };
 
