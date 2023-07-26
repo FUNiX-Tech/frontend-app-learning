@@ -15,6 +15,7 @@ import './FunixLearningGoalCard.scss';
 function FunixLearningGoalCard({
   goalHoursPerDay,
   goalWeekdays,
+  enrollCourseDate,
   intl,
 }) {
   const {
@@ -24,6 +25,12 @@ function FunixLearningGoalCard({
 
   const [weekDays, setWeekDays] = useState(goalWeekdays);
   const [hoursPerDay, setHoursPerDay] = useState(goalHoursPerDay);
+  const [selectedDate, setSelectedDate] = useState(enrollCourseDate);
+
+  const handleDateChange = (event) => {
+    setSelectedDate(event.target.value);
+  };
+
   const MySwal = withReactContent(Swal);
 
   const DATE_TEXT = [
@@ -69,6 +76,16 @@ function FunixLearningGoalCard({
       return;
     }
 
+    const toDay = new Date()
+    const selectedNewDate = new Date(selectedDate)
+    if (toDay > selectedNewDate ){
+      MySwal.fire({
+        title: <strong>False!</strong>,
+        html: <i>Not selected before the today</i>,
+        icon: 'error',
+      });
+    }
+
     await saveGoal(courseId, hoursPerDay, weekDays, targetUserId);
     global.location.reload();
   };
@@ -98,6 +115,14 @@ function FunixLearningGoalCard({
           value={hoursPerDay}
           onInput={(event) => { handleInput(event); }}
         />
+         <br />
+        <div>
+        <h2 className="h4 mb-2.5 text-primary-500 ">Nhập ngày bắt đầu học</h2>
+
+          <Input type="date"
+        value={selectedDate}
+        onChange={handleDateChange} />
+        </div>
          <br />
         <h2 className="h4 mb-1 text-primary-500">{intl.formatMessage(messages.setWeekdayText)}</h2>
         {/* <Card.Text

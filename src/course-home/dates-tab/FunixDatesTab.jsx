@@ -20,6 +20,7 @@ function FunixDatesTab({ intl }) {
     goalHoursPerDay,
     goalWeekdays,
     username,
+    enrollCourseDate
   } = useModel('dates', courseId);
 
   /** [MM-P2P] Experiment */
@@ -37,6 +38,7 @@ function FunixDatesTab({ intl }) {
           <FunixLearningGoalCard
             goalHoursPerDay={goalHoursPerDay}
             goalWeekdays={goalWeekdays}
+            enrollCourseDate={enrollCourseDate}
           />
         </div>
       </div>
