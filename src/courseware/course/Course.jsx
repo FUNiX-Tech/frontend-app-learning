@@ -104,7 +104,7 @@ function Course({
       </div>*/}
 
       <AlertList topic="sequence" />
-      <div className="row w-100">
+      <div className="row">
         <div className="col-12 col-md-8 broder-all" >
         <CourseBreadcrumbs
           courseId={courseId}
