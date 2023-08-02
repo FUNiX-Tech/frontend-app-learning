@@ -105,7 +105,7 @@ function Course({
 
       <AlertList topic="sequence" />
       <div className="row">
-        <div className="col-12 col-md-8 broder-all" >
+        <div className="col-12 col-md-9 broder-all" >
         <CourseBreadcrumbs
           courseId={courseId}
           sectionId={section ? section.id : null}
@@ -126,7 +126,7 @@ function Course({
         mmp2p={MMP2P}
       />
       </div>
-        <div className="col-12 col-md-4" id="section-list-container">
+        <div className="col-12 col-md-3" id="section-list-container">
           <SectionList
             courseId={courseId}
             relativeHeight
