@@ -76,15 +76,7 @@ function FunixLearningGoalCard({
       return;
     }
 
-    const toDay = new Date()
-    const selectedNewDate = new Date(selectedDate)
-    if (toDay > selectedNewDate ){
-      MySwal.fire({
-        title: <strong>False!</strong>,
-        html: <i>Not selected before the today</i>,
-        icon: 'error',
-      });
-    }
+
 
     await saveGoal(courseId, hoursPerDay, weekDays, targetUserId);
     global.location.reload();
