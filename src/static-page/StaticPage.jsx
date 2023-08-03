@@ -8,21 +8,20 @@ function StaticPage({ courseId, staticId }) {
 
   function receiveMessage(event) {
     const { type, payload } = event.data;
-    if (type === 'plugin.resize' && iframeHeight === 0 && isMounted) {
-      let { height } = payload;
-
-      if (height === 1000) {
+    if (type === 'plugin.resize') {
+      let height = payload.height;
+      if (iframeHeight === 0 && height === 1000 && isMounted) {
         height = 1010;
       }
-
       setIframeHeight(height);
     }
+   
   }
 
   useEffect(() => {
     isMounted = true;
     global.addEventListener('message', receiveMessage);
-  });
+  },[iframeHeight]);
 
   return (
     <div className="sequence-container">
