@@ -6,6 +6,10 @@ const messages = defineMessages({
     defaultMessage: 'Course Material',
     description: 'The accessible label for course tabs navigation',
   },
+  asessmentSubmission  :{
+    id: 'staticTab.asessmentSubmission.title',
+    defaultMessage: 'Asessment Submission',
+}
 });
 
 export default messages;

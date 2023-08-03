@@ -16,15 +16,18 @@ function CourseTabsNavigation({
           className="nav-underline-tabs"
           aria-label={intl.formatMessage(messages.courseMaterial)}
         >
-          {tabs.map(({ url, title, slug }) => (
-            <a
+          {tabs.map(({ url, title, slug }) => {
+              if (title === 'Assessment Submission') {
+              title = intl.formatMessage(messages.asessmentSubmission)
+            }
+            return <a
               key={slug}
               className={classNames('nav-item flex-shrink-0 nav-link', { active: slug === activeTabSlug })}
               href={url}
             >
               {title}
             </a>
-          ))}
+})}
         </Tabs>
       </div>
     </div>
