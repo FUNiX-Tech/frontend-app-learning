@@ -19,6 +19,12 @@ function CourseTabsNavigation({
           {tabs.map(({ url, title, slug }) => {
               if (title === 'Assessment Submission') {
               title = intl.formatMessage(messages.asessmentSubmission)
+            } 
+            else if (title === 'Ngày'){
+              title = intl.formatMessage(messages.dateTab)
+            }
+            else if (title === 'Tiến Trình Học'){
+              title = intl.formatMessage(messages.progressTab)
             }
             return <a
               key={slug}

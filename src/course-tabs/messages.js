@@ -7,9 +7,17 @@ const messages = defineMessages({
     description: 'The accessible label for course tabs navigation',
   },
   asessmentSubmission  :{
-    id: 'staticTab.asessmentSubmission.title',
+    id: 'learning.tabs.staticTab.asessmentSubmission',
     defaultMessage: 'Asessment Submission',
-}
+},
+  dateTab: {
+    id:'learning.tabs.date',
+    defaultMessage:'Date'
+  },
+  progressTab: {
+    id: 'learning.tabs.progress',
+    defineMessages: 'Progress'
+  }
 });
 
 export default messages;
