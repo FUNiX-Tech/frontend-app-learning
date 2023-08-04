@@ -23,7 +23,7 @@ function CourseTabsNavigation({
             else if (title === 'Ngày'){
               title = intl.formatMessage(messages.dateTab)
             }
-            else if (title === 'Tiến trình Học'){
+            else if (title === 'Tiến trình học'){
               title = intl.formatMessage(messages.progressTab)
             }
             return <a
