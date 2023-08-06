@@ -7,6 +7,7 @@ import { useModel } from '../../../generic/model-store';
 
 import Day from './Day';
 import { daycmp, isLearnerAssignment } from '../utils';
+import DayNew from './DayNew';
 
 /** [MM-P2P] Experiment (argument) */
 export default function Timeline({ mmp2p }) {
@@ -64,11 +65,21 @@ export default function Timeline({ mmp2p }) {
   }
 
   return (
-    <ul className="list-unstyled m-0 mt-4 pt-2">
+    <>
+      {/* <ul className="list-unstyled m-0 mt-4 pt-2">
       {groupedDates.map((groupedDate) => (
         <Day key={groupedDate.date} {...groupedDate} mmp2p={mmp2p} />
       ))}
-    </ul>
+    </ul> */}
+     <div className='container'>
+    <div className='d-flex flex-wrap pe-2' style={{gap:'25px'}}>
+        {groupedDates.map((groupedDate ,index) => (
+        <DayNew key={groupedDate.date} {...groupedDate} index={index} mmp2p={mmp2p} />
+      ))}
+    </div>
+    </div>
+    </>
+    
   );
 }
 
