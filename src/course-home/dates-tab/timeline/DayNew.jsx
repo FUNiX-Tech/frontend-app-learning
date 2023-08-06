@@ -42,7 +42,21 @@ const DayNew = ({
         check = false
     }
 
-   
+    const today = new Date()
+    const formattedToday = today.toISOString().slice(0, 10);
+    const formattedDate = date.toISOString().slice(0, 10)
+    let setColor = '#80cac2'
+  
+    if (formattedDate  < formattedToday ){
+      setColor = '#01796b'
+    }
+     else if (formattedDate == formattedToday){
+      setColor = '#004e40'
+      
+    } 
+  
+
+
     return <>
        <div  className="d-flex flex-column justify-content-evenly align-items-center"
               style={{ width: "200px", height: "300px", marginLeft: "-55px" ,marginTop: `${check? '':'8px'}`}}>
@@ -69,7 +83,7 @@ const DayNew = ({
                       <g transform="matrix(.99959 0 0 .99838 -100.96 -48.57)">
                         <path
                           d="M101.002 69.656h55.492l4.064 4.158-4.064 4.205h-55.492l3.85-4.205z"
-                          fill="#e0e0e0"
+                          fill={setColor}
                           strokeWidth="0.24"
                         />
                         <rect
@@ -78,7 +92,7 @@ const DayNew = ({
                           x="130.383"
                           y="37.309"
                           ry="0"
-                          fill="#e0e0e0"
+                          fill={setColor}
                           strokeWidth="0.108"
                         />
                       </g>
@@ -99,12 +113,11 @@ const DayNew = ({
                 const showLink = item.link && isLearnerAssignment(item);
                 let titleSlice
                 if (item.title.length > 40){
-                   titleSlice = item.title.slice(0,40)+'...'
-                
-
+                   titleSlice = item.title.slice(0,40)+'...'       
                 }
                 const title = showLink ? (<u><a href={item.link} className="text-reset">{ titleSlice ? titleSlice :  item.title}</a></u>) : item.title;
-            return <div >
+
+           return <div >
                 <span className='small'>
                     <span className='font-weight-bold'>{title}</span>
                 </span>
@@ -144,7 +157,7 @@ const DayNew = ({
                       <g transform="matrix(.99959 0 0 .99838 -100.96 -49.20)">
                         <path
                           d="M101.002 69.656h55.492l4.064 4.158-4.064 4.205h-55.492l3.85-4.205z"
-                          fill="#e0e0e0"
+                          fill={setColor}
                           strokeWidth="0.24"
                         />
                         <rect
@@ -153,7 +166,7 @@ const DayNew = ({
                           x="130.383"
                           y="75.309"
                           ry="0"
-                          fill="#e0e0e0"
+                          fill={setColor}
                           strokeWidth="0.108"
                         />
                       </g>
