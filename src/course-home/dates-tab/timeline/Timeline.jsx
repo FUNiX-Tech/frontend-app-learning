@@ -73,9 +73,9 @@ export default function Timeline({ mmp2p }) {
     </ul> */}
      <div className='container'>
     <div className='d-flex flex-wrap pe-2' style={{gap:'25px'}}>
-        {groupedDates.map((groupedDate ,index) => (
-        <DayNew key={groupedDate.date} {...groupedDate} index={index} mmp2p={mmp2p} />
-      ))}
+    {groupedDates.filter(groupedDates=>{
+        return  groupedDates.items.map(e => e.title)[0] !== 'Enrollment Date'
+      }).map((groupedDate ,index)=>(<DayNew key={groupedDate.date} {...groupedDate} index={index} mmp2p={mmp2p} />))}
     </div>
     </div>
     </>
