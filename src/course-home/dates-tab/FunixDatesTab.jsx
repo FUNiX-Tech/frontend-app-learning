@@ -31,9 +31,9 @@ function FunixDatesTab({ intl }) {
         {intl.formatMessage(messages.title, { username })}
       </div>
       <div className="row">
-        <div className="col col-12 col-md-7">
+        {/* <div className="col col-12 col-md-7">
           <Timeline mmp2p={mmp2p} />
-        </div>
+        </div> */}
         <div className="col col-12 col-md-5">
           <FunixLearningGoalCard
             goalHoursPerDay={goalHoursPerDay}
@@ -42,6 +42,7 @@ function FunixDatesTab({ intl }) {
           />
         </div>
       </div>
+      <Timeline mmp2p={mmp2p} />
     </>
   );
 }
