@@ -98,8 +98,8 @@ const DayNew = ({
                 
                 const showLink = item.link && isLearnerAssignment(item);
                 let titleSlice
-                if (item.title.length > 50){
-                   titleSlice = item.title.slice(0,50)+'...'
+                if (item.title.length > 40){
+                   titleSlice = item.title.slice(0,40)+'...'
                 
 
                 }
@@ -129,7 +129,7 @@ const DayNew = ({
                 let titleSlice
                 if (item.title.length > 50){
                   
-                  titleSlice=item.title.slice(0,50)+'...'
+                  titleSlice=item.title.slice(0,40)+'...'
                 }
                 const title = showLink ? (<u><a href={item.link} className="text-reset">{titleSlice ? titleSlice : item.title}</a></u>) : item.title;
             return <div >
