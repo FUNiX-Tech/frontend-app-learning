@@ -108,7 +108,7 @@ const DayNew = ({
                       zIndex:'2'
                     }}
                   >
-                    {items.map(item=>{
+                    {items.filter(i=>i.title!=='Enrollment Date').map(item=>{
                 
                 const showLink = item.link && isLearnerAssignment(item);
                 let titleSlice
@@ -136,10 +136,10 @@ const DayNew = ({
                       zIndex:'2'
                     }}
                   >
-                    {items.map(item=>{
+                    {items.filter(i=>i.title!=='Enrollment Date').map(item=>{
                   const showLink = item.link && isLearnerAssignment(item);
                 let titleSlice
-                if (item.title.length > 50){
+                if (item.title.length > 40){
                   
                   titleSlice=item.title.slice(0,40)+'...'
                 }
