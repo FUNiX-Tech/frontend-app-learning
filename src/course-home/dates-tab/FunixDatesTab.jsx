@@ -10,6 +10,8 @@ import { useModel } from '../../generic/model-store';
 /** [MM-P2P] Experiment */
 import { initDatesMMP2P } from '../../experiments/mm-p2p';
 import FunixLearningGoalCard from './widgets/FunixLearningGoalCard';
+import MilestoneChart from './timeline/MilestoneChart';
+
 
 function FunixDatesTab({ intl }) {
   const {
@@ -31,9 +33,10 @@ function FunixDatesTab({ intl }) {
         {intl.formatMessage(messages.title, { username })}
       </div>
       <div className="row">
-        {/* <div className="col col-12 col-md-7">
-          <Timeline mmp2p={mmp2p} />
-        </div> */}
+      <div className="col col-12 col-md-7">
+
+        <MilestoneChart mmp2p={mmp2p} />
+      </div>
         <div className="col col-12 col-md-5">
           <FunixLearningGoalCard
             goalHoursPerDay={goalHoursPerDay}

@@ -445,5 +445,6 @@
     "progress.gradeBarGraph.title": "Tiến độ môn học" ,
     "learning.tabs.staticTab.asessmentSubmission" : "Hướng dẫn nộp bài" ,
     "learning.tabs.date" : "Kế hoạch học tập" ,
-    "learning.tabs.progress":"Tiến độ"
+    "learning.tabs.progress":"Tiến độ",
+    "learning.tabs.course" : "Môn học"
 }

@@ -17,6 +17,10 @@ const messages = defineMessages({
   progressTab: {
     id: 'learning.tabs.progress',
     defineMessages: 'Progress'
+  },
+  courseTab:{
+    id : 'learning.tabs.course',
+    defineMessages : 'Course'
   }
 });
 

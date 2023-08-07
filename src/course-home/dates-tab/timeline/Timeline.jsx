@@ -63,22 +63,22 @@ export default function Timeline({ mmp2p }) {
   if (groupedDates.length) {
     groupedDates[groupedDates.length - 1].last = true;
   }
-  console.log('=================groupedDates', groupedDates)
+
 
   return (
     <>
-      {/* <ul className="list-unstyled m-0 mt-4 pt-2">
+      <ul className="list-unstyled m-0 mt-4 pt-2">
       {groupedDates.map((groupedDate) => (
         <Day key={groupedDate.date} {...groupedDate} mmp2p={mmp2p} />
       ))}
-    </ul> */}
-      <div className='container'>
+    </ul>
+      {/* <div className='container'>
     <div className='d-flex flex-wrap pe-2' style={{gap:'25px'}}>
         {groupedDates.map((groupedDate ,index) => (
         <DayNew key={groupedDate.date} {...groupedDate} index={index} mmp2p={mmp2p} />
       ))}
     </div>
-    </div>
+    </div> */}
     </>
     
   );

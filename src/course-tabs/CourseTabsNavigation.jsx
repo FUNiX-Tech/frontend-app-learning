@@ -26,6 +26,10 @@ function CourseTabsNavigation({
             else if (title === 'Tiến trình học'){
               title = intl.formatMessage(messages.progressTab)
             }
+            else if (title === 'Khóa học'){
+
+              title = intl.formatMessage(messages.courseTab)
+            }
             return <a
               key={slug}
               className={classNames('nav-item flex-shrink-0 nav-link', { active: slug === activeTabSlug })}

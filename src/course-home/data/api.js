@@ -205,15 +205,32 @@ export async function getDatesTabData(courseId, targetUserId) {
   // return camelCaseObject(Factory.build('datesTabData'));
   // const url = `${getConfig().LMS_BASE_URL}/api/course_home/dates/${courseId}`;
   let url = `${getConfig().LMS_BASE_URL}/api/course_home/dates-funix/${courseId}`;
-  console.log(url)
+
   if (targetUserId) {
     url += `/${targetUserId}/`;
   }
 
   try {
     const { data } = await getAuthenticatedHttpClient().get(url);
-    console.log('data',data)
-    return camelCaseObject(data);
+    const sections = await getSection(courseId)
+    const blocks = data.course_date_blocks
+    const newSections = sections.map(s =>{
+      let newSequenceIds = []
+      blocks.map(b=>{
+        const blockId = b.link.split('/')[6]
+        s.sequenceIds.map(i =>{
+    
+          if (i === blockId){
+            newSequenceIds.push({date: b.date, id: blockId, title: b.title})
+          }
+        })
+   
+      })
+      return {...s, sequenceIds:newSequenceIds}
+    })
+  
+
+    return camelCaseObject({...data, sections: newSections});
   } catch (error) {
     const { httpErrorStatus } = error && error.customAttributes;
     if (httpErrorStatus === 401) {
@@ -441,4 +458,24 @@ export async function postSetGoal(courseId, hoursPerDay, weekDays, targetUserId,
     target_user_id: targetUserId,
     selected_date : selectedDate
   });
+}
+
+
+export async function getSection(courseId){
+  const url = `${getConfig().LMS_BASE_URL}/api/course_home/outline/${courseId}`;
+  const tabData = await getAuthenticatedHttpClient().get(url);
+  const {
+    data,
+    
+  } = tabData;
+  // data.course_blocks.blocks.filter(e=>)
+  const courseBlocks = data.course_blocks ? normalizeOutlineBlocks(courseId, data.course_blocks.blocks) : {}
+  
+  const filteredData = Object.fromEntries(
+    Object.entries(courseBlocks.sections).filter(([key, value]) => value.title !== "Giới Thiệu" && value.title !== 'Kết thúc')
+  )
+  const newData =  Object.values(filteredData)
+  
+
+  return newData
 }
