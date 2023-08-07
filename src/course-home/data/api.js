@@ -113,7 +113,7 @@ function normalizeCourseHomeCourseMetadata(metadata, rootSlug) {
 }
 
 export function normalizeOutlineBlocks(courseId, blocks) {
- console.log(blocks)
+
   const models = {
     courses: {},
     sections: {},
@@ -213,7 +213,7 @@ export async function getDatesTabData(courseId, targetUserId) {
   try {
     const { data } = await getAuthenticatedHttpClient().get(url);
     const sections = await getSection(courseId)
-    console.log(sections)
+   
     const blocks = data.course_date_blocks
     const newSections = sections.map(s =>{
       let newSequenceIds = []

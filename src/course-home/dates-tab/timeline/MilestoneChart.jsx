@@ -12,17 +12,17 @@ const MilestoneChart = ({mmp2p})=>{
         courseDateBlocks,
         sections
       } = useModel('dates', courseId);
-      console.log('sections=======', sections)
+
       const updatedSections = sections.map(section => {
         let startDate;
         
         section.sequenceIds.forEach(sequence => {
           const newSequence = { ...sequence };
           const parsedDate = new Date(newSequence.date);
-            console.log(parsedDate)
+
           if (!startDate || parsedDate < startDate) {
             startDate = parsedDate;
-            console.log(startDate)
+  
           }
         });
         

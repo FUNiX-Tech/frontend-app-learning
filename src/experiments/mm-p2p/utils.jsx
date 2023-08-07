@@ -38,7 +38,7 @@ const strictGet = (target, name) => {
     return target[name];
   }
 
-  console.log(name.toString());
+
   console.error({ target, name });
   const e = Error(`invalid property "${name.toString()}"`);
   console.error(e.stack);
