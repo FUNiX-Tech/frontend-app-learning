@@ -13,7 +13,7 @@ const MilestoneChart = ({mmp2p})=>{
         sections
       } = useModel('dates', courseId);
 
-      const updatedSections = sections.map(section => {
+      const updatedSections = sections?.map(section => {
         let startDate;
         
         section.sequenceIds.forEach(sequence => {
@@ -34,7 +34,7 @@ const MilestoneChart = ({mmp2p})=>{
     return <>
     <div className='container' style={{marginRight:'-40px'}}>
         <div className='d-flex flex-wrap pe-2' style={{gap:'25px'}}>
-            {updatedSections.map((section, index) => <MilestoneChartItem mmp2p={mmp2p} {...section}  index={index}/>)}
+            {updatedSections?.map((section, index) => <MilestoneChartItem mmp2p={mmp2p} {...section}  index={index}/>)}
         </div>
     </div>
     </>
