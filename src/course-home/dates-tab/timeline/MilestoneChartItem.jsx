@@ -29,11 +29,11 @@ const MilestoneChartItem = ({ mmp2p, startDate, title, index ,intl }) => {
 
     const check = index % 2 === 0 ? true : false
 
-    console.log(startDate)
+
     const today = new Date()
-    const dateStart = new Date(startDate)
+
     const formattedToday = today.toISOString().slice(0, 10);
-    const formattedDate = dateStart.toISOString().slice(0, 10)
+    const formattedDate = startDate?.toISOString().slice(0, 10)
     let setColor = '#80cac2'
 
     if (formattedDate < formattedToday) {
