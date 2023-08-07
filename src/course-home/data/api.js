@@ -473,7 +473,7 @@ export async function getSection(courseId){
   const courseBlocks = data.course_blocks ? normalizeOutlineBlocks(courseId, data.course_blocks.blocks) : {}
   
   const filteredData = Object.fromEntries(
-    Object.entries(courseBlocks.sections).filter(([key, value]) => value.title !== "Giới Thiệu" && value.title !== 'Kết thúc')
+    Object.entries(courseBlocks.sections).filter(([key, value]) => value.title !== "Giới Thiệu" && value.title !== 'Kết thúc' && value.title !=='Mở đầu' , values.title !== 'Kết thúc khóa học')
   )
   const newData =  Object.values(filteredData)
   
