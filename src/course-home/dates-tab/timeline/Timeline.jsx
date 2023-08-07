@@ -63,7 +63,10 @@ export default function Timeline({ mmp2p }) {
   if (groupedDates.length) {
     groupedDates[groupedDates.length - 1].last = true;
   }
-
+  console.log('=================groupedDates', groupedDates)
+  console.log('================',groupedDates.filter(groupedDates=>{
+    return  groupedDates.items.map(e => e.title)[0] !== 'Enrollment Date'
+  })  )
   return (
     <>
       {/* <ul className="list-unstyled m-0 mt-4 pt-2">
