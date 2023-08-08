@@ -222,7 +222,7 @@ export async function getDatesTabData(courseId, targetUserId) {
         s.sequenceIds.map(i =>{
     
           if (i === blockId){
-            newSequenceIds.push({date: b.date, id: blockId, title: b.title})
+            newSequenceIds.push({date: b.date, id: blockId, title: b.title,  assignment_type : b.assignment_type})
           }
         })
    

@@ -12,7 +12,7 @@ const MilestoneChart = ({mmp2p})=>{
         courseDateBlocks,
         sections
       } = useModel('dates', courseId);
-
+      let asms = []
       const updatedSections = sections?.map(section => {
         let startDate;
         
@@ -24,13 +24,16 @@ const MilestoneChart = ({mmp2p})=>{
             startDate = parsedDate;
   
           }
+          if (sequence.assignmentType === 'Assignment'){
+            asms.push(sequence)
+          }
         });
         
         return { ...section, startDate };
       });
 
-
-
+      asms.forEach(asm =>updatedSections.push({startDate : new Date(asm.date), title: asm.title}))
+      updatedSections.sort((a, b)=>a.startDate - b.startDate)
     return <>
     <div className='container' style={{marginRight:'-40px'}}>
         <div className='d-flex flex-wrap pe-2' style={{gap:'25px'}}>
