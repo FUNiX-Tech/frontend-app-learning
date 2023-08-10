@@ -154,7 +154,7 @@ function FunixLearningGoalCard({
           <div className=' '>
             <span style={{fontWeight:'650'}}>Kế hoạch học tập dự kiến dựa trên quỹ tời gian cá nhân của học viên</span>
           </div>
-          <div className=''>
+          <div className='px-5'>
             <button
           className="btn btn-primary mb-1 mt-3"
           type="submit"
