@@ -95,13 +95,13 @@ function FunixLearningGoalCard({
   return (
     <Card
       id="courseHome-weeklyLearningGoal"
-      className="row w-100 m-0 mb-3 border border-dark"
+      className="row w-100 p-2 m-0 mb-3 border border-dark "
       data-testid="weekly-learning-goal-card"
     >
 
       <Card.Body className=" p-3 p-lg-3.5">
         <div className='row ' style={{gap:'30px'}}>
-         <div className='col-2 form-date '>
+         <div className='col-2.5 form-date '>
             <h2 className="h4 mb-1 text-primary-500">{intl.formatMessage(messages.setHourDailyText)}</h2>
             <div className="text-gray-700 small mb-2.5">
               {intl.formatMessage(messages.setHourDailyDetail)}
@@ -116,7 +116,7 @@ function FunixLearningGoalCard({
               onInput={(event) => { handleInput(event); }}
             />
          </div>
-         <div className='col-2.5 form-date '>
+         <div className='col-2.5 form-date' style={{paddingLeft:'25px'}}>
          <h2 className="h4 mb-2.5 text-primary-500 ">Nhập ngày bắt đầu học</h2>
             <Input type="date"
             value={selectedDate}
