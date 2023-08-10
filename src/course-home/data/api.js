@@ -450,14 +450,15 @@ export async function unsubscribeFromCourseGoal(token) {
     .then(res => camelCaseObject(res));
 }
 
-export async function postSetGoal(courseId, hoursPerDay, weekDays, targetUserId,selectedDate) {
+export async function postSetGoal(courseId, hoursPerDay, weekDays, targetUserId,selectedDate,selectBlockId) {
   const url = new URL(`${getConfig().LMS_BASE_URL}/api/course_home/set_goal`);
   return getAuthenticatedHttpClient().post(url.href, {
     course_id: courseId,
     hours_per_day: hoursPerDay,
     week_days: weekDays,
     target_user_id: targetUserId,
-    selected_date : selectedDate
+    selected_date : selectedDate,
+    block_id : selectBlockId
   });
 }
 

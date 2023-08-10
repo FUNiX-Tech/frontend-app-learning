@@ -9,8 +9,9 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import messages from '../messages';
 import { saveGoal } from '../../data';
-
+import { useModel } from '../../../generic/model-store';
 import './FunixLearningGoalCard.scss';
+
 
 function FunixLearningGoalCard({
   goalHoursPerDay,
@@ -23,10 +24,18 @@ function FunixLearningGoalCard({
     targetUserId,
   } = useSelector(state => state.courseHome);
 
+  const {
+    courseDateBlocks,
+  } = useModel('dates', courseId);
+
+  const filterCourseBlock = courseDateBlocks.filter(courseBlock=>courseBlock.title!=='Enrollment Date')
+
+
+
   const [weekDays, setWeekDays] = useState(goalWeekdays);
   const [hoursPerDay, setHoursPerDay] = useState(goalHoursPerDay);
   const [selectedDate, setSelectedDate] = useState(enrollCourseDate);
-
+  const [selectBlockId, SetSelectBlockId] = useState()
   const handleDateChange = (event) => {
     setSelectedDate(event.target.value);
   };
@@ -78,79 +87,85 @@ function FunixLearningGoalCard({
 
 
 
-    await saveGoal(courseId, hoursPerDay, weekDays, targetUserId,selectedDate);
+    await saveGoal(courseId, hoursPerDay, weekDays, targetUserId,selectedDate , selectBlockId);
     global.location.reload();
   };
+
 
   return (
     <Card
       id="courseHome-weeklyLearningGoal"
-      className="row w-100 m-0 mb-3 shadow-sm border-0"
+      className="row w-100 m-0 mb-3 border border-dark"
       data-testid="weekly-learning-goal-card"
     >
-     
-      <Card.Body className="p-3 p-lg-3.5">
-        <h2 className="h4 mb-1 text-primary-500">{intl.formatMessage(messages.setHourDailyText)}</h2>
-        {/* <Card.Text
-          className="text-gray-700 small mb-2.5"
-        > */}
-        <div className="text-gray-700 small mb-2.5">
-          {intl.formatMessage(messages.setHourDailyDetail)}
-        </div>
-          
-        {/* </Card.Text> */}
-        <Input
-          min="1"
-          max="24"
-          step={0.5}
-          type="number"
-          value={hoursPerDay}
-          onInput={(event) => { handleInput(event); }}
-        />
-         <br />
-        <div>
-        <h2 className="h4 mb-2.5 text-primary-500 ">Nhập ngày bắt đầu học</h2>
 
-          <Input type="date"
-        value={selectedDate}
-        onChange={handleDateChange} />
+      <Card.Body className=" p-3 p-lg-3.5">
+        <div className='row ' style={{gap:'30px'}}>
+         <div className='col-2 form-date '>
+            <h2 className="h4 mb-1 text-primary-500">{intl.formatMessage(messages.setHourDailyText)}</h2>
+            <div className="text-gray-700 small mb-2.5">
+              {intl.formatMessage(messages.setHourDailyDetail)}
+            </div>
+            <Input
+              className='input-time'
+              min="1"
+              max="24"
+              step={0.5}
+              type="number"
+              value={hoursPerDay}
+              onInput={(event) => { handleInput(event); }}
+            />
+         </div>
+         <div className='col-2.5 form-date '>
+         <h2 className="h4 mb-2.5 text-primary-500 ">Nhập ngày bắt đầu học</h2>
+            <Input type="date"
+            value={selectedDate}
+            onChange={handleDateChange} />
+          
+         </div>
+        <div className='col form-date px-5' >
+          <h2 className="h4 mb-1 text-primary-500">{intl.formatMessage(messages.setWeekdayText)}</h2>
+          <div className="text-gray-700 small mb-2.5">
+            {intl.formatMessage(messages.setWeekdayDetail)}
+          </div>
+          <div
+            role="radiogroup"
+            aria-labelledby="set-weekly-goal-h2"
+            className="flag-button-container m-0 p-0"
+          >
+            {DATE_TEXT.map((title, index) => {
+              const isSelected = weekDays[index];
+              return (
+                <button
+                  type="button"
+                  className={classnames('flag-button row w-100 align-content-between m-1.5', isSelected ? 'funix-flag-button-selected' : '')}
+                  onClick={() => handleSelect(index)}
+                >
+                  <div className={classnames('row w-100 m-0 justify-content-center small text-gray-700 pb-1 pt-1', isSelected ? 'font-weight-bold' : '')}>
+                    {title}
+                  </div>
+                </button>
+              );
+              })}
+          </div>
         </div>
-         <br />
-        <h2 className="h4 mb-1 text-primary-500">{intl.formatMessage(messages.setWeekdayText)}</h2>
-        {/* <Card.Text
-          className="text-gray-700 small mb-2.5"
-        > */}
-        <div className="text-gray-700 small mb-2.5">
-          {intl.formatMessage(messages.setWeekdayDetail)}
         </div>
-        {/* </Card.Text> */}
-        <div
-          role="radiogroup"
-          aria-labelledby="set-weekly-goal-h2"
-          className="flag-button-container m-0 p-0"
-        >
-          {DATE_TEXT.map((title, index) => {
-            const isSelected = weekDays[index];
-            return (
-              <button
-                type="button"
-                className={classnames('flag-button row w-100 align-content-between m-1.5', isSelected ? 'funix-flag-button-selected' : '')}
-                onClick={() => handleSelect(index)}
-              >
-                <div className={classnames('row w-100 m-0 justify-content-center small text-gray-700 pb-1 pt-1', isSelected ? 'font-weight-bold' : '')}>
-                  {title}
-                </div>
-              </button>
-            );
-          })}
-        </div>
-        <button
+        <div className='d-flex justify-content-between align-items-end pt-3'>
+          <div className=' '>
+            <span style={{fontWeight:'650'}}>Kế hoạch học tập dự kiến dựa trên quỹ tời gian cá nhân của học viên</span>
+          </div>
+          <div className=''>
+            <button
           className="btn btn-primary mb-1 mt-3"
           type="submit"
           onClick={handleSubmit}
-        >
+          >
           Submit
-        </button>
+          </button> 
+          </div>
+          
+        </div>
+       
       </Card.Body> 
     </Card>
   );
@@ -167,3 +182,18 @@ FunixLearningGoalCard.defaultProps = {
   goalWeekdays: [true, true, true, true, true, false, false],
 };
 export default injectIntl(FunixLearningGoalCard)
+
+
+
+      {/* <div>
+        <h2 className="h4 mb-2.5 text-primary-500 ">Chọn bài bắt đầu học</h2>
+          <div>
+            <select className="form-control w-100" onChange={(e)=>SetSelectBlockId(e.target.value)}>
+              {filterCourseBlock.map(courseBlock=>{
+                const blockId = courseBlock.link.split('/')[6]
+                return <option value={blockId}  key={blockId}>{courseBlock.title}</option>
+              })}
+            </select>
+            
+          </div>
+        </div> */}

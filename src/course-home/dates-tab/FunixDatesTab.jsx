@@ -32,7 +32,26 @@ function FunixDatesTab({ intl }) {
       <div role="heading" aria-level="1" className="h2 my-3">
         {intl.formatMessage(messages.title, { username })}
       </div>
-      <div className="row">
+      <div className='d-flex flex-column ' style={{gap:'20px'}}>
+        <div className='w-100'>
+          
+          <FunixLearningGoalCard
+            goalHoursPerDay={goalHoursPerDay}
+            goalWeekdays={goalWeekdays}
+            enrollCourseDate={enrollCourseDate}
+          />
+        </div>
+        <div>
+          <h3 className='py-5'>Tiến độ theo tuần</h3>
+           <MilestoneChart mmp2p={mmp2p} />
+        </div>
+        <div>
+          <h3 className='pt-5 pb-2'>Tiến độ theo ngày</h3>
+          <Timeline mmp2p={mmp2p} />
+        </div>
+    
+      </div>
+      {/* <div className="row">
       <div className="col col-12 col-md-7">
 
         <MilestoneChart mmp2p={mmp2p} />
@@ -45,7 +64,7 @@ function FunixDatesTab({ intl }) {
           />
         </div>
       </div>
-      <Timeline mmp2p={mmp2p} />
+      <Timeline mmp2p={mmp2p} /> */}
     </>
   );
 }

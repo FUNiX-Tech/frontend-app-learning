@@ -30,6 +30,7 @@ function CourseTabsNavigation({
 
               title = intl.formatMessage(messages.courseTab)
             }
+            
             return <a
               key={slug}
               className={classNames('nav-item flex-shrink-0 nav-link', { active: slug === activeTabSlug })}
