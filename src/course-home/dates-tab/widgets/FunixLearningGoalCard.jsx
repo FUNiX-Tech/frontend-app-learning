@@ -131,7 +131,7 @@ function FunixLearningGoalCard({
               onInput={(event) => { handleInput(event); }}
             />
          </div>
-         <div className='col-2.5 form-date' style={{paddingLeft:'25px'}}>
+         <div className='col-2.5 form-date' >
          <h2 className="h4 mb-2.5 text-primary-500 ">Nhập ngày bắt đầu học</h2>
             <Input type="date"
             value={selectedDate}
@@ -150,7 +150,7 @@ function FunixLearningGoalCard({
             
           </div>
         </div>
-        <div className='col form-date px-5' >
+        <div className='col form-date '  style={{marginLeft:'-18px'}}>
           <h2 className="h4 mb-1 text-primary-500">{intl.formatMessage(messages.setWeekdayText)}</h2>
           <div className="text-gray-700 small mb-2.5">
             {intl.formatMessage(messages.setWeekdayDetail)}
@@ -181,7 +181,7 @@ function FunixLearningGoalCard({
           <div className=' '>
             <span style={{fontWeight:'650'}}>Kế hoạch học tập dự kiến dựa trên quỹ tời gian cá nhân của học viên</span>
           </div>
-          <div className='px-5'>
+          <div className=''>
             <button
           className="btn btn-primary mb-1 mt-3 "
           type="submit"

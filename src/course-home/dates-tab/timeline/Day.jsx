@@ -75,10 +75,12 @@ function Day({
 
           const showDueDateTime = item.dateType === 'assignment-due-date';
           const showLink = item.link && isLearnerAssignment(item);
-          const title = showLink ? (<u><a href={item.link} className="text-reset">{item.title}</a></u>) : item.title;
+          const title = showLink ? (<u style={{textDecoration:'none'}}><a href={item.link} className="date-title  text-reset">{item.title}</a></u>) : item.title;
           const available = item.learnerHasAccess && (item.link || !isLearnerAssignment(item));
           const textColor = available ? 'text-primary-700' : 'text-gray-500';
-
+          const newDate = new Date(date)
+          newDate.setHours(23)
+          newDate.setMinutes(59)
           return (
             <div key={item.title + item.date} className={classNames(textColor, 'small pb-1')} data-testid="dates-item">
               <div>
@@ -88,7 +90,7 @@ function Day({
                     <span>
                       <span className="mx-1">due</span>
                       <FormattedTime
-                        value={date}
+                        value={newDate}
                         timeZoneName="short"
                         {...timezoneFormatArgs}
                       />

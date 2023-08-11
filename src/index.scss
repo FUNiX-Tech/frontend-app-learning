@@ -413,7 +413,9 @@
   position: sticky;
   top: 10px;
 }
-
+#section-list-container {
+  min-height: 600px;
+}
 .border-all {
   border: solid 1px #eaeaea;
   border-radius: 4px;
