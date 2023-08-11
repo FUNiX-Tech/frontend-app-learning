@@ -29,13 +29,28 @@ function FunixLearningGoalCard({
   } = useModel('dates', courseId);
 
   const filterCourseBlock = courseDateBlocks.filter(courseBlock=>courseBlock.title!=='Enrollment Date')
-
-
+  filterCourseBlock.sort((a,b)=>{
+    const titleA = a.title;
+    const titleB = b.title;
+  
+    if (titleA.startsWith("Assignment")) {
+      return 1; 
+    }
+  
+    if (titleB.startsWith("Assignment")) {
+      return -1; 
+    }
+  
+    const numberA = parseInt(titleA.split(" ")[1]);
+    const numberB = parseInt(titleB.split(" ")[1]);
+  
+    return numberA - numberB;
+  })
 
   const [weekDays, setWeekDays] = useState(goalWeekdays);
   const [hoursPerDay, setHoursPerDay] = useState(goalHoursPerDay);
   const [selectedDate, setSelectedDate] = useState(enrollCourseDate);
-  const [selectBlockId, SetSelectBlockId] = useState()
+  const [selectBlockId, SetSelectBlockId] = useState(filterCourseBlock[0]?.link?.split('/')[6]||'')
   const handleDateChange = (event) => {
     setSelectedDate(event.target.value);
   };
@@ -123,6 +138,18 @@ function FunixLearningGoalCard({
             onChange={handleDateChange} />
           
          </div>
+      <div className='col form-date'>
+        <h2 className="h4 mb-2.5 text-primary-500 ">Chọn bài bắt đầu học</h2>
+          <div>
+            <select className="form-control w-100" value={selectBlockId} onChange={(e)=>SetSelectBlockId(e.target.value)}>
+              {filterCourseBlock.map(courseBlock=>{
+                const blockId = courseBlock.link.split('/')[6]
+                return <option value={blockId}  key={blockId}>{courseBlock.title}</option>
+              })}
+            </select>
+            
+          </div>
+        </div>
         <div className='col form-date px-5' >
           <h2 className="h4 mb-1 text-primary-500">{intl.formatMessage(messages.setWeekdayText)}</h2>
           <div className="text-gray-700 small mb-2.5">
@@ -156,7 +183,7 @@ function FunixLearningGoalCard({
           </div>
           <div className='px-5'>
             <button
-          className="btn btn-primary mb-1 mt-3"
+          className="btn btn-primary mb-1 mt-3 "
           type="submit"
           onClick={handleSubmit}
           >
@@ -185,15 +212,3 @@ export default injectIntl(FunixLearningGoalCard)
 
 
 
-      {/* <div>
-        <h2 className="h4 mb-2.5 text-primary-500 ">Chọn bài bắt đầu học</h2>
-          <div>
-            <select className="form-control w-100" onChange={(e)=>SetSelectBlockId(e.target.value)}>
-              {filterCourseBlock.map(courseBlock=>{
-                const blockId = courseBlock.link.split('/')[6]
-                return <option value={blockId}  key={blockId}>{courseBlock.title}</option>
-              })}
-            </select>
-            
-          </div>
-        </div> */}
