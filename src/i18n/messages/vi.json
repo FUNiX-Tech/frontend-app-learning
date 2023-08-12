@@ -184,7 +184,7 @@
     "progress.noAcessToAssignmentType": "Bạn không có quyền truy cập vào loại bài tập {assignmentType}",
     "progress.noAcessToSubsection": "Bạn không có quyền truy cập vào mục {displayName}",
     "progress.courseGrade.label.passingGrade": "Điểm qua",
-    "progress.detailedGrades.problemScore.label": "Điểm :",
+    "progress.detailedGrades.problemScore.label": "Điểm Quiz:",
     "progress.detailedGrades.problemScore.toggleButton": "Chuyển đổi điểm riêng lẻ cho {subsectionTitle}",
     "progress.detailedGrades.overridden": "Phần điểm đã bị ghi đè.",
     "progress.score": "Điểm",
