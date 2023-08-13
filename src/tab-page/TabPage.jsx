@@ -8,7 +8,6 @@ import { getConfig } from '@edx/frontend-platform';
 
 import Footer from '@edx/frontend-component-footer';
 import { Toast } from '@edx/paragon';
-import { LearningHeader as Header } from '@edx/frontend-component-header';
 import PageLoading from '../generic/PageLoading';
 import { getAccessDeniedRedirectUrl } from '../shared/access';
 import { useModel } from '../generic/model-store';
@@ -156,7 +155,7 @@ function TabPage({ intl, ...props }) {
   // courseStatus 'failed' and any other unexpected course status.
   return (
     <>
-      <Header />
+      <HeaderLearning />
       <p className="text-center py-5 mx-auto" style={{ maxWidth: '30em' }}>
         {intl.formatMessage(messages.failure)}
       </p>

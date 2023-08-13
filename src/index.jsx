@@ -12,7 +12,6 @@ import ReactDOM from 'react-dom';
 import { Switch } from 'react-router-dom';
 
 import { messages as footerMessages } from '@edx/frontend-component-footer';
-import { messages as headerMessages } from '@edx/frontend-component-header';
 import { Helmet } from 'react-helmet';
 import { fetchDiscussionTab, fetchLiveTab } from './course-home/data/thunks';
 import DiscussionTab from './course-home/discussion-tab/DiscussionTab';
@@ -197,6 +196,6 @@ initialize({
   messages: [
     appMessages,
     footerMessages,
-    headerMessages,
+    
   ],
 });
