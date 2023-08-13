@@ -18,6 +18,7 @@ import messages from './messages';
 import LoadedTabPage from './LoadedTabPage';
 import { setCallToActionToast } from '../course-home/data/slice';
 import LaunchCourseHomeTourButton from '../product-tours/newUserCourseHomeTour/LaunchCourseHomeTourButton';
+import HeaderLearning from '../header/HeaderLearning';
 
 function TabPage({ intl, ...props }) {
   const {
@@ -101,7 +102,8 @@ function TabPage({ intl, ...props }) {
   if (courseStatus === 'loading') {
     return (
       <>
-        <Header />
+        {/* <Header /> */}
+        <HeaderLearning />
         <PageLoading
           srMessage={intl.formatMessage(messages.loading)}
         />
@@ -134,11 +136,17 @@ function TabPage({ intl, ...props }) {
           {toastHeader}
         </Toast>
         {metadataModel === 'courseHomeMeta' && (<LaunchCourseHomeTourButton srOnly />)}
-        <Header
+        {/* <Header
           courseOrg={org}
           courseNumber={number}
           courseTitle={title}
-        />
+        /> */}
+        <HeaderLearning          
+          courseOrg={org}
+          courseNumber={number}
+          courseTitle={title}
+          intl={intl}
+          />
         <LoadedTabPage {...props} />
         <Footer />
       </>
