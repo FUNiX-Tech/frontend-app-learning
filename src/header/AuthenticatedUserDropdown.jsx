@@ -53,7 +53,7 @@ const AuthenticatedUserDropdown = ({ intl, username }) => {
 
    
       <div className='d-flex align-items-center ' style={{gap:'1rem'}}>
-        <a  className="text-gray-700" href={`${getConfig().SUPPORT_URL}`}>{intl.formatMessage(messages.help)}</a>
+        <a  className="text-gray-700" href={`${getConfig().SUPPORT_URL}`} target='_blank'>{intl.formatMessage(messages.help)}</a>
         <select value={language} onChange={(e)=>handlerLanguage(e)} >
           <option value='vi'>Tiếng Việt</option>
           <option value='en'>English</option>

@@ -99,6 +99,14 @@ function FunixLearningGoalCard({
 
       return;
     }
+    if (hoursPerDay < 2.5){
+      MySwal.fire({
+        title:<strong>False!</strong>,
+        html: <i>Select study hours each day not less than 2.5h!</i> ,
+        icon: 'error'
+      })
+      return
+    }
 
 
 
