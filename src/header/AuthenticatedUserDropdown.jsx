@@ -6,8 +6,10 @@ import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { getConfig } from '@edx/frontend-platform';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { Dropdown  } from '@edx/paragon';
-import Cookies from 'js-cookie';
+
 import messages from './messages';
+import { fetchDataLanguage, fetchPreferences ,fetchLanguage } from './data/thunks';
+
 
 
 const AuthenticatedUserDropdown = ({ intl, username }) => {
@@ -16,18 +18,36 @@ const AuthenticatedUserDropdown = ({ intl, username }) => {
       {intl.formatMessage(messages.dashboard)}
     </Dropdown.Item>
   );
-
-
-    const languageDefault = Cookies.get('openedx-language-preference')
-    const [language , setLanguage] = useState(languageDefault)
-
-
     
-    const handlerLanguage  = (e)=>{
+
+  const  [language, setLanguage] = useState('vi')
+  const [loading, setLoading] = useState(false)
+  const [loadingSetLanguage, setLoadingSetLanguage] = useState(false)
+
+    const handlerLanguage = async (e)=>{
       setLanguage(e.target.value)
-      Cookies.set('openedx-language-preference', language);
-      window.location.reload();
+      setLoadingSetLanguage(true)
+
     }
+
+    useEffect(async()=>{
+      if(loadingSetLanguage){
+        await fetchDataLanguage(language)
+        await fetchPreferences(username, language)
+        setLoading(true)
+        setLoadingSetLanguage(false)
+      }
+      if (loading){
+        window.location.reload();
+        setLoading(false)
+      }
+      if(!loading && !loadingSetLanguage){
+        const data = await fetchLanguage(username)
+        setLanguage(data['pref-lang'])
+      }
+    },[language ,loading])
+
+
   return (
     <>
 
