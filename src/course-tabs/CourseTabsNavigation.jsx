@@ -17,19 +17,7 @@ function CourseTabsNavigation({
           aria-label={intl.formatMessage(messages.courseMaterial)}
         >
           {tabs.map(({ url, title, slug }) => {
-              if (title === 'Assessment Submission') {
-              title = intl.formatMessage(messages.asessmentSubmission)
-            } 
-            else if (title === 'Ngày'){
-              title = intl.formatMessage(messages.dateTab)
-            }
-            else if (title === 'Tiến trình học'){
-              title = intl.formatMessage(messages.progressTab)
-            }
-            else if (title === 'Khóa học'){
-
-              title = intl.formatMessage(messages.courseTab)
-            }
+             
             
             return <a
               key={slug}
