@@ -58,16 +58,14 @@ function CollapsibleSequenceLink({
   }, [expand]);
 
   const timezoneFormatArgs = userTimezone ? { timeZone: userTimezone } : {};
-	
+  const newTitle = title.replace(/\b(Questions?|Question)\b/g, intl.formatMessage(messages.QuestionSequenceTitle));
   // canLoadCourseware is true if the Courseware MFE is enabled, false otherwise
   let coursewareUrl = (
     canLoadCourseware
-      ? <Link to={`/course/${courseId}/${id}`}>{title}</Link>
-      : <Hyperlink destination={legacyWebUrl}>{title}</Hyperlink>
+      ? <Link to={`/course/${courseId}/${id}`}>{newTitle}</Link>
+      : <Hyperlink destination={legacyWebUrl}>{newTitle}</Hyperlink>
   );
-    
-  const newTitle = title.replace(/\b(Questions?|Question)\b/g, intl.formatMessage(messages.QuestionSequenceTitle));
-   
+
   if (canLoadCourseware === undefined) {
     if (useHistory) {
       const firstSequence = sequenceIds[0] || id;
@@ -86,10 +84,8 @@ function CollapsibleSequenceLink({
     }
   }
 
-
-
   const displayTitle = showLink ? coursewareUrl : newTitle;
-  console.log(displayTitle)
+
   const sectionTitle = (
     <div className={classNames('', { 'mt-2': !first })}>
     <div className=" w-100 m-0">
