@@ -47,6 +47,7 @@ const AuthenticatedUserDropdown = ({ intl, username }) => {
       }
     },[language ,loading])
 
+    console.log('=========', `${getConfig().SUPPORT_URL}`)
 
   return (
     <>
