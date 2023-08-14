@@ -65,7 +65,9 @@ function CollapsibleSequenceLink({
       ? <Link to={`/course/${courseId}/${id}`}>{title}</Link>
       : <Hyperlink destination={legacyWebUrl}>{title}</Hyperlink>
   );
-
+    
+  const newTitle = title.replace(/\b(Questions?|Question)\b/g, intl.formatMessage(messages.QuestionSequenceTitle));
+   
   if (canLoadCourseware === undefined) {
     if (useHistory) {
       const firstSequence = sequenceIds[0] || id;
@@ -76,16 +78,18 @@ function CollapsibleSequenceLink({
             handleHistoryClick(e, courseId, id, firstSequence);
           }}
         >
-          {title}
+          {newTitle}
         </Link>
       );
     } else {
-      coursewareUrl = (<Link to={`/course/${courseId}/${id}`}>{title}</Link>);
+      coursewareUrl = (<Link to={`/course/${courseId}/${id}`}>{newTitle}</Link>);
     }
   }
 
-  const displayTitle = showLink ? coursewareUrl : title;
 
+
+  const displayTitle = showLink ? coursewareUrl : newTitle;
+  console.log(displayTitle)
   const sectionTitle = (
     <div className={classNames('', { 'mt-2': !first })}>
     <div className=" w-100 m-0">

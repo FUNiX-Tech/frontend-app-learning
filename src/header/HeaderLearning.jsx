@@ -25,7 +25,7 @@ const HeaderLearning = ({
            <img className="d-block" src={getConfig().LOGO_URL} alt={getConfig().LOGO_URL} />
         </a>
         <div className="d-flex align-items-center flex-grow-1 course-title-lockup" style={{ gap:'0.5rem' }}>
-          <span className="d-block font-weight-bold small m-0">{courseOrg} {courseNumber}</span>
+          <span className="d-block  course-title m-0">{courseOrg} {courseNumber}</span>
           <span className="d-block m-0  course-title">{courseTitle}</span>
         </div>
         {showUserDropdown && authenticatedUser && (

@@ -452,5 +452,6 @@
     "header.help" : "Trợ giúp" ,
     "header.menu.profile" : "Hồ sơ" ,
     "header.menu.account" : "Tài khoản" ,
-    "header.menu.signOut" : "Đăng Xuất"
+    "header.menu.signOut" : "Đăng Xuất" ,
+    "learning.section.sequence.title.question" : "câu hỏi"
 }
