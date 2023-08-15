@@ -70,7 +70,7 @@ const MilestoneChartItem = ({ mmp2p, startDate, title, index ,intl }) => {
 
                   <div>
                     <svg width="180" height="250" viewBox="0 0 59.531 49.477" style={{width:'180px'}}>
-                      <g transform="matrix(.99959 0 0 .99838 -100.96 -48.57)">
+                      <g transform="matrix(.99959 0 0 .99838 -100.96 -47.70)">
                         <path
                           d="M101.002 69.656h55.492l4.064 4.158-4.064 4.205h-55.492l3.85-4.205z"
                           fill={setColor}
