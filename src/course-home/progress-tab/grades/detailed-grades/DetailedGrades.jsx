@@ -67,7 +67,7 @@ function DetailedGrades({ intl }) {
       {!hasSectionScores && (
         <p className="small">{intl.formatMessage(messages.detailedGradesEmpty)}</p>
       )}
-      {overviewTabUrl && (
+      {/* {overviewTabUrl && (
         <p className="x-small m-0">
           <FormattedMessage
             id="progress.ungradedAlert"
@@ -76,7 +76,7 @@ function DetailedGrades({ intl }) {
             values={{ outlineLink }}
           />
         </p>
-      )}
+      )} */}
     </section>
   );
 }

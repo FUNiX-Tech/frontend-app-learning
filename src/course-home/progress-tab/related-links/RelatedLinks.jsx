@@ -28,8 +28,8 @@ function RelatedLinks({ intl }) {
     });
   };
 
-  const overviewTab = tabs.find(tab => tab.slug === 'outline');
-  const overviewTabUrl = overviewTab && overviewTab.url;
+  // const overviewTab = tabs.find(tab => tab.slug === 'outline');
+  // const overviewTabUrl = overviewTab && overviewTab.url;
   const datesTab = tabs.find(tab => tab.slug === 'dates');
   const datesTabUrl = datesTab && datesTab.url;
 
@@ -45,14 +45,14 @@ function RelatedLinks({ intl }) {
           <p>{intl.formatMessage(messages.datesCardDescription)}</p>
         </li>
         )}
-        {overviewTabUrl && (
+        {/* {overviewTabUrl && (
         <li>
           <Hyperlink destination={overviewTabUrl} onClick={() => logLinkClicked('course_outline')}>
             {intl.formatMessage(messages.outlineCardLink)}
           </Hyperlink>
           <p>{intl.formatMessage(messages.outlineCardDescription)}</p>
         </li>
-        )}
+        )} */}
       </ul>
     </section>
   );
