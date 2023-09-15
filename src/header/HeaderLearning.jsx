@@ -2,9 +2,12 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { getConfig } from '@edx/frontend-platform';
 import { getAuthenticatedUser } from '@edx/frontend-platform/auth';
-
+import { useParams } from 'react-router-dom';
 import './HeaderLearning.scss'
 import AuthenticatedUserDropdown from './AuthenticatedUserDropdown';
+import { useEffect } from 'react';
+import { fetchSurveyCourse } from './data/thunks';
+
 
 const HeaderLearning = ({
     courseOrg, courseNumber, courseTitle, intl, showUserDropdown,
@@ -12,9 +15,20 @@ const HeaderLearning = ({
     // console.log('=======', courseOrg, courseNumber, courseTitle)
 
     const authenticatedUser = getAuthenticatedUser();
-
+    const { courseId: courseIdFromUrl } = useParams();
    
-
+    useEffect(async()=>{
+      const {checkSurveyCourse, checkUserSurvey } = await fetchSurveyCourse(courseIdFromUrl)
+      if (!checkSurveyCourse){
+         if(checkUserSurvey){
+           return window.location.href = `${getConfig().LMS_BASE_URL}/survey-form/${courseIdFromUrl}`
+         }else {
+           return true
+         }
+      }else {
+       return true
+      }
+     },[])
 
 
     return (

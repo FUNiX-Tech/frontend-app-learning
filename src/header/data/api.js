@@ -34,3 +34,12 @@ export async function getLanguage (username) {
 
     return data.data
 }
+
+
+export async function checkSurveyCourse(courseId){
+  const url = `${getConfig().LMS_BASE_URL}/api/survey-course/${courseId}`
+
+  const data = await getAuthenticatedHttpClient().get(url)
+
+  return data.data
+}

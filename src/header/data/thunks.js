@@ -1,5 +1,5 @@
 
-import { postSetLang , patchPreferences , getLanguage} from "./api"
+import { postSetLang , patchPreferences , getLanguage , checkSurveyCourse} from "./api"
 
 
 export async function fetchPreferences (username,code) {
@@ -14,4 +14,8 @@ export async function fetchDataLanguage (code){
 
 export async function fetchLanguage (username){
     return getLanguage(username)
+}
+
+export async function fetchSurveyCourse (courseId){
+    return checkSurveyCourse(courseId)
 }
