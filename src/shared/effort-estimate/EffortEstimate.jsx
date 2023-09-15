@@ -26,23 +26,25 @@ function EffortEstimate(props) {
       <span className="sr-only">{minutesFull}</span>
     </>
   );
-  const activities = intl.formatMessage(messages.activities, { activityCount: effortActivities });
+  // const activities = intl.formatMessage(messages.activities, { activityCount: effortActivities });
   let content = null;
 
-  if (effortTime && effortActivities) {
+  if (effortTime ) {
     content = (
       <FormattedMessage
         id="learning.effortEstimation.combinedEstimate"
-        defaultMessage="{minutes} + {activities}"
+        defaultMessage="{minutes} "
         description="You can likely leave this alone, unless you want to use a full width plus or similar change"
-        values={{ activities, minutes }}
+        values={{  minutes }}
       />
     );
   } else if (effortTime) {
     content = minutes;
-  } else if (effortActivities) {
-    content = activities;
-  } else {
+  } 
+  // else if (effortActivities) {
+  //   content = activities;
+  // } 
+  else {
     return null;
   }
 
