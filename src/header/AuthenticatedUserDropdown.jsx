@@ -9,7 +9,8 @@ import { Dropdown  } from '@edx/paragon';
 
 import messages from './messages';
 import { fetchDataLanguage, fetchPreferences ,fetchLanguage } from './data/thunks';
-
+import Cookies from 'js-cookie';
+import SelectLanguage from './SelectLanguage';
 
 
 const AuthenticatedUserDropdown = ({ intl, username }) => {
@@ -20,34 +21,34 @@ const AuthenticatedUserDropdown = ({ intl, username }) => {
   );
     
 
-  const  [language, setLanguage] = useState('vi')
-  const [loading, setLoading] = useState(false)
-  const [loadingSetLanguage, setLoadingSetLanguage] = useState(false)
+  // const  [language, setLanguage] = useState('vi')
+  // const [loading, setLoading] = useState(false)
+  // const [loadingSetLanguage, setLoadingSetLanguage] = useState(false)
 
-    const handlerLanguage = async (e)=>{
-      setLanguage(e.target.value)
-      setLoadingSetLanguage(true)
+    // const handlerLanguage = async (e)=>{
+    //   setLanguage(e.target.value)
+    //   setLoadingSetLanguage(true)
 
-    }
+    // }
 
-    useEffect(async()=>{
-      if(loadingSetLanguage){
-        await fetchDataLanguage(language)
-        await fetchPreferences(username, language)
-        setLoading(true)
-        setLoadingSetLanguage(false)
-      }
-      if (loading){
-        window.location.reload();
-        setLoading(false)
-      }
-      if(!loading && !loadingSetLanguage){
-        const data = await fetchLanguage(username)
-        setLanguage(data['pref-lang'])
-      }
-    },[language ,loading])
+    // useEffect(async()=>{
+    //   if(loadingSetLanguage){
+    //     await fetchDataLanguage(language)
+    //     await fetchPreferences(username, language)
+    //     setLoading(true)
+    //     setLoadingSetLanguage(false)
+    //   }
+    //   if (loading){
+    //     window.location.reload();
+    //     setLoading(false)
+    //   }
+    //   if(!loading && !loadingSetLanguage){
+    //     const data = await fetchLanguage(username)
+    //     setLanguage(data['pref-lang'])
+    //   }
+    // },[language ,loading])
 
-
+    
 
   return (
     <>
@@ -55,10 +56,11 @@ const AuthenticatedUserDropdown = ({ intl, username }) => {
    
       <div className='d-flex align-items-center ' style={{gap:'1rem'}}>
         <a  className="text-gray-700" href='https://funix.gitbook.io/funix-documentation/' target='_blank'>{intl.formatMessage(messages.help)}</a>
-        <select value={language} onChange={(e)=>handlerLanguage(e)} >
+        {/* <select value={language} onChange={(e)=>handlerLanguage(e)} >
           <option value='vi'>Tiếng Việt</option>
           <option value='en'>English</option>
-        </select>
+        </select> */}
+        <SelectLanguage username={username}/>
       </div>
       <Dropdown className="user-dropdown ml-3">
         <Dropdown.Toggle variant="outline-primary">

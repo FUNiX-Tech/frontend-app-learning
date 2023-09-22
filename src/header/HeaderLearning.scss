@@ -1,24 +1,62 @@
 .learning-header {
+  min-width: 0;
+
+  .course-title-lockup {
     min-width: 0;
-  
-    .course-title-lockup {
-      min-width: 0;
-  
-      span {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        padding-bottom: 0.1rem;
-      }
-    }
-  
-    .user-dropdown {
-      .btn {
-        height: 3rem;
-        // @media (max-width: -1 + map-get($grid-breakpoints, "sm")) {
-        //   padding: 0 0.5rem;
-        // }
-      }
+
+    span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding-bottom: 0.1rem;
     }
   }
 
+  .user-dropdown {
+    .btn {
+      height: 3rem;
+      // @media (max-width: -1 + map-get($grid-breakpoints, "sm")) {
+      //   padding: 0 0.5rem;
+      // }
+    }
+  }
+}
+
+
+.custom-selected{
+
+}
+
+
+.select-selected{
+&:hover{
+  cursor: pointer;
+}
+img {
+  width: 24px;
+}
+  display:flex ;
+
+  gap:5px;
+}
+
+.select-options {
+position: absolute;
+background-color: #fff;
+box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+z-index: 99;
+
+}
+.option{
+&:hover{
+  background-color:#f1f1f1 ;
+  cursor: pointer;
+}
+img{
+  width: 24px;
+}
+display: flex;
+gap:5px;
+width: 100%;
+padding:10px;
+}

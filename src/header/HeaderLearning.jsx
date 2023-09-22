@@ -18,15 +18,19 @@ const HeaderLearning = ({
     const { courseId: courseIdFromUrl } = useParams();
    
     useEffect(async()=>{
-      const {checkSurveyCourse, checkUserSurvey } = await fetchSurveyCourse(courseIdFromUrl)
-      if (!checkSurveyCourse){
-         if(checkUserSurvey){
-           return window.location.href = `${getConfig().LMS_BASE_URL}/survey-form/${courseIdFromUrl}`
-         }else {
-           return true
-         }
-      }else {
-       return true
+      try {
+        const {checkSurveyCourse, checkUserSurvey } = await fetchSurveyCourse(courseIdFromUrl)
+        if (!checkSurveyCourse){
+           if(checkUserSurvey){
+             return window.location.href = `${getConfig().LMS_BASE_URL}/survey-form/${courseIdFromUrl}`
+           }else {
+             return true
+           }
+        }else {
+         return true
+        }
+      } catch (error) {
+        console.log(error)
       }
      },[])
 
