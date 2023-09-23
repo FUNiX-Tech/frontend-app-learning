@@ -8,7 +8,7 @@ import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { Dropdown  } from '@edx/paragon';
 
 import messages from './messages';
-import { fetchDataLanguage, fetchPreferences ,fetchLanguage } from './data/thunks';
+import { fetchDataLanguage, fetchPreferences ,fetchLanguage ,fetchSearchCourse } from './data/thunks';
 import Cookies from 'js-cookie';
 import SelectLanguage from './SelectLanguage';
 
