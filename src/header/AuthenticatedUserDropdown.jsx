@@ -16,14 +16,15 @@ import SelectLanguage from './SelectLanguage';
 const AuthenticatedUserDropdown = ({ intl, username }) => {
   const dashboardMenuItem = (
     <Dropdown.Item href={`${getConfig().LMS_BASE_URL}/dashboard`}>
+       <i class="bi bi-house" ></i>
       {intl.formatMessage(messages.dashboard)}
     </Dropdown.Item>
   );
     
 
-  // const  [language, setLanguage] = useState('vi')
-  // const [loading, setLoading] = useState(false)
-  // const [loadingSetLanguage, setLoadingSetLanguage] = useState(false)
+  const  [language, setLanguage] = useState('vi')
+  const [loading, setLoading] = useState(false)
+  const [loadingSetLanguage, setLoadingSetLanguage] = useState(false)
 
     // const handlerLanguage = async (e)=>{
     //   setLanguage(e.target.value)
@@ -70,11 +71,13 @@ const AuthenticatedUserDropdown = ({ intl, username }) => {
           </span>
         </Dropdown.Toggle>
         <Dropdown.Menu className="dropdown-menu-right">
+          
           {dashboardMenuItem}
-          <Dropdown.Item href={`${getConfig().LMS_BASE_URL}/u/${username}`}>
+          {/* <Dropdown.Item href={`${getConfig().LMS_BASE_URL}/u/${username}`}>
             {intl.formatMessage(messages.profile)}
-          </Dropdown.Item>
+          </Dropdown.Item> */}
           <Dropdown.Item href={`${getConfig().LMS_BASE_URL}/account/settings`}>
+          <i class="bi bi-person"></i>
             {intl.formatMessage(messages.account)}
           </Dropdown.Item>
           {/* { getConfig().ORDER_HISTORY_URL && (
@@ -84,6 +87,7 @@ const AuthenticatedUserDropdown = ({ intl, username }) => {
           )} */}
           
           <Dropdown.Item href={getConfig().LOGOUT_URL}>
+          <i class="bi bi-box-arrow-left" ></i>
             {intl.formatMessage(messages.signOut)}
           </Dropdown.Item  >
           
