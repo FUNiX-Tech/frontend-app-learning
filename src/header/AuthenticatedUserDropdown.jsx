@@ -22,9 +22,9 @@ const AuthenticatedUserDropdown = ({ intl, username }) => {
   );
     
 
-  const  [language, setLanguage] = useState('vi')
-  const [loading, setLoading] = useState(false)
-  const [loadingSetLanguage, setLoadingSetLanguage] = useState(false)
+  // const  [language, setLanguage] = useState('vi')
+  // const [loading, setLoading] = useState(false)
+  // const [loadingSetLanguage, setLoadingSetLanguage] = useState(false)
 
     // const handlerLanguage = async (e)=>{
     //   setLanguage(e.target.value)
@@ -50,11 +50,19 @@ const AuthenticatedUserDropdown = ({ intl, username }) => {
     // },[language ,loading])
 
     
-
+    const handlerSearch =  async()=>{
+      try {
+          await fetchSearchCourse()
+      } catch (error) {
+          console.log('err', error)
+      }
+    }
   return (
     <>
 
-   
+      <div>
+          <button onClick={handlerSearch}>Search</button>
+      </div>
       <div className='d-flex align-items-center ' style={{gap:'1rem'}}>
         <a  className="text-gray-700" href='https://funix.gitbook.io/funix-documentation/' target='_blank'>{intl.formatMessage(messages.help)}</a>
         {/* <select value={language} onChange={(e)=>handlerLanguage(e)} >
