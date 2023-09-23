@@ -47,7 +47,9 @@ export async function checkSurveyCourse(courseId){
 
 export async function searchCourse(){
   const formData = new FormData();
-  formData.append({search_string: 'a' , page_size: 20, page_index: 0});
+  formData.append("search_string", 'a' );
+  formData.append('page_size', 20)
+  formData.append('page_index', 0)
   const url = `${getConfig().LMS_BASE_URL}/search/`
   const data = await getAuthenticatedHttpClient().post(url , formData , {
     headers: { 'X-Requested-With': 'XMLHttpRequest' }
