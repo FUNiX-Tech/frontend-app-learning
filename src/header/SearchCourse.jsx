@@ -1,7 +1,7 @@
 import { Dropdown , Modal, Button , ModalLayer , useToggle, ModalCloseButton } from '@edx/paragon';
 import { useEffect, useState } from 'react';
 import { fetchSearchCourse } from './data/thunks';
-import { useParams } from 'react-router-dom';
+import { useParams , useHistory } from 'react-router-dom';
 
 
 const SearchCourse = ()=>{
@@ -10,7 +10,7 @@ const SearchCourse = ()=>{
     const { courseId: courseIdFromUrl } = useParams();
     const [resultSearch, setResultSearch] = useState([])
     const [pageIndex, setPageIndex] = useState(0)
-   
+    const history = useHistory()
     const handlerSearch = async()=>{
         try {
             const search_string = 'a'
@@ -35,7 +35,10 @@ const SearchCourse = ()=>{
             console.log(error)
         }
     }
-
+    const handlerNavigate = (e)=>{
+        console.log(e)
+        history.push(e.data.url)
+    }
     return (
     <div className='search-course-custom'>
       <div className="d-flex">
@@ -59,15 +62,17 @@ const SearchCourse = ()=>{
             <div className='search-results'>
              {resultSearch && resultSearch.map(e =>{
                         console.log(e)
-                           return ( <div className='p-2'>
+                           return ( <div className='p-2' onClick={(e)=>handlerNavigate(e)} >
                            <div className='result-item rounded border p-4'>
                                    <div className='d-flex justify-content-between'>
                                        <span className='search-title' style={{fontSize:'1.3rem', fontWeight:'bold'}} >
                                         {e.data.location[1]}
                                          </span>
-                                       <span className='search-lesson   px-3'>Lesson</span>
+                                       <div>
+                                            <span className='search-lesson   px-3'>Lesson</span>
+                                        </div>
                                    </div>
-                                   <div dangerouslySetInnerHTML={{ __html: e.data.excerpt }} />
+                                   <div className='excerpt' dangerouslySetInnerHTML={{ __html: e.data.excerpt }} />
                                           
                                           
                            </div>
