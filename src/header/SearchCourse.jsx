@@ -2,6 +2,7 @@ import { Dropdown , Modal, Button , ModalLayer , useToggle, ModalCloseButton } f
 import { useEffect, useState } from 'react';
 import { fetchSearchCourse } from './data/thunks';
 import { useParams , useHistory } from 'react-router-dom';
+import { getConfig } from '@edx/frontend-platform';
 
 
 const SearchCourse = ()=>{
@@ -37,7 +38,6 @@ const SearchCourse = ()=>{
         }
     }
     useEffect(() => {
-        
         handlerSearch();
       }, [inputValue, courseIdFromUrl]);
 
@@ -67,7 +67,6 @@ const SearchCourse = ()=>{
             <span className='search-title' style={{fontSize:'1.2rem'}}>Results :</span>
             <div className='search-results'>
              {resultSearch && resultSearch.map(e =>{
-                        console.log(e)
                            return ( <div className='p-2' onClick={()=>handlerNavigate(e)} >
                            <div className='result-item rounded border p-4'>
                                    <div className='d-flex justify-content-between'>
