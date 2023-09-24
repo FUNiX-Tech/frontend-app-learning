@@ -12,7 +12,7 @@ const SearchCourse = ()=>{
     const [resultSearch, setResultSearch] = useState([])
     const [pageIndex, setPageIndex] = useState(0)
     const [inputValue , setInputValue] = useState('')
-    const history = useHistory()
+
     const handlerSearch = async()=>{
         try {
             
@@ -41,10 +41,20 @@ const SearchCourse = ()=>{
         handlerSearch();
       }, [inputValue, courseIdFromUrl]);
 
+      useEffect(()=>{
+        if(isOpen){
+            setResultSearch([])
+            setPageIndex(0)
+        }    
+    },[])
+   
+
     const handlerNavigate = (e)=>{
         console.log(e)
         window.location.href = `${getConfig().LMS_BASE_URL}${e.data.url}`
     }
+
+
     return (
     <div className='search-course-custom'>
       <div className="d-flex">
@@ -83,7 +93,7 @@ const SearchCourse = ()=>{
                            </div>
                        </div>)
                     })}
-                                {pageIndex > 0 && <div className='text-center'>
+                                {resultSearch && <div className='text-center'>
                     <button className='btn-load-more' onClick={handlerLoadMore}>Load More</button>
                 </div> }
             </div>
