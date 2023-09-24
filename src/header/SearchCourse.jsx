@@ -43,8 +43,9 @@ const SearchCourse = ()=>{
             setResultSearch([])
             setPageIndex(0)
         }    
-    },[])
+    },[isOpen])
    
+    console.log(resultSearch)
 
     const handlerNavigate = (e)=>{
         console.log(e)
