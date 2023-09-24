@@ -14,7 +14,7 @@ const SearchCourse = ()=>{
     const history = useHistory()
     const handlerSearch = async()=>{
         try {
-
+            
             const page_index = 0
            const {data , total} = await fetchSearchCourse(courseIdFromUrl, inputValue, page_index)
            setResultSearch(data)
@@ -36,9 +36,14 @@ const SearchCourse = ()=>{
             console.log(error)
         }
     }
+    useEffect(() => {
+        
+        handlerSearch();
+      }, [inputValue, courseIdFromUrl]);
+
     const handlerNavigate = (e)=>{
         console.log(e)
-        history.push(e.data.url)
+        window.location.href = `${getConfig().LMS_BASE_URL}${e.data.url}`
     }
     return (
     <div className='search-course-custom'>
@@ -79,7 +84,7 @@ const SearchCourse = ()=>{
                            </div>
                        </div>)
                     })}
-                                {pageIndex != 0 && <div className='text-center'>
+                                {pageIndex > 0 && <div className='text-center'>
                     <button className='btn-load-more' onClick={handlerLoadMore}>Load More</button>
                 </div> }
             </div>
