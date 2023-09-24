@@ -16,8 +16,7 @@ const SearchCourse = ()=>{
             const search_string = 'a'
             const page_index = 0
            const {data , total} = await fetchSearchCourse(courseIdFromUrl, search_string, page_index)
-           console.log('======', data)
-           setResultSearch(data.data)
+           setResultSearch(data)
            console.log(resultSearch)
         } catch (error) {
            console.log(error) 
