@@ -16,7 +16,9 @@ const SearchCourse = ()=>{
             const search_string = 'a'
             const page_index = 0
            const {data , total} = await fetchSearchCourse(courseIdFromUrl, search_string, page_index)
+           console.log('======', data)
            setResultSearch(data.data)
+           console.log(resultSearch)
         } catch (error) {
            console.log(error) 
         }
@@ -56,8 +58,7 @@ const SearchCourse = ()=>{
             </div>
             <span className='search-title' style={{fontSize:'1.2rem'}}>Results :</span>
             <div className='search-results'>
-                {resultSearch ? <>
-                    {resultSearch.map(e =>{
+             {resultSearch && resultSearch.map(e =>{
                         console.log(e)
                            return ( <div className='p-2'>
                            <div className='result-item rounded border p-4'>
@@ -73,9 +74,6 @@ const SearchCourse = ()=>{
                            </div>
                        </div>)
                     })}
-                
-                </> : <span>Not Found</span>}
-
                 <div>
                     <button onClick={handlerLoadMore}>loadmore</button>
                 </div>
