@@ -15,8 +15,8 @@ const SearchCourse = ()=>{
         try {
             const search_string = 'a'
             const page_index = 0
-           const data = await fetchSearchCourse(courseIdFromUrl, search_string, page_index)
-           setResultSearch(data)
+           const {data , total} = await fetchSearchCourse(courseIdFromUrl, search_string, page_index)
+           setResultSearch(data.data)
         } catch (error) {
            console.log(error) 
         }
@@ -26,7 +26,7 @@ const SearchCourse = ()=>{
             const search_string = 'a'
             const newPageIndex = pageIndex + 1;
             setPageIndex(prevPageIndex => prevPageIndex + 1 )
-            const data = await fetchSearchCourse(courseIdFromUrl, search_string, newPageIndex);
+            const {data, total} = await fetchSearchCourse(courseIdFromUrl, search_string, newPageIndex);
             setResultSearch(prevResult => [...prevResult, ...data]);
             setPageIndex(newPageIndex);
             console.log(resultSearch)
@@ -56,51 +56,26 @@ const SearchCourse = ()=>{
             </div>
             <span className='search-title' style={{fontSize:'1.2rem'}}>Results :</span>
             <div className='search-results'>
-{/*               
-                <div className='p-2'>
-                    <div className='result-item rounded border p-4'>
-                            <div className='d-flex justify-content-between'>
-                                <span className='search-title' style={{fontSize:'1.3rem', fontWeight:'bold'}} >Program Receipt and invoice</span>
-                                <span className='search-lesson   px-3'>Lesson</span>
-                            </div>
-                            <div>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio culpa maxime odio placeat ea labore quidem quasi consectetur alias tempora eum eligendi
-                            </div>
-                    </div>
-                </div>
-                <div className='p-2'>
-                    <div className='result-item rounded border p-4'>
-                            <div className='d-flex justify-content-between'>
-                                <span className='search-title' style={{fontSize:'1.3rem', fontWeight:'bold'}} >Program Receipt and invoice</span>
-                                <span className='search-lesson   px-3'>Lesson</span>
-                            </div>
-                            <div>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio culpa maxime odio placeat ea labore quidem quasi consectetur alias tempora eum eligendi
-                            </div>
-                    </div>
-                </div>
-                <div className='p-2'>
-                    <div className='result-item rounded border p-4'>
-                            <div className='d-flex justify-content-between'>
-                                <span className='search-title' style={{fontSize:'1.3rem', fontWeight:'bold'}} >Program Receipt and invoice</span>
-                                <span className='search-lesson   px-3'>Lesson</span>
-                            </div>
-                            <div>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio culpa maxime odio placeat ea labore quidem quasi consectetur alias tempora eum eligendi
-                            </div>
-                    </div>
-                </div>
-                <div className='p-2'>
-                    <div className='result-item rounded border p-4'>
-                            <div className='d-flex justify-content-between'>
-                                <span className='search-title' style={{fontSize:'1.3rem', fontWeight:'bold'}} >Program Receipt and invoice</span>
-                                <span className='search-lesson   px-3'>Lesson</span>
-                            </div>
-                            <div>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio culpa maxime odio placeat ea labore quidem quasi consectetur alias tempora eum eligendi
-                            </div>
-                    </div>
-                </div> */}
+                {resultSearch ? <>
+                    {resultSearch.map(e =>{
+                        console.log(e)
+                           return ( <div className='p-2'>
+                           <div className='result-item rounded border p-4'>
+                                   <div className='d-flex justify-content-between'>
+                                       <span className='search-title' style={{fontSize:'1.3rem', fontWeight:'bold'}} >
+                                        {e.data.location.join(', ')}
+                                         </span>
+                                       <span className='search-lesson   px-3'>Lesson</span>
+                                   </div>
+                                   <div>
+                                       {e.data.excerpt}
+                                   </div>
+                           </div>
+                       </div>)
+                    })}
+                
+                </> : <span>Not Found</span>}
+
                 <div>
                     <button onClick={handlerLoadMore}>loadmore</button>
                 </div>

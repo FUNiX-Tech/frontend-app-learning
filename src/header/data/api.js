@@ -56,5 +56,8 @@ export async function searchCourse(courseIdFromUrl, search_string, pageIndex){
   })
   const results = data.data.results.filter(e =>e.data.course === courseIdFromUrl)
   
-  return results
+  return {
+    data : results,
+    total : data.total
+  }
 }
