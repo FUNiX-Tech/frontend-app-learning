@@ -63,13 +63,13 @@ const SearchCourse = ()=>{
                            <div className='result-item rounded border p-4'>
                                    <div className='d-flex justify-content-between'>
                                        <span className='search-title' style={{fontSize:'1.3rem', fontWeight:'bold'}} >
-                                        {e.data.location.join(', ')}
+                                        {e.data.location[1]}
                                          </span>
                                        <span className='search-lesson   px-3'>Lesson</span>
                                    </div>
-                                   <div>
-                                       {e.data.excerpt}
-                                   </div>
+                                   <div dangerouslySetInnerHTML={{ __html: e.data.excerpt }} />
+                                          
+                                          
                            </div>
                        </div>)
                     })}
