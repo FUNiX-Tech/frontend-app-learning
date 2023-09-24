@@ -45,14 +45,16 @@ export async function checkSurveyCourse(courseId){
 }
 
 
-export async function searchCourse(){
+export async function searchCourse(courseIdFromUrl, search_string, pageIndex){
   const formData = new FormData();
   formData.append("search_string", 'a' );
   formData.append('page_size', 20)
-  formData.append('page_index', 0)
+  formData.append('page_index', pageIndex)
   const url = `${getConfig().LMS_BASE_URL}/search/`
   const data = await getAuthenticatedHttpClient().post(url , formData , {
     headers: { 'X-Requested-With': 'XMLHttpRequest' }
   })
-  console.log(data)
+  const results = data.data.results.filter(e =>e.data.course === courseIdFromUrl)
+  
+  return results
 }

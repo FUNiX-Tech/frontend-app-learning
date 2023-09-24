@@ -20,6 +20,7 @@ export async function fetchSurveyCourse (courseId){
     return checkSurveyCourse(courseId)
 }
 
-export async function fetchSearchCourse (){
-    return searchCourse()
+export async function fetchSearchCourse (courseIdFromUrl, search_string, pageIndex){
+
+    return searchCourse(courseIdFromUrl, search_string, pageIndex)
 }
