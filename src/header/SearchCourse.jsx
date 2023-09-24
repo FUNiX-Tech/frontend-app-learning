@@ -37,9 +37,6 @@ const SearchCourse = ()=>{
             console.log(error)
         }
     }
-    useEffect(() => {
-        handlerSearch();
-      }, [inputValue, courseIdFromUrl]);
 
       useEffect(()=>{
         if(isOpen){
@@ -93,9 +90,9 @@ const SearchCourse = ()=>{
                            </div>
                        </div>)
                     })}
-                                {resultSearch && <div className='text-center'>
+                 <div className='text-center'>
                     <button className='btn-load-more' onClick={handlerLoadMore}>Load More</button>
-                </div> }
+                </div> 
             </div>
         </div>
       </ModalLayer>
