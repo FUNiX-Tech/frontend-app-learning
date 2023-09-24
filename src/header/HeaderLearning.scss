@@ -162,3 +162,12 @@ padding:10px;
     background: #90cdf4;
   }
 }
+
+.btn-load-more{
+  border : none;
+  background: none;
+  color : #0a3055;
+  &:hover {
+    cursor: pointer;
+  }
+}

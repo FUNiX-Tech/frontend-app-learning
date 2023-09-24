@@ -10,12 +10,13 @@ const SearchCourse = ()=>{
     const { courseId: courseIdFromUrl } = useParams();
     const [resultSearch, setResultSearch] = useState([])
     const [pageIndex, setPageIndex] = useState(0)
+    const [inputValue , setInputValue] = useState('')
     const history = useHistory()
     const handlerSearch = async()=>{
         try {
-            const search_string = 'a'
+
             const page_index = 0
-           const {data , total} = await fetchSearchCourse(courseIdFromUrl, search_string, page_index)
+           const {data , total} = await fetchSearchCourse(courseIdFromUrl, inputValue, page_index)
            setResultSearch(data)
            console.log(resultSearch)
         } catch (error) {
@@ -24,10 +25,10 @@ const SearchCourse = ()=>{
     }
     const handlerLoadMore = async()=>{
         try {
-            const search_string = 'a'
+
             const newPageIndex = pageIndex + 1;
             setPageIndex(prevPageIndex => prevPageIndex + 1 )
-            const {data, total} = await fetchSearchCourse(courseIdFromUrl, search_string, newPageIndex);
+            const {data, total} = await fetchSearchCourse(courseIdFromUrl, inputValue, newPageIndex);
             setResultSearch(prevResult => [...prevResult, ...data]);
             setPageIndex(newPageIndex);
             console.log(resultSearch)
@@ -54,7 +55,7 @@ const SearchCourse = ()=>{
             </div>
             <div className='modal-body-search'>
                 <div className='input-search rounded'>
-                    <input type='text' className='' name='search' />
+                    <input type='text' className='' name='search' onChange={(e)=>setInputValue(e.target.value)}/>
                     <i class="bi bi-search" onClick={handlerSearch}></i>
                 </div>
             </div>
@@ -62,7 +63,7 @@ const SearchCourse = ()=>{
             <div className='search-results'>
              {resultSearch && resultSearch.map(e =>{
                         console.log(e)
-                           return ( <div className='p-2' onClick={(e)=>handlerNavigate(e)} >
+                           return ( <div className='p-2' onClick={()=>handlerNavigate(e)} >
                            <div className='result-item rounded border p-4'>
                                    <div className='d-flex justify-content-between'>
                                        <span className='search-title' style={{fontSize:'1.3rem', fontWeight:'bold'}} >
@@ -78,9 +79,9 @@ const SearchCourse = ()=>{
                            </div>
                        </div>)
                     })}
-                <div>
-                    <button onClick={handlerLoadMore}>loadmore</button>
-                </div>
+                                {pageIndex != 0 && <div className='text-center'>
+                    <button className='btn-load-more' onClick={handlerLoadMore}>Load More</button>
+                </div> }
             </div>
         </div>
       </ModalLayer>
