@@ -8,54 +8,29 @@ import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { Dropdown  } from '@edx/paragon';
 
 import messages from './messages';
-import { fetchDataLanguage, fetchPreferences ,fetchLanguage } from './data/thunks';
-import Cookies from 'js-cookie';
+
 import SelectLanguage from './SelectLanguage';
+import SearchCourse from './SearchCourse';
+
 
 
 const AuthenticatedUserDropdown = ({ intl, username }) => {
+
   const dashboardMenuItem = (
     <Dropdown.Item href={`${getConfig().LMS_BASE_URL}/dashboard`}>
        <i class="bi bi-house" ></i>
       {intl.formatMessage(messages.dashboard)}
     </Dropdown.Item>
   );
+
     
-
-  const  [language, setLanguage] = useState('vi')
-  const [loading, setLoading] = useState(false)
-  const [loadingSetLanguage, setLoadingSetLanguage] = useState(false)
-
-    // const handlerLanguage = async (e)=>{
-    //   setLanguage(e.target.value)
-    //   setLoadingSetLanguage(true)
-
-    // }
-
-    // useEffect(async()=>{
-    //   if(loadingSetLanguage){
-    //     await fetchDataLanguage(language)
-    //     await fetchPreferences(username, language)
-    //     setLoading(true)
-    //     setLoadingSetLanguage(false)
-    //   }
-    //   if (loading){
-    //     window.location.reload();
-    //     setLoading(false)
-    //   }
-    //   if(!loading && !loadingSetLanguage){
-    //     const data = await fetchLanguage(username)
-    //     setLanguage(data['pref-lang'])
-    //   }
-    // },[language ,loading])
-
     
 
   return (
     <>
-
-   
+      
       <div className='d-flex align-items-center ' style={{gap:'1rem'}}>
+        <SearchCourse />
         <a  className="text-gray-700" href='https://funix.gitbook.io/funix-documentation/' target='_blank'>{intl.formatMessage(messages.help)}</a>
         {/* <select value={language} onChange={(e)=>handlerLanguage(e)} >
           <option value='vi'>Tiếng Việt</option>
