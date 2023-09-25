@@ -45,13 +45,16 @@ const SearchCourse = ()=>{
         }    
     },[isOpen])
    
-    console.log(resultSearch)
 
     const handlerNavigate = (e)=>{
-        console.log(e)
         window.location.href = `${getConfig().LMS_BASE_URL}${e.data.url}`
     }
 
+    const handleKeyPress = (e)=>{
+        if(e.key === 'Enter'){
+            handlerSearch()
+        }
+    }
 
     return (
     <div className='search-course-custom'>
@@ -68,13 +71,16 @@ const SearchCourse = ()=>{
             </div>
             <div className='modal-body-search'>
                 <div className='input-search rounded'>
-                    <input type='text' className='' name='search' onChange={(e)=>setInputValue(e.target.value)}/>
+                    <input type='text' className='' name='search'
+                     onChange={(e)=>setInputValue(e.target.value)}
+                     onKeyDown={handleKeyPress}
+                     />
                     <i class="bi bi-search" onClick={handlerSearch}></i>
                 </div>
             </div>
             <span className='search-title' style={{fontSize:'1.2rem'}}>Results :</span>
             <div className='search-results'>
-             {resultSearch && resultSearch.map(e =>{
+             {resultSearch.length > 0 ?  resultSearch.map(e =>{
                            return ( <div className='p-2' onClick={()=>handlerNavigate(e)} >
                            <div className='result-item rounded border p-4'>
                                    <div className='d-flex justify-content-between'>
@@ -90,8 +96,8 @@ const SearchCourse = ()=>{
                                           
                            </div>
                        </div>)
-                    })}
-                    {resultSearch &&  <div className='text-center'>
+                    }) : <span>Not Found</span>}
+                    {resultSearch.length > 0 &&  <div className='text-center'>
                     <button className='btn-load-more' onClick={handlerLoadMore}>Load More</button>
                 </div>  }
                 
