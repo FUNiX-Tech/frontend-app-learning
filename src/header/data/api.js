@@ -55,10 +55,9 @@ export async function searchCourse(courseIdFromUrl, search_string, pageIndex){
     headers: { 'X-Requested-With': 'XMLHttpRequest' }
   })
   console.log(data)
-  // const results = data.data.results.filter(e =>e.data.course === courseIdFromUrl)
-  // return {
-  //   data : results,
-  //   total : data.total
-  // }
+  return {
+    data : data.data.results,
+    total : data.total
+  }
 }
 
