@@ -1,5 +1,5 @@
 
-import { postSetLang , patchPreferences , getLanguage , checkSurveyCourse , searchCourse} from "./api"
+import { postSetLang , patchPreferences , getLanguage , checkSurveyCourse , searchCourse } from "./api"
 
 
 export async function fetchPreferences (username,code) {
@@ -24,3 +24,4 @@ export async function fetchSearchCourse (courseIdFromUrl, search_string, pageInd
 
     return searchCourse(courseIdFromUrl, search_string, pageIndex)
 }
+

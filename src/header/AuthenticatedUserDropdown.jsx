@@ -30,6 +30,7 @@ const AuthenticatedUserDropdown = ({ intl, username }) => {
     <>
       
       <div className='d-flex align-items-center ' style={{gap:'1rem'}}>
+    
         <SearchCourse />
         <a  className="text-gray-700" href='https://funix.gitbook.io/funix-documentation/' target='_blank'>{intl.formatMessage(messages.help)}</a>
         {/* <select value={language} onChange={(e)=>handlerLanguage(e)} >

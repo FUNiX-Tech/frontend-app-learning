@@ -91,9 +91,10 @@ const SearchCourse = ()=>{
                            </div>
                        </div>)
                     })}
-                 <div className='text-center'>
+                    {resultSearch &&  <div className='text-center'>
                     <button className='btn-load-more' onClick={handlerLoadMore}>Load More</button>
-                </div> 
+                </div>  }
+                
             </div>
         </div>
       </ModalLayer>
