@@ -45,13 +45,17 @@ const SearchCourse = ()=>{
         }    
     },[isOpen])
    
-    console.log(resultSearch)
+    console.log(pageIndex)
 
     const handlerNavigate = (e)=>{
-        console.log(e)
         window.location.href = `${getConfig().LMS_BASE_URL}${e.data.url}`
     }
 
+    const handleKeyPress = (e)=>{
+        if(e.key === 'Enter'){
+            handlerSearch()
+        }
+    }
 
     return (
     <div className='search-course-custom'>
@@ -68,7 +72,10 @@ const SearchCourse = ()=>{
             </div>
             <div className='modal-body-search'>
                 <div className='input-search rounded'>
-                    <input type='text' className='' name='search' onChange={(e)=>setInputValue(e.target.value)}/>
+                    <input type='text' className='' name='search'
+                     onChange={(e)=>setInputValue(e.target.value)}
+                     onKeyDown={handleKeyPress}
+                     />
                     <i class="bi bi-search" onClick={handlerSearch}></i>
                 </div>
             </div>
