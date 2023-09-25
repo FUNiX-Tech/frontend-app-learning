@@ -45,7 +45,6 @@ const SearchCourse = ()=>{
         }    
     },[isOpen])
    
-    console.log(pageIndex)
 
     const handlerNavigate = (e)=>{
         window.location.href = `${getConfig().LMS_BASE_URL}${e.data.url}`
@@ -98,7 +97,7 @@ const SearchCourse = ()=>{
                            </div>
                        </div>)
                     })}
-                    {resultSearch &&  <div className='text-center'>
+                    {resultSearch.length > 0 &&  <div className='text-center'>
                     <button className='btn-load-more' onClick={handlerLoadMore}>Load More</button>
                 </div>  }
                 
