@@ -1,0 +1,52 @@
+
+
+
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(100%);
+    }
+}
+
+
+
+.show-section {
+    display: block;
+    animation: slideInRight 0.5s forwards;
+}
+
+.hidden-section{
+    display: none;
+    animation: slideOutRight 0.5s forwards;
+}
+
+.btn-toggle-section{
+    border: 1px solid #e9e6e4 ;
+    background: none;
+    border-top-right-radius: 70%;
+    border-bottom-right-radius: 70%;
+    &:hover{
+        i {
+            color: white;
+        }
+        background: rgb(23, 26, 83);
+        border-color: rgb(23, 26, 83);
+    }
+  i{
+    font-size: 28px;
+    
+  }
+    
+}

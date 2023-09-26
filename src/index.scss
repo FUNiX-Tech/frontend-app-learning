@@ -96,7 +96,6 @@
 
 .sequence {
   @media (min-width: map-get($grid-breakpoints, "sm")) {
-    border: solid 1px #eaeaea;
     border-radius: 4px;
   }
 }
@@ -299,10 +298,8 @@
 
 .unit-navigation {
   display: flex;
-  justify-content: center;
-  max-width: 640px;
   margin: 0 auto;
-
+  gap:'26px';
   .previous-button,
   .next-button {
     white-space: nowrap;
@@ -314,11 +311,24 @@
   }
 
   .next-button {
-    flex-basis: 25%;
+    flex-basis: 15%;
+    background: #2015FF;
+    color: #eaeaea;
+    border:none;
+    &:hover{
+      background-color: rgb(23, 26, 83);
+      color : #eaeaea
+    }
   }
 
   .previous-button {
-    flex-basis: 25%;
+    flex-basis: 15%;
+    border-color: rgb(32, 21, 255);
+    color : rgb(32, 21, 255);
+    &:hover{
+      background-color: rgb(23, 26, 83);
+      color : #eaeaea
+    }
   }
 }
 
