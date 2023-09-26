@@ -39,9 +39,9 @@ function UnitNavigation({
         onClick={buttonOnClick}
         disabled={disabled}
       >
-        {/* <UnitNavigationEffortEstimate sequenceId={sequenceId} unitId={unitId}>
+        <UnitNavigationEffortEstimate sequenceId={sequenceId} unitId={unitId}>
           {buttonText}
-        </UnitNavigationEffortEstimate> */}
+        </UnitNavigationEffortEstimate>
         <FontAwesomeIcon icon={nextArrow} className="ml-2" size="sm" />
       </Button>
     );
@@ -49,7 +49,8 @@ function UnitNavigation({
 
   const prevArrow = isRtl(getLocale()) ? faChevronRight : faChevronLeft;
   return (
-    <div className="unit-navigation d-flex">
+   <div className='border-top ' style={{paddingTop:'34px'}} >
+      <div className="unit-navigation d-flex ">
       <Button
         variant="outline-secondary"
         className="previous-button mr-2 d-flex align-items-center justify-content-center"
@@ -61,6 +62,7 @@ function UnitNavigation({
       </Button>
       {renderNextButton()}
     </div>
+   </div>
   );
 }
 

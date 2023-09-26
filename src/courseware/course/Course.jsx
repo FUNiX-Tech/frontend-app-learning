@@ -18,6 +18,8 @@ import SectionList from '../../course-home/outline-tab/SectionList';
 import { useModel } from '../../generic/model-store';
 import { getSessionStorage, setSessionStorage } from '../../data/sessionStorage';
 
+import './course.scss'
+
 /** [MM-P2P] Experiment */
 import { initCoursewareMMP2P, MMP2PBlockModal } from '../../experiments/mm-p2p';
 
@@ -83,6 +85,10 @@ function Course({
     ));
   }, [sequenceId]);
 
+  const [showUnit , setShowUnit] = useState(false)
+
+
+
   return (
     <SidebarProvider courseId={courseId} unitId={unitId}>
       <Helmet>
@@ -104,8 +110,34 @@ function Course({
       </div>*/}
 
       <AlertList topic="sequence" />
-      <div className="row">
-        <div className="col-12 col-md-9 broder-all" >
+      <div className="row" >
+      <div className={showUnit ? 'col-12 col-md-3' :''}  style={{marginLeft:'-2.1%', with:'100%'}} >
+          <div  style={{position:'sticky' , top:'0px' , left:'0', overflowY:'auto' , with:'100%'}}>
+                <div className='d-flex'>
+                
+                  <div className={showUnit ? 'show-section' : 'hidden-section'} style={{maxHeight:'100vh' , overflow:'auto'}} >
+                      <SectionList
+                courseId={courseId}
+                relativeHeight
+                useHistory
+              />
+
+                  </div>
+                  <div>
+                    <button className='btn-toggle-section' onClick={()=>setShowUnit(!showUnit)}>
+                      {showUnit ? <span>
+                        <i class="bi bi-arrow-left"></i>
+                      </span> :                      
+                      <span>
+                        <i class="bi bi-arrow-right"></i>
+                      </span>}
+                    </button>
+                  </div>
+            
+                </div>
+            </div>
+        </div>
+        <div className={` col-12  ${showUnit ? 'col-md-9 ' : 'col-md '}`} >
         <CourseBreadcrumbs
           courseId={courseId}
           sectionId={section ? section.id : null}
@@ -126,13 +158,14 @@ function Course({
         mmp2p={MMP2P}
       />
       </div>
-        <div className="col-12 col-md-3" id="section-list-container">
+     
+        {/* <div className="col-12 col-md-3" id="section-list-container">
           <SectionList
             courseId={courseId}
             relativeHeight
             useHistory
           />
-        </div>
+        </div> */}
       </div>
       <CelebrationModal
         courseId={courseId}

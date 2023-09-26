@@ -149,7 +149,7 @@ function Sequence({
   };
 
   const defaultContent = (
-    <div className="sequence-container d-inline-flex flex-row">
+    <div className="sequence-container d-inline-flex flex-row" >
       <div className={classNames('sequence w-100', { 'position-relative': shouldDisplayNotificationTriggerInSequence })}>
         <SequenceNavigation
           sequenceId={sequenceId}
@@ -183,7 +183,20 @@ function Sequence({
             unitId={unitId}
 
           />
-          {unitHasLoaded && (
+           <UnitNavigation
+            sequenceId={sequenceId}
+            unitId={unitId}
+            onClickPrevious={() => {
+              logEvent('edx.ui.lms.sequence.previous_selected', 'bottom');
+              handlePrevious();
+            }}
+            onClickNext={() => {
+              logEvent('edx.ui.lms.sequence.next_selected', 'bottom');
+              handleNext();
+            }}
+            goToCourseExitPage={() => goToCourseExitPage()}
+          />
+          {/* {unitHasLoaded && (
           <UnitNavigation
             sequenceId={sequenceId}
             unitId={unitId}
@@ -197,7 +210,7 @@ function Sequence({
             }}
             goToCourseExitPage={() => goToCourseExitPage()}
           />
-          )}
+          )} */}
         </div>
       </div>
       <Sidebar />
