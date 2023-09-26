@@ -112,7 +112,7 @@
     display: inline-flex;
     border-radius: 0;
     border: solid 1px #eaeaea;
-    border-left-width: 0;
+    border-left-width: 1;
     position: relative;
     font-weight: 400;
     padding: 0 0.375rem;
@@ -149,13 +149,13 @@
       color: $success;
     }
 
-    &:first-child {
-      border-left-width: 0;
-    }
+    // &:first-child {
+    //   border-left-width: 1;
+    // }
 
-    &:last-child {
-      border-right-width: 0;
-    }
+    // &:last-child {
+    //   border-right-width: 0;
+    // }
   }
 
   .sequence-navigation-tabs-container {
@@ -169,6 +169,7 @@
   }
 
   .sequence-navigation-tabs {
+    overflow: hidden;
     .btn {
       flex-basis: 100%;
       min-width: 2rem;
@@ -406,6 +407,15 @@
   max-width: none !important;
 }
 
+.learning-header{
+  position: sticky;
+  top:0px;
+  background-color: white;
+  z-index: 1;
+  box-shadow:  0px 2px 4px -1px #0B0B0B0F,0px 4px 6px -1px #0B0B0B1A;;
+}
+
+
 .learning-header .course-title-lockup span:first-child {
   padding-bottom: 5px;
   padding-top: 5px;
@@ -441,7 +451,6 @@
   & #courseware-sequenceNavigation {
     // max-height: 50vh;
     overflow-y: auto;
-    position: sticky;
     top: 0px;
 
     & button {

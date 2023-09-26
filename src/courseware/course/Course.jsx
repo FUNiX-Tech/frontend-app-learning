@@ -112,7 +112,7 @@ function Course({
       <AlertList topic="sequence" />
       <div className="row" >
       <div className={showUnit ? 'col-12 col-md-3' :''}  style={{marginLeft:'-2.1%', with:'100%'}} >
-          <div  style={{position:'sticky' , top:'0px' , left:'0', overflowY:'auto' , with:'100%'}}>
+          <div  style={{position:'sticky' , top:'68px' , left:'0', overflowY:'auto' , with:'100%'}}>
                 <div className='d-flex'>
                 
                   <div className={showUnit ? 'show-section' : 'hidden-section'} style={{maxHeight:'100vh' , overflow:'auto'}} >
@@ -124,7 +124,7 @@ function Course({
 
                   </div>
                   <div>
-                    <button className='btn-toggle-section' onClick={()=>setShowUnit(!showUnit)}>
+                    <button className={`btn-toggle-section ${showUnit ? "btn-hidden-section" : "btn-show-section"}`} onClick={()=>setShowUnit(!showUnit)}>
                       {showUnit ? <span>
                         <i class="bi bi-arrow-left"></i>
                       </span> :                      
