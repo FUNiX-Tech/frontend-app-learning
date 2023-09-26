@@ -32,11 +32,20 @@
     animation: slideOutRight 0.5s forwards;
 }
 
-.btn-toggle-section{
-    border: 1px solid #e9e6e4 ;
-    background: none;
+
+.btn-hidden-section {
+    border-radius: 50%;
+}
+.btn-show-section{
     border-top-right-radius: 70%;
     border-bottom-right-radius: 70%;
+}
+
+
+.btn-toggle-section{
+    border: 2px solid #2015FF; ;
+    background: none;
+
     &:hover{
         i {
             color: white;
