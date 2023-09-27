@@ -46,6 +46,7 @@ function SectionList({
 
 const style = {
     maxHeight: `${height}px`,
+    overflow : 'auto',
   };
 
 

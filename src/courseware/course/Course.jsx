@@ -36,6 +36,7 @@ function Course({
   const {
     celebrations,
     isStaff,
+    title
   } = useModel('courseHomeMeta', courseId);
   const sequence = useModel('sequences', sequenceId);
   const section = useModel('sections', sequence ? sequence.sectionId : null);
@@ -85,10 +86,10 @@ function Course({
     ));
   }, [sequenceId]);
 
-  const [showUnit , setShowUnit] = useState(false)
+  const [show , setShow] = useState(false)
 
 
-
+  
   return (
     <SidebarProvider courseId={courseId} unitId={unitId}>
       <Helmet>
@@ -110,34 +111,28 @@ function Course({
       </div>*/}
 
       <AlertList topic="sequence" />
-      <div className="row" >
-      <div className={showUnit ? 'col-12 col-md-3' :''}  style={{marginLeft:'-2.1%', with:'100%'}} >
-          <div  style={{position:'sticky' , top:'68px' , left:'0', overflowY:'auto' , with:'100%'}}>
-                <div className='d-flex'>
-                
-                  <div className={showUnit ? 'show-section' : 'hidden-section'} style={{maxHeight:'100vh' , overflow:'auto'}} >
-                      <SectionList
-                courseId={courseId}
-                relativeHeight
-                useHistory
-              />
+      <div id='sequence-custom' className="d-flex" >
+        <div className={show? 'css-16e9fpx' : 'css-17h1ao9'}>
+        <div style={{height:'100%' }}>
+            <div className={show ? 'css-mtrik7' : 'css-dh1ib6'}>
+                  <button className={`btn-toggle-section ${show ? "btn-hidden-section rotated" : "btn-show-section"}`}  onClick={()=>setShow(!show)}>
 
-                  </div>
-                  <div>
-                    <button className={`btn-toggle-section ${showUnit ? "btn-hidden-section" : "btn-show-section"}`} onClick={()=>setShowUnit(!showUnit)}>
-                      {showUnit ? <span>
-                        <i class="bi bi-arrow-left"></i>
-                      </span> :                      
-                      <span>
-                        <i class="bi bi-arrow-right"></i>
-                      </span>}
-                    </button>
-                  </div>
-            
+                    <i class="bi bi-arrow-right"></i>
+                  </button>
+              </div>
+              <div className={show? 'css-11m367g' : 'css-1qz66c7'} style={{marginTop:'3px'}}>
+                <div style={{padding:'20px 10px' , paddingRight:'50px'}}>
+                    <h4>{title}</h4>
                 </div>
-            </div>
+                <SectionList
+              courseId={courseId}
+              relativeHeight
+              useHistory
+            />
+              </div>
+           </div>
         </div>
-        <div className={` col-12  ${showUnit ? 'col-md-9 ' : 'col-md '}`} >
+        <div className={show ?  'css-jygthk' : 'css-yeymkw'}style={{width:'100%'}} >
         <CourseBreadcrumbs
           courseId={courseId}
           sectionId={section ? section.id : null}
