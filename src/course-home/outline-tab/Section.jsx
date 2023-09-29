@@ -76,7 +76,7 @@ function Section({
   return (
     <li>
       <Collapsible
-        className="mb-2 border-none"
+        className="mb-2"
         styling="card-lg"
         title={sectionTitle}
         open={open}
