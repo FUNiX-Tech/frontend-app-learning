@@ -203,10 +203,26 @@ html:root {
   }
 
 
-  .collapsible-body{
-    background-color: var(--chakra-colors-gray-100);
+
+  .lesson{
+    .collapsible-body{
+      background-color: var(--chakra-colors-gray-100);
+    
+    }
   
   }
+  
+  .home{
+    .collapsible-body{
+      background-color: white;
+    
+    }
+  }
+  
+  
+  
+
+
   .border-none{
     border:none
   }

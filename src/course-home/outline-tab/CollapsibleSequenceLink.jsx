@@ -160,13 +160,16 @@ function CollapsibleSequenceLink({
           </small>
         </div>
       )}
-         {!lesson && <span>{subText}</span>}
+         {!lesson && <div className='pl-2 ml-4'>
+          <span class="align-middle">{subText}</span>
+          </div>}
     </div>
   );
 
 
   return (
     <li className="collapsible-sequence-link-container">
+  
       <Collapsible
         className="mb-2"
         styling="card-lg"
@@ -190,8 +193,9 @@ function CollapsibleSequenceLink({
         //   />
         // )}
       >
-        {/* <div>sub-text</div> */}
-        <ol className="list-unstyled" style={{ paddingLeft: '1rem' }}>
+
+
+       <ol className="list-unstyled" style={{ paddingLeft: '1rem' }}>
           {sequenceIds.map((sequenceId) => {
              const sequenceData = sequences[sequenceId];
         
@@ -230,6 +234,7 @@ function CollapsibleSequenceLink({
             );
           })}
         </ol>
+       
       </Collapsible>
     </li>
   );

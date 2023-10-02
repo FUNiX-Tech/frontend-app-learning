@@ -77,9 +77,10 @@ function Section({
 
   return (
     <li>
+
       <Collapsible
      
-        className="mb-2"
+        className={`mb-2 ${lesson ? 'lesson' : 'home'}`}
         styling="card-lg"
         title={sectionTitle}
         open={open}
@@ -101,6 +102,8 @@ function Section({
           />
         )}
       >
+      
+        
         <ol className="list-unstyled">
           {sequenceIds.map((sequenceId, index) => (
             <CollapsibleSequenceLink
@@ -115,6 +118,7 @@ function Section({
             />
           ))}
         </ol>
+        
       </Collapsible>
     </li>
   );
