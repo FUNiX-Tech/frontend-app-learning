@@ -128,6 +128,7 @@ function Course({
               courseId={courseId}
               relativeHeight
               useHistory
+              lesson
             />
               </div>
            </div>

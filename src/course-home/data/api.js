@@ -113,13 +113,14 @@ function normalizeCourseHomeCourseMetadata(metadata, rootSlug) {
 }
 
 export function normalizeOutlineBlocks(courseId, blocks) {
-
+  
   const models = {
     courses: {},
     sections: {},
     sequences: {},
   };
   Object.values(blocks).forEach(block => {
+
     switch (block.type) {
       case 'course':
         models.courses[block.id] = {
@@ -379,7 +380,7 @@ export async function getOutlineTabData(courseId) {
   const userHasPassingGrade = data.user_has_passing_grade;
   const verifiedMode = camelCaseObject(data.verified_mode);
   const welcomeMessageHtml = data.welcome_message_html;
-
+  
   return {
     accessExpiration,
     canShowUpgradeSock,
@@ -480,4 +481,13 @@ export async function getSection(courseId){
   
 
   return newData
+}
+
+
+// api sub-text course
+export async function getSubtextSequence (sequenceId){
+  const url = `${getConfig().LMS_BASE_URL}/api/sub_text/${sequenceId}`
+  const data = await getAuthenticatedHttpClient().get(url);
+
+  return data.data
 }

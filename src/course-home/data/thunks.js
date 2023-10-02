@@ -13,6 +13,7 @@ import {
   postRequestCert,
   postSetGoal,
   getLiveTabIframe,
+  getSubtextSequence
 } from './api';
 
 import {
@@ -148,4 +149,8 @@ export function processEvent(eventData, getTabData) {
 
 export async function saveGoal(courseId, hoursPerDay, weekDays, targetUserId, selectedDate, selectBlockId) {
   return postSetGoal(courseId, hoursPerDay, weekDays, targetUserId, selectedDate , selectBlockId);
+}
+
+export async function subTextSuquence (sequenceId) {
+  return getSubtextSequence(sequenceId)
 }

@@ -18,6 +18,7 @@ import { useModel } from '../../generic/model-store';
 import messages from './messages';
 // import genericMessages from '../../generic/messages';
 import './CollapsibleSequenceLink.scss';
+import {subTextSuquence} from '../data/index'
 
 function handleHistoryClick(e, courseId, sequenceId, unitId) {
   e.preventDefault();
@@ -34,6 +35,7 @@ function CollapsibleSequenceLink({
   sequences,
   expand,
   useHistory,
+  lesson
 }) {
   const sequence = sequences[id];
   const {
@@ -44,10 +46,13 @@ function CollapsibleSequenceLink({
     showLink,
     title,
     sequenceIds,
+    
   } = sequence;
   const {
     userTimezone,
   } = useModel('outline', courseId);
+
+
   const {
     canLoadCourseware,
   } = useModel('courseHomeMeta', courseId);
@@ -56,6 +61,18 @@ function CollapsibleSequenceLink({
   useEffect(() => {
     setOpen(expand);
   }, [expand]);
+
+  const [subText , setSubText] = useState('')
+  useEffect(async ()=>{
+    try {
+    const {sub_text} = await subTextSuquence(id)
+      if (sub_text.length > 0) {
+        setSubText(sub_text)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  },[id])
 
   const timezoneFormatArgs = userTimezone ? { timeZone: userTimezone } : {};
   const newTitle = title.replace(/\b(Questions?|Question)\b/g, intl.formatMessage(messages.QuestionSequenceTitle));
@@ -85,11 +102,12 @@ function CollapsibleSequenceLink({
   }
 
   const displayTitle = showLink ? coursewareUrl : newTitle;
-
+  // console.log(id)
   const sectionTitle = (
     <div className={classNames('', { 'mt-2': !first })}>
     <div className=" w-100 m-0">
       <div className=" p-0">
+     
         {complete ? (
           <FontAwesomeIcon
             icon={fasCheckCircle}
@@ -114,6 +132,7 @@ function CollapsibleSequenceLink({
             , {intl.formatMessage(complete ? messages.completedAssignment : messages.incompleteAssignment)}
           </span>
           <EffortEstimate className="ml-3 align-middle" block={sequence} />
+         
           </div>
     </div>
       {due && (
@@ -141,9 +160,10 @@ function CollapsibleSequenceLink({
           </small>
         </div>
       )}
+         {!lesson && <span>{subText}</span>}
     </div>
   );
-  
+
 
   return (
     <li className="collapsible-sequence-link-container">
@@ -170,10 +190,11 @@ function CollapsibleSequenceLink({
         //   />
         // )}
       >
+        {/* <div>sub-text</div> */}
         <ol className="list-unstyled" style={{ paddingLeft: '1rem' }}>
           {sequenceIds.map((sequenceId) => {
              const sequenceData = sequences[sequenceId];
-	
+        
             return (
               <li key={sequenceId}>
 	     
@@ -222,6 +243,7 @@ CollapsibleSequenceLink.propTypes = {
   expand: PropTypes.bool.isRequired,
   sequences: PropTypes.shape().isRequired,
   useHistory: PropTypes.bool.isRequired,
+  lesson : PropTypes.bool
 };
 
 export default injectIntl(CollapsibleSequenceLink);

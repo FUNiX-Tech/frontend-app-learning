@@ -7,6 +7,7 @@ export {
   saveWeeklyLearningGoal,
   saveGoal,
   fetchStaticTab,
+  subTextSuquence,
 } from './thunks';
 
 export { reducer } from './slice';

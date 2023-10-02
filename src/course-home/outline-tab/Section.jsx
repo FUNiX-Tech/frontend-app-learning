@@ -20,6 +20,7 @@ function Section({
   intl,
   section,
   useHistory,
+  lesson
 }) {
   const {
     complete,
@@ -32,6 +33,7 @@ function Section({
     },
   } = useModel('outline', courseId);
 
+ 
   const [open, setOpen] = useState(defaultOpen);
 
   useEffect(() => {
@@ -76,6 +78,7 @@ function Section({
   return (
     <li>
       <Collapsible
+     
         className="mb-2"
         styling="card-lg"
         title={sectionTitle}
@@ -101,6 +104,7 @@ function Section({
         <ol className="list-unstyled">
           {sequenceIds.map((sequenceId, index) => (
             <CollapsibleSequenceLink
+              lesson = {lesson}
               key={sequenceId}
               id={sequenceId}
               courseId={courseId}
@@ -123,6 +127,7 @@ Section.propTypes = {
   intl: intlShape.isRequired,
   section: PropTypes.shape().isRequired,
   useHistory: PropTypes.bool.isRequired,
+  lesson: PropTypes.bool
 };
 
 export default injectIntl(Section);

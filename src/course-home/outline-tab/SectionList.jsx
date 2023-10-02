@@ -16,6 +16,7 @@ function SectionList({
   expandAll,
   relativeHeight,
   useHistory,
+  lesson
 }) {
 
 
@@ -54,16 +55,18 @@ const style = {
 
   return (
     <ol id="courseHome-utline" className="list-unstyled" style={style} >
-      {courses[rootCourseId].sectionIds.map((sectionId) => (
-        <Section
-          key={sectionId}
-          courseId={courseId}
-          defaultOpen={false}
-          expand={expandAll}
-          section={sections[sectionId]}
-          useHistory={useHistory}
-        />
-      ))}
+      {courses[rootCourseId].sectionIds.map((sectionId) => {
+
+        return <Section
+        key={sectionId}
+        courseId={courseId}
+        defaultOpen={false}
+        expand={expandAll}
+        section={sections[sectionId]}
+        useHistory={useHistory}
+        lesson = {lesson}
+      />
+      })}
     </ol>
   );
 }
@@ -73,6 +76,7 @@ SectionList.propTypes = {
   expandAll: PropTypes.bool,
   relativeHeight: PropTypes.bool,
   useHistory: PropTypes.bool,
+  lesson : PropTypes.bool
 };
 
 SectionList.defaultProps = {
@@ -80,6 +84,7 @@ SectionList.defaultProps = {
   expandAll: false,
   relativeHeight: false,
   useHistory: false,
+  lesson : false
 };
 
 export default SectionList;
