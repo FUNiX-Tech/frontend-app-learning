@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 
@@ -12,7 +12,7 @@ import StreakModal from '../shared/streak-celebration';
 import InstructorToolbar from '../instructor-toolbar';
 import useEnrollmentAlert from '../alerts/enrollment-alert';
 import useLogistrationAlert from '../alerts/logistration-alert';
-
+import { useSelector } from 'react-redux';
 import ProductTours from '../product-tours/ProductTours';
 
 function LoadedTabPage({
@@ -42,6 +42,15 @@ function LoadedTabPage({
   const streakDiscountCouponEnabled = celebrations && celebrations.streakDiscountEnabled && verifiedMode;
   const [isStreakCelebrationOpen,, closeStreakCelebration] = useToggle(streakLengthToCelebrate);
 
+  const [show , setShow] = useState(false)
+  const [styling, setStyling] = useState('css-yeymkw')
+  const isShowChatGPT = useSelector(state =>state.header.isShowGlobalChatGPT)
+  
+  useEffect(() => {
+    setStyling(show ? (isShowChatGPT ? 'css-14u8e49' : 'css-jygthk') : (isShowChatGPT ? 'css-1mjee9h' : 'css-yeymkw'));
+  }, [show, isShowChatGPT]);
+
+
   return (
     <>
       <ProductTours
@@ -69,20 +78,23 @@ function LoadedTabPage({
         streakDiscountCouponEnabled={streakDiscountCouponEnabled}
         verifiedMode={verifiedMode}
       />
-      <main id="main-content" className="d-flex flex-column flex-grow-1">
-        <AlertList
-          topic="outline"
-          className="mx-5 mt-3"
-          customAlerts={{
-            ...enrollmentAlert,
-            ...logistrationAlert,
-          }}
-        />
-        <CourseTabsNavigation tabs={tabs} className="mb-3" activeTabSlug={activeTabSlug} />
-        <div className="container-xl">
-          {children}
+      
+        <div className={styling}>
+          <main id="main-content" className="d-flex flex-column flex-grow-1">
+          <AlertList
+            topic="outline"
+            className="mx-5 mt-3"
+            customAlerts={{
+              ...enrollmentAlert,
+              ...logistrationAlert,
+            }}
+          />
+          <CourseTabsNavigation tabs={tabs} className="mb-3" activeTabSlug={activeTabSlug} />
+          <div className="container-xl">
+            {children}
+          </div>
+        </main>
         </div>
-      </main>
     </>
   );
 }

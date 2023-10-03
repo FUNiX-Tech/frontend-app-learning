@@ -102,7 +102,8 @@ function TabPage({ intl, ...props }) {
     return (
       <>
         {/* <Header /> */}
-        <HeaderLearning />
+        <HeaderLearning loading  />
+  
         <PageLoading
           srMessage={intl.formatMessage(messages.loading)}
         />
@@ -145,6 +146,7 @@ function TabPage({ intl, ...props }) {
           courseNumber={number}
           courseTitle={title}
           intl={intl}
+          isLoading
           />
         <LoadedTabPage {...props} />
         <Footer />

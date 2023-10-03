@@ -17,7 +17,7 @@ import SidebarTriggers from './sidebar/SidebarTriggers';
 import SectionList from '../../course-home/outline-tab/SectionList';
 import { useModel } from '../../generic/model-store';
 import { getSessionStorage, setSessionStorage } from '../../data/sessionStorage';
-
+import { useSelector } from 'react-redux';
 import './course.scss'
 
 /** [MM-P2P] Experiment */
@@ -87,9 +87,14 @@ function Course({
   }, [sequenceId]);
 
   const [show , setShow] = useState(false)
-
-
+  const [styling, setStyling] = useState('css-yeymkw')
+  const isShowChatGPT = useSelector(state =>state.header.isShowChatGPT)
   
+  useEffect(() => {
+    setStyling(show ? (isShowChatGPT ? 'css-14u8e49' : 'css-jygthk') : (isShowChatGPT ? 'css-1mjee9h' : 'css-yeymkw'));
+  }, [show, isShowChatGPT]);
+
+
   return (
     <SidebarProvider courseId={courseId} unitId={unitId}>
       <Helmet>
@@ -133,7 +138,7 @@ function Course({
               </div>
            </div>
         </div>
-        <div className={show ?  'css-jygthk' : 'css-yeymkw'}style={{width:'100%'}} >
+        <div className={styling} style={{width:'100%'}} >
         <CourseBreadcrumbs
           courseId={courseId}
           sectionId={section ? section.id : null}
@@ -162,6 +167,9 @@ function Course({
             useHistory
           />
         </div> */}
+
+
+
       </div>
       <CelebrationModal
         courseId={courseId}

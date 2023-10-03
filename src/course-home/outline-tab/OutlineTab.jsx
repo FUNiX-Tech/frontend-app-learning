@@ -147,7 +147,7 @@ function OutlineTab({ intl }) {
             }}
           />
         </div>
-        <div className="col col-12 col-md-8">
+        <div className="col col-12 col-md-10">
           { /** [MM-P2P] Experiment (the conditional) */ }
           { !MMP2P.state.isEnabled
             && (

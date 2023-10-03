@@ -10,7 +10,7 @@ import { fetchSurveyCourse } from './data/thunks';
 
 
 const HeaderLearning = ({
-    courseOrg, courseNumber, courseTitle, intl, showUserDropdown,
+    courseOrg, courseNumber, courseTitle, intl, showUserDropdown, loading
   })=>{
     // console.log('=======', courseOrg, courseNumber, courseTitle)
 
@@ -49,6 +49,7 @@ const HeaderLearning = ({
         {showUserDropdown && authenticatedUser && (
         <AuthenticatedUserDropdown
           username={authenticatedUser.username}
+          isLoading= {loading}
         />
         )}
       </div>
@@ -64,6 +65,8 @@ HeaderLearning.propTypes = {
     courseTitle: PropTypes.string,
     intl: intlShape.isRequired,
     showUserDropdown: PropTypes.bool,
+    isLoading : PropTypes.bool
+    
   };
   
 HeaderLearning.defaultProps = {
@@ -71,6 +74,7 @@ HeaderLearning.defaultProps = {
     courseNumber: null,
     courseTitle: null,
     showUserDropdown: true,
+    isLoading: false
   };
   
 
