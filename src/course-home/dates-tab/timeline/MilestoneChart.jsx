@@ -36,7 +36,7 @@ const MilestoneChart = ({mmp2p})=>{
       updatedSections.sort((a, b)=>a.startDate - b.startDate)
     return <>
     <div className='container d-flex justify-content-center' >
-        <div className='d-flex flex-nowrap pe-2' >
+        <div className='d-flex flex-wrap pe-2' style={{gap:'25px'}} >
             {updatedSections?.map((section, index) => <MilestoneChartItem mmp2p={mmp2p} {...section}  index={index}/>)}
         </div>
     </div>
