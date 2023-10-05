@@ -37,10 +37,7 @@ const ChatGPT = ()=>{
         </div>
         <div className='px-3'>
             <div className='pt-2 border-top d-flex flex-column'>
-                <span>Need to speak to mentor?<a href='#'>Go to Knowledge</a></span>
-                <span>Need technical support?<a href='#'>Go to Support</a></span>
-                <span>Tell us what you think of Udacity GPT <a href='#'>Provide feedback</a></span>
-
+             
 
             </div>
         </div>
