@@ -11,6 +11,7 @@ import { useModel } from '../../generic/model-store';
 import { initDatesMMP2P } from '../../experiments/mm-p2p';
 import FunixLearningGoalCard from './widgets/FunixLearningGoalCard';
 import MilestoneChart from './timeline/MilestoneChart';
+import GradeBarGraph from '../progress-tab/grade-graph/GradeBarGraph';
 
 
 function FunixDatesTab({ intl }) {
@@ -51,20 +52,11 @@ function FunixDatesTab({ intl }) {
         </div>
     
       </div>
-      {/* <div className="row">
-      <div className="col col-12 col-md-7">
 
-        <MilestoneChart mmp2p={mmp2p} />
-      </div>
-        <div className="col col-12 col-md-5">
-          <FunixLearningGoalCard
-            goalHoursPerDay={goalHoursPerDay}
-            goalWeekdays={goalWeekdays}
-            enrollCourseDate={enrollCourseDate}
-          />
+        <div>
+          <GradeBarGraph  />
+
         </div>
-      </div>
-      <Timeline mmp2p={mmp2p} /> */}
     </>
   );
 }

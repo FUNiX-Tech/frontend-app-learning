@@ -35,8 +35,8 @@ const MilestoneChart = ({mmp2p})=>{
       asms.forEach(asm =>updatedSections.push({startDate : new Date(asm.date), title: asm.title}))
       updatedSections.sort((a, b)=>a.startDate - b.startDate)
     return <>
-    <div className='container' style={{marginRight:'-40px'}}>
-        <div className='d-flex flex-wrap pe-2' style={{gap:'25px'}}>
+    <div className='container d-flex justify-content-center' >
+        <div className='d-flex flex-nowrap pe-2' >
             {updatedSections?.map((section, index) => <MilestoneChartItem mmp2p={mmp2p} {...section}  index={index}/>)}
         </div>
     </div>

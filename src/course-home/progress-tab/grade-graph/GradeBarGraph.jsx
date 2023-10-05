@@ -1,10 +1,12 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React,{useEffect} from 'react';
+import { useSelector ,useDispatch} from 'react-redux';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { Bar } from 'react-chartjs-2';
 
 import { useModel } from '../../../generic/model-store';
 import messages from './messages';
+
+import { fetchProgressTab } from '../../data';
 
 function GradeBarGraph({ intl }) {
   const {
@@ -15,8 +17,23 @@ function GradeBarGraph({ intl }) {
     sectionScores,
   } = useModel('progress', courseId);
 
-  const sectionScoresFlat = sectionScores
-    .reduce((arr, el) => arr.concat(el.subsections || []), []);
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (!sectionScores) {
+
+      dispatch(fetchProgressTab(courseId));
+    }
+  }, [courseId, sectionScores]);
+
+  let sectionScoresFlat = [];
+
+  if (sectionScores) {
+   
+    sectionScoresFlat = sectionScores.reduce((arr, el) => arr.concat(el.subsections || []), []);
+  }
+
+
 
   const labels = [];
   const dataGrade = [];
@@ -33,7 +50,7 @@ function GradeBarGraph({ intl }) {
 
   const assignmentTypeArr = Array.from(assignmentTypeSet).map(assignmentType => {
     if (assignmentType.split(' ').length >= 2) {
-      const assignmentTypeFirstLetter = assignmentType.split(' ').map(el => el[0]).join('');
+      const assignmentTypeFirstLetter = assignmentType.split(' ')?.map(el => el[0]).join('');
       return { label: assignmentTypeFirstLetter.toUpperCase(), assignmentType };
     }
     return { label: assignmentType, assignmentType };
@@ -43,13 +60,13 @@ function GradeBarGraph({ intl }) {
   let sumGrade = 0;
 
   // Populate labels, dataGrade, and tooltipTitles each assignmentTypeArr
-  assignmentTypeArr.forEach(({ assignmentType, label }) => {
+  assignmentTypeArr?.forEach(({ assignmentType, label }) => {
     // Filter all sectionScoresFlat for each assignmentType
     // eslint-disable-next-line max-len
     const filteredSectionScoresFlat = sectionScoresFlat.filter(({ assignmentType: sectionAssignmentType }) => sectionAssignmentType === assignmentType);
 
     // For each and process the dataGrade and tooltipTitles
-    filteredSectionScoresFlat.forEach((el, index) => {
+    filteredSectionScoresFlat?.forEach((el, index) => {
       labels.push(`${label} ${index + 1}`);
       dataGrade.push(Math.round(el.percentGraded * 100));
       tooltipTitles.push(el.displayName);
@@ -99,9 +116,10 @@ function GradeBarGraph({ intl }) {
   };
   return (
     <section className="text-dark-700 mb-4 rounded shadow-sm p-4">
+      
       <div className="row w-100 m-0">
-        <h2>{ intl.formatMessage(messages.gradeBarGraphtitle) }</h2>
-        <Bar
+       <h2>{ intl.formatMessage(messages.gradeBarGraphtitle) }</h2>
+         <Bar
           data={data}
           options={options}
         />
