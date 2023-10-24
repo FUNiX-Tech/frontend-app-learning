@@ -225,7 +225,7 @@ function CollapsibleSequenceLink({
                     </div>
                     <div className="col p-0 ml-3 text-break">
                       <span className="align-middle">
-                      <Link to={`/course/${courseId}/${sequenceId}`}>{sequenceData.display_name}</Link>
+                      <Link to={`/course/${courseId}/${sequence.id}/${sequenceId}`}>{sequenceData.display_name}</Link>
                       </span>
                     </div>
                   </div>
