@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { OuterExamTimer } from '@edx/frontend-lib-special-exams';
-
+import { useModel } from '../generic/model-store';
 import TabPage from './TabPage';
 
 export default function TabContainer(props) {
@@ -28,6 +28,18 @@ export default function TabContainer(props) {
     courseId,
     courseStatus,
   } = useSelector(state => state[slice]);
+
+  const {toggleFeature}  = useModel('courseHomeMeta', courseId)
+  
+  useEffect(() => {
+    if (tab === 'dates') {
+      if (toggleFeature) {
+        if (!toggleFeature.includes('dates')) {
+          window.location.href = `/course/${courseId}/home`
+        } 
+      }
+    }
+  }, [tab, toggleFeature]);
 
   return (
     <TabPage

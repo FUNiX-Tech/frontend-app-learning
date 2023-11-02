@@ -14,11 +14,11 @@ import logoChatGPT from './assets/chatGPT.svg'
 import SelectLanguage from './SelectLanguage';
 import SearchCourse from './SearchCourse';
 import ChatGPT from '../chatGPT/ChatGPT';
+import { useModel } from '../generic/model-store';
 
 
-
-const AuthenticatedUserDropdown = ({ intl, username , isLoading}) => {
-
+const AuthenticatedUserDropdown = ({ intl, username , isLoading , courseId}) => {
+  
   const dashboardMenuItem = (
     <Dropdown.Item href={`${getConfig().LMS_BASE_URL}/dashboard`}>
        <i class="bi bi-house" ></i>
@@ -33,17 +33,31 @@ const AuthenticatedUserDropdown = ({ intl, username , isLoading}) => {
 
     dispatch(showGlobalChatGPT())
   }
+  const [isSearch , setIsSearch] = useState(true)
+  const [isChatGPT , setIsChatGPT] = useState(true)
+  const {toggleFeature}  = useModel('courseHomeMeta', courseId)
+  useEffect(()=>{
+    if (!toggleFeature?.includes('search')) {
+      setIsSearch(false);
+    } 
+    if (!toggleFeature?.includes('chatGPT')) {
+      setIsChatGPT(false);
+    } 
 
+  },[toggleFeature])
   return (
     <>
       
-    {!isLoading &&        <div className='d-flex align-items-center ' style={{gap:'1rem'}}>
-      <div className="btn-chatGPT" onClick={handlerChatGPT}>
+    {!isLoading &&  <div className='d-flex align-items-center ' style={{gap:'1rem'}}>
+
+      {isChatGPT && <div className="btn-chatGPT" onClick={handlerChatGPT}>
           <span>
               <img src={logoChatGPT} alt='logo-chatGPT' />
           </span>
       </div>
-        <SearchCourse />
+      }
+        {isSearch && <SearchCourse />}
+        
         <a  className="text-gray-700" href='https://funix.gitbook.io/funix-documentation/' target='_blank'>{intl.formatMessage(messages.help)}</a>
         <SelectLanguage username={username}/>
       </div>}
@@ -83,7 +97,8 @@ const AuthenticatedUserDropdown = ({ intl, username , isLoading}) => {
 AuthenticatedUserDropdown.propTypes = {
   intl: intlShape.isRequired,
   username: PropTypes.string.isRequired,
-  isLoading : PropTypes.bool
+  isLoading : PropTypes.bool ,
+  courseId : PropTypes.string
 };
 
 AuthenticatedUserDropdown.defaultProps = {

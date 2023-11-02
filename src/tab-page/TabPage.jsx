@@ -38,6 +38,7 @@ function TabPage({ intl, ...props }) {
     org,
     start,
     title,
+    toggleFeature
   } = useModel('courseHomeMeta', courseId);
 
   const user = getAuthenticatedUser();
@@ -76,6 +77,7 @@ function TabPage({ intl, ...props }) {
   //   }
   // }, []);
 
+if (toggleFeature?.includes('feedback')){
   useEffect(() => {
     if (!document.getElementById('feed-back-script')) {
       // Because the feedback style is depend on LMS style so we need to add it to the head
@@ -97,7 +99,8 @@ function TabPage({ intl, ...props }) {
       document.head.appendChild(feedScript);
     }
   });
-
+}
+  
   if (courseStatus === 'loading') {
     return (
       <>
