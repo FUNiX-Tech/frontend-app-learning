@@ -447,6 +447,11 @@
     "learning.tabs.date" : "Kế hoạch học tập" ,
     "learning.tabs.progress":"Tiến độ",
     "learning.tabs.course" : "Môn học",
+    "learning.dates.submit" : "Gửi" , 
+    "learning.dates.select.date" :"Nhập ngày bắt đầu học" ,
+    "learning.dates.select.unit" : "Chọn bài bắt đầu học",
+    "learning.dates.progress.weekly" : "Tiến độ theo tuần" ,
+    "learning.dates.progress.daily" : "Tiến độ theo ngày ",
 
     "header.menu.dashboard" : "Trang chủ" ,
     "header.help" : "Sổ tay sinh viên" ,

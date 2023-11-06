@@ -81,6 +81,26 @@ const messages = defineMessages({
     id: 'learning.goal.sun',
     defaultMessage: 'Sun',
   },
+  submit :{
+    id:'learning.dates.submit' ,
+    defaultMessage : 'Submit'
+  },
+  selectDate : {
+    id : 'learning.dates.select.date' ,
+    defaultMessage : 'Select the start date of study'
+  },
+  selectUnti : {
+    id:'learning.dates.select.unit' , 
+    defaultMessage: 'Select the lesson to begin with' 
+  },
+  weeklyProgress : {
+    id : 'learning.dates.progress.weekly' ,
+    defaultMessage : 'Weekly progress'
+  },
+  dailyProgress : {
+    id:  'learning.dates.progress.daily' ,
+    defaultMessage : 'Daily progress'
+  }
 });
 
 export default messages;

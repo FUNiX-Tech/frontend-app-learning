@@ -43,11 +43,11 @@ function FunixDatesTab({ intl }) {
           />
         </div>
         <div>
-          <h3 className='py-5'>Tiến độ theo tuần</h3>
+          <h3 className='py-5'> {intl.formatMessage(messages.weeklyProgress)}</h3>
            <MilestoneChart mmp2p={mmp2p} />
         </div>
         <div>
-          <h3 className='pt-5 pb-2'>Tiến độ theo ngày</h3>
+          <h3 className='pt-5 pb-2'>{intl.formatMessage(messages.dailyProgress)}</h3>
           <Timeline mmp2p={mmp2p} />
         </div>
     

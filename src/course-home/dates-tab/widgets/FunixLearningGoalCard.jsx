@@ -140,14 +140,14 @@ function FunixLearningGoalCard({
             />
          </div>
          <div className='col-2.5 form-date' >
-         <h2 className="h4 mb-2.5 text-primary-500 ">Nhập ngày bắt đầu học</h2>
+         <h2 className="h4 mb-2.5 text-primary-500 "> {intl.formatMessage(messages.selectDate)}</h2>
             <Input type="date"
             value={selectedDate}
             onChange={handleDateChange} />
           
          </div>
       <div className='col form-date'>
-        <h2 className="h4 mb-2.5 text-primary-500 ">Chọn bài bắt đầu học</h2>
+        <h2 className="h4 mb-2.5 text-primary-500 ">{intl.formatMessage(messages.selectUnti)}</h2>
           <div>
             <select className="form-control w-100" value={selectBlockId} onChange={(e)=>SetSelectBlockId(e.target.value)}>
               {filterCourseBlock.map(courseBlock=>{
@@ -195,7 +195,7 @@ function FunixLearningGoalCard({
           type="submit"
           onClick={handleSubmit}
           >
-          Submit
+          {intl.formatMessage(messages.submit)}
           </button> 
           </div>
           
