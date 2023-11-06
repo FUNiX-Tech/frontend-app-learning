@@ -38,6 +38,7 @@ function TabPage({ intl, ...props }) {
     org,
     start,
     title,
+    toggleFeature
   } = useModel('courseHomeMeta', courseId);
 
   const user = getAuthenticatedUser();
@@ -77,25 +78,28 @@ function TabPage({ intl, ...props }) {
   // }, []);
 
   useEffect(() => {
-    if (!document.getElementById('feed-back-script')) {
-      // Because the feedback style is depend on LMS style so we need to add it to the head
-      // Append link to style in body
-      const feedbackStyle = document.createElement('link');
-      feedbackStyle.setAttribute('rel', 'stylesheet');
-      feedbackStyle.setAttribute('href', `${getConfig().LMS_BASE_URL}/static/feedback/feedback.css`);
-
-      // Append link to head
-      document.head.appendChild(feedbackStyle);
-
-      const feedScript = document.createElement('script');
-      feedScript.setAttribute('src', `${getConfig().LMS_BASE_URL}/static/feedback/add_feedback.js`);
-      feedScript.setAttribute('id', 'feed-back-script');
-      feedScript.addEventListener('load', () => {
-        // eslint-disable-next-line no-undef
-        initFUNiXFeedback(getConfig().LMS_BASE_URL, true);
-      });
-      document.head.appendChild(feedScript);
+    if (toggleFeature?.includes('feedback')){
+      if (!document.getElementById('feed-back-script')) {
+        // Because the feedback style is depend on LMS style so we need to add it to the head
+        // Append link to style in body
+        const feedbackStyle = document.createElement('link');
+        feedbackStyle.setAttribute('rel', 'stylesheet');
+        feedbackStyle.setAttribute('href', `${getConfig().LMS_BASE_URL}/static/feedback/feedback.css`);
+  
+        // Append link to head
+        document.head.appendChild(feedbackStyle);
+  
+        const feedScript = document.createElement('script');
+        feedScript.setAttribute('src', `${getConfig().LMS_BASE_URL}/static/feedback/add_feedback.js`);
+        feedScript.setAttribute('id', 'feed-back-script');
+        feedScript.addEventListener('load', () => {
+          // eslint-disable-next-line no-undef
+          initFUNiXFeedback(getConfig().LMS_BASE_URL, true);
+        });
+        document.head.appendChild(feedScript);
+      }
     }
+    
   });
 
   if (courseStatus === 'loading') {

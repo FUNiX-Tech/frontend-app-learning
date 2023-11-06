@@ -50,6 +50,7 @@ const HeaderLearning = ({
         <AuthenticatedUserDropdown
           username={authenticatedUser.username}
           isLoading= {loading}
+          courseId={courseIdFromUrl}
         />
         )}
       </div>
