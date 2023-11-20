@@ -453,5 +453,6 @@
     "header.menu.profile" : "Hồ sơ" ,
     "header.menu.account" : "Tài khoản" ,
     "header.menu.signOut" : "Đăng Xuất" ,
-    "learning.section.sequence.title.question" : "câu hỏi"
+    "learning.section.sequence.title.question" : "câu hỏi",
+    "dashboard.myCourse": "khoá học của tôi"
 }

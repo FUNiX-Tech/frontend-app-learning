@@ -50,7 +50,7 @@ import LiveTab from './course-home/live-tab/LiveTab';
 import CourseAccessErrorPage from './generic/CourseAccessErrorPage';
 
 import StaticPage from './static-page/StaticPage';
-import Dashboard from './learner-dashboard/dashboard';
+import Dashboard from './learner-dashboard/Dashboard';
 
 
 subscribe(APP_READY, () => {
