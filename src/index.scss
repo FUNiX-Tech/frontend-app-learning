@@ -718,3 +718,29 @@ html:root {
   border-right-style: solid;
   border-color: var(--chakra-colors-gray-300);
 }
+
+
+// css custtom styles figma
+
+.btn-primary-custom{
+  border: none ;
+  background-color:#0086FF !important;
+  // width: 143px;
+  // height: 36px;
+  border-radius: 6px;
+  padding: 6px 16px;
+  color: white;
+
+  span {
+    size: 16px;
+    line-height: 20px;
+    font-weight: 600;
+  }
+}
+.outline{
+  background: none !important;
+  border: 1px solid #0086FF;
+  span{
+    color: #0086FF;
+  }
+}
