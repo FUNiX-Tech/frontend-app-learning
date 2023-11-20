@@ -50,6 +50,7 @@ import LiveTab from './course-home/live-tab/LiveTab';
 import CourseAccessErrorPage from './generic/CourseAccessErrorPage';
 
 import StaticPage from './static-page/StaticPage';
+import Dashboard from './learner-dashboard/dashboard';
 
 
 subscribe(APP_READY, () => {
@@ -75,6 +76,7 @@ subscribe(APP_READY, () => {
         <NoticesProvider>
           <UserMessagesProvider>
             <Switch>
+              <PageRoute path='/dashboard' component={Dashboard} />
               <PageRoute exact path="/goal-unsubscribe/:token" component={GoalUnsubscribe} />
               <PageRoute path="/redirect" component={CoursewareRedirectLandingPage} />
               <PageRoute path="/course/:courseId/access-denied" component={CourseAccessErrorPage} />
