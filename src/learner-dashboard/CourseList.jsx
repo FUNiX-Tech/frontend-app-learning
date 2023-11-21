@@ -4,7 +4,7 @@ import messages from './messages';
 import { getConfig } from '@edx/frontend-platform';
 
 const CourseList = ({intl, courses})=>{
-    // console.log('course ' , courses)
+    console.log('course ' , courses)
     return <div className='container p-2' >
             <div className='p-2' >
                 <h1>{intl.formatMessage(messages.myCourse)}</h1>
@@ -12,7 +12,7 @@ const CourseList = ({intl, courses})=>{
             <div className='d-flex flex-column ' style={{gap:'10px'}}>
                 {courses.map(c => {
                     const {course} = c
-                    console.log('==========', c)
+                    // console.log('==========', c)
                     return (
                         <div className='d-flex border w-100 ' >
                             <div className=''>

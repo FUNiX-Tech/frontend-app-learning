@@ -18,7 +18,7 @@ export default function Timeline({ mmp2p }) {
   const {
     courseDateBlocks,
   } = useModel('dates', courseId);
-
+  console.log('courseDateBlocks' , courseDateBlocks)
   // Group date items by day (assuming they are sorted in first place) and add some metadata
   const groupedDates = [];
   const now = new Date();
@@ -64,7 +64,7 @@ export default function Timeline({ mmp2p }) {
     groupedDates[groupedDates.length - 1].last = true;
   }
 
-
+  console.log('groupedDates' , groupedDates)
   return (
     <>
       <ul className="list-unstyled m-0 mt-4 pt-2">

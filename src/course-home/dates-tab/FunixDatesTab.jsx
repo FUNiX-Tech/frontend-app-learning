@@ -25,7 +25,7 @@ function FunixDatesTab({ intl }) {
     username,
     enrollCourseDate
   } = useModel('dates', courseId);
-
+ 
   /** [MM-P2P] Experiment */
   const mmp2p = initDatesMMP2P(courseId);
   return (
