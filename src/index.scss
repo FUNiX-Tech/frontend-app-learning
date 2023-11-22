@@ -7,6 +7,12 @@
 @import 'https://askmentor.funix.edu.vn/hf40-livechat/hf40-livechat.css';
 @import 'https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css';
 
+:root {
+  //loading 
+  --bg-color-loading: #ECECEC;
+
+}
+
 #root {
   display: flex;
   flex-direction: column;
@@ -725,22 +731,30 @@ html:root {
 .btn-primary-custom{
   border: none ;
   background-color:#0086FF !important;
-  // width: 143px;
-  // height: 36px;
   border-radius: 6px;
   padding: 6px 16px;
   color: white;
-
+  &:hover{
+    background-color: #0B70DF !important;
+  }
   span {
-    size: 16px;
+    size: 13px;
     line-height: 20px;
     font-weight: 600;
   }
 }
-.outline{
+.btn-primary-custom-outline{
   background: none !important;
   border: 1px solid #0086FF;
+  border-radius: 6px;
+  padding: 6px 16px;
+  &:hover{
+    background-color: #EFF7FF !important;
+  }
   span{
     color: #0086FF;
+    line-height: 20px;
+    font-weight: 600;
+    size: 16px;
   }
 }

@@ -454,5 +454,11 @@
     "header.menu.account" : "Tài khoản" ,
     "header.menu.signOut" : "Đăng Xuất" ,
     "learning.section.sequence.title.question" : "câu hỏi",
-    "dashboard.myCourse": "Khoá học của tôi"
+    
+    "dashboard.myCourse": "Khoá học của tôi" ,
+    "dashboard.btn.beginCourse" : "Bắt đầu khoá học",
+    "dashboard.btn.viewCourse" : "Xem lại khoá học",
+    "dashboard.btn.resumeCourse" : "Tiếp tục học",
+    "dashboard.btn.introductionCourse" : "Giới thiệu khoá học",
+    "dashboard.notCourse" : "Hiện tại bạn chưa đăng ký khoá học"
 }
