@@ -8,7 +8,7 @@ const CourseBtn = ({intl ,courseRun})=>{
     return (
         <>
              {courseRun.resumeUrl ? 
-                        <a href={`${getConfig().LMS_BASE_URL}/courses/${courseRun.courseId}/about`}  >
+                        <a href={`${getConfig().LMS_BASE_URL}${courseRun.resumeUrl}`}  >
                             <button className='btn-primary-custom-outline'> 
                                 <span>{intl.formatMessage(messages.btnResumeCourse)}</span>
                             </button>

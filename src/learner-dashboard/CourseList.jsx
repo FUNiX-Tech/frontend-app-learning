@@ -9,7 +9,7 @@ import CourseBtn from './CourseBtn';
 const CourseList = ({intl, courses})=>{
 
     return (
-        <div className='d-flex flex-column ' style={{gap:'10px'}}>
+        <div className='d-flex flex-column w-100' style={{gap:'10px'}}>
         {courses.map(c => {
             const {course, courseRun, courseProvider} = c
             console.log(c)
