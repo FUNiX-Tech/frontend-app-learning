@@ -3,11 +3,11 @@ import './dashboard.scss'
 const CourseLoading = ()=>{
 
     return (
-        <div className='d-flex w-100 course-loading' >
+        <div className='d-flex w-100 course-loading' style={{height:'193px'}}>
         <div className='bg-loading' >
             <img  width="346px" height='193px'/>
         </div>
-        <div className='p-3 w-100 d-flex  border flex-column justify-content-around'>
+        <div className='p-3 w-100 d-flex  border flex-column justify-content-around' >
             <div className='course-title-loading' >
             </div>
             <div>
