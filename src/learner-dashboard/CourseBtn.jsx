@@ -9,7 +9,7 @@ const CourseBtn = ({intl ,courseRun})=>{
         <>
              {courseRun.resumeUrl ? 
                         <a href={`${getConfig().LMS_BASE_URL}${courseRun.resumeUrl}`}  >
-                            <button className='btn-primary-custom-outline'> 
+                            <button className='btn-primary-custom'> 
                                 <span>{intl.formatMessage(messages.btnResumeCourse)}</span>
                             </button>
                         </a> : <>
