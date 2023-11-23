@@ -14,7 +14,7 @@ const CourseList = ({intl, courses})=>{
             const {course, courseRun, courseProvider,complete} = c
             let complete_ = complete
             if (complete){
-                complete_ = number.toFixed(2)
+                complete_ = complete_.toFixed(2)
             }
             return (
                 <div className='d-flex border w-100 ' key={courseRun.courseId}>
