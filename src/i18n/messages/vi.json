@@ -460,5 +460,6 @@
     "dashboard.btn.viewCourse" : "Xem lại khoá học",
     "dashboard.btn.resumeCourse" : "Tiếp tục học",
     "dashboard.btn.introductionCourse" : "Giới thiệu khoá học",
-    "dashboard.notCourse" : "Hiện tại bạn chưa đăng ký khoá học"
+    "dashboard.notCourse" : "Hiện tại bạn chưa đăng ký khoá học",
+    "dashboard.complete" :"hoàn thành"
 }

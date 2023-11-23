@@ -28,6 +28,10 @@ const messages = defineMessages({
   notCourse :{
     id: 'dashboard.notCourse',
     defaultMessage: 'You are not currently registered for any courses',
+  },
+  complete :{
+    id:'dashboard.complete',
+    defaultMessage : "complete"
   }
   
 
