@@ -38,7 +38,11 @@ const Dashboard = ({ intl }) => {
               </div>
               <div className="w-100" >
                 <div className={`d-flex justify-content-center w-100 ${listCourse.length == 0 && !loading && 'align-items-center'} `} style={{minHeight:'500px'}}>
-                {loading  && <CourseLoading />}
+                {loading  && <div className="pb-3 d-flex flex-column w-100 " style={{gap:'10px'}}>
+                  <CourseLoading />
+                  <CourseLoading />
+                  <CourseLoading />
+                </div>}
                 {listCourse.length == 0 && !loading 
                   && <>
                     <span className="d-flex flex-column  align-items-center model-not-course " >
