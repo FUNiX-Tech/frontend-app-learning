@@ -1,0 +1,67 @@
+#custom-footer {
+  padding: 2.75rem 11.56rem 0;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; /* 1.5rem */
+
+  .footer-container {
+    display: grid;
+    grid-template-columns: 3.5fr 1fr 1fr 1fr;
+    align-items: start;
+    gap: 1rem;
+
+    .footer-section {
+      .footer-section-logo {
+        display: block;
+        padding: 0.25rem 0.5rem;
+      }
+
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.88rem;
+
+      .footer-section-location,
+      .footer-section-email,
+      .footer-section-phone {
+        margin-bottom: 0;
+        padding: 0.62rem 0;
+        display: flex;
+        align-items: center;
+        gap: 0.62rem;
+      }
+
+      h3 {
+        padding: 0;
+        margin: 0;
+        font-size: 1.25rem;
+        font-style: normal;
+        font-weight: 700;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.88rem;
+
+        li {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .footer-bottom {
+    margin-top: 3rem;
+    p {
+      margin: 0;
+      padding: 0;
+    }
+    margin-bottom: 4rem;
+  }
+}

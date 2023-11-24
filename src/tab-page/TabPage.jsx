@@ -1,45 +1,35 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
-import { getAuthenticatedUser } from '@edx/frontend-platform/auth';
-import { useDispatch, useSelector } from 'react-redux';
-import { Redirect } from 'react-router';
-import { getConfig } from '@edx/frontend-platform';
+import React, { useEffect } from "react";
+import PropTypes from "prop-types";
+import { injectIntl, intlShape } from "@edx/frontend-platform/i18n";
+import { getAuthenticatedUser } from "@edx/frontend-platform/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { Redirect } from "react-router";
+import { getConfig } from "@edx/frontend-platform";
 
-import Footer from '@edx/frontend-component-footer';
-import { Toast } from '@edx/paragon';
-import PageLoading from '../generic/PageLoading';
-import { getAccessDeniedRedirectUrl } from '../shared/access';
-import { useModel } from '../generic/model-store';
+// import Footer from '@edx/frontend-component-footer';
+import Footer from "../footer/Footer";
+import { Toast } from "@edx/paragon";
+import PageLoading from "../generic/PageLoading";
+import { getAccessDeniedRedirectUrl } from "../shared/access";
+import { useModel } from "../generic/model-store";
 
-import genericMessages from '../generic/messages';
-import messages from './messages';
-import LoadedTabPage from './LoadedTabPage';
-import { setCallToActionToast } from '../course-home/data/slice';
-import LaunchCourseHomeTourButton from '../product-tours/newUserCourseHomeTour/LaunchCourseHomeTourButton';
-import HeaderLearning from '../header/HeaderLearning';
+import genericMessages from "../generic/messages";
+import messages from "./messages";
+import LoadedTabPage from "./LoadedTabPage";
+import { setCallToActionToast } from "../course-home/data/slice";
+import LaunchCourseHomeTourButton from "../product-tours/newUserCourseHomeTour/LaunchCourseHomeTourButton";
+import HeaderLearning from "../header/HeaderLearning";
 
 function TabPage({ intl, ...props }) {
-  const {
-    activeTabSlug,
-    courseId,
-    courseStatus,
-    metadataModel,
-  } = props;
-  const {
-    toastBodyLink,
-    toastBodyText,
-    toastHeader,
-  } = useSelector(state => state.courseHome);
+  const { activeTabSlug, courseId, courseStatus, metadataModel } = props;
+  const { toastBodyLink, toastBodyText, toastHeader } = useSelector(
+    (state) => state.courseHome
+  );
   const dispatch = useDispatch();
-  const {
-    courseAccess,
-    number,
-    org,
-    start,
-    title,
-    toggleFeature
-  } = useModel('courseHomeMeta', courseId);
+  const { courseAccess, number, org, start, title, toggleFeature } = useModel(
+    "courseHomeMeta",
+    courseId
+  );
 
   const user = getAuthenticatedUser();
 
@@ -78,80 +68,98 @@ function TabPage({ intl, ...props }) {
   // }, []);
 
   useEffect(() => {
-    if (toggleFeature?.includes('feedback')){
-      if (!document.getElementById('feed-back-script')) {
+    if (toggleFeature?.includes("feedback")) {
+      if (!document.getElementById("feed-back-script")) {
         // Because the feedback style is depend on LMS style so we need to add it to the head
         // Append link to style in body
-        const feedbackStyle = document.createElement('link');
-        feedbackStyle.setAttribute('rel', 'stylesheet');
-        feedbackStyle.setAttribute('href', `${getConfig().LMS_BASE_URL}/static/feedback/feedback.css`);
-  
+        const feedbackStyle = document.createElement("link");
+        feedbackStyle.setAttribute("rel", "stylesheet");
+        feedbackStyle.setAttribute(
+          "href",
+          `${getConfig().LMS_BASE_URL}/static/feedback/feedback.css`
+        );
+
         // Append link to head
         document.head.appendChild(feedbackStyle);
-  
-        const feedScript = document.createElement('script');
-        feedScript.setAttribute('src', `${getConfig().LMS_BASE_URL}/static/feedback/add_feedback.js`);
-        feedScript.setAttribute('id', 'feed-back-script');
-        feedScript.addEventListener('load', () => {
+
+        const feedScript = document.createElement("script");
+        feedScript.setAttribute(
+          "src",
+          `${getConfig().LMS_BASE_URL}/static/feedback/add_feedback.js`
+        );
+        feedScript.setAttribute("id", "feed-back-script");
+        feedScript.addEventListener("load", () => {
           // eslint-disable-next-line no-undef
           initFUNiXFeedback(getConfig().LMS_BASE_URL, true);
         });
         document.head.appendChild(feedScript);
       }
     }
-    
   });
 
-  if (courseStatus === 'loading') {
+  if (courseStatus === "loading") {
     return (
       <>
         {/* <Header /> */}
-        <HeaderLearning loading  />
-  
-        <PageLoading
-          srMessage={intl.formatMessage(messages.loading)}
-        />
+        <HeaderLearning loading />
+
+        <PageLoading srMessage={intl.formatMessage(messages.loading)} />
         <Footer />
       </>
     );
   }
 
-  if (courseStatus === 'denied') {
-    const redirectUrl = getAccessDeniedRedirectUrl(courseId, activeTabSlug, courseAccess, start);
+  if (courseStatus === "denied") {
+    const redirectUrl = getAccessDeniedRedirectUrl(
+      courseId,
+      activeTabSlug,
+      courseAccess,
+      start
+    );
     if (redirectUrl) {
-      return (<Redirect to={redirectUrl} />);
+      return <Redirect to={redirectUrl} />;
     }
   }
 
   // Either a success state or a denied state that wasn't redirected above (some tabs handle denied states themselves,
   // like the outline tab handling unenrolled learners)
-  if (courseStatus === 'loaded' || courseStatus === 'denied') {
+  if (courseStatus === "loaded" || courseStatus === "denied") {
     return (
       <>
         <Toast
-          action={toastBodyText ? {
-            label: toastBodyText,
-            href: toastBodyLink,
-          } : null}
+          action={
+            toastBodyText
+              ? {
+                  label: toastBodyText,
+                  href: toastBodyLink,
+                }
+              : null
+          }
           closeLabel={intl.formatMessage(genericMessages.close)}
-          onClose={() => dispatch(setCallToActionToast({ header: '', link: null, link_text: null }))}
-          show={!!(toastHeader)}
+          onClose={() =>
+            dispatch(
+              setCallToActionToast({ header: "", link: null, link_text: null })
+            )
+          }
+          show={!!toastHeader}
         >
           {toastHeader}
         </Toast>
-        {metadataModel === 'courseHomeMeta' && (<LaunchCourseHomeTourButton srOnly />)}
+        {metadataModel === "courseHomeMeta" && (
+          <LaunchCourseHomeTourButton srOnly />
+        )}
         {/* <Header
           courseOrg={org}
           courseNumber={number}
           courseTitle={title}
         /> */}
-        <HeaderLearning          
+        <HeaderLearning
           courseOrg={org}
           courseNumber={number}
           courseTitle={title}
           intl={intl}
           isLoading
-          />
+        />
         <LoadedTabPage {...props} />
         <Footer />
       </>
@@ -162,7 +170,7 @@ function TabPage({ intl, ...props }) {
   return (
     <>
       <HeaderLearning />
-      <p className="text-center py-5 mx-auto" style={{ maxWidth: '30em' }}>
+      <p className="text-center py-5 mx-auto" style={{ maxWidth: "30em" }}>
         {intl.formatMessage(messages.failure)}
       </p>
       <Footer />

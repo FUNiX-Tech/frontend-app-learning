@@ -4,13 +4,12 @@
 @import "~@edx/brand/paragon/overrides";
 
 @import "~@edx/frontend-component-footer/dist/footer";
-@import 'https://askmentor.funix.edu.vn/hf40-livechat/hf40-livechat.css';
-@import 'https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css';
+@import "https://askmentor.funix.edu.vn/hf40-livechat/hf40-livechat.css";
+@import "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css";
 
 :root {
-  //loading 
-  --bg-color-loading: #ECECEC;
-
+  //loading
+  --bg-color-loading: #ececec;
 }
 
 #root {
@@ -41,6 +40,20 @@
 
   footer {
     flex: 0;
+  }
+
+  // class css for position attribute
+  .fixed-position {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    box-shadow: 0px 2px 4px -1px #0b0b0b0f, 0px 4px 6px -1px #0b0b0b1a;
+  }
+
+  .unset-position {
+    position: unset;
   }
 }
 
@@ -306,7 +319,7 @@
 .unit-navigation {
   display: flex;
   margin: 0 auto;
-  gap:'26px';
+  gap: "26px";
   .previous-button,
   .next-button {
     white-space: nowrap;
@@ -319,22 +332,22 @@
 
   .next-button {
     flex-basis: 15%;
-    background: #2015FF;
+    background: #2015ff;
     color: #eaeaea;
-    border:none;
-    &:hover{
+    border: none;
+    &:hover {
       background-color: rgb(23, 26, 83);
-      color : #eaeaea
+      color: #eaeaea;
     }
   }
 
   .previous-button {
     flex-basis: 15%;
     border-color: rgb(32, 21, 255);
-    color : rgb(32, 21, 255);
-    &:hover{
+    color: rgb(32, 21, 255);
+    &:hover {
       background-color: rgb(23, 26, 83);
-      color : #eaeaea
+      color: #eaeaea;
     }
   }
 }
@@ -379,7 +392,7 @@
 
 .raised-card {
   border: 0 !important;
-  box-shadow: 0 .0625rem .125rem rgba(0, 0, 0, .2) !important;
+  box-shadow: 0 0.0625rem 0.125rem rgba(0, 0, 0, 0.2) !important;
 }
 
 // Import component-specific sass files
@@ -413,14 +426,13 @@
   max-width: none !important;
 }
 
-.learning-header{
+.learning-header {
   position: sticky;
-  top:0px;
+  top: 0px;
   background-color: white;
   z-index: 99;
-  box-shadow:  0px 2px 4px -1px #0B0B0B0F,0px 4px 6px -1px #0B0B0B1A;;
+  box-shadow: 0px 2px 4px -1px #0b0b0b0f, 0px 4px 6px -1px #0b0b0b1a;
 }
-
 
 .learning-header .course-title-lockup span:first-child {
   padding-bottom: 5px;
@@ -433,9 +445,9 @@
 
 // section list
 #section-list-container > ol {
- // max-height: 50vh;
+  // max-height: 50vh;
   overflow-y: auto;
- 
+
   position: sticky;
   top: 10px;
 }
@@ -472,23 +484,22 @@ html:root {
   --chakra-transition-easing-ease-in: cubic-bezier(0.4, 0, 1, 1);
   --chakra-transition-duration-normal: 200ms;
   --chakra-zIndices-low: 1;
-  --chakra-colors-white: #FFFFFF;
-  --chakra-shadows-base: 0px 1px 2px 0px #0B0B0B0F,0px 1px 3px 0px #0B0B0B1A;
+  --chakra-colors-white: #ffffff;
+  --chakra-shadows-base: 0px 1px 2px 0px #0b0b0b0f, 0px 1px 3px 0px #0b0b0b1a;
   --chakra-lineHeights-none: 100%;
   --chakra-fontSizes-md: 1rem;
   --chakra-sizes-12: 3rem;
-  --chakra-colors-black: #0B0B0B;
+  --chakra-colors-black: #0b0b0b;
   --chakra-space-2: 0.5rem;
   --chakra-colors-transparent: transparent;
   --chakra-sizes-full: 100%;
-  --chakra-colors-gray-100: #F6F6F6;
+  --chakra-colors-gray-100: #f6f6f6;
   --chakra-radii-full: 9999px;
-  --chakra-colors-gray-300: #C7C7C7;
-  --chakra-shadows-lg: 0px 4px 6px -2px #0B0B0B0D,0px 10px 15px -3px #0B0B0B1A;
-  
+  --chakra-colors-gray-300: #c7c7c7;
+  --chakra-shadows-lg: 0px 4px 6px -2px #0b0b0b0d, 0px 10px 15px -3px #0b0b0b1a;
 }
 
-.css-19dz5pz{
+.css-19dz5pz {
   display: flex;
   flex-direction: column;
   border-left-width: 1px;
@@ -499,11 +510,9 @@ html:root {
   width: var(--chakra-sizes-full);
   height: var(--chakra-sizes-full);
   padding: 0px;
-
 }
 
-
-.css-1dntyew{
+.css-1dntyew {
   display: none;
   flex-direction: column;
   border-left-width: 1px;
@@ -516,7 +525,7 @@ html:root {
   padding: 0px;
 }
 
-.css-16kvbm{
+.css-16kvbm {
   right: -30.5rem;
   position: fixed;
   width: 30.5rem;
@@ -528,10 +537,7 @@ html:root {
   z-index: var(--chakra-zIndices-low);
 }
 
-
-
-
-.css-1bljlat{
+.css-1bljlat {
   right: 0px;
   position: fixed;
   width: 30.5rem;
@@ -541,12 +547,9 @@ html:root {
   transition-duration: var(--chakra-transition-duration-normal);
   transition-property: left, right;
   z-index: var(--chakra-zIndices-low);
-
 }
 
-
-
-.css-14u8e49{
+.css-14u8e49 {
   display: flex;
   flex-direction: column;
   margin-top: 0px;
@@ -558,9 +561,7 @@ html:root {
   transition-duration: var(--chakra-transition-duration-normal);
 }
 
-
-
-.css-1mjee9h{
+.css-1mjee9h {
   margin-top: 0px;
   flex: 1 1 0%;
   padding-inline: 0px 30.5rem;
@@ -569,9 +570,6 @@ html:root {
   transition-property: padding;
   transition-duration: var(--chakra-transition-duration-normal);
 }
-
-
-
 
 .css-jygthk {
   flex-direction: column;
@@ -584,7 +582,6 @@ html:root {
   transition-duration: var(--chakra-transition-duration-normal);
 }
 
-
 .css-11m367g {
   display: flex;
   flex-direction: column;
@@ -595,8 +592,6 @@ html:root {
   border-right-style: solid;
   border-color: var(--chakra-colors-gray-300);
 }
-
-
 
 .css-mtrik7 {
   position: absolute;
@@ -609,9 +604,6 @@ html:root {
   border-radius: var(--chakra-radii-full);
 }
 
-
-
-
 .css-16e9fpx {
   left: 0px;
   position: fixed;
@@ -623,9 +615,6 @@ html:root {
   transition-property: left, right;
   z-index: var(--chakra-zIndices-low);
 }
-
-
-
 
 .css-wc1vc9::before {
   content: "";
@@ -644,9 +633,7 @@ html:root {
   transform: translate(-50%, -50%);
 }
 
-
 .css-yeymkw {
-
   flex-direction: column;
   margin-top: 0px;
   flex: 1 1 0%;
@@ -667,10 +654,7 @@ html:root {
   transition-duration: var(--chakra-transition-duration-normal);
   transition-property: left, right;
   z-index: var(--chakra-zIndices-low);
-
-
 }
-
 
 .css-dh1ib6 {
   position: absolute;
@@ -682,7 +666,6 @@ html:root {
   transform: translateY(24px) rotate(0deg);
   border-radius: 0px 50% 50% 0px;
 }
-
 
 .css-wc1vc9 {
   display: inline-flex;
@@ -713,7 +696,6 @@ html:root {
   background: var(--chakra-colors-transparent);
 }
 
-
 .css-1qz66c7 {
   display: none;
   flex-direction: column;
@@ -725,17 +707,16 @@ html:root {
   border-color: var(--chakra-colors-gray-300);
 }
 
-
 // css custtom styles figma
 
-.btn-primary-custom{
-  border: none ;
-  background-color:#0086FF !important;
+.btn-primary-custom {
+  border: none;
+  background-color: #0086ff !important;
   border-radius: 6px;
   padding: 6px 16px;
   color: white;
-  &:hover{
-    background-color: #0B70DF !important;
+  &:hover {
+    background-color: #0b70df !important;
   }
   span {
     size: 13px;
@@ -743,16 +724,16 @@ html:root {
     font-weight: 600;
   }
 }
-.btn-primary-custom-outline{
+.btn-primary-custom-outline {
   background: none !important;
-  border: 1px solid #0086FF;
+  border: 1px solid #0086ff;
   border-radius: 6px;
   padding: 6px 16px;
-  &:hover{
-    background-color: #EFF7FF !important;
+  &:hover {
+    background-color: #eff7ff !important;
   }
-  span{
-    color: #0086FF;
+  span {
+    color: #0086ff;
     line-height: 20px;
     font-weight: 600;
     size: 16px;
