@@ -34,7 +34,7 @@ export default function Tabs({ children, className, ...attrs }) {
 
     // Insert the overflow menu at the cut off index (even if it will be hidden
     // it so it can be part of measurements)
-    wrappedChildren.splice(
+    childrenArray.splice(
       indexOfOverflowStart,
       0,
       <div
