@@ -491,10 +491,3 @@ export async function getSubtextSequence (sequenceId){
 
   return data.data
 }
-
-export async function getLearnerHomeInit (){
-  const url = `${getConfig().LMS_BASE_URL}/api/learner_home/init`
-  const {data} = await getAuthenticatedHttpClient().get(url);
-
-  return data
-}

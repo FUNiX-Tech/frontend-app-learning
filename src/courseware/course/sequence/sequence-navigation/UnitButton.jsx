@@ -20,21 +20,32 @@ function UnitButton({
   className,
   showTitle,
 }) {
+  
+  //Completed unit 
+
   const handleClick = useCallback(() => {
     onClick(unitId);
   });
 
+
   return (
+
+    
+    
     <Button
+      // className={classNames({
+      //   active: isActive,
+      //   complete: showCompletion && complete,
+      // }, className)}
       className={classNames({
         active: isActive,
         complete: showCompletion && complete,
-      }, className)}
+      }, className,"border-0 text-start")}
       variant="link"
       onClick={handleClick}
-      title={title}
+      // title={title}
     >
-      <UnitIcon type={contentType} />
+      {/* <UnitIcon type={contentType} />
       {showTitle && <span className="unit-title">{title}</span>}
       {showCompletion && complete ? <CompleteIcon size="sm" className="text-success ml-2" /> : null}
       {bookmarked ? (
@@ -42,7 +53,8 @@ function UnitButton({
           className="text-primary small position-absolute"
           style={{ top: '-3px', right: '5px' }}
         />
-      ) : null}
+      ) : null} */} 
+      {title.length>=48 ? title.substring(0,48)+'...': title}
     </Button>
   );
 }
