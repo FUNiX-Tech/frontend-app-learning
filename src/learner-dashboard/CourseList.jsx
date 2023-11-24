@@ -38,7 +38,7 @@ const CourseList = ({intl, courses})=>{
                         </div>}
                         
                         <div className=' d-flex  align-self-end' style={{gap:'10px'}} >
-                            <CourseBtn intl={intl} courseRun={courseRun} />
+                            {/* <CourseBtn intl={intl} courseRun={courseRun} /> */}
                        
                         </div>
                     </div>
