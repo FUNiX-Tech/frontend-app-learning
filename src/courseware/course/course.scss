@@ -55,3 +55,26 @@
   .border-none{
     border:none
   }
+
+  .menu-lesson{
+    display: flex;
+width: 100%;
+padding: 1.1875rem 1rem 0.5rem 1rem;
+align-items: center;
+gap: 0.5rem;
+align-self: stretch;
+// border-bottom-width: 1px;
+//   border-bottom-style: solid;
+//   border-color: var(--chakra-colors-gray-300);
+    .menu-lesson-title{
+      flex: 1 0 0;
+      color: var(--text-default, #2C3744);
+      
+      font-feature-settings: 'clig' off, 'liga' off;
+      font-family: Roboto;
+      font-size: 1.125rem;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 150%; /* 1.6875rem */
+    }
+  }

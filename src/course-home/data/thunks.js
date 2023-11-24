@@ -13,8 +13,7 @@ import {
   postRequestCert,
   postSetGoal,
   getLiveTabIframe,
-  getSubtextSequence,
-  getLearnerHomeInit
+  getSubtextSequence
 } from './api';
 
 import {
@@ -154,8 +153,4 @@ export async function saveGoal(courseId, hoursPerDay, weekDays, targetUserId, se
 
 export async function subTextSuquence (sequenceId) {
   return getSubtextSequence(sequenceId)
-}
-
-export async function fetchDashboard (){
-  return getLearnerHomeInit()
 }

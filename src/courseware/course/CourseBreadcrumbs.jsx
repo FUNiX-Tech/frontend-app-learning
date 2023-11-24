@@ -11,6 +11,7 @@ import { useModel, useModels } from '../../generic/model-store';
 /** [MM-P2P] Experiment */
 import { MMP2PFlyoverTrigger } from '../../experiments/mm-p2p';
 import JumpNavMenuItem from './JumpNavMenuItem';
+import './course-breadcrumbs.scss'
 
 function CourseBreadcrumb({
   content, withSeparator, courseId, sequenceId, unitId, isStaff,
@@ -127,7 +128,8 @@ export default function CourseBreadcrumbs({
   }, [courseStatus, sequenceStatus, allSequencesInSections]);
 
   return (
-    <nav aria-label="breadcrumb" className="d-inline-block col-sm-10" style={{marginBottom: '10px', marginTop: '5px' }}>
+    <div className="text-center">
+    {/* <nav aria-label="breadcrumb" className="d-inline-block navbar-modify" style={{marginBottom: '10px', marginTop: '5px' }}>
       <ol className="list-unstyled d-flex  flex-nowrap align-items-center m-0">
         <li className="list-unstyled col-auto m-0 p-0">
           <Link
@@ -153,11 +155,12 @@ export default function CourseBreadcrumbs({
           />
         ))}
         {/** [MM-P2P] Experiment */}
-        {mmp2p.state && mmp2p.state.isEnabled && (
+        {/* {mmp2p.state && mmp2p.state.isEnabled && (
           <MMP2PFlyoverTrigger options={mmp2p} />
         )}
       </ol>
-    </nav>
+    </nav> */}
+    </div>
   );
 }
 
