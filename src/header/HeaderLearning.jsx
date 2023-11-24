@@ -18,6 +18,7 @@ const HeaderLearning = ({
   intl,
   showUserDropdown,
   loading,
+  isDashoard
 }) => {
   // console.log('=======', courseOrg, courseNumber, courseTitle)
 
@@ -41,7 +42,7 @@ const HeaderLearning = ({
   //     console.log(error)
   //   }
   //  },[])
-
+  console.log(isDashoard)
   return (
     <header
       className={`learning-header ${scrollY > 100 ? "unset-position" : ""}`}
@@ -73,75 +74,28 @@ const HeaderLearning = ({
         )}
       </div> */}
 
-      {/* New header 1 - done */}
-      <div className="header1-container d-flex align-items-center">
-        {/* Logo */}
-        <a
-          href={`${getConfig().LMS_BASE_URL}/dashboard`}
-          className="logo logo_img"
-        >
-          <img
-            className="d-block"
-            src={getConfig().LOGO_URL}
-            alt={getConfig().LOGO_URL}
-          />
-        </a>
 
-        {/* Course title */}
-        <div
-          className="d-flex align-items-center course-title-lockup"
-          // style={{ gap: "0.5rem" }}
-        >
-          <span className="d-block m-0  font-weight-bold ">
-            {courseOrg}+{courseNumber}+{courseTitle}
-          </span>
-        </div>
-
-        <div className="actions d-flex">
-          <button className="action-button">
-            <img src={notification_icon} alt={notification_icon} />
-          </button>
-          <button className="action-button">
-            {/* avatar icon */}
-            <img src={avatar_icon} alt={avatar_icon} />
-          </button>
-        </div>
-      </div>
-
-      {/* New header 2 - done */}
-      <div className="header2-container d-flex align-items-center">
-        {/* Logo */}
-        <div className="logo_img">
-          <a
-            href={`${getConfig().LMS_BASE_URL}/dashboard`}
-            className="logo m-0"
-          >
-            <img
-              className="d-block"
-              src={getConfig().LOGO_URL}
-              alt={getConfig().LOGO_URL}
-            />
+            <div className={`${isDashoard ? "header2-container" : "header1-container"} d-flex align-items-center`}>
+          <a href={`${getConfig().LMS_BASE_URL}/dashboard`} className="logo logo_img">
+            <img className="d-block" src={getConfig().LOGO_URL} alt={getConfig().LOGO_URL} />
           </a>
+          <div className="d-flex align-items-center course-title-lockup">
+            <span className="d-block m-0 font-weight-bold">
+              {isDashoard ? courseTitle : `${courseOrg}+${courseNumber}+${courseTitle}`}
+            </span>
+          </div>
+          <div className="actions d-flex">
+            <button className="action-button">
+              <img src={notification_icon} alt={notification_icon} />
+            </button>
+            <button className="action-button">
+              <img src={avatar_icon} alt={avatar_icon} />
+            </button>
+          </div>
         </div>
+     
 
-        {/* Course title */}
-        <div
-          className="d-flex align-items-center course-title-lockup"
-          // style={{ gap: "0.5rem" }}
-        >
-          <span className="d-block m-0  font-weight-bold ">{courseTitle}</span>
-        </div>
-
-        <div className="actions d-flex">
-          <button className="action-button">
-            <img src={notification_icon} alt={notification_icon} />
-          </button>
-          <button className="action-button">
-            {/* avatar icon */}
-            <img src={avatar_icon} alt={avatar_icon} />
-          </button>
-        </div>
-      </div>
+   
     </header>
   );
 };
@@ -153,6 +107,7 @@ HeaderLearning.propTypes = {
   intl: intlShape.isRequired,
   showUserDropdown: PropTypes.bool,
   isLoading: PropTypes.bool,
+  isDashoard: PropTypes.bool
 };
 
 HeaderLearning.defaultProps = {
@@ -161,6 +116,7 @@ HeaderLearning.defaultProps = {
   courseTitle: null,
   showUserDropdown: true,
   isLoading: false,
+  isDashoard: false
 };
 
 export default injectIntl(HeaderLearning);

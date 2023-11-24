@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import PropTypes from 'prop-types';
 import HeaderLearning from "../header/HeaderLearning"
-import Footer from '@edx/frontend-component-footer';
+
 import { fetchDashboard } from "../course-home/data";
 import CourseList from "./CourseList";
 import messages from "./messages";
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import CourseLoading from "./CourseLoading";
 import iconVector from '../assets/icon/Vector.png'
+import Footer from "../footer/Footer";
 
 const Dashboard = ({ intl }) => {
   const [listCourse, setListCourse] = useState([]);
@@ -29,7 +30,7 @@ const Dashboard = ({ intl }) => {
 
   return (
       <>
-          <HeaderLearning />
+          <HeaderLearning  isDashoard/>
 
           <div className='container pt-4'style={{width:'1100px'}} >
             <div className="d-flex flex-column">
@@ -60,7 +61,7 @@ const Dashboard = ({ intl }) => {
           </div>
 
           
-          <Footer />
+         <Footer />
       </>
   );
 };
