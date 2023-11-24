@@ -32,8 +32,11 @@ const messages = defineMessages({
   complete :{
     id:'dashboard.complete',
     defaultMessage : "complete"
+  },
+  overviewCourse:{
+    id : "dashboard.btn.overviewCourse",
+    defaultMessage : "Overview Course",
   }
-  
 
 });
 
