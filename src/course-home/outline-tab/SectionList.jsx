@@ -16,7 +16,8 @@ function SectionList({
   expandAll,
   relativeHeight,
   useHistory,
-  lesson
+  lesson,
+ unitId
 }) {
 
 
@@ -65,6 +66,7 @@ const style = {
         section={sections[sectionId]}
         useHistory={useHistory}
         lesson = {lesson}
+        unitId={unitId}
       />
       })}
     </ol>
