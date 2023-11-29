@@ -23,9 +23,9 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
       className={classNames(
         "course-tabs-navigation",
         className,
-        `${scrollY > 100 ? "fixed-position" : ""}`
+        `${scrollY > 50 ? "fixed-position" : ""}`
       )}
-      style={scrollY > 100 ? stylesBackgroundColor : {}}
+      style={scrollY > 50 ? stylesBackgroundColor : {}}
     >
       {/* sub Header - done */}
       <div className="sub-header-container">
