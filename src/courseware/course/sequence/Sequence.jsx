@@ -105,6 +105,25 @@ function Sequence({
         // course blocks that were originally hidden because the Entrance Exam was not passed.
         global.location.reload();
       }
+
+      if (type === "learningprojectxblock") {
+        const iframe = document.getElementById("unit-iframe");
+
+        if (event.data.resize) {
+          iframe.style.transition = event.data.resize.transition;
+          iframe.style.height = event.data.resize.iframeHeight + 'px';
+        }
+
+        if (event.data.scroll) {
+          const top = iframe.getBoundingClientRect().top + window.scrollY + event.data.scroll.top;
+          window.scroll({
+            top: top,
+            left: 0,
+            behavior: "smooth",
+          });
+        }
+
+      }
     }
     global.addEventListener('message', receiveMessage);
   }, []);
@@ -175,32 +194,32 @@ function Sequence({
           goToCourseExitPage={() => goToCourseExitPage()}
         />
         {shouldDisplayNotificationTriggerInSequence && <SidebarTriggers />}
-      
-      <div className="w-100">
-            
-       
-      <div className="unit-container flex-grow-1" style={{paddingLeft:'2rem',marginTop:"0.625rem"}}>
-          <SequenceContent
-            courseId={courseId}
-            gated={gated}
-            sequenceId={sequenceId}
-            unitId={unitId}
 
-          />
-           <UnitNavigation
-            sequenceId={sequenceId}
-            unitId={unitId}
-            onClickPrevious={() => {
-              logEvent('edx.ui.lms.sequence.previous_selected', 'bottom');
-              handlePrevious();
-            }}
-            onClickNext={() => {
-              logEvent('edx.ui.lms.sequence.next_selected', 'bottom');
-              handleNext();
-            }}
-            goToCourseExitPage={() => goToCourseExitPage()}
-          />
-          {/* {unitHasLoaded && (
+        <div className="w-100">
+
+
+          <div className="unit-container flex-grow-1" style={{ paddingLeft: '2rem', marginTop: "0.625rem" }}>
+            <SequenceContent
+              courseId={courseId}
+              gated={gated}
+              sequenceId={sequenceId}
+              unitId={unitId}
+
+            />
+            <UnitNavigation
+              sequenceId={sequenceId}
+              unitId={unitId}
+              onClickPrevious={() => {
+                logEvent('edx.ui.lms.sequence.previous_selected', 'bottom');
+                handlePrevious();
+              }}
+              onClickNext={() => {
+                logEvent('edx.ui.lms.sequence.next_selected', 'bottom');
+                handleNext();
+              }}
+              goToCourseExitPage={() => goToCourseExitPage()}
+            />
+            {/* {unitHasLoaded && (
           <UnitNavigation
             sequenceId={sequenceId}
             unitId={unitId}
@@ -215,10 +234,10 @@ function Sequence({
             goToCourseExitPage={() => goToCourseExitPage()}
           />
           )} */}
+          </div>
+
         </div>
 
-      </div>
-       
       </div>
       <Sidebar />
 
