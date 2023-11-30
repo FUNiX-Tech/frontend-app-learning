@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 import { useDispatch } from 'react-redux';
 import { getConfig } from '@edx/frontend-platform';
 import { breakpoints, useWindowSize } from '@edx/paragon';
+import {useLocation} from 'react-router-dom'
 
 import { AlertList } from '../../generic/user-messages';
 
@@ -14,7 +15,7 @@ import ContentTools from './content-tools';
 import CourseBreadcrumbs from './CourseBreadcrumbs';
 import SidebarProvider from './sidebar/SidebarContextProvider';
 import SidebarTriggers from './sidebar/SidebarTriggers';
-import SectionList from '../../course-home/outline-tab/SectionList';
+import SectionListUnit from '../../course-home/outline-tab/SectionListUnit';
 import { useModel } from '../../generic/model-store';
 import { getSessionStorage, setSessionStorage } from '../../data/sessionStorage';
 import { useSelector } from 'react-redux';
@@ -88,80 +89,111 @@ function Course({
 
   const [show , setShow] = useState(false)
   const [showLeftbarContent,setShowLeftbarContent] = useState(false)
+  const location = useLocation()
   const [styling, setStyling] = useState('css-yeymkw')
   const isShowChatGPT = useSelector(state =>state.header.isShowChatGPT)
   
   useEffect(() => {
     setStyling(show ? (isShowChatGPT ? 'css-14u8e49' : 'css-jygthk') : (isShowChatGPT ? 'css-1mjee9h' : 'css-yeymkw'));
   }, [show, isShowChatGPT]);
-   
 
-  //Left side bar scrolling hander
-  useEffect(() => {
-    // Get the fixed element
-    const fixedElement = document.querySelector('.css-11m367g');
-    const instructorToolbar = document.querySelector('#instructor-toolbar')
-    const header = document.querySelector('.learning-header')
-    const headerHeight = header.offsetHeight
-    const courseTagsNav = document.querySelector('#courseTabsNavigation')
-    const courseTagsNavHeight = courseTagsNav.offsetHeight;
-     let instructorToolbarHeight = 0;
-     if(instructorToolbar){
-      instructorToolbarHeight = instructorToolbar.offsetHeight;
-      fixedElement.style.paddingTop = headerHeight+courseTagsNavHeight +instructorToolbarHeight +'px'
+
+ 
+
+    //Left side bar scrolling hander
+    useEffect(() => {
+      // Get the fixed element
+      const fixedElement = document.querySelector('.unit-left-sidebar');
+      const instructorToolbar = document.querySelector('#instructor-toolbar')
+      const header = document.querySelector('.learning-header')
+      const headerHeight = header.offsetHeight
+      const courseTagsNav = document.querySelector('#courseTabsNavigation')
+      const courseTagsNavHeight = courseTagsNav.offsetHeight;
+     
+       let instructorToolbarHeight = 0;
+       if(instructorToolbar){
+        instructorToolbarHeight = instructorToolbar.offsetHeight;
+        fixedElement.style.paddingTop = headerHeight+courseTagsNavHeight +instructorToolbarHeight +'px'
+        
+       }else{
+        fixedElement.style.paddingTop = headerHeight+courseTagsNavHeight+'px'
+       }
+       
       
-     }else{
-      fixedElement.style.paddingTop = headerHeight+courseTagsNavHeight+'px'
-     }
-  
+      
+      
     
+      // Adjust position on scroll
+      const handleScroll = () => {
+     
+        if(window.scrollY >=137.5){
+        fixedElement.style.paddingTop = headerHeight +'px'
+        return;
+        
+        }
+        else if(window.scrollY>=50 && window.scrollY <85.5){
+          if(instructorToolbar){
+        fixedElement.style.paddingTop = courseTagsNavHeight +instructorToolbarHeight- window.scrollY + 'px'
+        return;
   
-    // Adjust position on scroll
-    const handleScroll = () => {
-
-      
-      if(window.scrollY >=137.5){
-      fixedElement.style.paddingTop = headerHeight +'px'
-      return;
-      
-      }else if(window.scrollY>1 && window.scrollY <137.5){
-        if(instructorToolbar){
-      fixedElement.style.paddingTop = headerHeight+courseTagsNavHeight +instructorToolbarHeight- window.scrollY + 'px'
-      return;
-
-        }else{
-          fixedElement.style.paddingTop = headerHeight+courseTagsNavHeight - window.scrollY + 'px'
-          return;
+          }else{
+            fixedElement.style.paddingTop =courseTagsNavHeight - window.scrollY + 'px'
+            return;
+          }
         }
         
-      }
-      else if(window.scrollY ===0){
-        if(instructorToolbar){
-          fixedElement.style.paddingTop = headerHeight+courseTagsNavHeight +instructorToolbarHeight - window.scrollY + 'px'
-          return;
-    
-            }else{
-              fixedElement.style.paddingTop = headerHeight+courseTagsNavHeight- window.scrollY + 'px'
-              return;
-            }
-      }
-    };
+        else if(window.scrollY>=122 && window.scrollY <137.5){
+          if(instructorToolbar){
+        fixedElement.style.paddingTop = headerHeight+courseTagsNavHeight +instructorToolbarHeight- window.scrollY + 'px'
+        return;
+  
+          }else{
+            fixedElement.style.paddingTop = headerHeight+courseTagsNavHeight - window.scrollY + 'px'
+            return;
+          }
+          
+        }
+        else if(window.scrollY>=85.5 && window.scrollY <122){
+          if(instructorToolbar){
+        fixedElement.style.paddingTop = courseTagsNavHeight +30 +instructorToolbarHeight- window.scrollY + 'px'
+        return;
+  
+          }else{
+            fixedElement.style.paddingTop = courseTagsNavHeight+30 - window.scrollY + 'px'
+            return;
+          }
+          
+        }
+        else if(window.scrollY <=50){
+          if(instructorToolbar){
+            fixedElement.style.paddingTop = headerHeight+courseTagsNavHeight +instructorToolbarHeight - window.scrollY + 'px'
+            return;
+      
+              }else{
+                fixedElement.style.paddingTop = headerHeight+courseTagsNavHeight- window.scrollY + 'px'
+                return;
+              }
+        }
+     
+      };
 
-    window.addEventListener('scroll', handleScroll);
+  
+      window.addEventListener('scroll', handleScroll);
 
-    // Cleanup event listener on component unmount
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
- 
+  
+      // Cleanup event listener on component unmount
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
+    }, [location.pathname]);
+
   return (
     <SidebarProvider courseId={courseId} unitId={unitId}>
-
       <Helmet>
         <title>{`${pageTitleBreadCrumbs.join(' | ')} | ${getConfig().SITE_NAME}`}</title>
       </Helmet>
-      <div className='css-11m367g' >
+
+      <div className='unit-left-sidebar' >
               {/* className={show? 'css-11m367g' : 'css-1qz66c7'} */}
                 {/* <div style={{padding:'20px 10px' , paddingRight:'50px'}}>
                     <h4>{title}</h4>
@@ -172,23 +204,25 @@ function Course({
                  {!showLeftbarContent && <path d="M10.8008 11.9998L14.7008 15.8998C14.8841 16.0831 14.9758 16.3165 14.9758 16.5998C14.9758 16.8831 14.8841 17.1165 14.7008 17.2998C14.5174 17.4831 14.2841 17.5748 14.0008 17.5748C13.7174 17.5748 13.4841 17.4831 13.3008 17.2998L8.70078 12.6998C8.60078 12.5998 8.52995 12.4915 8.48828 12.3748C8.44661 12.2581 8.42578 12.1331 8.42578 11.9998C8.42578 11.8665 8.44661 11.7415 8.48828 11.6248C8.52995 11.5081 8.60078 11.3998 8.70078 11.2998L13.3008 6.6998C13.4841 6.51647 13.7174 6.4248 14.0008 6.4248C14.2841 6.4248 14.5174 6.51647 14.7008 6.6998C14.8841 6.88314 14.9758 7.11647 14.9758 7.3998C14.9758 7.68314 14.8841 7.91647 14.7008 8.0998L10.8008 11.9998Z" fill="#2C3744"/>}
                 </svg>
                 </div>
-                {!showLeftbarContent &&( 
+               
                   <React.Fragment>
-                     <div className="menu-lesson">
+                     <div className={`${showLeftbarContent?'menu-lesson hide-leftbar':'menu-lesson'}`}>
                           <h2 className="menu-lesson-title">Mục lục bài học</h2>
                         </div>
-                        <SectionList
+                        <SectionListUnit
                       courseId={courseId}
                        unitId={unitId}
                       relativeHeight
                       useHistory
                       lesson
+                      showLeftbarContent={showLeftbarContent}
                     />
                   </React.Fragment>
-                )}
+               
                
               </div>
    
+
        {/*<div className="position-relative d-flex align-items-start">
         <CourseBreadcrumbs
           courseId={courseId}
@@ -205,22 +239,26 @@ function Course({
       </div>*/}
 
       <AlertList topic="sequence" />
-   
       <div id='sequence-custom' className="d-flex" >
-      
         {/* <div className={show? 'css-16e9fpx' : 'css-17h1ao9'}> */}
-        <div className={show? 'css-16e9fpx' : 'css-17h1ao9'}>
         <div style={{height:'100%' }}>
-     
-        {/* <div className={show ? 'css-mtrik7' : 'css-dh1ib6'}> */}
-            {/* <div className= 'css-dh1ib6' >
+            {/* <div className={show ? 'css-mtrik7' : 'css-dh1ib6'}>
                   <button className={`btn-toggle-section ${show ? "btn-hidden-section rotated" : "btn-show-section"}`}  onClick={()=>setShow(!show)}>
 
                     <i class="bi bi-arrow-right"></i>
                   </button>
               </div> */}
-          
-            
+              {/* <div className={show? 'css-11m367g' : 'css-1qz66c7'} style={{marginTop:'3px'}}>
+                <div style={{padding:'20px 10px' , paddingRight:'50px'}}>
+                    <h4>{title}</h4>
+                </div>
+                <SectionListUnit
+              courseId={courseId}
+              relativeHeight
+              useHistory
+              lesson
+            />
+              </div> */}
            </div>
         </div>
         <div className={styling} style={{width:'100%'}} >
@@ -243,7 +281,7 @@ function Course({
         //* * [MM-P2P] Experiment */
         mmp2p={MMP2P}
       />
-      </div>
+      {/* </div> */}
      
         {/* <div className="col-12 col-md-3" id="section-list-container">
           <SectionList

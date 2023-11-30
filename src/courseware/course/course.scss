@@ -56,6 +56,114 @@
     border:none
   }
 
+  
+  .unit-left-sidebar{
+  
+ 
+    height: 100%;
+    position: fixed;
+    top:0;
+    padding-top:12.6rem;
+   z-index: 2 ;
+    left:0;
+    width: calc((100% - 44.75rem)/2);
+   
+ 
+    background-color: #FAFBFB;
+
+   
+    // background: var(--chakra-colors-gray-100);
+    // border-right-width: 1px;
+    // border-right-style: solid;
+    // border-color: var(--chakra-colors-gray-300);
+
+    #courseHome-utline{
+      overflow-y: scroll;
+      position:relative;
+      height:100%;
+      &.hide-leftbar{
+        animation-name: hideLeftbar;
+        animation-duration:0.35s;
+        animation-timing-function: linear;
+        animation-fill-mode:forwards;
+      }
+      @keyframes hideLeftbar{
+        0%{   
+           
+            opacity:1;
+            transform:translateX(0);
+        }
+        10%{
+         opacity:1;
+            transform:translateX(-75px);
+        }
+        25%{
+         opacity:0.9;
+         transform: translateX(-150px);
+        }
+        50%{
+         opacity:0.8;
+         transform:translateX(-250px);
+        }75%{
+         opacity:0.8;
+         transform:translateX(-400px);
+        }
+        100%{
+         opacity:0;
+         display:none;
+         left:-300px;
+         transform:translateX(-500px);
+        }
+       }
+    }
+    
+
+    
+
+
+
+    .show-menu-lesson{
+    
+      position: absolute;
+      z-index: 10;
+      margin-top:0.5rem;
+      right:-1rem;
+      transition-duration: var(--chakra-transition-duration-normal);
+      transition: 0.15s all ease;
+      &.left-side{
+        left:0.5rem;
+  
+  
+      }
+      &.right-side{
+        right:-1rem;
+  
+  
+      }
+  
+  
+      svg{
+        display: inline-flex;
+  padding: 0.25rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 2.5rem;
+  border: 1px solid var(--other-border, #CFDBE8);
+  background: var(--background-white, #FFF);
+      }
+      svg{
+        &:hover{
+          background-color: #0B70DF;
+          path{
+            fill:white;
+          }
+        }
+  
+      }
+  }
+  }
+
   .menu-lesson{
     display: flex;
 width: 100%;
@@ -63,13 +171,17 @@ padding: 1.1875rem 1rem 0.5rem 1rem;
 align-items: center;
 gap: 0.5rem;
 align-self: stretch;
-// border-bottom-width: 1px;
-//   border-bottom-style: solid;
-//   border-color: var(--chakra-colors-gray-300);
+&.hide-leftbar{
+  animation-name: hideLeftbar;
+  animation-duration:0.35s;
+  animation-timing-function: linear;
+  animation-fill-mode:forwards;
+}
+
     .menu-lesson-title{
       flex: 1 0 0;
       color: var(--text-default, #2C3744);
-      
+
       font-feature-settings: 'clig' off, 'liga' off;
       font-family: Roboto;
       font-size: 1.125rem;
@@ -77,4 +189,33 @@ align-self: stretch;
       font-weight: 700;
       line-height: 150%; /* 1.6875rem */
     }
+    @keyframes hideLeftbar{
+      0%{   
+         
+          opacity:1;
+          transform:translateX(0);
+      }
+      10%{
+       opacity:1;
+          transform:translateX(-75px);
+      }
+      25%{
+       opacity:0.9;
+       transform: translateX(-150px);
+      }
+      50%{
+       opacity:0.8;
+       transform:translateX(-250px);
+      }75%{
+       opacity:0.8;
+       transform:translateX(-400px);
+      }
+      100%{
+       opacity:0;
+       display:none;
+       left:-300px;
+       transform:translateX(-500px);
+      }
+     }
+ 
   }

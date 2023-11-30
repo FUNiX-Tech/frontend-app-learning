@@ -1,10 +1,5 @@
 .collapsible-sequence-link {
 	&-container {
-		display: flex;
-		padding: 0.25rem 0.8125rem 0.25rem 1rem;
-		align-items: center;
-		gap: 0.25rem;
-		align-self: stretch;
 		& .collapsible-trigger {
 			display: block;
 		}
@@ -16,69 +11,4 @@
 
 .collapsible-icon {
 	margin-left: 0px !important;
-}
-
-.collapsible-tab{
-  
-    display: flex;
-	align-items: center;
-	
-	a{  
-		display: inline-block;
-		width: 100%;
-	
-			font-family: 'Roboto';
-        &.active.complete{
-			position: relative;
-			left:1rem;
-			top:-0.25rem;
-			color: var(--text-default, #2C3744);
-			
-		}
-
-		&.active{
-			
-			color:#0B70DF;
-		}
-			color: var(--base-color-inactive, #7B7B7B);
-	font-feature-settings: 'clig' off, 'liga' off;
-
-	/* Unit text/Paragraph 2 */
-	font-family: Roboto;
-	font-size: 0.875rem;
-	font-style: normal;
-	font-weight: 400;
-	line-height: 150%; /* 1.3125rem */
-	}
-
-	&:hover a{
-		text-decoration: none;
-	}
-}
-
-
-.collapsible-sequence-link-container{
-	display: flex;
-padding: 0rem 0.8125rem 0.25rem 1rem;
-gap: 0.25rem;
-align-self: stretch;
- .pgn_collapsible{
-	align-items: center;
-	.collapsible-trigger{
-		padding: 0;
-		border-bottom:0;
-	}
- }
-}
-
-
-
-.success-icon{
-	width: 0.75rem;
-	height:0.75rem;
-	float:left;
-	position: relative;
-	top: 1.125rem;
-	margin-left:-0.0625rem;
-
 }

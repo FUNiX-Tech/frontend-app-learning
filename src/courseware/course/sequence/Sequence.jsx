@@ -9,7 +9,6 @@ import {
   sendTrackingLogEvent,
 } from '@edx/frontend-platform/analytics';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
-
 import { useSelector } from 'react-redux';
 import { history } from '@edx/frontend-platform';
 import SequenceExamWrapper from '@edx/frontend-lib-special-exams';
@@ -151,7 +150,7 @@ function Sequence({
 
   const defaultContent = (
     <div className="sequence-container d-inline-flex flex-row" >
-      <div className={classNames('sequence postion-relative w-100', { 'position-relative': shouldDisplayNotificationTriggerInSequence })}>
+      <div className={classNames('sequence w-100',  { 'position-relative': shouldDisplayNotificationTriggerInSequence })}>
         <SequenceNavigation
           sequenceId={sequenceId}
           unitId={unitId}
@@ -175,11 +174,8 @@ function Sequence({
           goToCourseExitPage={() => goToCourseExitPage()}
         />
         {shouldDisplayNotificationTriggerInSequence && <SidebarTriggers />}
-      
-      <div className="w-100">
-            
-       
-      <div className="unit-container flex-grow-1" style={{paddingLeft:'2rem',marginTop:"0.625rem"}}>
+
+        <div className="unit-container flex-grow-1">
           <SequenceContent
             courseId={courseId}
             gated={gated}
@@ -216,9 +212,6 @@ function Sequence({
           />
           )} */}
         </div>
-
-      </div>
-       
       </div>
       <Sidebar />
 

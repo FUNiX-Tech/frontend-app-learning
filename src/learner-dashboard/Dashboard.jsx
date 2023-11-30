@@ -14,6 +14,7 @@ const Dashboard = ({ intl }) => {
   const [listCourse, setListCourse] = useState([]);
   const [loading, setLoading] = useState(true); 
 
+
   useEffect(() => {
       const fetchData = async () => {
           try {
@@ -27,6 +28,9 @@ const Dashboard = ({ intl }) => {
 
       fetchData();
   }, []);
+
+    
+ 
 
   return (
       <>
@@ -52,7 +56,7 @@ const Dashboard = ({ intl }) => {
                     </span>
                   </>
                 }
-                {listCourse.length >0 && <CourseList courses={listCourse} />}
+                {listCourse.length >0 && <CourseList showFooter courses={listCourse} />}
                    
                 </div>
               </div>
@@ -60,8 +64,7 @@ const Dashboard = ({ intl }) => {
               </div>
           </div>
 
-          
-         <Footer />
+        <Footer /> 
       </>
   );
 };

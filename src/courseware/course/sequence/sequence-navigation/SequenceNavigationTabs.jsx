@@ -1,12 +1,17 @@
-import React,{useEffect} from 'react';
+import React,{useEffect,useState} from 'react';
 import PropTypes from 'prop-types';
+import {useModel} from '../../../../generic/model-store'
 
 import UnitButton from './UnitButton';
 import SequenceNavigationDropdown from './SequenceNavigationDropdown';
 import useIndexOfLastVisibleChild from '../../../../generic/tabs/useIndexOfLastVisibleChild';
+import {useLocation} from 'react-router-dom'
+import sequence from '..';
+
+
 
 export default function SequenceNavigationTabs({
-  unitIds, unitId, showCompletion, onNavigate,
+  unitIds, unitId, showCompletion, onNavigate,courseId
 }) {
   const [
     indexOfLastVisibleChild,
@@ -15,11 +20,10 @@ export default function SequenceNavigationTabs({
   ] = useIndexOfLastVisibleChild();
   const shouldDisplayDropdown = indexOfLastVisibleChild === -1;
 
-
   //Right side bar scrolling hander
   useEffect(() => {
     // Get the fixed element
-    const fixedElement = document.querySelector('.sequence-navigation-tabs-container');
+    const fixedElement = document.querySelector('#courseware-sequenceNavigation');
     const instructorToolbar = document.querySelector('#instructor-toolbar')
     const header = document.querySelector('.learning-header')
     const headerHeight = header.offsetHeight
@@ -38,13 +42,24 @@ export default function SequenceNavigationTabs({
   
     // Adjust position on scroll
     const handleScroll = () => {
-
-      
+     
       if(window.scrollY >=137.5){
       fixedElement.style.paddingTop = headerHeight +'px'
       return;
       
-      }else if(window.scrollY>1 && window.scrollY <137.5){
+      }
+      else if(window.scrollY>=50 && window.scrollY <85.5){
+        if(instructorToolbar){
+      fixedElement.style.paddingTop = courseTagsNavHeight +instructorToolbarHeight- window.scrollY + 'px'
+      return;
+
+        }else{
+          fixedElement.style.paddingTop =courseTagsNavHeight - window.scrollY + 'px'
+          return;
+        }
+      }
+      
+      else if(window.scrollY>=122 && window.scrollY <137.5){
         if(instructorToolbar){
       fixedElement.style.paddingTop = headerHeight+courseTagsNavHeight +instructorToolbarHeight- window.scrollY + 'px'
       return;
@@ -55,7 +70,18 @@ export default function SequenceNavigationTabs({
         }
         
       }
-      else if(window.scrollY ===0){
+      else if(window.scrollY>=85.5 && window.scrollY <122){
+        if(instructorToolbar){
+      fixedElement.style.paddingTop = courseTagsNavHeight +30 +instructorToolbarHeight- window.scrollY + 'px'
+      return;
+
+        }else{
+          fixedElement.style.paddingTop = courseTagsNavHeight+30 - window.scrollY + 'px'
+          return;
+        }
+        
+      }
+      else if(window.scrollY <=50){
         if(instructorToolbar){
           fixedElement.style.paddingTop = headerHeight+courseTagsNavHeight +instructorToolbarHeight - window.scrollY + 'px'
           return;
@@ -65,6 +91,7 @@ export default function SequenceNavigationTabs({
               return;
             }
       }
+   
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -75,6 +102,26 @@ export default function SequenceNavigationTabs({
     };
   }, []);
 
+
+  //Get
+  
+  const  location = useLocation();
+ const  [title, setTitle] = useState('')
+ const {courseBlocks} = useModel('outline', courseId);
+ const {sequences} = courseBlocks
+
+ useEffect(()=>{
+ 
+  
+    console.log(sequences)
+     
+
+  
+
+ 
+ },[location.pathname])
+   
+
   return (
     <div style={{ flexBasis: '100%', minWidth: 0 }}>
       <div className="sequence-navigation-tabs-container" ref={containerRef}>
@@ -82,6 +129,7 @@ export default function SequenceNavigationTabs({
           className="sequence-navigation-tabs d-flex flex-grow-1"
           style={shouldDisplayDropdown ? null : null}
         >
+         
           {unitIds.map(buttonUnitId => (
             <UnitButton
               key={buttonUnitId}
