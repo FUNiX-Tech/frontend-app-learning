@@ -64,6 +64,7 @@ function SequenceNavigation({
         showCompletion={sequence.showCompletion}
         onNavigate={onNavigate}
         courseId={courseId}
+        title={sequence.title}
       />
     );
   };

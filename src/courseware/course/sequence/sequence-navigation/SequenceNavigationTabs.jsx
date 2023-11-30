@@ -5,13 +5,13 @@ import {useModel} from '../../../../generic/model-store'
 import UnitButton from './UnitButton';
 import SequenceNavigationDropdown from './SequenceNavigationDropdown';
 import useIndexOfLastVisibleChild from '../../../../generic/tabs/useIndexOfLastVisibleChild';
-import {useLocation} from 'react-router-dom'
+
 import sequence from '..';
 
 
 
 export default function SequenceNavigationTabs({
-  unitIds, unitId, showCompletion, onNavigate,courseId
+  unitIds, unitId, showCompletion, onNavigate,courseId,title
 }) {
   const [
     indexOfLastVisibleChild,
@@ -103,23 +103,7 @@ export default function SequenceNavigationTabs({
   }, []);
 
 
-  //Get
   
-  const  location = useLocation();
- const  [title, setTitle] = useState('')
- const {courseBlocks} = useModel('outline', courseId);
- const {sequences} = courseBlocks
-
- useEffect(()=>{
- 
-  
-    console.log(sequences)
-     
-
-  
-
- 
- },[location.pathname])
    
 
   return (
@@ -128,7 +112,8 @@ export default function SequenceNavigationTabs({
         <div
           className="sequence-navigation-tabs d-flex flex-grow-1"
           style={shouldDisplayDropdown ? null : null}
-        >
+        > 
+        <div className="sequence-lesson-title"><h2 className="lesson-title">{title}</h2></div>
          
           {unitIds.map(buttonUnitId => (
             <UnitButton
