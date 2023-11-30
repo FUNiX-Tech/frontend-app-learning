@@ -9,7 +9,6 @@ import {
   sendTrackingLogEvent,
 } from '@edx/frontend-platform/analytics';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
-
 import { useSelector } from 'react-redux';
 import { history } from '@edx/frontend-platform';
 import SequenceExamWrapper from '@edx/frontend-lib-special-exams';
@@ -170,7 +169,7 @@ function Sequence({
 
   const defaultContent = (
     <div className="sequence-container d-inline-flex flex-row" >
-      <div className={classNames('sequence postion-relative w-100', { 'position-relative': shouldDisplayNotificationTriggerInSequence })}>
+      <div className={classNames('sequence w-100', { 'position-relative': shouldDisplayNotificationTriggerInSequence })}>
         <SequenceNavigation
           sequenceId={sequenceId}
           unitId={unitId}
@@ -195,31 +194,28 @@ function Sequence({
         />
         {shouldDisplayNotificationTriggerInSequence && <SidebarTriggers />}
 
-        <div className="w-100">
+        <div className="unit-container flex-grow-1">
+          <SequenceContent
+            courseId={courseId}
+            gated={gated}
+            sequenceId={sequenceId}
+            unitId={unitId}
 
-
-          <div className="unit-container flex-grow-1" style={{ paddingLeft: '2rem', marginTop: "0.625rem" }}>
-            <SequenceContent
-              courseId={courseId}
-              gated={gated}
-              sequenceId={sequenceId}
-              unitId={unitId}
-
-            />
-            <UnitNavigation
-              sequenceId={sequenceId}
-              unitId={unitId}
-              onClickPrevious={() => {
-                logEvent('edx.ui.lms.sequence.previous_selected', 'bottom');
-                handlePrevious();
-              }}
-              onClickNext={() => {
-                logEvent('edx.ui.lms.sequence.next_selected', 'bottom');
-                handleNext();
-              }}
-              goToCourseExitPage={() => goToCourseExitPage()}
-            />
-            {/* {unitHasLoaded && (
+          />
+          <UnitNavigation
+            sequenceId={sequenceId}
+            unitId={unitId}
+            onClickPrevious={() => {
+              logEvent('edx.ui.lms.sequence.previous_selected', 'bottom');
+              handlePrevious();
+            }}
+            onClickNext={() => {
+              logEvent('edx.ui.lms.sequence.next_selected', 'bottom');
+              handleNext();
+            }}
+            goToCourseExitPage={() => goToCourseExitPage()}
+          />
+          {/* {unitHasLoaded && (
           <UnitNavigation
             sequenceId={sequenceId}
             unitId={unitId}
@@ -234,10 +230,7 @@ function Sequence({
             goToCourseExitPage={() => goToCourseExitPage()}
           />
           )} */}
-          </div>
-
         </div>
-
       </div>
       <Sidebar />
 

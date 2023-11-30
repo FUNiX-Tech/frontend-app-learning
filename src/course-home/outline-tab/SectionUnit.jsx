@@ -8,19 +8,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // import SequenceLink from './SequenceLink';
 import { useModel } from '../../generic/model-store';
-import CollapsibleSequenceLink from './CollapsibleSequenceLink';
+import CollapsibleSequenceLinkUnit from './CollapsibleSequenceLinkUnit';
 
 import genericMessages from '../../generic/messages';
 import messages from './messages';
-
-function Section({
+import "./SectionUnit.scss"
+function SectionUnit({
   courseId,
   defaultOpen,
   expand,
   intl,
   section,
   useHistory,
-  lesson
+  lesson,
+ unitId
 }) {
   const {
     complete,
@@ -47,7 +48,7 @@ function Section({
 
   const sectionTitle = (
     <div className=" w-100 m-0">
-      <div className=" p-0">
+      {/* <div className=" p-0">
         {complete ? (
           <FontAwesomeIcon
             icon={fasCheckCircle}
@@ -65,48 +66,54 @@ function Section({
             title={intl.formatMessage(messages.incompleteSection)}
           />
         )}
-      </div>
-      <div className=" ml-3 p-0 font-weight-bold text-dark-500">
+      </div> */}
+      {/* <div className=" ml-3 p-0 font-weight-bold text-dark-500">
         <span className="align-middle">{title}</span>
-        <span className="sr-only">
-          , {intl.formatMessage(complete ? messages.completedSection : messages.incompleteSection)}
+            <span className="sr-only">
+        {intl.formatMessage(complete ? messages.completedSection : messages.incompleteSection)}
         </span>
-      </div>
+      </div> */}
     </div>
   );
 
   return (
-    <li>
+    <li className="bg-light">
 
-      <Collapsible
+      {/* <Collapsible 
      
         className={`mb-2 ${lesson ? 'lesson' : 'home'}`}
-        styling="card-lg"
-        title={sectionTitle}
-        open={open}
-        onToggle={() => { setOpen(!open); }}
-        iconWhenClosed={(
-          <IconButton
-            alt={intl.formatMessage(messages.openSection)}
-            icon={faPlus}
-            onClick={() => { setOpen(true); }}
-            size="sm"
-          />
-        )}
-        iconWhenOpen={(
-          <IconButton
-            alt={intl.formatMessage(genericMessages.close)}
-            icon={faMinus}
-            onClick={() => { setOpen(false); }}
-            size="sm"
-          />
-        )}
+        // styling="card-lg"
+        // title={sectionTitle}
+        // open={open}
+        // onToggle={() => { setOpen(!open); }}
+        open={true}
+        onToggle={() => { setOpen(false); }}
+        // iconWhenClosed={(
+        //   <IconButton
+        //     alt={intl.formatMessage(messages.openSection)}
+        //     icon={faPlus}
+        //     onClick={() => { setOpen(true); }}
+        //     size="sm"
+        //   />
+        // )}
+        // iconWhenOpen={(
+        //   <IconButton
+        //     alt={intl.formatMessage(genericMessages.close)}
+        //     icon={faMinus}
+        //     onClick={() => { setOpen(false); }}
+        //     size="sm"
+        //   />
+        // )}
       >
-      
+     </Collapsible> 
+      */}
         
-        <ol className="list-unstyled">
+        
+        
+     
+      <ol className="list-unstyled bg-list-unstyled"  >
           {sequenceIds.map((sequenceId, index) => (
-            <CollapsibleSequenceLink
+            <CollapsibleSequenceLinkUnit
               lesson = {lesson}
               key={sequenceId}
               id={sequenceId}
@@ -115,16 +122,16 @@ function Section({
               first={index === 0}
               expand={expand}
               useHistory={useHistory}
+              unitId={unitId}
+             
             />
           ))}
         </ol>
-        
-      </Collapsible>
     </li>
   );
 }
 
-Section.propTypes = {
+SectionUnit.propTypes = {
   courseId: PropTypes.string.isRequired,
   defaultOpen: PropTypes.bool.isRequired,
   expand: PropTypes.bool.isRequired,
@@ -134,4 +141,4 @@ Section.propTypes = {
   lesson: PropTypes.bool
 };
 
-export default injectIntl(Section);
+export default injectIntl(SectionUnit);

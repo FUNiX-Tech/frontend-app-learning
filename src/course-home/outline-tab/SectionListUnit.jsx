@@ -6,17 +6,19 @@ import PropTypes from 'prop-types';
 //   intlShape,
 // } from '@edx/frontend-platform/i18n';
 
-import Section from './Section';
+import SectionUnit from './SectionUnit';
 import { useModel } from '../../generic/model-store';
 
 const MAX_HEIGHT_PERCENT = 80;
 
-function SectionList({
+function SectionListUnit({
   courseId,
   expandAll,
   relativeHeight,
   useHistory,
-  lesson
+  lesson,
+ unitId,
+ showLeftbarContent
 }) {
 
 
@@ -45,19 +47,19 @@ function SectionList({
     },
   } = useModel('outline', courseId);
 
-const style = {
-    maxHeight: `${height}px`,
-    overflow : 'auto',
-  };
+// const style = {
+//     maxHeight: `${height}px`,
+//     overflow : 'auto',
+//   };
 
 
   const rootCourseId = courses && Object.keys(courses)[0];
 
   return (
-    <ol id="courseHome-utline" className="list-unstyled" style={style} >
+    <ol id="courseHome-utline" className={`${showLeftbarContent?'list-unstyled hide-leftbar':' list-unstyled'}`}  /* style={style} */  >
       {courses[rootCourseId].sectionIds.map((sectionId) => {
-
-        return <Section
+        
+        return <SectionUnit
         key={sectionId}
         courseId={courseId}
         defaultOpen={false}
@@ -65,13 +67,14 @@ const style = {
         section={sections[sectionId]}
         useHistory={useHistory}
         lesson = {lesson}
+        unitId={unitId}
       />
       })}
     </ol>
   );
 }
 
-SectionList.propTypes = {
+SectionListUnit.propTypes = {
   courseId: PropTypes.string,
   expandAll: PropTypes.bool,
   relativeHeight: PropTypes.bool,
@@ -79,7 +82,7 @@ SectionList.propTypes = {
   lesson : PropTypes.bool
 };
 
-SectionList.defaultProps = {
+SectionListUnit.defaultProps = {
   courseId: '',
   expandAll: false,
   relativeHeight: false,
@@ -87,4 +90,4 @@ SectionList.defaultProps = {
   lesson : false
 };
 
-export default SectionList;
+export default SectionListUnit;

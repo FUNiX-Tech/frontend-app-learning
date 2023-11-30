@@ -42,10 +42,18 @@ const HeaderLearning = ({
   //     console.log(error)
   //   }
   //  },[])
-  console.log(isDashoard)
+
+
+  // Header for dashboard
+  const headerDashboard = (
+    <div className="d-flex align-items-center course-title-lockup">
+      <span className="d-block m-0 font-weight-bold">Header for dashboard</span>
+    </div>
+  );
+
   return (
     <header
-      className={`learning-header ${scrollY > 100 ? "unset-position" : ""}`}
+      className={`learning-header ${scrollY > 50 ? "unset-position" : ""}`}
     >
       {/* <a className="sr-only sr-only-focusable" href="#main-content">{intl.formatMessage(messages.skipNavLink)}</a> */}
       {/* <div className="container-xl py-2 d-flex align-items-center">
@@ -75,13 +83,13 @@ const HeaderLearning = ({
       </div> */}
 
 
-            <div className={`${isDashoard ? "header2-container" : "header1-container"} d-flex align-items-center`}>
+            <div className={`${!isDashoard ? "header2-container" : "header1-container"} d-flex align-items-center`}>
           <a href={`${getConfig().LMS_BASE_URL}/dashboard`} className="logo logo_img">
             <img className="d-block" src={getConfig().LOGO_URL} alt={getConfig().LOGO_URL} />
           </a>
           <div className="d-flex align-items-center course-title-lockup">
             <span className="d-block m-0 font-weight-bold">
-              {isDashoard ? courseTitle : `${courseOrg}+${courseNumber}+${courseTitle}`}
+              {isDashoard ? headerDashboard : `${courseOrg}+${courseNumber}+${courseTitle}`}
             </span>
           </div>
           <div className="actions d-flex">

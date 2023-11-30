@@ -161,7 +161,7 @@ function TabPage({ intl, ...props }) {
           isLoading
         />
         <LoadedTabPage {...props} />
-        <Footer />
+        {/* <Footer /> */}
       </>
     );
   }
