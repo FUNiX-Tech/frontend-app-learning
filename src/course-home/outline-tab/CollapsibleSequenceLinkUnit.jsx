@@ -137,10 +137,10 @@ function CollapsibleSequenceLinkUnit({
     
       <div className="text-break">
           <span className="align-middle">{displayTitle}</span>
-          <span className="sr-only">
+          {/* <span className="sr-only">
             , {intl.formatMessage(complete ? messages.completedAssignment : messages.incompleteAssignment)}
           </span>
-          <EffortEstimate className="ml-3 align-middle" block={sequence} />
+          <EffortEstimate className="ml-3 align-middle" block={sequence} /> */}
          
           </div>
     </div>

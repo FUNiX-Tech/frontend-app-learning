@@ -47,18 +47,28 @@ align-self: stretch;
 		width: 100%;
 	
 			font-family: 'Roboto';
-        &.active.complete{
+        &.complete{
 			position: relative;
 			left:1rem;
 			top:-0.25rem;
 			color: var(--text-default, #2C3744);
 			
 		}
+        
+		&.active.complete{
+			color:#0086FF;
+		}
+
 
 		&.active{
 			
-			color:#0B70DF;
+			color:#0086FF;
 		}
+
+        &:hover{
+			color:#0076E0;
+		}
+
 			color: var(--base-color-inactive, #7B7B7B);
 	font-feature-settings: 'clig' off, 'liga' off;
 
@@ -72,6 +82,7 @@ align-self: stretch;
 
 	&:hover a{
 		text-decoration: none;
+		
 	}
 }
 }

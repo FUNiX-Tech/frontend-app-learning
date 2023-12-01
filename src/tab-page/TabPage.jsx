@@ -162,6 +162,7 @@ function TabPage({ intl, ...props }) {
         />
         <LoadedTabPage {...props} />
         {/* <Footer /> */}
+        <div style={{height:'4rem'}}></div>
       </>
     );
   }
