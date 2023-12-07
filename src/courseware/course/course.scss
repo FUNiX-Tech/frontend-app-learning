@@ -1,221 +1,141 @@
+.btn-toggle-section {
+  border: 2px solid #2015ff;
+  background: none;
 
-
-  
-  
-  .btn-toggle-section{
-    border: 2px solid #2015FF; ;
-    background: none;
-  
-    &:hover{
-        i {
-            color: white;
-        }
-        background: rgb(23, 26, 83);
-        border-color: rgb(23, 26, 83);
+  &:hover {
+    i {
+      color: white;
     }
-  i{
+    background: rgb(23, 26, 83);
+    border-color: rgb(23, 26, 83);
+  }
+  i {
     font-size: 28px;
-    
   }
-    
-  }
-  
-  
-  
-  .btn-hidden-section {
-    border-radius: 50%;
-  }
-  .btn-show-section{
-    border-top-right-radius: 70%;
-    border-bottom-right-radius: 70%;
-  
-  }
-
-
-
-  .lesson{
-    .collapsible-body{
-      background-color: var(--chakra-colors-gray-100);
-    
-    }
-  
-  }
-  
-  .home{
-    .collapsible-body{
-      background-color: white;
-    
-    }
-  }
-  
-  
-  
-
-
-  .border-none{
-    border:none
-  }
-
-  
-  .unit-left-sidebar{
-  
- 
-    height: 100%;
-    position: fixed;
-    top:0;
-    padding-top:12.6rem;
-   z-index: 2 ;
-    left:0;
-    width: calc((100% - 44.75rem)/2);
-   
- 
-    background-color: #FAFBFB;
-
-   
-    // background: var(--chakra-colors-gray-100);
-    // border-right-width: 1px;
-    // border-right-style: solid;
-    // border-color: var(--chakra-colors-gray-300);
-
-    #courseHome-utline{
-      overflow-y: scroll;
-      position:relative;
-      height:100%;
-      &.hide-leftbar{
-        animation-name: hideLeftbar;
-        animation-duration:0.35s;
-        animation-timing-function: linear;
-        animation-fill-mode:forwards;
-      }
-      @keyframes hideLeftbar{
-        0%{   
-           
-            opacity:1;
-            transform:translateX(0);
-        }
-        10%{
-         opacity:1;
-            transform:translateX(-75px);
-        }
-        25%{
-         opacity:0.9;
-         transform: translateX(-150px);
-        }
-        50%{
-         opacity:0.8;
-         transform:translateX(-250px);
-        }75%{
-         opacity:0.8;
-         transform:translateX(-400px);
-        }
-        100%{
-         opacity:0;
-         display:none;
-         left:-300px;
-         transform:translateX(-500px);
-        }
-       }
-    }
-    
-
-    
-
-
-
-    .show-menu-lesson{
-    
-      position: absolute;
-      z-index: 10;
-      margin-top:0.5rem;
-      right:-1rem;
-      transition-duration: var(--chakra-transition-duration-normal);
-      transition: 0.15s all ease;
-      &.left-side{
-        left:0.5rem;
-  
-  
-      }
-      &.right-side{
-        right:-1rem;
-  
-  
-      }
-  
-  
-      svg{
-        display: inline-flex;
-  padding: 0.25rem;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-  border-radius: 2.5rem;
-  border: 1px solid var(--other-border, #CFDBE8);
-  background: var(--background-white, #FFF);
-      }
-      svg{
-        &:hover{
-          background-color: #0B70DF;
-          path{
-            fill:white;
-          }
-        }
-  
-      }
-  }
-  }
-
-  .menu-lesson{
-    display: flex;
-width: 100%;
-padding: 1.1875rem 1rem 0.5rem 1rem;
-align-items: center;
-gap: 0.5rem;
-align-self: stretch;
-&.hide-leftbar{
-  animation-name: hideLeftbar;
-  animation-duration:0.35s;
-  animation-timing-function: linear;
-  animation-fill-mode:forwards;
 }
 
-    .menu-lesson-title{
-      flex: 1 0 0;
-      color: var(--text-default, #2C3744);
+.btn-hidden-section {
+  border-radius: 50%;
+}
+.btn-show-section {
+  border-top-right-radius: 70%;
+  border-bottom-right-radius: 70%;
+}
 
-      font-feature-settings: 'clig' off, 'liga' off;
-      font-family: Roboto;
-      font-size: 1.125rem;
-      font-style: normal;
-      font-weight: 700;
-      line-height: 150%; /* 1.6875rem */
-    }
-    @keyframes hideLeftbar{
-      0%{   
-         
-          opacity:1;
-          transform:translateX(0);
-      }
-      10%{
-       opacity:1;
-          transform:translateX(-75px);
-      }
-      25%{
-       opacity:0.9;
-       transform: translateX(-150px);
-      }
-      50%{
-       opacity:0.8;
-       transform:translateX(-250px);
-      }75%{
-       opacity:0.8;
-       transform:translateX(-400px);
-      }
-      100%{
-       opacity:0;
-       display:none;
-       left:-300px;
-       transform:translateX(-500px);
-      }
-     }
- 
+.lesson {
+  .collapsible-body {
+    background-color: var(--chakra-colors-gray-100);
   }
+}
+
+.home {
+  .collapsible-body {
+    background-color: white;
+  }
+}
+
+.border-none {
+  border: none;
+}
+
+.unit-left-sidebar {
+  height: 100%;
+  position: fixed;
+  top: 0;
+  padding-top: 12.6rem;
+  z-index: 2;
+  left: 0;
+  width: calc((100% - 44.75rem) / 2);
+
+  background-color: #fafbfb;
+
+  // background: var(--chakra-colors-gray-100);
+  // border-right-width: 1px;
+  // border-right-style: solid;
+  // border-color: var(--chakra-colors-gray-300);
+
+  #courseHome-utline {
+    overflow-y: scroll;
+    width: 18.75rem;
+    transform: translateX(30.125rem);
+    height: 100%;
+
+    transition: all 0.5s ease;
+    opacity: 0;
+    position: relative;
+    z-index: -100;
+    &.show-leftbar {
+      transform: translateX(0);
+      margin-left: auto;
+      z-index: 100;
+      opacity: 1;
+      transition: all 0.25s ease;
+    }
+  }
+
+  .show-menu-lesson {
+    position: absolute;
+    z-index: 1000;
+    margin-top: 0.5rem;
+    right: 0rem;
+    transition-duration: var(--chakra-transition-duration-normal);
+    transition: 0.15s all ease;
+
+    &.right-side {
+      right: 0rem;
+    }
+
+    svg {
+      display: inline-flex;
+      padding: 0.25rem;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      border-radius: 2.5rem;
+      border: 1px solid var(--other-border, #cfdbe8);
+      background: var(--background-white, #fff);
+    }
+    svg {
+      &:hover {
+        background-color: #0b70df;
+        path {
+          fill: white;
+        }
+      }
+    }
+  }
+}
+
+.menu-lesson {
+  width: 18.75rem;
+  display: flex;
+  padding: 1rem;
+  line-height: 1.5;
+  transform: translateX(32rem);
+  transition: all 0.5s ease;
+  position: relative;
+  z-index: -100;
+  opacity: 0;
+  &.show-leftbar {
+    transform: translateX(0);
+    margin-left: auto;
+    opacity: 1;
+    z-index: 100;
+    transition: all 0.25s ease;
+  }
+
+  .menu-lesson-title {
+    align-self: stretch;
+    flex-grow: 0;
+    font-family: Roboto;
+    font-size: 1.125rem;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+
+    letter-spacing: normal;
+    text-align: left;
+    margin-bottom: 0;
+    color: var(--color-text-default);
+  }
+}

@@ -1,12 +1,12 @@
-import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import classNames from 'classnames';
-import { Button } from '@edx/paragon';
+import React, { useCallback } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import classNames from "classnames";
+import { Button } from "@edx/paragon";
 
-import UnitIcon from './UnitIcon';
-import CompleteIcon from './CompleteIcon';
-import BookmarkFilledIcon from '../../bookmark/BookmarkFilledIcon';
+import UnitIcon from "./UnitIcon";
+import CompleteIcon from "./CompleteIcon";
+import BookmarkFilledIcon from "../../bookmark/BookmarkFilledIcon";
 
 function UnitButton({
   onClick,
@@ -20,27 +20,26 @@ function UnitButton({
   className,
   showTitle,
 }) {
-  
-  //Completed unit 
+  //Completed unit
 
   const handleClick = useCallback(() => {
     onClick(unitId);
   });
 
-
   return (
-
-    
-    
     <Button
       // className={classNames({
       //   active: isActive,
       //   complete: showCompletion && complete,
       // }, className)}
-      className={classNames({
-        active: isActive,
-        complete: showCompletion && complete,
-      }, className,"border-0 text-start")}
+      className={classNames(
+        {
+          active: isActive,
+          complete: showCompletion && complete,
+        },
+        className,
+        "border-0 text-start"
+      )}
       variant="link"
       onClick={handleClick}
       // title={title}
@@ -53,8 +52,8 @@ function UnitButton({
           className="text-primary small position-absolute"
           style={{ top: '-3px', right: '5px' }}
         />
-      ) : null} */} 
-      {title.length>=48 ? title.substring(0,48)+'...': title}
+      ) : null} */}
+      {title.length >= 42 ? title.substring(0, 42) + "..." : title}
     </Button>
   );
 }
