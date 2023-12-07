@@ -50,7 +50,15 @@
         gap: 0.88rem;
 
         li {
-          cursor: pointer;
+          & a {
+            color: var(--color-text-default);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            &:hover {
+              color: var(--color-hover);
+              transition: all 0.2s ease;
+            }
+          }
         }
       }
     }

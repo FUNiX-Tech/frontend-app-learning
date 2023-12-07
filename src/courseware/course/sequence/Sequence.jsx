@@ -104,25 +104,6 @@ function Sequence({
         // course blocks that were originally hidden because the Entrance Exam was not passed.
         global.location.reload();
       }
-
-      if (type === "learningprojectxblock") {
-        const iframe = document.getElementById("unit-iframe");
-
-        if (event.data.resize) {
-          iframe.style.transition = event.data.resize.transition;
-          iframe.style.height = event.data.resize.iframeHeight + 'px';
-        }
-
-        if (event.data.scroll) {
-          const top = iframe.getBoundingClientRect().top + window.scrollY + event.data.scroll.top;
-          window.scroll({
-            top: top,
-            left: 0,
-            behavior: "smooth",
-          });
-        }
-
-      }
     }
     global.addEventListener('message', receiveMessage);
   }, []);
@@ -169,7 +150,7 @@ function Sequence({
 
   const defaultContent = (
     <div className="sequence-container d-inline-flex flex-row" >
-      <div className={classNames('sequence w-100', { 'position-relative': shouldDisplayNotificationTriggerInSequence })}>
+      <div className={classNames('sequence w-100',  { 'position-relative': shouldDisplayNotificationTriggerInSequence })}>
         <SequenceNavigation
           sequenceId={sequenceId}
           unitId={unitId}
@@ -202,7 +183,7 @@ function Sequence({
             unitId={unitId}
 
           />
-          <UnitNavigation
+           <UnitNavigation
             sequenceId={sequenceId}
             unitId={unitId}
             onClickPrevious={() => {
