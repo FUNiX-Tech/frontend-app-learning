@@ -1,8 +1,21 @@
 #courseTabsNavigation {
   .sub-header-container {
-    margin-left: 23.12rem;
-    margin-right: 23.12rem;
+    margin-left: calc((100% - 44.75rem) / 2);
+    margin-right: calc((100% - 42.75rem) / 2);
     position: relative;
+
+    & a {
+      color: var(--color-text-inactive);
+      font-feature-settings: "clig" off, "liga" off;
+      font-family: Roboto;
+      font-size: 1rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 150%;
+      padding: 1rem 0;
+      margin-right: 1rem;
+    }
+
     h1 {
       color: red;
     }

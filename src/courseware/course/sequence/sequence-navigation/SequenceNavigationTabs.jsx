@@ -282,6 +282,45 @@ export default function SequenceNavigationTabs({
             </div>
           </div>
         </div>
+        {/* Feedback */}
+        <div
+          className={`${
+            isShowFeedback
+              ? "sequence-navigation-tabs d-flex flex-grow-1 active feedback"
+              : "sequence-navigation-tabs d-flex flex-grow-1"
+          }`}
+          style={shouldDisplayDropdown ? null : null}
+        >
+          <div className="feedback">
+            <h2 className="feedback-title">Phản hồi</h2>
+            <h3 className="feedback-question-title">Phản hồi của bạn là gì?</h3>
+            <form>
+              <select className="feedback-question-select">
+                <option value="">Nội dung chứa thông tin lỗi thời</option>
+                <option value="">Nội dung không được giải thích tốt</option>
+                <option value="">Nội dung cần chi tiết hơn</option>
+                <option value="">
+                  Tài nguyên bị thiếu hoặc bị hỏng (liên kết, tập dữ liệu, v.v.)
+                </option>
+                <option value="">Lỗi dịch nội dung</option>
+              </select>
+              <h3 className="feedback-question-title">
+                Phản hồi của bạn là gì?
+              </h3>
+              <textarea
+                placeholder="Nhập nội dung"
+                name="feedback-text"
+                className="feedback-text"
+              ></textarea>
+              <h3 className="feedback-question-title">Tải ảnh chụp</h3>
+              <p className="file-inform">
+                File ảnh: jpg, jpeg, png. Kích thước tối đa 5MB
+              </p>
+              <input type="file" className="file-input" />
+              <button class="submit-feedback-btn">Gửi phản hồi</button>
+            </form>
+          </div>
+        </div>
       </div>
       {/* {shouldDisplayDropdown && (
         <SequenceNavigationDropdown
