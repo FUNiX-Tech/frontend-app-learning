@@ -17,7 +17,7 @@ import "./CourseTabsNavigation.scss";
 import RightMenu from "./assets/RightMenu_off.svg";
 import Chatbot from "./assets/Chatbot_off.svg";
 import Feedback from "./assets/Feedback_off.svg";
-import RightMenuHover from "./assets/Rightmenu_hover.svg";
+import RightMenuHover from "./assets/RightMenu_hover.svg";
 import FeedbackHover from "./assets/Feedback_hover.svg";
 import ChatbotHover from "./assets/Chatbot_hover.svg";
 import RightMenuActive from "./assets/RightMenu_active.svg";
