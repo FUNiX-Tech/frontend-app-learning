@@ -7,6 +7,7 @@ import {
   toggleShowFeedback,
   toggleShowLesson,
   toggleShowChatbot,
+  setOffMenuState,
 } from "../header/data/slice";
 import { useLocation } from "react-router-dom";
 
@@ -55,6 +56,12 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
     }
     if (isShowFeedback) {
       setFeedbackSrc(FeedbackActive);
+    }
+    if (pathname.includes("/home")) {
+      dispatch(setOffMenuState());
+      setRightMenuSrc(RightMenu);
+      setChatbotSrc(Chatbot);
+      setFeedbackSrc(Feedback);
     }
   }, [pathname]);
 
