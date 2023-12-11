@@ -25,12 +25,13 @@
     flex: 0 0 auto;
 
     .logo {
+      margin-left: 0.75rem;
       display: block;
       box-sizing: content-box;
       position: relative;
       top: 0.1em;
       height: 1.75rem;
-      margin-right: 1rem;
+
       img {
         display: block;
         height: 100%;
@@ -61,7 +62,7 @@
 .course-tabs-navigation {
   border-bottom: solid 1px #eaeaea;
   position: relative;
-  z-index: 150000;
+  z-index: 20000;
   background-color: #fff;
 
   .nav a,
@@ -330,6 +331,7 @@
     }
 
     .btn {
+      font-family: Roboto;
       box-sizing: border-box;
       display: flex;
       flex-wrap: wrap;
@@ -972,18 +974,18 @@
   position: sticky;
   // top:0px;
   background-color: white;
-  z-index: 99;
+  z-index: 250000;
   box-shadow: 0px 2px 4px -1px #0b0b0b0f, 0px 4px 6px -1px #0b0b0b1a;
 }
 
-.learning-header .course-title-lockup span:first-child {
-  padding-bottom: 5px;
-  padding-top: 5px;
-}
+// .learning-header .course-title-lockup span:first-child {
+//   padding-bottom: 5px;
+//   padding-top: 5px;
+// }
 
-.learning-header .course-title-lockup span {
-  padding-bottom: 5px;
-}
+// .learning-header .course-title-lockup span {
+//   padding-bottom: 5px;
+// }
 
 // section list
 #section-list-container > ol {

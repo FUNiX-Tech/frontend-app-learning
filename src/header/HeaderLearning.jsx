@@ -10,6 +10,7 @@ import { fetchSurveyCourse } from "./data/thunks";
 import notification_icon from "./assets/notification.svg";
 import avatar_icon from "./assets/avatar.svg";
 import useScroll from "../course-tabs/useScroll";
+import { NavLink } from "react-router-dom";
 
 const HeaderLearning = ({
   courseOrg,
@@ -18,7 +19,7 @@ const HeaderLearning = ({
   intl,
   showUserDropdown,
   loading,
-  isDashoard
+  isDashoard,
 }) => {
   // console.log('=======', courseOrg, courseNumber, courseTitle)
 
@@ -43,11 +44,31 @@ const HeaderLearning = ({
   //   }
   //  },[])
 
-
   // Header for dashboard
   const headerDashboard = (
     <div className="d-flex align-items-center course-title-lockup">
-      <span className="d-block m-0 font-weight-bold">Header for dashboard</span>
+      <ul>
+        <li>
+          <NavLink
+            className="header-dashboard-link"
+            activeClassName="active"
+            end
+            to="/dashboard"
+          >
+            Khoá học của tôi
+          </NavLink>
+        </li>
+        <li>
+          <a
+            className="header-dashboard-link"
+            // activeClassName="active"
+            // to="/course"
+            href="#"
+          >
+            Các khoá khác
+          </a>
+        </li>
+      </ul>
     </div>
   );
 
@@ -82,28 +103,54 @@ const HeaderLearning = ({
         )}
       </div> */}
 
-
-            <div className={`${!isDashoard ? "header2-container" : "header1-container"} d-flex align-items-center`}>
-          <a href={`${getConfig().LMS_BASE_URL}/dashboard`} className="logo logo_img">
-            <img className="d-block" src={getConfig().LOGO_URL} alt={getConfig().LOGO_URL} />
+      <div
+        className={`${
+          !isDashoard ? "header2-container" : "header1-container"
+        } d-flex align-items-center`}
+      >
+        <div className="logo-container">
+          {" "}
+          <a
+            href={`${getConfig().LMS_BASE_URL}/dashboard`}
+            className="logo logo_img"
+          >
+            <img
+              className="d-block"
+              src={getConfig().LOGO_URL}
+              alt={getConfig().LOGO_URL}
+            />
           </a>
-          <div className="d-flex align-items-center course-title-lockup">
-            <span className="d-block m-0 font-weight-bold">
-              {isDashoard ? headerDashboard : `${courseOrg}+${courseNumber}+${courseTitle}`}
-            </span>
-          </div>
-          <div className="actions d-flex">
-            <button className="action-button">
-              <img src={notification_icon} alt={notification_icon} />
-            </button>
-            <button className="action-button">
-              <img src={avatar_icon} alt={avatar_icon} />
-            </button>
-          </div>
         </div>
-     
 
-   
+        <div
+          className={`${
+            isDashoard
+              ? "d-flex align-items-center course-title-lockup header-dashboard"
+              : "d-flex align-items-center course-title-lockup"
+          }`}
+        >
+          <span className={`${isDashoard ? "d-block" : "d-block header-2"}`}>
+            {isDashoard
+              ? headerDashboard
+              : `${courseOrg}+${courseNumber}+${courseTitle}`}
+          </span>
+        </div>
+        <div className="actions d-flex align-items-center">
+          <button className="action-button">
+            <img src={notification_icon} alt={notification_icon} />
+          </button>
+          {/* <button className="action-button">
+            <img src={avatar_icon} alt={avatar_icon} />
+          </button> */}
+          {showUserDropdown && authenticatedUser && (
+            <AuthenticatedUserDropdown
+              username={authenticatedUser.username}
+              isLoading={loading}
+              courseId={courseIdFromUrl}
+            />
+          )}
+        </div>
+      </div>
     </header>
   );
 };
@@ -115,7 +162,7 @@ HeaderLearning.propTypes = {
   intl: intlShape.isRequired,
   showUserDropdown: PropTypes.bool,
   isLoading: PropTypes.bool,
-  isDashoard: PropTypes.bool
+  isDashoard: PropTypes.bool,
 };
 
 HeaderLearning.defaultProps = {
@@ -124,7 +171,7 @@ HeaderLearning.defaultProps = {
   courseTitle: null,
   showUserDropdown: true,
   isLoading: false,
-  isDashoard: false
+  isDashoard: false,
 };
 
 export default injectIntl(HeaderLearning);
