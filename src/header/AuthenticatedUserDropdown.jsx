@@ -15,6 +15,8 @@ import SelectLanguage from "./SelectLanguage";
 import SearchCourse from "./SearchCourse";
 import ChatGPT from "../chatGPT/ChatGPT";
 import { useModel } from "../generic/model-store";
+import avatar_icon from "./assets/avatar.svg";
+import avatar_hover_icon from "./assets/avatar_hover.svg";
 
 const AuthenticatedUserDropdown = ({ intl, username, isLoading, courseId }) => {
   const dashboardMenuItem = (
@@ -23,6 +25,9 @@ const AuthenticatedUserDropdown = ({ intl, username, isLoading, courseId }) => {
       {intl.formatMessage(messages.dashboard)}
     </Dropdown.Item>
   );
+
+  //avatar state
+  const [avatarSrc, setAvatarSrc] = useState(avatar_icon);
 
   const isShowGlobalChatGPT = useSelector(
     (state) => state.header.isShowGlobalChatGPT
@@ -47,32 +52,39 @@ const AuthenticatedUserDropdown = ({ intl, username, isLoading, courseId }) => {
     <>
       {!isLoading && (
         <div className="d-flex align-items-center " style={{ gap: "1rem" }}>
-          {isChatGPT && (
+          {/* {isChatGPT && (
             <div className="btn-chatGPT" onClick={handlerChatGPT}>
               <span>
                 <img src={logoChatGPT} alt="logo-chatGPT" />
               </span>
             </div>
-          )}
-          {isSearch && <SearchCourse />}
+          )} */}
+          {/* {isSearch && <SearchCourse />} */}
 
-          <a
+          {/* <a
             className="text-gray-700"
             href="https://funix.gitbook.io/funix-documentation/"
             target="_blank"
           >
             {intl.formatMessage(messages.help)}
           </a>
-          <SelectLanguage username={username} />
+          <SelectLanguage username={username} /> */}
         </div>
       )}
-      <Dropdown className="user-dropdown ml-3">
-        <Dropdown.Toggle variant="outline-primary">
-          <FontAwesomeIcon
+      <Dropdown className="user-dropdown position-relative z-index-100000">
+        <Dropdown.Toggle
+          variant="outline-primary"
+          onMouseOver={() => setAvatarSrc(avatar_hover_icon)}
+          onMouseOut={() => setAvatarSrc(avatar_icon)}
+        >
+          {/* <FontAwesomeIcon
             icon={faUserCircle}
             className="d-md-none"
             size="lg"
-          />
+          /> */}
+          <button className="action-button mr-1">
+            <img src={avatarSrc} alt={avatar_icon} />
+          </button>
           <span data-hj-suppress className="d-none d-md-inline">
             {username}
           </span>
@@ -92,13 +104,13 @@ const AuthenticatedUserDropdown = ({ intl, username, isLoading, courseId }) => {
         </Dropdown.Menu>
       </Dropdown>
 
-      {!isLoading && (
+      {/* {!isLoading && (
         <div className={isShowGlobalChatGPT ? "css-1bljlat" : "css-16kvbm"}>
           <div className={isShowGlobalChatGPT ? "css-19dz5pz" : "css-1dntyew"}>
             <ChatGPT />
           </div>
         </div>
-      )}
+      )} */}
     </>
   );
 };

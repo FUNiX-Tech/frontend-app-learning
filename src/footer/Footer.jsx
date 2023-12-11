@@ -33,11 +33,23 @@ export default function Footer() {
         <div className="footer-section">
           <h3>Về chúng tôi</h3>
           <ul>
-            <li><a href="https://funix.edu.vn/gioi-thieu-funix">Giới thiệu FUNiX</a></li>
-            <li><a href="https://funix.edu.vn/mentor/">Đội ngũ Mentor</a></li>
-            <li><a href="https://funix.edu.vn/hop-tac/">Hợp tác</a></li>
-            <li><a href="https://funix.edu.vn/lien-he/">Liên hệ</a></li>
-            <li><a href="https://funix.edu.vn/faq-2/">FAQ</a></li>
+            <li>
+              <a href="https://funix.edu.vn/gioi-thieu-funix">
+                Giới thiệu FUNiX
+              </a>
+            </li>
+            <li>
+              <a href="https://funix.edu.vn/mentor/">Đội ngũ Mentor</a>
+            </li>
+            <li>
+              <a href="https://funix.edu.vn/hop-tac/">Hợp tác</a>
+            </li>
+            <li>
+              <a href="https://funix.edu.vn/lien-he/">Liên hệ</a>
+            </li>
+            <li>
+              <a href="https://funix.edu.vn/faq-2/">FAQ</a>
+            </li>
           </ul>
         </div>
 
@@ -45,10 +57,22 @@ export default function Footer() {
         <div className="footer-section">
           <h3>Học gì ở FUNiX</h3>
           <ul>
-            <li><a href="https://funix.edu.vn/chuong-trinh-hoc-funix/">Chương trình học</a></li>
-            <li><a href="https://funix.edu.vn/hoc-phi/">Học phí</a></li>
-            <li><a href="https://funix.edu.vn/phuong-phap-hoc-truc-tuyen-hieu-qua/">Cách Học</a></li>
-            <li><a href="https://events.funix.edu.vn/xter">Đời sống sinh viên</a></li>
+            <li>
+              <a href="https://funix.edu.vn/chuong-trinh-hoc-funix/">
+                Chương trình học
+              </a>
+            </li>
+            <li>
+              <a href="https://funix.edu.vn/hoc-phi/">Học phí</a>
+            </li>
+            <li>
+              <a href="https://funix.edu.vn/phuong-phap-hoc-truc-tuyen-hieu-qua/">
+                Cách Học
+              </a>
+            </li>
+            <li>
+              <a href="https://events.funix.edu.vn/xter">Đời sống sinh viên</a>
+            </li>
           </ul>
         </div>
 
@@ -56,8 +80,12 @@ export default function Footer() {
         <div className="footer-section">
           <h3>Tin tức</h3>
           <ul>
-            <li><a href="https://funix.edu.vn/funix-activities/">Học đường</a></li>
-            <li><a href="https://funix.edu.vn/events/">Sự kiện</a></li>
+            <li>
+              <a href="https://funix.edu.vn/funix-activities/">Học đường</a>
+            </li>
+            <li>
+              <a href="https://funix.edu.vn/events/">Sự kiện</a>
+            </li>
           </ul>
         </div>
       </div>

@@ -134,7 +134,7 @@ function Course({
     // Adjust position on scroll
     const handleScroll = () => {
       if (window.scrollY >= 137.5) {
-        fixedElement.style.paddingTop = headerHeight + "px";
+        fixedElement.style.paddingTop = courseTagsNavHeight + "px";
         return;
       } else if (window.scrollY >= 50 && window.scrollY < 85.5) {
         if (instructorToolbar) {
