@@ -16,5 +16,5 @@ jobs:
           port: 22
           command_timeout: 100m
           script: |
-            tutor images build mfe --no-cache
+            tutor images build mfe --build-arg CACHEBUST=$(date +%s)
             echo -e "y\n\n\n\n\n\ny" | tutor local launch
