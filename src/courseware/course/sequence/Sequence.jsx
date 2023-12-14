@@ -104,6 +104,45 @@ function Sequence({
         // course blocks that were originally hidden because the Entrance Exam was not passed.
         global.location.reload();
       }
+
+      // Resize height iframe unit chứa learning project xblock để responsive
+      // reload (cập nhật) unit learning project cuối khi unit 1 đổi trạng thái nộp/hủy bài
+      // scroll
+      if (type === "learningprojectxblock") {
+        console.log(event.data)
+
+        if (event.data.resize) {
+          const iframe = document.querySelector(`iframe[data-unit-usage-id='${event.data.unit_usage_id}']`);
+          if (!iframe) {
+            console.log("not fond iframe")
+            return
+          }
+          iframe.style.transition = event.data.resize.transition;
+          iframe.style.height = event.data.resize.iframeHeight + 'px';
+        }
+
+        if (event.data.scroll) {
+          const iframe = document.querySelector(`iframe[data-unit-usage-id='${event.data.unit_usage_id}']`);
+          if (!iframe) {
+            console.log("not fond iframe")
+            return
+          }
+          const top = iframe.getBoundingClientRect().top + window.scrollY + event.data.scroll.top;
+          window.scroll({
+            top: top,
+            left: 0,
+            behavior: "smooth",
+          });
+        }
+
+        if (event.data.reload) {
+          const iframes = Array.from(document.querySelectorAll('iframe'))
+          iframes.forEach((ifr) => {
+            ifr.contentWindow.postMessage({ type: 'learningprojectxblock', reload: true }, "*")
+          })
+        }
+
+      }
     }
     global.addEventListener('message', receiveMessage);
   }, []);
@@ -150,7 +189,7 @@ function Sequence({
 
   const defaultContent = (
     <div className="sequence-container d-inline-flex flex-row" >
-      <div className={classNames('sequence w-100',  { 'position-relative': shouldDisplayNotificationTriggerInSequence })}>
+      <div className={classNames('sequence w-100', { 'position-relative': shouldDisplayNotificationTriggerInSequence })}>
         <SequenceNavigation
           sequenceId={sequenceId}
           unitId={unitId}
@@ -183,7 +222,7 @@ function Sequence({
             unitId={unitId}
 
           />
-           <UnitNavigation
+          <UnitNavigation
             sequenceId={sequenceId}
             unitId={unitId}
             onClickPrevious={() => {
