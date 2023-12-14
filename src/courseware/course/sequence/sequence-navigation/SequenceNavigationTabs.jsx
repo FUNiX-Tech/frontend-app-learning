@@ -142,7 +142,15 @@ export default function SequenceNavigationTabs({
               unitId={buttonUnitId}
               isActive={unitId === buttonUnitId}
               showCompletion={showCompletion}
-              onClick={onNavigate}
+              onClick={(...params) => {
+                document
+                  .querySelector(`iframe[data-unit-usage-id='${buttonUnitId}'`)
+                  .contentWindow.postMessage(
+                    { type: "learningprojectxblock", resize: true },
+                    "*"
+                  );
+                onNavigate(...params);
+              }}
             />
           ))}
         </div>
