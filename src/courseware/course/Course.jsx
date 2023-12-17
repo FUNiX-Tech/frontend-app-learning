@@ -56,9 +56,9 @@ function Course({
   const rootCourseId = courses && Object.keys(courses)[0];
   const allSequenceIds = useMemo(() => {
     const output = [];
-    courses[rootCourseId].sectionIds.forEach((sectionId) =>
-      output.push(...sections[sectionId].sequenceIds)
-    );
+    for (let value of courses[rootCourseId].sectionIds) {
+      output.push(...sections[value].sequenceIds);
+    }
     return output;
   }, [rootCourseId, courses]);
 
