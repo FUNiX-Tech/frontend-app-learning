@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import PropTypes from "prop-types";
 import { Helmet } from "react-helmet";
 import { useDispatch } from "react-redux";
@@ -27,6 +27,9 @@ import {
 } from "../../data/sessionStorage";
 import { useSelector } from "react-redux";
 import "./course.scss";
+import group from "./assets/group.svg";
+import group_active from "./assets/group_active.svg";
+import group_hover from "./assets/group_hover.svg";
 
 /** [MM-P2P] Experiment */
 import { initCoursewareMMP2P, MMP2PBlockModal } from "../../experiments/mm-p2p";
@@ -41,9 +44,23 @@ function Course({
   windowWidth,
 }) {
   const course = useModel("coursewareMeta", courseId);
+  const {
+    courseBlocks: { sequences, courses, sections },
+  } = useModel("outline", courseId);
+
   const { celebrations, isStaff, title } = useModel("courseHomeMeta", courseId);
   const sequence = useModel("sequences", sequenceId);
   const section = useModel("sections", sequence ? sequence.sectionId : null);
+
+  //Logic get all sequenceIds in section via sectionIds
+  const rootCourseId = courses && Object.keys(courses)[0];
+  const allSequenceIds = useMemo(() => {
+    const output = [];
+    courses[rootCourseId].sectionIds.forEach((sectionId) =>
+      output.push(...sections[sectionId].sequenceIds)
+    );
+    return output;
+  }, [rootCourseId, courses]);
 
   const pageTitleBreadCrumbs = [sequence, section, course]
     .filter((element) => element != null)
@@ -95,22 +112,25 @@ function Course({
   }, [sequenceId]);
 
   const [show, setShow] = useState(false);
-  const [showLeftbarContent, setShowLeftbarContent] = useState(false);
+  const [showLeftbarContent, setShowLeftbarContent] = useState(true);
   const location = useLocation();
   const [styling, setStyling] = useState("css-yeymkw");
   const isShowChatGPT = useSelector((state) => state.header.isShowChatGPT);
+  const isShowFeedback = useSelector((state) => state.header.isShowFeedback);
+  const isShowChatbot = useSelector((state) => state.header.isShowChatbot);
+  const [groupSrc, setGroupSrc] = useState(group_active);
 
-  useEffect(() => {
-    setStyling(
-      show
-        ? isShowChatGPT
-          ? "css-14u8e49"
-          : "css-jygthk"
-        : isShowChatGPT
-        ? "css-1mjee9h"
-        : "css-yeymkw"
-    );
-  }, [show, isShowChatGPT]);
+  // useEffect(() => {
+  //   setStyling(
+  //     show
+  //       ? isShowChatGPT
+  //         ? "css-14u8e49"
+  //         : "css-jygthk"
+  //       : isShowChatGPT
+  //       ? "css-1mjee9h"
+  //       : "css-yeymkw"
+  //   );
+  // }, [show, isShowChatGPT]);
 
   //Left side bar scrolling hander
   useEffect(() => {
@@ -126,69 +146,73 @@ function Course({
     if (instructorToolbar) {
       instructorToolbarHeight = instructorToolbar.offsetHeight;
       fixedElement.style.paddingTop =
-        headerHeight + courseTagsNavHeight + instructorToolbarHeight + "px";
+        (headerHeight + courseTagsNavHeight + instructorToolbarHeight) / 16 +
+        "rem";
     } else {
-      fixedElement.style.paddingTop = headerHeight + courseTagsNavHeight + "px";
+      fixedElement.style.paddingTop =
+        (headerHeight + courseTagsNavHeight) / 16 + "rem";
     }
 
     // Adjust position on scroll
     const handleScroll = () => {
       if (window.scrollY >= 137.5) {
-        fixedElement.style.paddingTop = courseTagsNavHeight + "px";
+        fixedElement.style.paddingTop = courseTagsNavHeight / 16 + "rem";
         return;
       } else if (window.scrollY >= 50 && window.scrollY < 85.5) {
         if (instructorToolbar) {
-          fixedElement.style.paddingTop =
-            courseTagsNavHeight +
-            instructorToolbarHeight -
-            window.scrollY +
-            "px";
+          (fixedElement.style.paddingTop =
+            courseTagsNavHeight + instructorToolbarHeight - window.scrollY) /
+            16 +
+            "rem";
           return;
         } else {
           fixedElement.style.paddingTop =
-            courseTagsNavHeight - window.scrollY + "px";
+            (courseTagsNavHeight - window.scrollY) / 16 + "rem";
           return;
         }
       } else if (window.scrollY >= 122 && window.scrollY < 137.5) {
         if (instructorToolbar) {
           fixedElement.style.paddingTop =
-            headerHeight +
-            courseTagsNavHeight +
-            instructorToolbarHeight -
-            window.scrollY +
-            "px";
+            (headerHeight +
+              courseTagsNavHeight +
+              instructorToolbarHeight -
+              window.scrollY) /
+              16 +
+            "rem";
           return;
         } else {
           fixedElement.style.paddingTop =
-            headerHeight + courseTagsNavHeight - window.scrollY + "px";
+            (headerHeight + courseTagsNavHeight - window.scrollY) / 16 + "rem";
           return;
         }
       } else if (window.scrollY >= 85.5 && window.scrollY < 122) {
         if (instructorToolbar) {
           fixedElement.style.paddingTop =
-            courseTagsNavHeight +
-            30 +
-            instructorToolbarHeight -
-            window.scrollY +
-            "px";
+            (headerHeight +
+              courseTagsNavHeight +
+              instructorToolbarHeight -
+              window.scrollY) /
+              16 +
+            "rem";
           return;
         } else {
           fixedElement.style.paddingTop =
-            courseTagsNavHeight + 30 - window.scrollY + "px";
+            (headerHeight + courseTagsNavHeight - window.scrollY) / 16 + "rem";
           return;
         }
       } else if (window.scrollY <= 50) {
         if (instructorToolbar) {
           fixedElement.style.paddingTop =
-            headerHeight +
-            courseTagsNavHeight +
-            instructorToolbarHeight -
-            window.scrollY +
-            "px";
+            (headerHeight +
+              courseTagsNavHeight +
+              instructorToolbarHeight -
+              window.scrollY) /
+              16 +
+            "rem";
           return;
         } else {
           fixedElement.style.paddingTop =
-            headerHeight + courseTagsNavHeight - window.scrollY + "px";
+            (headerHeight + courseTagsNavHeight - window.scrollY) / 16 + "rem";
           return;
         }
       }
@@ -202,6 +226,36 @@ function Course({
     };
   }, [location.pathname]);
 
+  //set footer z-index
+  useEffect(() => {
+    const rightBar = document.querySelector(".sequence-navigation");
+    const leftBar = document.querySelector(".unit-left-sidebar");
+
+    if (rightBar && leftBar) {
+      if (showLeftbarContent) {
+        leftBar.style.zIndex = 25000;
+      } else {
+        leftBar.style.zIndex = 2;
+      }
+
+      if (!isShowChatbot && !isShowFeedback) {
+        rightBar.style.zIndex = 2;
+      }
+      if (isShowChatbot) {
+        rightBar.style.zIndex = 25000;
+      }
+      if (isShowFeedback) {
+        rightBar.style.zIndex = 25000;
+      }
+    }
+  }, [
+    showLeftbarContent,
+    isShowChatbot,
+    isShowFeedback,
+    location.pathname,
+    sequences,
+  ]);
+
   return (
     <SidebarProvider courseId={courseId} unitId={unitId}>
       <Helmet>
@@ -210,61 +264,63 @@ function Course({
         }`}</title>
       </Helmet>
 
-      <div className="unit-left-sidebar">
+      <div
+        className={`${
+          !showLeftbarContent
+            ? "unit-left-sidebar"
+            : "unit-left-sidebar right-side"
+        }`}
+      >
+        <div class="content">
+          <div
+            onMouseOver={() => {
+              setGroupSrc(group_hover);
+            }}
+            onMouseOut={() => {
+              if (showLeftbarContent) {
+                setGroupSrc(group_active);
+              } else {
+                setGroupSrc(group);
+              }
+            }}
+            onClick={() => {
+              setShowLeftbarContent(!showLeftbarContent);
+
+              if (!showLeftbarContent) {
+                setGroupSrc(group_active);
+              }
+            }}
+            className={`${
+              !showLeftbarContent
+                ? "show-menu-lesson right-side"
+                : "show-menu-lesson left-side"
+            }`}
+          >
+            <img src={groupSrc} alt={group} />
+          </div>
+
+          <React.Fragment>
+            <div
+              className={`${
+                showLeftbarContent ? "menu-lesson show-leftbar" : "menu-lesson"
+              }`}
+            >
+              <h2 className="menu-lesson-title">Mục lục bài học</h2>
+            </div>
+            <SectionListUnit
+              courseId={courseId}
+              unitId={unitId}
+              relativeHeight
+              useHistory
+              lesson
+              showLeftbarContent={showLeftbarContent}
+            />
+          </React.Fragment>
+        </div>
         {/* className={show? 'css-11m367g' : 'css-1qz66c7'} */}
         {/* <div style={{padding:'20px 10px' , paddingRight:'50px'}}>
                     <h4>{title}</h4>
                 </div> */}
-        <div
-          className={`${
-            !showLeftbarContent
-              ? "show-menu-lesson right-side"
-              : "show-menu-lesson left-side"
-          }`}
-        >
-          <svg
-            onClick={() => {
-              setShowLeftbarContent(!showLeftbarContent);
-            }}
-            xmlns="http://www.w3.org/2000/svg"
-            style={{ width: "1.5rem", height: "1.5rem" }}
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-          >
-            {!showLeftbarContent && (
-              <path
-                d="M12.6008 11.9998L8.70078 8.0998C8.51745 7.91647 8.42578 7.68314 8.42578 7.3998C8.42578 7.11647 8.51745 6.88314 8.70078 6.6998C8.88411 6.51647 9.11745 6.4248 9.40078 6.4248C9.68411 6.4248 9.91745 6.51647 10.1008 6.6998L14.7008 11.2998C14.8008 11.3998 14.8716 11.5081 14.9133 11.6248C14.9549 11.7415 14.9758 11.8665 14.9758 11.9998C14.9758 12.1331 14.9549 12.2581 14.9133 12.3748C14.8716 12.4915 14.8008 12.5998 14.7008 12.6998L10.1008 17.2998C9.91745 17.4831 9.68411 17.5748 9.40078 17.5748C9.11745 17.5748 8.88411 17.4831 8.70078 17.2998C8.51745 17.1165 8.42578 16.8831 8.42578 16.5998C8.42578 16.3165 8.51745 16.0831 8.70078 15.8998L12.6008 11.9998Z"
-                fill="#2C3744"
-              />
-            )}
-            {showLeftbarContent && (
-              <path
-                d="M10.8008 11.9998L14.7008 15.8998C14.8841 16.0831 14.9758 16.3165 14.9758 16.5998C14.9758 16.8831 14.8841 17.1165 14.7008 17.2998C14.5174 17.4831 14.2841 17.5748 14.0008 17.5748C13.7174 17.5748 13.4841 17.4831 13.3008 17.2998L8.70078 12.6998C8.60078 12.5998 8.52995 12.4915 8.48828 12.3748C8.44661 12.2581 8.42578 12.1331 8.42578 11.9998C8.42578 11.8665 8.44661 11.7415 8.48828 11.6248C8.52995 11.5081 8.60078 11.3998 8.70078 11.2998L13.3008 6.6998C13.4841 6.51647 13.7174 6.4248 14.0008 6.4248C14.2841 6.4248 14.5174 6.51647 14.7008 6.6998C14.8841 6.88314 14.9758 7.11647 14.9758 7.3998C14.9758 7.68314 14.8841 7.91647 14.7008 8.0998L10.8008 11.9998Z"
-                fill="#2C3744"
-              />
-            )}
-          </svg>
-        </div>
-
-        <React.Fragment>
-          <div
-            className={`${
-              showLeftbarContent ? "menu-lesson show-leftbar" : "menu-lesson"
-            }`}
-          >
-            <h2 className="menu-lesson-title">Mục lục bài học</h2>
-          </div>
-          <SectionListUnit
-            courseId={courseId}
-            unitId={unitId}
-            relativeHeight
-            useHistory
-            lesson
-            showLeftbarContent={showLeftbarContent}
-          />
-        </React.Fragment>
       </div>
 
       {/*<div className="position-relative d-flex align-items-start">
@@ -283,7 +339,10 @@ function Course({
       </div>*/}
 
       <AlertList topic="sequence" />
-      <div id="sequence-custom" className="d-flex">
+      <div
+        id="sequence-custom"
+        className={`${showLeftbarContent ? "d-flex show-leftbar" : "d-flex"}`}
+      >
         {/* <div className={show? 'css-16e9fpx' : 'css-17h1ao9'}> */}
         <div style={{ height: "100%" }}>
           {/* <div className={show ? 'css-mtrik7' : 'css-dh1ib6'}>
@@ -316,6 +375,8 @@ function Course({
           mmp2p={MMP2P}
         />
         <Sequence
+          sequenceIds={allSequenceIds}
+          sequences={sequences}
           unitId={unitId}
           sequenceId={sequenceId}
           courseId={courseId}

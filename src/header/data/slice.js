@@ -8,7 +8,7 @@ const slice = createSlice({
     isShowGlobalChatGPT: false,
     isShowLessonContent: true,
     isShowFeedback: false,
-    isShowChatbot: false,
+    isShowChatbot: true,
   },
   reducers: {
     showChatGPT: (state) => {

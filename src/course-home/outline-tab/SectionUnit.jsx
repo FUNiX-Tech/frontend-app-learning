@@ -1,18 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
-import { Collapsible, IconButton } from '@edx/paragon';
-import { faCheckCircle as fasCheckCircle, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { faCheckCircle as farCheckCircle } from '@fortawesome/free-regular-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import { injectIntl, intlShape } from "@edx/frontend-platform/i18n";
+import { Collapsible, IconButton } from "@edx/paragon";
+import {
+  faCheckCircle as fasCheckCircle,
+  faMinus,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle as farCheckCircle } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // import SequenceLink from './SequenceLink';
-import { useModel } from '../../generic/model-store';
-import CollapsibleSequenceLinkUnit from './CollapsibleSequenceLinkUnit';
+import { useModel } from "../../generic/model-store";
+import CollapsibleSequenceLinkUnit from "./CollapsibleSequenceLinkUnit";
 
-import genericMessages from '../../generic/messages';
-import messages from './messages';
-import "./SectionUnit.scss"
+import genericMessages from "../../generic/messages";
+import messages from "./messages";
+import "./SectionUnit.scss";
 function SectionUnit({
   courseId,
   defaultOpen,
@@ -21,20 +25,13 @@ function SectionUnit({
   section,
   useHistory,
   lesson,
- unitId
+  unitId,
 }) {
+  const { complete, sequenceIds, title } = section;
   const {
-    complete,
-    sequenceIds,
-    title,
-  } = section;
-  const {
-    courseBlocks: {
-      sequences,
-    },
-  } = useModel('outline', courseId);
+    courseBlocks: { sequences },
+  } = useModel("outline", courseId);
 
- 
   const [open, setOpen] = useState(defaultOpen);
 
   useEffect(() => {
@@ -44,7 +41,6 @@ function SectionUnit({
   useEffect(() => {
     setOpen(defaultOpen);
   }, []);
-
 
   const sectionTitle = (
     <div className=" w-100 m-0">
@@ -78,7 +74,6 @@ function SectionUnit({
 
   return (
     <li className="bg-light">
-
       {/* <Collapsible 
      
         className={`mb-2 ${lesson ? 'lesson' : 'home'}`}
@@ -107,26 +102,22 @@ function SectionUnit({
       >
      </Collapsible> 
       */}
-        
-        
-        
-     
-      <ol className="list-unstyled bg-list-unstyled"  >
-          {sequenceIds.map((sequenceId, index) => (
-            <CollapsibleSequenceLinkUnit
-              lesson = {lesson}
-              key={sequenceId}
-              id={sequenceId}
-              courseId={courseId}
-              sequences={sequences}
-              first={index === 0}
-              expand={expand}
-              useHistory={useHistory}
-              unitId={unitId}
-             
-            />
-          ))}
-        </ol>
+
+      <ol className="list-unstyled bg-list-unstyled">
+        {sequenceIds.map((sequenceId, index) => (
+          <CollapsibleSequenceLinkUnit
+            lesson={lesson}
+            key={sequenceId}
+            id={sequenceId}
+            courseId={courseId}
+            sequences={sequences}
+            first={index === 0}
+            expand={expand}
+            useHistory={useHistory}
+            unitId={unitId}
+          />
+        ))}
+      </ol>
     </li>
   );
 }
@@ -138,7 +129,7 @@ SectionUnit.propTypes = {
   intl: intlShape.isRequired,
   section: PropTypes.shape().isRequired,
   useHistory: PropTypes.bool.isRequired,
-  lesson: PropTypes.bool
+  lesson: PropTypes.bool,
 };
 
 export default injectIntl(SectionUnit);

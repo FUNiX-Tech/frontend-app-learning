@@ -58,7 +58,7 @@ const HeaderLearning = ({
             Khoá học của tôi
           </NavLink>
         </li>
-        <li>
+        {/* <li>
           <a
             className="header-dashboard-link"
             // activeClassName="active"
@@ -67,15 +67,17 @@ const HeaderLearning = ({
           >
             Các khoá khác
           </a>
-        </li>
+        </li> */}
       </ul>
     </div>
   );
+  let titleContent = "";
+  if (courseOrg && courseNumber && courseTitle) {
+    titleContent = `${courseTitle}`;
+  }
 
   return (
-    <header
-      className={`learning-header ${scrollY > 50 ? "unset-position" : ""}`}
-    >
+    <header className="learning-header">
       {/* <a className="sr-only sr-only-focusable" href="#main-content">{intl.formatMessage(messages.skipNavLink)}</a> */}
       {/* <div className="container-xl py-2 d-flex align-items-center">
         <a href={`${getConfig().LMS_BASE_URL}/dashboard`} className="logo">
@@ -130,9 +132,7 @@ const HeaderLearning = ({
           }`}
         >
           <span className={`${isDashoard ? "d-block" : "d-block header-2"}`}>
-            {isDashoard
-              ? headerDashboard
-              : `${courseOrg}+${courseNumber}+${courseTitle}`}
+            {isDashoard ? headerDashboard : titleContent}
           </span>
         </div>
         <div className="actions d-flex align-items-center">

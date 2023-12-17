@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { getConfig } from '@edx/frontend-platform';
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import { getConfig } from "@edx/frontend-platform";
 
-import { ALERT_TYPES, AlertList } from '../generic/user-messages';
-import Alert from '../generic/user-messages/Alert';
-import MasqueradeWidget from './masquerade-widget';
-import { useAccessExpirationMasqueradeBanner } from '../alerts/access-expiration-alert';
-import { useCourseStartMasqueradeBanner } from '../alerts/course-start-alert';
+import { ALERT_TYPES, AlertList } from "../generic/user-messages";
+import Alert from "../generic/user-messages/Alert";
+import MasqueradeWidget from "./masquerade-widget";
+import { useAccessExpirationMasqueradeBanner } from "../alerts/access-expiration-alert";
+import { useCourseStartMasqueradeBanner } from "../alerts/course-start-alert";
 
 function getInsightsUrl(courseId) {
   const urlBase = getConfig().INSIGHTS_BASE_URL;
@@ -51,25 +51,34 @@ export default function InstructorToolbar(props) {
     return () => setDidMount(false);
   });
 
-  const {
-    courseId,
-    unitId,
-    tab,
-  } = props;
+  const { courseId, unitId, tab } = props;
 
   const urlInsights = getInsightsUrl(courseId);
   const urlStudio = getStudioUrl(courseId, unitId);
   const [masqueradeErrorMessage, showMasqueradeError] = useState(null);
 
-  const accessExpirationMasqueradeBanner = useAccessExpirationMasqueradeBanner(courseId, tab);
-  const courseStartDateMasqueradeBanner = useCourseStartMasqueradeBanner(courseId, tab);
+  const accessExpirationMasqueradeBanner = useAccessExpirationMasqueradeBanner(
+    courseId,
+    tab
+  );
+  const courseStartDateMasqueradeBanner = useCourseStartMasqueradeBanner(
+    courseId,
+    tab
+  );
 
-  return (!didMount ? null : (
-    <div data-testid="instructor-toolbar" id="instructor-toolbar" style={{zIndex:"10",position:"relative"}}>
-      <div className="bg-primary text-white" style={{zIndex:"10"}}>
+  return !didMount ? null : (
+    <div
+      data-testid="instructor-toolbar"
+      id="instructor-toolbar"
+      style={{ zIndex: "26000", position: "relative" }}
+    >
+      <div className="bg-primary text-white" style={{ zIndex: "10" }}>
         <div className="container-xl py-3 d-md-flex justify-content-end align-items-start">
           <div className="align-items-center flex-grow-1 d-md-flex mx-1 my-1">
-            <MasqueradeWidget courseId={courseId} onError={showMasqueradeError} />
+            <MasqueradeWidget
+              courseId={courseId}
+              onError={showMasqueradeError}
+            />
           </div>
           {(urlStudio || urlInsights) && (
             <>
@@ -79,22 +88,23 @@ export default function InstructorToolbar(props) {
           )}
           {urlStudio && (
             <span className="mx-1 my-1">
-              <a className="btn btn-inverse-outline-primary" href={urlStudio}>Studio</a>
+              <a className="btn btn-inverse-outline-primary" href={urlStudio}>
+                Studio
+              </a>
             </span>
           )}
           {urlInsights && (
             <span className="mx-1 my-1">
-              <a className="btn btn-inverse-outline-primary" href={urlInsights}>Insights</a>
+              <a className="btn btn-inverse-outline-primary" href={urlInsights}>
+                Insights
+              </a>
             </span>
           )}
         </div>
       </div>
       {masqueradeErrorMessage && (
         <div className="container-xl mt-3">
-          <Alert
-            type={ALERT_TYPES.ERROR}
-            dismissible={false}
-          >
+          <Alert type={ALERT_TYPES.ERROR} dismissible={false}>
             {masqueradeErrorMessage}
           </Alert>
         </div>
@@ -107,7 +117,7 @@ export default function InstructorToolbar(props) {
         }}
       />
     </div>
-  ));
+  );
 }
 
 InstructorToolbar.propTypes = {
@@ -119,5 +129,5 @@ InstructorToolbar.propTypes = {
 InstructorToolbar.defaultProps = {
   courseId: undefined,
   unitId: undefined,
-  tab: '',
+  tab: "",
 };
