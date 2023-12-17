@@ -58,7 +58,7 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
     if (isShowFeedback) {
       setFeedbackSrc(FeedbackActive);
     }
-    if (pathname.includes("/home")) {
+    if (pathname.includes("/dates") || pathname.includes("/home")) {
       dispatch(setOffMenuState());
       setRightMenuSrc(RightMenu);
       setChatbotSrc(Chatbot);
@@ -78,7 +78,8 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
       className={classNames(
         "course-tabs-navigation",
         className,
-        `${scrollY > 50 ? "fixed-position" : ""}`
+        // `${scrollY > 50 ? "fixed-position" : ""}`
+        "fixed-position"
       )}
       style={scrollY > 50 ? stylesBackgroundColor : {}}
     >
@@ -106,7 +107,7 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
         {/* sub header Icon */}
         {!hideMenu && (
           <div className="sub-header-icon d-flex">
-            <div className="sub-header-icon-item tool-tip-1">
+            {/* <div className="sub-header-icon-item tool-tip-1">
               <img
                 onMouseOver={() => {
                   if (!isShowRightMenu) {
@@ -127,17 +128,17 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
                   dispatch(toggleShowLesson());
                 }}
               />
-            </div>
+            </div> */}
             <div className="sub-header-icon-item tool-tip-2">
               <img
                 onMouseOver={() => {
-                  if (!isShowFeedback) {
-                    setFeedbackSrc(FeedbackHover);
-                  }
+                  setFeedbackSrc(FeedbackHover);
                 }}
                 onMouseOut={() => {
                   if (!isShowFeedback) {
                     setFeedbackSrc(Feedback);
+                  } else {
+                    setFeedbackSrc(FeedbackActive);
                   }
                 }}
                 src={feedbackSrc}
@@ -160,6 +161,8 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
                 onMouseOut={() => {
                   if (!isShowChatbot) {
                     setChatbotSrc(Chatbot);
+                  } else {
+                    setChatbotSrc(ChatbotActive);
                   }
                 }}
                 src={chatbotSrc}

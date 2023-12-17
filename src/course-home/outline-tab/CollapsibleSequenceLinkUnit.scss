@@ -21,7 +21,7 @@
 .collapsible-sequence-link-container-unit {
   display: flex;
   padding: 0 1rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
   line-height: 1;
 
   .pgn_collapsible {
@@ -35,23 +35,37 @@
     }
   }
   .collapsible-tab {
+    background-color: unset;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+
+    & .collapsible-body {
+      padding: 0 !important;
+      background-color: unset !important;
+      & .unit-padding {
+        padding: 0.25rem 0;
+      }
+    }
 
     a {
       display: inline-block;
       width: 100%;
-
+      text-decoration: none;
       font-family: Roboto;
       &.complete {
         font-weight: 400;
-        position: relative;
-        left: 1rem;
-        top: -0.25rem;
+
         color: var(--color-text-default);
       }
 
-      &.active.complete {
+      &.complete-unit {
+        font-weight: 400;
+
+        color: var(--color-text-default);
+      }
+
+      &.active.complete,
+      &.active.complete-unit {
         font-weight: 500;
 
         color: var(--color-active);
@@ -60,24 +74,58 @@
         }
       }
 
+      &.active.complete {
+        white-space: unset;
+        overflow: unset;
+        text-overflow: unset;
+        max-width: unset;
+      }
+
       &.active {
         color: var(--color-active);
         font-weight: 500;
+        white-space: unset;
+        overflow: unset;
+        text-overflow: unset;
+        max-width: unset;
       }
 
       &:hover {
         color: var(--color-hover);
       }
+      &.unit-link {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 26ch;
+        font-size: 0.875rem;
+        &.active {
+          white-space: unset;
+          overflow: unset;
+          text-overflow: unset;
+          max-width: unset;
+        }
+        &.complete-unit.active {
+          white-space: unset;
+          overflow: unset;
+          text-overflow: unset;
+          max-width: unset;
+        }
+      }
       color: var(--color-text-inactive);
       flex-grow: 0;
       font-family: Roboto;
-      font-size: 0.75rem;
+      font-size: 1rem;
       font-weight: 400;
       font-stretch: normal;
       font-style: normal;
       line-height: 1;
       letter-spacing: normal;
       text-align: left;
+      white-space: nowrap; /* Prevent text from wrapping */
+      overflow: hidden; /* Hide any content that overflows */
+      text-overflow: ellipsis; /* Display an ellipsis (...) for overflowed content */
+      max-width: 26ch;
     }
 
     &:hover a {
@@ -89,8 +137,8 @@
 .success-icon {
   width: 0.75rem;
   height: 0.75rem;
-  float: left;
+  margin-right: 0.25rem;
+  margin-left: 0;
   position: relative;
-  top: 1.125rem;
-  margin-left: -0.0625rem;
+  top: 0.15rem;
 }

@@ -1,34 +1,35 @@
 /* eslint-disable no-use-before-define */
-import React, {
-  useEffect, useState,
-} from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import classNames from "classnames";
 import {
   sendTrackEvent,
   sendTrackingLogEvent,
-} from '@edx/frontend-platform/analytics';
-import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
-import { useSelector } from 'react-redux';
-import { history } from '@edx/frontend-platform';
-import SequenceExamWrapper from '@edx/frontend-lib-special-exams';
-import { breakpoints, useWindowSize } from '@edx/paragon';
+} from "@edx/frontend-platform/analytics";
+import { injectIntl, intlShape } from "@edx/frontend-platform/i18n";
+import { useSelector } from "react-redux";
+import { history } from "@edx/frontend-platform";
+import SequenceExamWrapper from "@edx/frontend-lib-special-exams";
+import { breakpoints, useWindowSize } from "@edx/paragon";
 
-import PageLoading from '../../../generic/PageLoading';
-import { useModel } from '../../../generic/model-store';
-import { useSequenceBannerTextAlert, useSequenceEntranceExamAlert } from '../../../alerts/sequence-alerts/hooks';
+import PageLoading from "../../../generic/PageLoading";
+import { useModel } from "../../../generic/model-store";
+import {
+  useSequenceBannerTextAlert,
+  useSequenceEntranceExamAlert,
+} from "../../../alerts/sequence-alerts/hooks";
 
-import CourseLicense from '../course-license';
-import Sidebar from '../sidebar/Sidebar';
-import SidebarTriggers from '../sidebar/SidebarTriggers';
-import messages from './messages';
-import HiddenAfterDue from './hidden-after-due';
-import { SequenceNavigation, UnitNavigation } from './sequence-navigation';
-import SequenceContent from './SequenceContent';
+import CourseLicense from "../course-license";
+import Sidebar from "../sidebar/Sidebar";
+import SidebarTriggers from "../sidebar/SidebarTriggers";
+import messages from "./messages";
+import HiddenAfterDue from "./hidden-after-due";
+import { SequenceNavigation, UnitNavigation } from "./sequence-navigation";
+import SequenceContent from "./SequenceContent";
 
 /** [MM-P2P] Experiment */
-import { isMobile } from '../../../experiments/mm-p2p/utils';
-import { MMP2PFlyover, MMP2PFlyoverMobile } from '../../../experiments/mm-p2p';
+import { isMobile } from "../../../experiments/mm-p2p/utils";
+import { MMP2PFlyover, MMP2PFlyoverMobile } from "../../../experiments/mm-p2p";
 
 function Sequence({
   unitId,
@@ -39,17 +40,21 @@ function Sequence({
   previousSequenceHandler,
   intl,
   mmp2p,
+  sequences,
+  sequenceIds,
 }) {
-  const course = useModel('coursewareMeta', courseId);
-  const {
-    isStaff,
-    originalUserIsStaff,
-  } = useModel('courseHomeMeta', courseId);
-  const sequence = useModel('sequences', sequenceId);
-  const unit = useModel('units', unitId);
-  const sequenceStatus = useSelector(state => state.courseware.sequenceStatus);
-  const sequenceMightBeUnit = useSelector(state => state.courseware.sequenceMightBeUnit);
-  const shouldDisplayNotificationTriggerInSequence = useWindowSize().width < breakpoints.small.minWidth;
+  const course = useModel("coursewareMeta", courseId);
+  const { isStaff, originalUserIsStaff } = useModel("courseHomeMeta", courseId);
+  const sequence = useModel("sequences", sequenceId);
+  const unit = useModel("units", unitId);
+  const sequenceStatus = useSelector(
+    (state) => state.courseware.sequenceStatus
+  );
+  const sequenceMightBeUnit = useSelector(
+    (state) => state.courseware.sequenceMightBeUnit
+  );
+  const shouldDisplayNotificationTriggerInSequence =
+    useWindowSize().width < breakpoints.small.minWidth;
 
   const handleNext = () => {
     const nextIndex = sequence.unitIds.indexOf(unitId) + 1;
@@ -78,7 +83,8 @@ function Sequence({
   const logEvent = (eventName, widgetPlacement, targetUnitId) => {
     // Note: tabs are tracked with a 1-indexed position
     // as opposed to a 0-index used throughout this MFE
-    const currentIndex = sequence.unitIds.length > 0 ? sequence.unitIds.indexOf(unitId) : 0;
+    const currentIndex =
+      sequence.unitIds.length > 0 ? sequence.unitIds.indexOf(unitId) : 0;
     const payload = {
       current_tab: currentIndex + 1,
       id: unitId,
@@ -99,7 +105,7 @@ function Sequence({
   useEffect(() => {
     function receiveMessage(event) {
       const { type } = event.data;
-      if (type === 'entranceExam.passed') {
+      if (type === "entranceExam.passed") {
         // I know this seems (is) intense. It is implemented this way since we need to refetch the underlying
         // course blocks that were originally hidden because the Entrance Exam was not passed.
         global.location.reload();
@@ -109,25 +115,32 @@ function Sequence({
       // reload (cập nhật) unit learning project cuối khi unit 1 đổi trạng thái nộp/hủy bài
       // scroll
       if (type === "learningprojectxblock") {
-        console.log(event.data)
+        console.log(event.data);
 
         if (event.data.resize) {
-          const iframe = document.querySelector(`iframe[data-unit-usage-id='${event.data.unit_usage_id}']`);
+          const iframe = document.querySelector(
+            `iframe[data-unit-usage-id='${event.data.unit_usage_id}']`
+          );
           if (!iframe) {
-            console.log("not fond iframe")
-            return
+            console.log("not fond iframe");
+            return;
           }
           iframe.style.transition = event.data.resize.transition;
-          iframe.style.height = event.data.resize.iframeHeight + 'px';
+          iframe.style.height = event.data.resize.iframeHeight + "px";
         }
 
         if (event.data.scroll) {
-          const iframe = document.querySelector(`iframe[data-unit-usage-id='${event.data.unit_usage_id}']`);
+          const iframe = document.querySelector(
+            `iframe[data-unit-usage-id='${event.data.unit_usage_id}']`
+          );
           if (!iframe) {
-            console.log("not fond iframe")
-            return
+            console.log("not fond iframe");
+            return;
           }
-          const top = iframe.getBoundingClientRect().top + window.scrollY + event.data.scroll.top;
+          const top =
+            iframe.getBoundingClientRect().top +
+            window.scrollY +
+            event.data.scroll.top;
           window.scroll({
             top: top,
             left: 0,
@@ -136,15 +149,17 @@ function Sequence({
         }
 
         if (event.data.reload) {
-          const iframes = Array.from(document.querySelectorAll('iframe'))
+          const iframes = Array.from(document.querySelectorAll("iframe"));
           iframes.forEach((ifr) => {
-            ifr.contentWindow.postMessage({ type: 'learningprojectxblock', reload: true }, "*")
-          })
+            ifr.contentWindow.postMessage(
+              { type: "learningprojectxblock", reload: true },
+              "*"
+            );
+          });
         }
-
       }
     }
-    global.addEventListener('message', receiveMessage);
+    global.addEventListener("message", receiveMessage);
   }, []);
 
   const [unitHasLoaded, setUnitHasLoaded] = useState(false);
@@ -164,50 +179,59 @@ function Sequence({
 
   // If sequence might be a unit, we want to keep showing a spinner - the courseware container will redirect us when
   // it knows which sequence to actually go to.
-  const loading = sequenceStatus === 'loading' || (sequenceStatus === 'failed' && sequenceMightBeUnit);
+  const loading =
+    sequenceStatus === "loading" ||
+    (sequenceStatus === "failed" && sequenceMightBeUnit);
   if (loading) {
     if (!sequenceId) {
-      return (<div> {intl.formatMessage(messages.noContent)} </div>);
+      return <div> {intl.formatMessage(messages.noContent)} </div>;
     }
     return (
-      <PageLoading
-        srMessage={intl.formatMessage(messages.loadingSequence)}
-      />
+      <PageLoading srMessage={intl.formatMessage(messages.loadingSequence)} />
     );
   }
 
-  if (sequenceStatus === 'loaded' && sequence.isHiddenAfterDue) {
+  if (sequenceStatus === "loaded" && sequence.isHiddenAfterDue) {
     // Shouldn't even be here - these sequences are normally stripped out of the navigation.
     // But we are here, so render a notice instead of the normal content.
     return <HiddenAfterDue courseId={courseId} />;
   }
 
-  const gated = sequence && sequence.gatedContent !== undefined && sequence.gatedContent.gated;
+  const gated =
+    sequence &&
+    sequence.gatedContent !== undefined &&
+    sequence.gatedContent.gated;
   const goToCourseExitPage = () => {
     history.push(`/course/${courseId}/course-end`);
   };
 
   const defaultContent = (
-    <div className="sequence-container d-inline-flex flex-row" >
-      <div className={classNames('sequence w-100', { 'position-relative': shouldDisplayNotificationTriggerInSequence })}>
+    <div className="sequence-container d-inline-flex flex-row">
+      <div
+        className={classNames("sequence w-100", {
+          "position-relative": shouldDisplayNotificationTriggerInSequence,
+        })}
+      >
         <SequenceNavigation
           sequenceId={sequenceId}
           unitId={unitId}
           className="mb-4"
-
           /** [MM-P2P] Experiment */
           mmp2p={mmp2p}
-
           nextSequenceHandler={() => {
-            logEvent('edx.ui.lms.sequence.next_selected', 'top');
+            logEvent("edx.ui.lms.sequence.next_selected", "top");
             handleNext();
           }}
           onNavigate={(destinationUnitId) => {
-            logEvent('edx.ui.lms.sequence.tab_selected', 'top', destinationUnitId);
+            logEvent(
+              "edx.ui.lms.sequence.tab_selected",
+              "top",
+              destinationUnitId
+            );
             handleNavigate(destinationUnitId);
           }}
           previousSequenceHandler={() => {
-            logEvent('edx.ui.lms.sequence.previous_selected', 'top');
+            logEvent("edx.ui.lms.sequence.previous_selected", "top");
             handlePrevious();
           }}
           goToCourseExitPage={() => goToCourseExitPage()}
@@ -215,22 +239,40 @@ function Sequence({
         {shouldDisplayNotificationTriggerInSequence && <SidebarTriggers />}
 
         <div className="unit-container flex-grow-1">
+          <UnitNavigation
+            sequenceIds={sequenceIds}
+            sequences={sequences}
+            top
+            sequenceId={sequenceId}
+            unitId={unitId}
+            onClickPrevious={() => {
+              logEvent("edx.ui.lms.sequence.previous_selected", "bottom");
+              handlePrevious();
+            }}
+            onClickNext={() => {
+              logEvent("edx.ui.lms.sequence.next_selected", "bottom");
+              handleNext();
+            }}
+            goToCourseExitPage={() => goToCourseExitPage()}
+          />
           <SequenceContent
             courseId={courseId}
             gated={gated}
             sequenceId={sequenceId}
             unitId={unitId}
-
           />
           <UnitNavigation
+            sequenceIds={sequenceIds}
+            sequences={sequences}
+            top={false}
             sequenceId={sequenceId}
             unitId={unitId}
             onClickPrevious={() => {
-              logEvent('edx.ui.lms.sequence.previous_selected', 'bottom');
+              logEvent("edx.ui.lms.sequence.previous_selected", "bottom");
               handlePrevious();
             }}
             onClickNext={() => {
-              logEvent('edx.ui.lms.sequence.next_selected', 'bottom');
+              logEvent("edx.ui.lms.sequence.next_selected", "bottom");
               handleNext();
             }}
             goToCourseExitPage={() => goToCourseExitPage()}
@@ -255,15 +297,17 @@ function Sequence({
       <Sidebar />
 
       {/** [MM-P2P] Experiment */}
-      {(mmp2p.state.isEnabled && mmp2p.flyover.isVisible) && (
-        isMobile()
-          ? <MMP2PFlyoverMobile options={mmp2p} />
-          : <MMP2PFlyover options={mmp2p} />
-      )}
+      {mmp2p.state.isEnabled &&
+        mmp2p.flyover.isVisible &&
+        (isMobile() ? (
+          <MMP2PFlyoverMobile options={mmp2p} />
+        ) : (
+          <MMP2PFlyover options={mmp2p} />
+        ))}
     </div>
   );
 
-  if (sequenceStatus === 'loaded') {
+  if (sequenceStatus === "loaded") {
     return (
       <div>
         <SequenceExamWrapper
@@ -282,7 +326,7 @@ function Sequence({
 
   // sequence status 'failed' and any other unexpected sequence status.
   return (
-    <p className="text-center py-5 mx-auto" style={{ maxWidth: '30em' }}>
+    <p className="text-center py-5 mx-auto" style={{ maxWidth: "30em" }}>
       {intl.formatMessage(messages.loadFailure)}
     </p>
   );
