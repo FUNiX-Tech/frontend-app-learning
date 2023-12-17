@@ -7,7 +7,10 @@ const CourseBtn = ({ intl, courseRun }) => {
   return (
     <>
       {courseRun.resumeUrl ? (
-        <a href={`${getConfig().LMS_BASE_URL}${courseRun.resumeUrl}`}>
+        <a
+          className="remove-link-effect"
+          href={`${getConfig().LMS_BASE_URL}${courseRun.resumeUrl}`}
+        >
           <button className="primary-btn-medium btn-modify">
             <span>{intl.formatMessage(messages.btnResumeCourse)}</span>
           </button>

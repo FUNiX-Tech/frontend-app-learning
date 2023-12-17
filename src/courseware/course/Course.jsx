@@ -111,6 +111,13 @@ function Course({
     );
   }, [sequenceId]);
 
+  useEffect(() => {
+    const pgn__checkpoint = document.getElementById("pgn__checkpoint");
+    if (pgn__checkpoint) {
+      pgn__checkpoint.style.display = "none!important";
+    }
+  }, []);
+
   const [show, setShow] = useState(false);
   const [showLeftbarContent, setShowLeftbarContent] = useState(true);
   const location = useLocation();
