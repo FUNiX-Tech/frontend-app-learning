@@ -127,7 +127,7 @@ function CollapsibleSequenceLinkUnit({
       style={{ backgroundColor: "#FAFBFB" }}
     >
       <div className="position-relative w-100 m-0">
-        <div className="text-break">
+        <div className={`${complete ? "text-break pl-3" : "text-break"}`}>
           <span className="d-flex align-items-flex-start align-middle">
             <React.Fragment>
               {complete ? (
@@ -266,7 +266,9 @@ function CollapsibleSequenceLinkUnit({
                       <span className="align-middle">
                         <NavLink
                           className={`${
-                            complete ? "unit-link complete-unit" : "unit-link"
+                            sequenceData.complete
+                              ? "unit-link complete-unit"
+                              : "unit-link"
                           }`}
                           to={`/course/${courseId}/${sequence.id}/${sequenceId}`}
                           activeClassName={"active"}
