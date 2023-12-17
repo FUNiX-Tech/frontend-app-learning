@@ -158,6 +158,7 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
                 <iframe
                   id="unit-iframe"
                   key={e.id}
+                  data-unit-usage-id={e.id}
                   src={e.url}
                   allow={IFRAME_FEATURE_POLICY}
                   allowFullScreen
