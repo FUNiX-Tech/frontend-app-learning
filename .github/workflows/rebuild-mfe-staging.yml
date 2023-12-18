@@ -18,7 +18,7 @@ jobs:
           script: |
             whoami
             echo $PATH
-            source ~/.bashrc
-            echo $PATH
+            cd /home/openedx/.local/bin
+            ls -la
             tutor images build mfe --no-cache
             echo -e "y\n\n\n\n\n\ny" | tutor local launch
