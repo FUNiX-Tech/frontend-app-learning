@@ -77,7 +77,11 @@ const HeaderLearning = ({
   }
 
   return (
-    <header className="learning-header">
+    <header
+      className={`${
+        isDashoard ? "learning-header dashboard" : "learning-header"
+      }`}
+    >
       {/* <a className="sr-only sr-only-focusable" href="#main-content">{intl.formatMessage(messages.skipNavLink)}</a> */}
       {/* <div className="container-xl py-2 d-flex align-items-center">
         <a href={`${getConfig().LMS_BASE_URL}/dashboard`} className="logo">

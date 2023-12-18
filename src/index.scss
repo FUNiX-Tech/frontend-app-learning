@@ -299,17 +299,37 @@
     flex-direction: column;
     align-items: flex-start;
     overflow: hidden;
+    transform: translateX(18.75rem);
     width: 18.75rem;
     margin-left: 35rem;
     transition: all 0.3s ease;
-    display: none;
+
     &.active {
-      display: flex;
+      transform: translateX(0);
+
       margin-left: 0;
       transition: all 0.3s ease;
     }
+
+    &.hidden {
+      animation: fade-out ease 0.3s forwards;
+      -o-animation: fade-out ease 0.3s forwards;
+      -moz-animation: fade-out ease 0.3s forwards;
+      -webkit-animation: fade-out ease 0.3s forwards;
+    }
+
     &.active.feedback {
       width: auto !important;
+    }
+    &.active.chatbot {
+      width: 18.75rem !important;
+    }
+
+    @keyframes fade-out {
+      100% {
+        opacity: 0;
+        display: none;
+      }
     }
 
     .sequence-lesson-title {
@@ -476,9 +496,6 @@
       }
     }
     .input-message {
-      &.hide {
-        display: none;
-      }
       position: fixed;
       bottom: 1rem;
       display: flex;
@@ -1031,7 +1048,9 @@
 
 .learning-header {
   position: sticky;
-  // top:0px;
+  &.dashboard {
+    top: 0;
+  }
   background-color: white;
   z-index: 250000;
   // box-shadow: 0px 2px 4px -1px #0b0b0b0f, 0px 4px 6px -1px #0b0b0b1a;
@@ -1993,4 +2012,9 @@ html:root {
     font-weight: 600;
     size: 16px;
   }
+}
+
+// fix  unlimited  scroll
+.pgn__checkpoint {
+  display: none !important;
 }

@@ -65,12 +65,23 @@
     transition: all 0.35s ease;
     position: relative;
     z-index: -100;
+
     &.show-leftbar {
       transform: translateX(0);
       overflow-y: scroll;
       margin-left: auto;
       z-index: 100;
       transition: all 0.35s ease;
+    }
+
+    &.hidden {
+    }
+
+    @keyframes fade-out {
+      100% {
+        opacity: 0;
+        display: none;
+      }
     }
   }
 

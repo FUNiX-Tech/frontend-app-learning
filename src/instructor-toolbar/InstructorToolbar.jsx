@@ -70,7 +70,7 @@ export default function InstructorToolbar(props) {
     <div
       data-testid="instructor-toolbar"
       id="instructor-toolbar"
-      style={{ zIndex: "26000", position: "relative" }}
+      style={{ zIndex: "27000", position: "relative" }}
     >
       <div className="bg-primary text-white" style={{ zIndex: "10" }}>
         <div className="container-xl py-3 d-md-flex justify-content-end align-items-start">

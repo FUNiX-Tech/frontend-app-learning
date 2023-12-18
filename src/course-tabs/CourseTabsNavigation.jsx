@@ -129,28 +129,7 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
                 }}
               />
             </div> */}
-            <div className="sub-header-icon-item tool-tip-2">
-              <img
-                onMouseOver={() => {
-                  setFeedbackSrc(FeedbackHover);
-                }}
-                onMouseOut={() => {
-                  if (!isShowFeedback) {
-                    setFeedbackSrc(Feedback);
-                  } else {
-                    setFeedbackSrc(FeedbackActive);
-                  }
-                }}
-                src={feedbackSrc}
-                alt={`Feedback`}
-                onClick={() => {
-                  setRightMenuSrc(RightMenu);
-                  setFeedbackSrc(FeedbackActive);
-                  setChatbotSrc(Chatbot);
-                  dispatch(toggleShowFeedback());
-                }}
-              />
-            </div>
+
             <div className="sub-header-icon-item tool-tip-3">
               <img
                 onMouseOver={() => {
@@ -172,6 +151,28 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
                   setFeedbackSrc(Feedback);
                   setChatbotSrc(ChatbotActive);
                   dispatch(toggleShowChatbot());
+                }}
+              />
+            </div>
+            <div className="sub-header-icon-item tool-tip-2">
+              <img
+                onMouseOver={() => {
+                  setFeedbackSrc(FeedbackHover);
+                }}
+                onMouseOut={() => {
+                  if (!isShowFeedback) {
+                    setFeedbackSrc(Feedback);
+                  } else {
+                    setFeedbackSrc(FeedbackActive);
+                  }
+                }}
+                src={feedbackSrc}
+                alt={`Feedback`}
+                onClick={() => {
+                  setRightMenuSrc(RightMenu);
+                  setFeedbackSrc(FeedbackActive);
+                  setChatbotSrc(Chatbot);
+                  dispatch(toggleShowFeedback());
                 }}
               />
             </div>
