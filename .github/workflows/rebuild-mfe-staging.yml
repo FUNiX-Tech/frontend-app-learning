@@ -20,5 +20,6 @@ jobs:
             echo $PATH
             cd /home/openedx/.local/bin
             ls -la
+            ./tutor --version
             tutor images build mfe --no-cache
             echo -e "y\n\n\n\n\n\ny" | tutor local launch
