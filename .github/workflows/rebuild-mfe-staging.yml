@@ -17,5 +17,6 @@ jobs:
           command_timeout: 100m
           script: |
             whoami
+            echo $PATH
             tutor images build mfe --no-cache
             echo -e "y\n\n\n\n\n\ny" | tutor local launch
