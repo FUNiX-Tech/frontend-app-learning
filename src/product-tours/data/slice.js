@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const slice = createSlice({
-  name: 'tours',
+  name: "tours",
   initialState: {
     showCoursewareTour: false,
     showExistingUserCourseHomeTour: false,
@@ -27,19 +27,21 @@ const slice = createSlice({
         state.showExistingUserCourseHomeTour = false;
       }
 
-      if (!state.showNewUserCourseHomeModal || !state.showNewUserCourseHomeTour) {
+      if (
+        !state.showNewUserCourseHomeModal ||
+        !state.showNewUserCourseHomeTour
+      ) {
         state.showNewUserCourseHomeTour = true;
       }
     },
     setTourData: (state, { payload }) => {
-      const {
-        courseHomeTourStatus,
-        showCoursewareTour,
-        toursEnabled,
-      } = payload;
+      const { courseHomeTourStatus, showCoursewareTour, toursEnabled } =
+        payload;
       state.showCoursewareTour = showCoursewareTour;
-      state.showExistingUserCourseHomeTour = courseHomeTourStatus === 'show-existing-user-tour';
-      state.showNewUserCourseHomeModal = courseHomeTourStatus === 'show-new-user-tour';
+      state.showExistingUserCourseHomeTour =
+        courseHomeTourStatus === "show-existing-user-tour";
+      state.showNewUserCourseHomeModal =
+        courseHomeTourStatus === "show-new-user-tour";
       state.toursEnabled = toursEnabled;
     },
   },
@@ -53,6 +55,4 @@ export const {
   setTourData,
 } = slice.actions;
 
-export const {
-  reducer,
-} = slice;
+export const { reducer } = slice;
