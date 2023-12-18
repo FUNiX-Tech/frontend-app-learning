@@ -1,0 +1,20 @@
+name: Deploy to AWS
+on:
+  push:
+    branches:
+      - "staging"
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Re deploy MFE
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{ secrets.STAG_IP }}
+          username: ${{ secrets.STAG_USERNAME }}
+          key: ${{ secrets.STAG_KEY }}
+          port: 22
+          command_timeout: 100m
+          script: |
+            tutor images build mfe --no-cache
+            echo -e "y\n\n\n\n\n\ny" | tutor local launch
