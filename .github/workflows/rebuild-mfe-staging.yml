@@ -17,9 +17,7 @@ jobs:
           command_timeout: 100m
           script: |
             whoami
+            export PATH='/home/openedx/.local/bin:/home/openedx/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'
             echo $PATH
-            cd /home/openedx/.local/bin
-            ls -la
-            ./tutor --version
             tutor images build mfe --no-cache
             echo -e "y\n\n\n\n\n\ny" | tutor local launch
