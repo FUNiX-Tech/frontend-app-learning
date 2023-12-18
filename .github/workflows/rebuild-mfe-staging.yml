@@ -19,5 +19,6 @@ jobs:
             whoami
             echo $PATH
             source ~/.bashrc
+            echo $PATH
             tutor images build mfe --no-cache
             echo -e "y\n\n\n\n\n\ny" | tutor local launch
