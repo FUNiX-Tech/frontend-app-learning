@@ -18,5 +18,6 @@ jobs:
           script: |
             whoami
             echo $PATH
+            source ~/.bashrc
             tutor images build mfe --no-cache
             echo -e "y\n\n\n\n\n\ny" | tutor local launch
