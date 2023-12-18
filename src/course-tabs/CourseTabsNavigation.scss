@@ -1,7 +1,7 @@
 #courseTabsNavigation {
   .sub-header-container {
-    margin-left: calc((100% - 44.75rem) / 2);
-    margin-right: calc((100% - 42.75rem) / 2);
+    margin-left: calc((100% - 43.75rem) / 2);
+    margin-right: calc((100% - 46.75rem) / 2);
     position: relative;
 
     & a {
@@ -20,7 +20,7 @@
       color: red;
     }
     .sub-header-icon {
-      margin-left: 1rem;
+      margin-left: 0.5rem;
       gap: 0.5rem;
 
       position: absolute;

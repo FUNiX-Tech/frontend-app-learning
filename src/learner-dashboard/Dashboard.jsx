@@ -32,18 +32,22 @@ const Dashboard = ({ intl }) => {
     <>
       <HeaderLearning isDashoard />
 
-      <div className="container container-padding" style={{ width: "1100px" }}>
+      <div
+        className="container container-padding"
+        style={{ width: "47.75rem" }}
+      >
         <div className="d-flex flex-column">
-          <div className=" pb-2 pr-2 pt-0 pl-0">
+          {/* <div className=" pb-2 pr-2 pt-0 pl-0">
             <h2 className="message-course">
               {intl.formatMessage(messages.myCourse)}
             </h2>
-          </div>
+          </div> */}
           <div className="w-100">
             <div
               className={`d-flex height-content justify-content-center w-100 ${
                 listCourse.length == 0 && !loading && "align-items-center"
               } `}
+              style={{ minHeight: "31.25rem" }}
             >
               {loading && (
                 <div

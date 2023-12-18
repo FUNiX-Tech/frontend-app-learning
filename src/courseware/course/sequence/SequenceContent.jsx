@@ -1,34 +1,29 @@
-import React, { Suspense, useEffect, useContext, useState , useCallback , useRef} from 'react';
-import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
-import PageLoading from '../../../generic/PageLoading';
-import { useModel } from '../../../generic/model-store';
-import { getConfig } from '@edx/frontend-platform';
-import { AppContext } from '@edx/frontend-platform/react';
-import messages from './messages';
-import BookmarkButton from '../bookmark/BookmarkButton';
-import { useEventListener } from '../../../generic/hooks';
-import Unit from './Unit';
+import React, {
+  Suspense,
+  useEffect,
+  useContext,
+  useState,
+  useCallback,
+  useRef,
+} from "react";
+import PropTypes from "prop-types";
+import { injectIntl, intlShape } from "@edx/frontend-platform/i18n";
+import PageLoading from "../../../generic/PageLoading";
+import { useModel } from "../../../generic/model-store";
+import { getConfig } from "@edx/frontend-platform";
+import { AppContext } from "@edx/frontend-platform/react";
+import messages from "./messages";
+import BookmarkButton from "../bookmark/BookmarkButton";
+import { useEventListener } from "../../../generic/hooks";
+import Unit from "./Unit";
 
+const IFRAME_FEATURE_POLICY =
+  "microphone *; camera *; midi *; geolocation *; encrypted-media *";
 
+const ContentLock = React.lazy(() => import("./content-lock"));
 
-const IFRAME_FEATURE_POLICY = (
-  'microphone *; camera *; midi *; geolocation *; encrypted-media *'
-);
-
-
-const ContentLock = React.lazy(() => import('./content-lock'));
-
-function SequenceContent({
-  gated,
-  intl,
-  courseId,
-  sequenceId,
-  unitId,
-
-
-}) {
-  const sequence = useModel('sequences', sequenceId);
+function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
+  const sequence = useModel("sequences", sequenceId);
 
   // Go back to the top of the page whenever the unit or sequence changes.
   useEffect(() => {
@@ -38,11 +33,11 @@ function SequenceContent({
   if (gated) {
     return (
       <Suspense
-        fallback={(
+        fallback={
           <PageLoading
             srMessage={intl.formatMessage(messages.loadingLockedContent)}
           />
-        )}
+        }
       >
         <ContentLock
           courseId={courseId}
@@ -54,7 +49,7 @@ function SequenceContent({
     );
   }
 
-  const unit = useModel('units', unitId);
+  const unit = useModel("units", unitId);
   // if (!unitId || !unit) {
   //   return (
   //     <div>
@@ -64,56 +59,58 @@ function SequenceContent({
   // }
 
   const { authenticatedUser } = useContext(AppContext);
-  const view = authenticatedUser ? 'student_view' : 'public_view';
+  const view = authenticatedUser ? "student_view" : "public_view";
 
   const getIframeUrl = (unitId) => {
-    let iframeUrl = `${getConfig().LMS_BASE_URL}/xblock/${unitId}?show_title=0&show_bookmark_button=0&recheck_access=1&view=${view}`;
+    let iframeUrl = `${
+      getConfig().LMS_BASE_URL
+    }/xblock/${unitId}?show_title=0&show_bookmark_button=0&recheck_access=1&view=${view}`;
     if (sequence.format) {
       iframeUrl += `&format=${sequence.format}`;
     }
     return iframeUrl;
   };
 
-  const iframeURLS = sequence.unitIds.map(e =>{
-    return {id : e , url : getIframeUrl(e)}
-  }
-    
-  )
+  const iframeURLS = sequence.unitIds.map((e) => {
+    return { id: e, url: getIframeUrl(e) };
+  });
 
   const [loadedIframeId, setLoadedIframeId] = useState(unitId);
   const [iframeHeight, setIframeHeight] = useState(0);
   const [iframeHeightValues, setIframeHeightValues] = useState([]);
-  const [load , setLoad] = useState(true)
-  const [loading, setLoading] = useState(false)
+  const [load, setLoad] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(()=>{
-    setLoadedIframeId(unitId)
-  },[unitId ])
+  useEffect(() => {
+    setLoadedIframeId(unitId);
+  }, [unitId]);
 
   const handleIframeLoad = (id) => {
-    setLoading(true)
+    setLoading(true);
   };
 
+  const receiveMessage = useCallback(
+    ({ data }) => {
+      const { type, payload } = data;
+      if (type === "plugin.resize" && payload.height > 0) {
+        setIframeHeight(payload.height);
 
-  const receiveMessage = useCallback(({ data }) => {
-    const {
-      type,
-      payload,
-    } = data;
-    if (type === 'plugin.resize' && payload.height > 0) {
-            setIframeHeight(payload.height);
+        // document.getElementById('unit-iframe').setAttribute('data-height', payload.height);
+      }
+    },
+    [unitId, iframeHeight, setIframeHeight, loadedIframeId]
+  );
+  useEventListener("message", receiveMessage);
 
-            // document.getElementById('unit-iframe').setAttribute('data-height', payload.height);     
-    } 
-  }, [unitId ,iframeHeight, setIframeHeight,loadedIframeId ]);
-  useEventListener('message', receiveMessage);
-
-
-  
   useEffect(() => {
     if (iframeHeight > 0) {
-      const existingItemIndex = iframeHeightValues.findIndex((item) => item.id === unitId);
-      if (existingItemIndex === -1 || iframeHeightValues[existingItemIndex].height < iframeHeight) {
+      const existingItemIndex = iframeHeightValues.findIndex(
+        (item) => item.id === unitId
+      );
+      if (
+        existingItemIndex === -1 ||
+        iframeHeightValues[existingItemIndex].height < iframeHeight
+      ) {
         setIframeHeightValues((prevValues) => {
           const updatedValues = prevValues.filter((item) => item.id !== unitId);
           return [...updatedValues, { id: unitId, height: iframeHeight }];
@@ -121,60 +118,62 @@ function SequenceContent({
       }
     }
   }, [iframeHeight]);
- 
-
-
 
   return (
-    <div className='unit'> 
-    <div style={{ marginLeft: '-15px' }}>
-        <h1 className="mb-0 h3">{unit.title}</h1>
-        <h2 className="sr-only">{intl.formatMessage(messages['learn.header.h2.placeholder'])}</h2>
+    <div className="unit">
+      {/* <div style={{ marginLeft: "-15px" }}> */}
+      <div>
+        <h1 className="mb-0  unit-title header-1">{unit.title}</h1>
+        <h2 className="sr-only">
+          {intl.formatMessage(messages["learn.header.h2.placeholder"])}
+        </h2>
         <BookmarkButton
           unitId={unit.id}
           isBookmarked={unit.bookmarked}
-          isProcessing={unit.bookmarkedUpdateState === 'loading'}
+          isProcessing={unit.bookmarkedUpdateState === "loading"}
         />
-    </div>
-    <div className="unit-iframe-wrapper">
-      {load && <iframe
-              id="unit-iframe"
-             src={getIframeUrl(unitId)}  
+      </div>
+      <div className="unit-iframe-wrapper">
+        {load && (
+          <iframe
+            id="unit-iframe"
+            src={getIframeUrl(unitId)}
             allow={IFRAME_FEATURE_POLICY}
             allowFullScreen
             height={iframeHeight}
             scrolling="no"
             referrerPolicy="origin"
             // data-height={iframeHeight}
-             onLoad={()=>handleIframeLoad(unitId)}/> }
-    { loading && <div>
-      {/* <div>
+            onLoad={() => handleIframeLoad(unitId)}
+          />
+        )}
+        {loading && (
+          <div>
+            {/* <div>
         <p>iframeHeight:{iframeHeight}</p>
       </div> */}
-      {iframeURLS.map((e) => {
-        const isLoaded = loadedIframeId === e.id;
-        return (
-          <iframe
-            id="unit-iframe"
-            key={e.id}
-            src={e.url}
-            allow={IFRAME_FEATURE_POLICY}
-            allowFullScreen
-            onLoad={() =>{
-            setLoad(false)             
-            }}
-            scrolling="no"
-            referrerPolicy="origin"
-            style={{ display: isLoaded && !load ? 'block' : 'none'  , }}
-            height={iframeHeightValues.find(h=>h.id === e.id)?.height }
-
-           
-          />
-          
-        );
-      })}
-  
-      </div>}
+            {iframeURLS.map((e) => {
+              const isLoaded = loadedIframeId === e.id;
+              return (
+                <iframe
+                  id="unit-iframe"
+                  key={e.id}
+                  data-unit-usage-id={e.id}
+                  src={e.url}
+                  allow={IFRAME_FEATURE_POLICY}
+                  allowFullScreen
+                  onLoad={() => {
+                    setLoad(false);
+                  }}
+                  scrolling="no"
+                  referrerPolicy="origin"
+                  style={{ display: isLoaded && !load ? "block" : "none" }}
+                  height={iframeHeightValues.find((h) => h.id === e.id)?.height}
+                />
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
     // <Unit

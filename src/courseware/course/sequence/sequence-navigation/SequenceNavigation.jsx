@@ -1,26 +1,26 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { breakpoints, Button, useWindowSize } from '@edx/paragon';
-import { ChevronLeft, ChevronRight } from '@edx/paragon/icons';
-import classNames from 'classnames';
+import React from "react";
+import PropTypes from "prop-types";
+import { breakpoints, Button, useWindowSize } from "@edx/paragon";
+import { ChevronLeft, ChevronRight } from "@edx/paragon/icons";
+import classNames from "classnames";
 import {
   injectIntl,
   intlShape,
   isRtl,
   getLocale,
-} from '@edx/frontend-platform/i18n';
+} from "@edx/frontend-platform/i18n";
 
-import { useSelector } from 'react-redux';
-import { getCourseExitNavigation } from '../../course-exit';
-import UnitButton from './UnitButton';
-import SequenceNavigationTabs from './SequenceNavigationTabs';
-import { useSequenceNavigationMetadata } from './hooks';
-import { useModel } from '../../../../generic/model-store';
-import { LOADED } from '../../../data/slice';
+import { useSelector } from "react-redux";
+import { getCourseExitNavigation } from "../../course-exit";
+import UnitButton from "./UnitButton";
+import SequenceNavigationTabs from "./SequenceNavigationTabs";
+import { useSequenceNavigationMetadata } from "./hooks";
+import { useModel } from "../../../../generic/model-store";
+import { LOADED } from "../../../data/slice";
 
-import messages from './messages';
+import messages from "./messages";
 /** [MM-P2P] Experiment */
-import { MMP2PFlyoverTriggerMobile } from '../../../../experiments/mm-p2p';
+import { MMP2PFlyoverTriggerMobile } from "../../../../experiments/mm-p2p";
 
 function SequenceNavigation({
   intl,
@@ -33,31 +33,44 @@ function SequenceNavigation({
   goToCourseExitPage,
   mmp2p,
 }) {
-  const sequence = useModel('sequences', sequenceId);
-  const { isFirstUnit, isLastUnit } = useSequenceNavigationMetadata(sequenceId, unitId);
-  const {
-    courseId,
-    sequenceStatus,
-  } = useSelector(state => state.courseware);
-  const isLocked = sequenceStatus === LOADED ? (
-    sequence.gatedContent !== undefined && sequence.gatedContent.gated
-  ) : undefined;
+  const sequence = useModel("sequences", sequenceId);
+  const { isFirstUnit, isLastUnit } = useSequenceNavigationMetadata(
+    sequenceId,
+    unitId
+  );
+  const { courseId, sequenceStatus } = useSelector((state) => state.courseware);
+  const isLocked =
+    sequenceStatus === LOADED
+      ? sequence.gatedContent !== undefined && sequence.gatedContent.gated
+      : undefined;
 
-  const shouldDisplayNotificationTriggerInSequence = useWindowSize().width < breakpoints.small.minWidth;
+  const shouldDisplayNotificationTriggerInSequence =
+    useWindowSize().width < breakpoints.small.minWidth;
 
   const renderUnitButtons = () => {
     if (isLocked) {
       return (
-        <UnitButton unitId={unitId} title="" contentType="lock" isActive onClick={() => {}} />
+        <UnitButton
+          unitId={unitId}
+          title=""
+          contentType="lock"
+          isActive
+          onClick={() => {}}
+        />
       );
     }
     if (sequence.unitIds.length === 0 || unitId === null) {
       return (
-        <div style={{ flexBasis: '100%', minWidth: 0, borderBottom: 'solid 1px #EAEAEA' }} />
+        <div
+          style={{
+            flexBasis: "100%",
+            minWidth: 0,
+            borderBottom: "solid 1px #EAEAEA",
+          }}
+        />
       );
     }
     return (
-      
       <SequenceNavigationTabs
         unitIds={sequence.unitIds}
         unitId={unitId}
@@ -72,12 +85,21 @@ function SequenceNavigation({
   const renderNextButton = () => {
     const { exitActive, exitText } = getCourseExitNavigation(courseId, intl);
     const buttonOnClick = isLastUnit ? goToCourseExitPage : nextSequenceHandler;
-    const buttonText = (isLastUnit && exitText) ? exitText : intl.formatMessage(messages.nextButton);
+    const buttonText =
+      isLastUnit && exitText
+        ? exitText
+        : intl.formatMessage(messages.nextButton);
     const disabled = isLastUnit && !exitActive;
     const nextArrow = isRtl(getLocale()) ? ChevronLeft : ChevronRight;
 
     return (
-      <Button variant="link" className="next-btn" onClick={buttonOnClick} disabled={disabled} iconAfter={nextArrow}>
+      <Button
+        variant="link"
+        className="next-btn"
+        onClick={buttonOnClick}
+        disabled={disabled}
+        iconAfter={nextArrow}
+      >
         {shouldDisplayNotificationTriggerInSequence ? null : buttonText}
       </Button>
     );
@@ -85,17 +107,35 @@ function SequenceNavigation({
 
   const prevArrow = isRtl(getLocale()) ? ChevronRight : ChevronLeft;
 
-  return sequenceStatus === LOADED && (
-    <nav id="courseware-sequenceNavigation" className={classNames('sequence-navigation', className)} style={{ width: shouldDisplayNotificationTriggerInSequence ? '90%' : null }}>
-      {/* <Button variant="link" className="previous-btn" onClick={previousSequenceHandler} disabled={isFirstUnit} iconBefore={prevArrow}>
+  const isShowFeedback = useSelector((state) => state.header.isShowFeedback);
+  const isShowChatbot = useSelector((state) => state.header.isShowChatbot);
+
+  return (
+    sequenceStatus === LOADED && (
+      <nav
+        id="courseware-sequenceNavigation"
+        className={classNames(
+          `${
+            isShowChatbot || isShowFeedback
+              ? "sequence-navigation active"
+              : "sequence-navigation no-active"
+          }`,
+          className
+        )}
+        style={{
+          width: shouldDisplayNotificationTriggerInSequence ? "90%" : null,
+        }}
+      >
+        {/* <Button variant="link" className="previous-btn" onClick={previousSequenceHandler} disabled={isFirstUnit} iconBefore={prevArrow}>
         {shouldDisplayNotificationTriggerInSequence ? null : intl.formatMessage(messages.previousButton)}
       </Button> */}
-      {renderUnitButtons()}
-      {/* {renderNextButton()} */}
+        {renderUnitButtons()}
+        {/* {renderNextButton()} */}
 
-      {/** [MM-P2P] Experiment */}
-      { mmp2p.state.isEnabled && <MMP2PFlyoverTriggerMobile options={mmp2p} /> }
-    </nav>
+        {/** [MM-P2P] Experiment */}
+        {mmp2p.state.isEnabled && <MMP2PFlyoverTriggerMobile options={mmp2p} />}
+      </nav>
+    )
   );
 }
 
