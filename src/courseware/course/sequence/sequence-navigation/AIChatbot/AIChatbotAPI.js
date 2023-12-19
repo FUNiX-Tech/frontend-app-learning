@@ -5,23 +5,37 @@ function baseUrl() {
   return `${getConfig().LMS_BASE_URL}/api/chatbot/`;
 }
 
-export const fetchQueries = async () => {
-  const url = `${baseUrl()}query/0/1/1/`;
+export const fetchQueries = async (session_id = 0, skip = 1, limit = 5) => {
+  const url = `${baseUrl()}query/${session_id}/${skip}/${limit}/`;
   const { data } = await getAuthenticatedHttpClient().get(url);
   return data;
 };
 
-export const askChatbot = async (query_msg, session_id = undefined) => {
+export const askChatbot = async (query_msg, session_id = undefined, hash) => {
   const url = `${baseUrl()}query/request/`;
   const { data } = await getAuthenticatedHttpClient().post(url, {
     query_msg,
     session_id,
+    hash,
   });
   return data;
 };
 
-export const voteQuery = () => {
-  //
+export const voteChatbotResponse = async (query_id, vote) => {
+  const url = `${baseUrl()}query/vote/`;
+  const { data } = await getAuthenticatedHttpClient().put(url, {
+    query_id,
+    vote,
+  });
+  return data;
+};
+
+export const retryAskChatbot = async (query_id) => {
+  const url = `${baseUrl()}query/retry/`;
+  const { data } = await getAuthenticatedHttpClient().put(url, {
+    query_id,
+  });
+  return data;
 };
 
 export const cancelQuery = () => {

@@ -204,7 +204,15 @@ export default function SequenceNavigationTabs({
 
   return (
     <div style={{ flexBasis: "100%", minWidth: 0 }}>
-      <div className="sequence-navigation-tabs-container" ref={containerRef}>
+      {/* <AIChatbot
+        isShowChatbot={isShowChatbot}
+        shouldDisplayDropdown={shouldDisplayDropdown}
+      /> */}
+      <div
+        className="sequence-navigation-tabs-container"
+        ref={containerRef}
+        style={{ height: "100%" }}
+      >
         {/* Right Menu */}
 
         {/* <div
