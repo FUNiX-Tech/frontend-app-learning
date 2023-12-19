@@ -1,11 +1,11 @@
-import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
-import { StatefulButton } from '@edx/paragon';
-import { FormattedMessage } from '@edx/frontend-platform/i18n';
-import { useDispatch } from 'react-redux';
-import BookmarkOutlineIcon from './BookmarkOutlineIcon';
-import BookmarkFilledIcon from './BookmarkFilledIcon';
-import { removeBookmark, addBookmark } from './data/thunks';
+import React, { useCallback } from "react";
+import PropTypes from "prop-types";
+import { StatefulButton } from "@edx/paragon";
+import { FormattedMessage } from "@edx/frontend-platform/i18n";
+import { useDispatch } from "react-redux";
+import BookmarkOutlineIcon from "./BookmarkOutlineIcon";
+import BookmarkFilledIcon from "./BookmarkFilledIcon";
+import { removeBookmark, addBookmark } from "./data/thunks";
 
 const addBookmarkLabel = (
   <FormattedMessage
@@ -23,10 +23,8 @@ const hasBookmarkLabel = (
   />
 );
 
-export default function BookmarkButton({
-  isBookmarked, isProcessing, unitId,
-}) {
-  const bookmarkState = isBookmarked ? 'bookmarked' : 'default';
+export default function BookmarkButton({ isBookmarked, isProcessing, unitId }) {
+  const bookmarkState = isBookmarked ? "bookmarked" : "default";
   const state = isProcessing ? `${bookmarkState}Processing` : bookmarkState;
 
   const dispatch = useDispatch();
@@ -44,12 +42,19 @@ export default function BookmarkButton({
       className="px-1 ml-n1 btn-sm text-primary-500"
       onClick={toggleBookmark}
       state={state}
-      disabledStates={['defaultProcessing', 'bookmarkedProcessing']}
+      disabledStates={["defaultProcessing", "bookmarkedProcessing"]}
+      // labels={{
+      //   default: addBookmarkLabel,
+      //   defaultProcessing: addBookmarkLabel,
+      //   bookmarked: hasBookmarkLabel,
+      //   bookmarkedProcessing: hasBookmarkLabel,
+      // }}
+
       labels={{
-        default: addBookmarkLabel,
-        defaultProcessing: addBookmarkLabel,
-        bookmarked: hasBookmarkLabel,
-        bookmarkedProcessing: hasBookmarkLabel,
+        default: "",
+        defaultProcessing: "",
+        bookmarked: "",
+        bookmarkedProcessing: "",
       }}
       icons={{
         default: <BookmarkOutlineIcon className="text-primary" />,

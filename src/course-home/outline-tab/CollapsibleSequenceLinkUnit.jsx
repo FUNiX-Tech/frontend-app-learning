@@ -251,7 +251,7 @@ function CollapsibleSequenceLinkUnit({
       >
         <ol
           className={`${
-            hasComplete ? "list-unstyled add-padding-left-12" : "list-unstyled"
+            hasComplete ? "list-unstyled add-padding-left-16" : "list-unstyled"
           }`}
         >
           {sequenceIds.map((sequenceId) => {

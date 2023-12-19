@@ -122,16 +122,21 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
   return (
     <div className="unit">
       {/* <div style={{ marginLeft: "-15px" }}> */}
-      <div>
-        <h1 className="mb-0  unit-title header-1">{unit.title}</h1>
+      <div className="position-relative">
+        <h1 className="mb-0  unit-title header-title pr-5">{unit.title}</h1>
         <h2 className="sr-only">
           {intl.formatMessage(messages["learn.header.h2.placeholder"])}
         </h2>
-        <BookmarkButton
-          unitId={unit.id}
-          isBookmarked={unit.bookmarked}
-          isProcessing={unit.bookmarkedUpdateState === "loading"}
-        />
+        <div
+          className="position-absolute"
+          style={{ top: "0", right: "-0.5rem" }}
+        >
+          <BookmarkButton
+            unitId={unit.id}
+            isBookmarked={unit.bookmarked}
+            isProcessing={unit.bookmarkedUpdateState === "loading"}
+          />
+        </div>
       </div>
       <div className="unit-iframe-wrapper">
         {load && (
