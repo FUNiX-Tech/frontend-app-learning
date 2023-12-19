@@ -42,7 +42,11 @@ const Dashboard = ({ intl }) => {
               {intl.formatMessage(messages.myCourse)}
             </h2>
           </div> */}
-          <div className="w-100">
+          <div
+            className={`${
+              listCourse.length == 0 ? "w-100 background-no-course" : "w-100"
+            }`}
+          >
             <div
               className={`d-flex height-content justify-content-center w-100 ${
                 listCourse.length == 0 && !loading && "align-items-center"
@@ -64,7 +68,6 @@ const Dashboard = ({ intl }) => {
                   <span className="d-flex flex-column  align-items-center model-not-course ">
                     <img src={iconVector} width="37px" height="30px" />
                     <span className="text-not-course">
-                      {" "}
                       {intl.formatMessage(messages.notCourse)}
                     </span>
                   </span>

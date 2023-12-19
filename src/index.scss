@@ -299,17 +299,37 @@
     flex-direction: column;
     align-items: flex-start;
     overflow: hidden;
+    transform: translateX(18.75rem);
     width: 18.75rem;
     margin-left: 35rem;
     transition: all 0.3s ease;
-    display: none;
+
     &.active {
-      display: flex;
+      transform: translateX(0);
+
       margin-left: 0;
       transition: all 0.3s ease;
     }
+
+    &.hidden {
+      animation: fade-out ease 0.3s forwards;
+      -o-animation: fade-out ease 0.3s forwards;
+      -moz-animation: fade-out ease 0.3s forwards;
+      -webkit-animation: fade-out ease 0.3s forwards;
+    }
+
     &.active.feedback {
       width: auto !important;
+    }
+    &.active.chatbot {
+      width: 18.75rem !important;
+    }
+
+    @keyframes fade-out {
+      100% {
+        opacity: 0;
+        display: none;
+      }
     }
 
     .sequence-lesson-title {
@@ -476,9 +496,6 @@
       }
     }
     .input-message {
-      &.hide {
-        display: none;
-      }
       position: fixed;
       bottom: 1rem;
       display: flex;
@@ -1031,7 +1048,9 @@
 
 .learning-header {
   position: sticky;
-  // top:0px;
+  &.dashboard {
+    top: 0;
+  }
   background-color: white;
   z-index: 250000;
   // box-shadow: 0px 2px 4px -1px #0b0b0b0f, 0px 4px 6px -1px #0b0b0b1a;
@@ -1590,7 +1609,6 @@ html:root {
 // text style unit
 
 .header-title {
-  height: 3rem;
   flex-grow: 0;
   font-family: RobotoSerif;
   font-size: 2rem;
@@ -1604,7 +1622,6 @@ html:root {
 }
 
 .header-1 {
-  height: 2.25rem;
   flex-grow: 0;
   font-family: Roboto;
   font-size: 1.5rem;
@@ -1617,7 +1634,6 @@ html:root {
   color: var(--color-text-default);
 }
 .header-2 {
-  height: 1.875rem;
   flex-grow: 0;
   font-family: Roboto;
   font-size: 1.25rem;
@@ -1631,7 +1647,6 @@ html:root {
 }
 
 .header-3 {
-  height: 1.688rem;
   flex-grow: 0;
   font-family: Roboto;
   font-size: 1.125rem;
@@ -1644,7 +1659,6 @@ html:root {
   color: var(--color-text-default);
 }
 .parag-1-medium {
-  height: 1.5rem;
   flex-grow: 0;
   font-family: Roboto;
   font-size: 1rem;
@@ -1658,7 +1672,6 @@ html:root {
 }
 
 .parag-1 {
-  height: 1.5rem;
   flex-grow: 0;
   font-family: Roboto;
   font-size: 1rem;
@@ -1685,7 +1698,6 @@ html:root {
 }
 
 .parag-2 {
-  height: 1.313rem;
   flex-grow: 0;
   font-family: Roboto;
   font-size: 0.875rem;
@@ -1699,7 +1711,6 @@ html:root {
 }
 
 .parag-3-medium {
-  height: 1.125rem;
   flex-grow: 0;
   font-family: Roboto;
   font-size: 0.75rem;
@@ -1713,7 +1724,6 @@ html:root {
 }
 
 .parag-3 {
-  height: 0.75rem;
   flex-grow: 0;
   font-family: Roboto;
   font-size: 0.75rem;
@@ -1727,7 +1737,6 @@ html:root {
 }
 
 .tag {
-  height: 1.313rem;
   flex-grow: 0;
   font-family: Roboto;
   font-size: 0.875rem;
@@ -1740,7 +1749,6 @@ html:root {
   color: var(--color-text-default);
 }
 .text-link {
-  height: 1.5rem;
   flex-grow: 0;
   font-family: Roboto;
   font-size: 1rem;
@@ -1993,4 +2001,9 @@ html:root {
     font-weight: 600;
     size: 16px;
   }
+}
+
+// fix  unlimited  scroll
+.pgn__checkpoint {
+  display: none !important;
 }

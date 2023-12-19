@@ -70,21 +70,10 @@ export default function SequenceNavigationTabs({
 
     // Adjust position on scroll
     const handleScroll = () => {
+      console.log(window.scrollY);
       if (window.scrollY >= 137.5) {
         fixedElement.style.paddingTop = courseTagsNavHeight / 16 + "rem";
         return;
-      } else if (window.scrollY >= 50 && window.scrollY < 85.5) {
-        if (instructorToolbar) {
-          fixedElement.style.paddingTop =
-            (courseTagsNavHeight + instructorToolbarHeight - window.scrollY) /
-              16 +
-            "rem";
-          return;
-        } else {
-          fixedElement.style.paddingTop =
-            (courseTagsNavHeight - window.scrollY) / 16 + "rem";
-          return;
-        }
       } else if (window.scrollY >= 122 && window.scrollY < 137.5) {
         if (instructorToolbar) {
           (fixedElement.style.paddingTop =
@@ -100,7 +89,7 @@ export default function SequenceNavigationTabs({
             headerHeight + courseTagsNavHeight - window.scrollY + "rem";
           return;
         }
-      } else if (window.scrollY >= 85.5 && window.scrollY < 122) {
+      } else if (window.scrollY >= 50 && window.scrollY < 122) {
         if (instructorToolbar) {
           fixedElement.style.paddingTop =
             (headerHeight +
@@ -260,7 +249,7 @@ export default function SequenceNavigationTabs({
           className={`${
             isShowFeedback
               ? "sequence-navigation-tabs d-flex flex-grow-1 active feedback"
-              : "sequence-navigation-tabs d-flex flex-grow-1"
+              : "sequence-navigation-tabs d-flex flex-grow-1 hidden"
           }`}
           style={shouldDisplayDropdown ? null : null}
         >

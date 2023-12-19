@@ -15,6 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { history } from "@edx/frontend-platform";
 import EffortEstimate from "../../shared/effort-estimate";
 import { useModel } from "../../generic/model-store";
+import { useLocation } from "react-router-dom";
 
 import messages from "./messages";
 // import genericMessages from '../../generic/messages';
@@ -47,6 +48,18 @@ function CollapsibleSequenceLinkUnit({
     title,
     sequenceIds,
   } = sequence;
+
+  //location
+  const location = useLocation();
+  //Check at least one  sequence has completed
+  const [hasComplete, setHasComplete] = useState(false);
+
+  useEffect(() => {
+    if (complete) {
+      setHasComplete(true);
+    }
+  }, [complete, location.pathname]);
+
   const { userTimezone } = useModel("outline", courseId);
 
   const course = useModel("coursewareMeta", courseId);
@@ -80,7 +93,9 @@ function CollapsibleSequenceLinkUnit({
   // canLoadCourseware is true if the Courseware MFE is enabled, false otherwise
   let coursewareUrl = canLoadCourseware ? (
     <NavLink
-      className={`${complete && "complete"}`}
+      className={`${
+        complete ? "complete" : `${hasComplete && "add-padding-left-12"}`
+      }`}
       activeClassName="active"
       to={`/course/${courseId}/${id}`}
     >
@@ -95,7 +110,9 @@ function CollapsibleSequenceLinkUnit({
       const firstSequence = sequenceIds[0] || id;
       coursewareUrl = (
         <NavLink
-          className={`${complete && "complete"}`}
+          className={`${
+            complete ? "complete" : `${hasComplete && "add-padding-left-12"}`
+          }`}
           activeClassName="active"
           // to={`/course/${courseId}/${id}/${firstSequence}`}
           to={`/course/${courseId}/${id}`}
@@ -109,7 +126,9 @@ function CollapsibleSequenceLinkUnit({
     } else {
       coursewareUrl = (
         <NavLink
-          className={`${complete && "complete"}`}
+          className={`${
+            complete ? "complete" : `${hasComplete && "add-padding-left-12"}`
+          }`}
           activeClassName="active"
           to={`/course/${courseId}/${id}`}
         >
@@ -127,7 +146,7 @@ function CollapsibleSequenceLinkUnit({
       style={{ backgroundColor: "#FAFBFB" }}
     >
       <div className="position-relative w-100 m-0">
-        <div className={`${complete ? "text-break pl-3" : "text-break"}`}>
+        <div className="text-break">
           <span className="d-flex align-items-flex-start align-middle">
             <React.Fragment>
               {complete ? (
@@ -230,7 +249,11 @@ function CollapsibleSequenceLinkUnit({
         //   />
         // }
       >
-        <ol className={`${complete ? "list-unstyled pl-3" : "list-unstyled"}`}>
+        <ol
+          className={`${
+            hasComplete ? "list-unstyled add-padding-left-16" : "list-unstyled"
+          }`}
+        >
           {sequenceIds.map((sequenceId) => {
             const sequenceData = sequences[sequenceId];
 

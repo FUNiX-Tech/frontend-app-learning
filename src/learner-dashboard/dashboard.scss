@@ -73,19 +73,23 @@
   text-align: center;
   width: 10.75rem;
   height: 100px;
-  gap: 5px;
+  row-gap: 0.625rem;
   .text-not-course {
-    font-size: 14px;
+    color: var(--color-text-default);
+    text-align: center;
+    font-feature-settings: "clig" off, "liga" off;
+    font-family: Roboto;
+    font-size: 0.875rem;
+    font-style: normal;
     font-weight: 400;
-    line-height: 21px;
-    align-items: center;
+    line-height: 150%;
   }
 }
 
 .progress {
   border-radius: 4px;
   border: none !important;
-  background-color: #d7d7d7 !important    ;
+  background-color: var(--color-stroke) !important;
 }
 
 .course-title {
@@ -116,6 +120,9 @@
     font-weight: 500;
     line-height: 150%;
     text-decoration: none;
+    &:hover {
+      color: var(--color-hover);
+    }
   }
 }
 
@@ -155,4 +162,9 @@
     width: 10.188rem;
     padding: 0.625rem 0.5rem;
   }
+}
+
+.background-no-course {
+  background-color: var(--background-content);
+  margin-bottom: 2rem;
 }

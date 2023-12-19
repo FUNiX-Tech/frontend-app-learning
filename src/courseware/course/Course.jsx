@@ -111,13 +111,6 @@ function Course({
     );
   }, [sequenceId]);
 
-  useEffect(() => {
-    const pgn__checkpoint = document.getElementById("pgn__checkpoint");
-    if (pgn__checkpoint) {
-      pgn__checkpoint.style.display = "none!important";
-    }
-  }, []);
-
   const [show, setShow] = useState(false);
   const [showLeftbarContent, setShowLeftbarContent] = useState(true);
   const location = useLocation();
@@ -165,18 +158,6 @@ function Course({
       if (window.scrollY >= 137.5) {
         fixedElement.style.paddingTop = courseTagsNavHeight / 16 + "rem";
         return;
-      } else if (window.scrollY >= 50 && window.scrollY < 85.5) {
-        if (instructorToolbar) {
-          (fixedElement.style.paddingTop =
-            courseTagsNavHeight + instructorToolbarHeight - window.scrollY) /
-            16 +
-            "rem";
-          return;
-        } else {
-          fixedElement.style.paddingTop =
-            (courseTagsNavHeight - window.scrollY) / 16 + "rem";
-          return;
-        }
       } else if (window.scrollY >= 122 && window.scrollY < 137.5) {
         if (instructorToolbar) {
           fixedElement.style.paddingTop =
@@ -192,7 +173,7 @@ function Course({
             (headerHeight + courseTagsNavHeight - window.scrollY) / 16 + "rem";
           return;
         }
-      } else if (window.scrollY >= 85.5 && window.scrollY < 122) {
+      } else if (window.scrollY >= 50 && window.scrollY < 122) {
         if (instructorToolbar) {
           fixedElement.style.paddingTop =
             (headerHeight +
