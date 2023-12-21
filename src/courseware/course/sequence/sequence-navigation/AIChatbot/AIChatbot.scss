@@ -36,11 +36,11 @@
   background: white;
 }
 
-@media screen and (min-width: 1440px) {
-  .chatbot-container * {
-    font-size: 21px;
-  }
-}
+// @media screen and (min-width: 1440px) {
+//   .chatbot-container * {
+//     font-size: 21px;
+//   }
+// }
 
 .chatbot-header {
   width: 100%;
@@ -205,7 +205,7 @@
       padding: 4px 10px;
       background: var(--color-bg-content);
       margin: 0;
-      text-align: right;
+      text-align: left;
       min-width: 0;
       word-break: break-word;
       border: 1px solid #e5e5e5;

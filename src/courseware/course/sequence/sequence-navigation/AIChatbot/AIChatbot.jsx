@@ -93,10 +93,11 @@ export default function AIChatbot({ isShowChatbot }) {
   function onScroll(e) {
     if (
       initiated &&
-      e.currentTarget.scrollTop < 150 &&
+      e.currentTarget.scrollTop < 50 &&
       !isFetching &&
       !isLastPage
     ) {
+      console.log("set page from scroll");
       setPage((prev) => prev + 1);
     }
   }
@@ -180,7 +181,10 @@ export default function AIChatbot({ isShowChatbot }) {
       .catch(console.error)
       .finally(() => {
         if (!isInitialLoading) {
-          msgContainerRef.current.scrollTop = 200;
+          console.log("set scroll top to 200");
+          if (msgContainerRef.current.scrollTop <= 50 && !isLastPage) {
+            msgContainerRef.current.scrollTop = 51;
+          }
         }
 
         if (isInitialLoading) {
