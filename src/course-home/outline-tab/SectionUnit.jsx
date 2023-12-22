@@ -28,6 +28,8 @@ function SectionUnit({
   unitId,
 }) {
   const { complete, sequenceIds, title } = section;
+  //check has one sequence complete
+  const [hasOneSequenceComplete, setHasOneSequenceComplete] = useState(false);
   const {
     courseBlocks: { sequences },
   } = useModel("outline", courseId);
@@ -71,6 +73,15 @@ function SectionUnit({
       </div> */}
     </div>
   );
+  useEffect(() => {
+    sequenceIds.map((sequenceId, index) => {
+      const sequence = sequences[sequenceId];
+      const { complete } = sequence;
+      if (complete) {
+        setHasOneSequenceComplete(true);
+      }
+    });
+  }, []);
 
   return (
     <li className="bg-light">
@@ -104,19 +115,22 @@ function SectionUnit({
       */}
 
       <ol className="list-unstyled bg-list-unstyled">
-        {sequenceIds.map((sequenceId, index) => (
-          <CollapsibleSequenceLinkUnit
-            lesson={lesson}
-            key={sequenceId}
-            id={sequenceId}
-            courseId={courseId}
-            sequences={sequences}
-            first={index === 0}
-            expand={expand}
-            useHistory={useHistory}
-            unitId={unitId}
-          />
-        ))}
+        {sequenceIds.map((sequenceId, index) => {
+          return (
+            <CollapsibleSequenceLinkUnit
+              lesson={lesson}
+              key={sequenceId}
+              id={sequenceId}
+              courseId={courseId}
+              sequences={sequences}
+              first={index === 0}
+              expand={expand}
+              useHistory={useHistory}
+              unitId={unitId}
+              hasOneComplete={hasOneSequenceComplete}
+            />
+          );
+        })}
       </ol>
     </li>
   );
