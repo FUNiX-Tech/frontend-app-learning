@@ -30,6 +30,7 @@ import SequenceContent from "./SequenceContent";
 /** [MM-P2P] Experiment */
 import { isMobile } from "../../../experiments/mm-p2p/utils";
 import { MMP2PFlyover, MMP2PFlyoverMobile } from "../../../experiments/mm-p2p";
+import CourseLoading from "../../../learner-dashboard/CourseLoading";
 
 function Sequence({
   unitId,
@@ -187,7 +188,23 @@ function Sequence({
       return <div> {intl.formatMessage(messages.noContent)} </div>;
     }
     return (
-      <PageLoading srMessage={intl.formatMessage(messages.loadingSequence)} />
+      // <PageLoading srMessage={intl.formatMessage(messages.loadingSequence)} />
+
+      <div
+        className="pb-3 d-flex flex-column position-relative"
+        style={{
+          gap: "10px",
+          maxWidth: "calc(100% - 50.75rem)",
+          paddingRight: "2rem",
+          paddingTop: "0.5rem",
+          left: "2rem",
+          margin: "0 auto",
+        }}
+      >
+        <CourseLoading courseLearning />
+        <CourseLoading courseLearning />
+        <CourseLoading courseLearning />
+      </div>
     );
   }
 
