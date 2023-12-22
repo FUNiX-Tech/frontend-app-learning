@@ -128,16 +128,14 @@ function Sequence({
         }
 
         if (event.data.scroll) {
-          const header = document.querySelector(
-            "header.learning-header"
-          ).offsetHeight;
+          const header =
+            document.querySelector("header.learning-header")?.offsetHeight || 0;
 
           const instructorToolbar =
-            document.getElementById("instructor-toolbar").offsetHeight;
+            document.getElementById("instructor-toolbar")?.offsetHeight || 0;
 
-          const courseTabsNavigation = document.getElementById(
-            "courseTabsNavigation"
-          ).offsetHeight;
+          const courseTabsNavigation =
+            document.getElementById("courseTabsNavigation")?.offsetHeight || 0;
 
           window.scroll({
             top:
