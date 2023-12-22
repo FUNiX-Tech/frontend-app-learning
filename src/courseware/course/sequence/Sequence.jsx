@@ -115,8 +115,6 @@ function Sequence({
       // reload (cập nhật) unit learning project cuối khi unit 1 đổi trạng thái nộp/hủy bài
       // scroll
       if (type === "learningprojectxblock") {
-        console.log(event.data);
-
         if (event.data.resize) {
           const iframe = document.querySelector(
             `iframe[data-unit-usage-id='${event.data.unit_usage_id}']`
@@ -130,19 +128,23 @@ function Sequence({
         }
 
         if (event.data.scroll) {
-          const iframe = document.querySelector(
-            `iframe[data-unit-usage-id='${event.data.unit_usage_id}']`
-          );
-          if (!iframe) {
-            console.log("not fond iframe");
-            return;
-          }
-          const top =
-            iframe.getBoundingClientRect().top +
-            window.scrollY +
-            event.data.scroll.top;
+          const header = document.querySelector(
+            "header.learning-header"
+          ).offsetHeight;
+
+          const instructorToolbar =
+            document.getElementById("instructor-toolbar").offsetHeight;
+
+          const courseTabsNavigation = document.getElementById(
+            "courseTabsNavigation"
+          ).offsetHeight;
+
           window.scroll({
-            top: top,
+            top:
+              event.data.scroll.top +
+              header +
+              instructorToolbar +
+              courseTabsNavigation,
             left: 0,
             behavior: "smooth",
           });
