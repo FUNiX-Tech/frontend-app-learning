@@ -158,7 +158,10 @@ function Course({
       if (window.scrollY >= 137.5) {
         fixedElement.style.paddingTop = courseTagsNavHeight / 16 + "rem";
         return;
-      } else if (window.scrollY >= 122 && window.scrollY < 137.5) {
+      } else if (
+        window.scrollY > courseTagsNavHeight &&
+        window.scrollY < 137.5
+      ) {
         if (instructorToolbar) {
           fixedElement.style.paddingTop =
             (headerHeight +
@@ -169,26 +172,10 @@ function Course({
             "rem";
           return;
         } else {
-          fixedElement.style.paddingTop =
-            (headerHeight + courseTagsNavHeight - window.scrollY) / 16 + "rem";
+          fixedElement.style.paddingTop = courseTagsNavHeight / 16;
           return;
         }
-      } else if (window.scrollY >= 50 && window.scrollY < 122) {
-        if (instructorToolbar) {
-          fixedElement.style.paddingTop =
-            (headerHeight +
-              courseTagsNavHeight +
-              instructorToolbarHeight -
-              window.scrollY) /
-              16 +
-            "rem";
-          return;
-        } else {
-          fixedElement.style.paddingTop =
-            (headerHeight + courseTagsNavHeight - window.scrollY) / 16 + "rem";
-          return;
-        }
-      } else if (window.scrollY <= 50) {
+      } else if (window.scrollY <= courseTagsNavHeight) {
         if (instructorToolbar) {
           fixedElement.style.paddingTop =
             (headerHeight +
@@ -214,27 +201,14 @@ function Course({
     };
   }, [location.pathname]);
 
-  //set footer z-index
+  //set footer hidden
   useEffect(() => {
     const rightBar = document.querySelector(".sequence-navigation");
     const leftBar = document.querySelector(".unit-left-sidebar");
+    const footer = document.querySelector("#custom-footer");
 
-    if (rightBar && leftBar) {
-      if (showLeftbarContent) {
-        leftBar.style.zIndex = 25000;
-      } else {
-        leftBar.style.zIndex = 2;
-      }
-
-      if (!isShowChatbot && !isShowFeedback) {
-        rightBar.style.zIndex = 2;
-      }
-      if (isShowChatbot) {
-        rightBar.style.zIndex = 25000;
-      }
-      if (isShowFeedback) {
-        rightBar.style.zIndex = 25000;
-      }
+    if (rightBar && leftBar && footer) {
+      footer.style.display = "none";
     }
   }, [
     showLeftbarContent,
