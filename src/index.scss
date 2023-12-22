@@ -626,10 +626,6 @@ body {
         background-size: 1.5rem 1.5rem;
 
         color: var(--color-text-default);
-
-        &:disabled {
-          color: var(--Text-Subdued-2, #8097b1);
-        }
       }
 
       & .feedback-text {
