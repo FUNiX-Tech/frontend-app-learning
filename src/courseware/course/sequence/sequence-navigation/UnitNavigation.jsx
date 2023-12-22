@@ -116,12 +116,12 @@ function UnitNavigation({
         nextClick: clickNextUnit ? clickNextUnit : newNextLesson,
       };
     }
-  }, [location.pathname, sequenceId, sequences]);
+  }, []);
 
   useEffect(() => {
     const data = handleHoverTitle();
     setHoverTitle(data);
-  }, [location.pathname, sequenceId, sequences]);
+  }, [location.pathname, sequenceId, unitId]);
 
   const { courseId } = useSelector((state) => state.courseware);
 

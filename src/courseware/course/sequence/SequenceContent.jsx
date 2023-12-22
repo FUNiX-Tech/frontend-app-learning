@@ -139,6 +139,18 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
         </div>
       </div>
       <div className="unit-iframe-wrapper">
+        {/* {!load ||
+          (!loading && (
+            <div
+              className="pb-3 d-flex flex-column w-100 "
+              style={{ gap: "10px" }}
+            >
+              <CourseLoading />
+              <CourseLoading />
+              <CourseLoading />
+            </div>
+          ))} */}
+
         {load && (
           <iframe
             id="unit-iframe"

@@ -37,6 +37,7 @@ function CollapsibleSequenceLinkUnit({
   useHistory,
   lesson,
   unitId,
+  hasOneComplete,
 }) {
   const sequence = sequences[id];
   const {
@@ -51,14 +52,8 @@ function CollapsibleSequenceLinkUnit({
 
   //location
   const location = useLocation();
-  //Check at least one  sequence has completed
-  const [hasComplete, setHasComplete] = useState(false);
 
-  useEffect(() => {
-    if (complete) {
-      setHasComplete(true);
-    }
-  }, [complete, location.pathname]);
+  //Set open full text if true
 
   const { userTimezone } = useModel("outline", courseId);
 
@@ -94,7 +89,7 @@ function CollapsibleSequenceLinkUnit({
   let coursewareUrl = canLoadCourseware ? (
     <NavLink
       className={`${
-        complete ? "complete" : `${hasComplete && "add-padding-left-12"}`
+        complete ? "complete" : `${hasOneComplete && "add-padding-left-16"}`
       }`}
       activeClassName="active"
       to={`/course/${courseId}/${id}`}
@@ -111,7 +106,7 @@ function CollapsibleSequenceLinkUnit({
       coursewareUrl = (
         <NavLink
           className={`${
-            complete ? "complete" : `${hasComplete && "add-padding-left-12"}`
+            complete ? "complete" : `${hasOneComplete && "add-padding-left-16"}`
           }`}
           activeClassName="active"
           // to={`/course/${courseId}/${id}/${firstSequence}`}
@@ -127,7 +122,7 @@ function CollapsibleSequenceLinkUnit({
       coursewareUrl = (
         <NavLink
           className={`${
-            complete ? "complete" : `${hasComplete && "add-padding-left-12"}`
+            complete ? "complete" : `${hasOneComplete && "add-padding-left-16"}`
           }`}
           activeClassName="active"
           to={`/course/${courseId}/${id}`}
@@ -251,7 +246,7 @@ function CollapsibleSequenceLinkUnit({
       >
         <ol
           className={`${
-            hasComplete ? "list-unstyled add-padding-left-16" : "list-unstyled"
+            complete ? "list-unstyled add-padding-left-16" : "list-unstyled"
           }`}
         >
           {sequenceIds.map((sequenceId) => {
@@ -261,8 +256,7 @@ function CollapsibleSequenceLinkUnit({
               <li key={sequenceId}>
                 {/* <div className={classNames("", { "mt-2": !first })}> */}
                 <div>
-                  <div className="row w-100 m-0">
-                    {/* <div className="col-auto p-0">
+                  {/* <div className="col-auto p-0">
                       {sequenceData.complete ? (
                         <FontAwesomeIcon
                           icon={fasCheckCircle}
@@ -285,21 +279,18 @@ function CollapsibleSequenceLinkUnit({
                         />
                       )}
                     </div> */}
-                    <div className="col unit-padding  text-break">
-                      <span className="align-middle">
-                        <NavLink
-                          className={`${
-                            sequenceData.complete
-                              ? "unit-link complete-unit"
-                              : "unit-link"
-                          }`}
-                          to={`/course/${courseId}/${sequence.id}/${sequenceId}`}
-                          activeClassName={"active"}
-                        >
-                          {sequenceData.display_name}
-                        </NavLink>
-                      </span>
-                    </div>
+                  <div className="col  text-break">
+                    <NavLink
+                      className={`${
+                        sequenceData.complete
+                          ? "unit-link complete-unit"
+                          : "unit-link"
+                      }`}
+                      to={`/course/${courseId}/${sequence.id}/${sequenceId}`}
+                      activeClassName={"active"}
+                    >
+                      {sequenceData.display_name}
+                    </NavLink>
                   </div>
                 </div>
               </li>

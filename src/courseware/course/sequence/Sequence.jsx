@@ -30,6 +30,7 @@ import SequenceContent from "./SequenceContent";
 /** [MM-P2P] Experiment */
 import { isMobile } from "../../../experiments/mm-p2p/utils";
 import { MMP2PFlyover, MMP2PFlyoverMobile } from "../../../experiments/mm-p2p";
+import CourseLoading from "../../../learner-dashboard/CourseLoading";
 
 function Sequence({
   unitId,
@@ -115,8 +116,6 @@ function Sequence({
       // reload (cập nhật) unit learning project cuối khi unit 1 đổi trạng thái nộp/hủy bài
       // scroll
       if (type === "learningprojectxblock") {
-        console.log(event.data);
-
         if (event.data.resize) {
           const iframe = document.querySelector(
             `iframe[data-unit-usage-id='${event.data.unit_usage_id}']`
@@ -130,19 +129,21 @@ function Sequence({
         }
 
         if (event.data.scroll) {
-          const iframe = document.querySelector(
-            `iframe[data-unit-usage-id='${event.data.unit_usage_id}']`
-          );
-          if (!iframe) {
-            console.log("not fond iframe");
-            return;
-          }
-          const top =
-            iframe.getBoundingClientRect().top +
-            window.scrollY +
-            event.data.scroll.top;
+          const header =
+            document.querySelector("header.learning-header")?.offsetHeight || 0;
+
+          const instructorToolbar =
+            document.getElementById("instructor-toolbar")?.offsetHeight || 0;
+
+          const courseTabsNavigation =
+            document.getElementById("courseTabsNavigation")?.offsetHeight || 0;
+
           window.scroll({
-            top: top,
+            top:
+              event.data.scroll.top +
+              header +
+              instructorToolbar +
+              courseTabsNavigation,
             left: 0,
             behavior: "smooth",
           });
@@ -187,7 +188,23 @@ function Sequence({
       return <div> {intl.formatMessage(messages.noContent)} </div>;
     }
     return (
-      <PageLoading srMessage={intl.formatMessage(messages.loadingSequence)} />
+      // <PageLoading srMessage={intl.formatMessage(messages.loadingSequence)} />
+
+      <div
+        className="pb-3 d-flex flex-column position-relative"
+        style={{
+          gap: "10px",
+          maxWidth: "calc(100% - 50.75rem)",
+          paddingRight: "2rem",
+          paddingTop: "0.5rem",
+          left: "2rem",
+          margin: "0 auto",
+        }}
+      >
+        <CourseLoading courseLearning />
+        <CourseLoading courseLearning />
+        <CourseLoading courseLearning />
+      </div>
     );
   }
 

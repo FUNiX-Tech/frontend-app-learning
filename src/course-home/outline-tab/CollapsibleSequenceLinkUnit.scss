@@ -19,22 +19,35 @@
 }
 
 .collapsible-sequence-link-container-unit {
+  //set line height 100%
+  li,
+  div,
+  ol,
+  span,
+  a {
+    font-family: Roboto;
+    line-height: 150%;
+  }
   display: flex;
-  padding: 0 1rem;
-  margin-bottom: 1rem;
-  line-height: 1;
+  padding-left: 1rem;
 
   .pgn_collapsible {
     align-items: center;
+    width: 100%;
     .collapsible-trigger {
+      width: 100%;
       padding: 0;
       border-bottom: 0;
+      &:hover a {
+        color: var(--color-hover);
+      }
     }
     .collapsible-icon {
       display: none;
     }
   }
   .collapsible-tab {
+    width: 100%;
     background-color: unset;
     display: flex;
     align-items: flex-start;
@@ -42,16 +55,18 @@
     & .collapsible-body {
       padding: 0 !important;
       background-color: unset !important;
+
       & .unit-padding {
-        padding: 0.25rem 0;
+        padding: 0;
       }
     }
 
     a {
       display: inline-block;
-      width: 100%;
       text-decoration: none;
       font-family: Roboto;
+      margin-top: 0.5rem;
+      margin-right: 1rem;
       &.complete {
         font-weight: 400;
 
@@ -66,66 +81,36 @@
 
       &.active.complete,
       &.active.complete-unit {
-        font-weight: 500;
-
         color: var(--color-active);
         &:hover {
+          background-color: var(--background-hover);
           color: var(--color-hover);
         }
-      }
-
-      &.active.complete {
-        white-space: unset;
-        overflow: unset;
-        text-overflow: unset;
-        max-width: unset;
       }
 
       &.active {
         color: var(--color-active);
         font-weight: 500;
-        white-space: unset;
-        overflow: unset;
-        text-overflow: unset;
-        max-width: unset;
       }
 
       &:hover {
         color: var(--color-hover);
       }
+
       &.unit-link {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-width: 26ch;
         font-size: 0.875rem;
-        &.active {
-          white-space: unset;
-          overflow: unset;
-          text-overflow: unset;
-          max-width: unset;
-        }
-        &.complete-unit.active {
-          white-space: unset;
-          overflow: unset;
-          text-overflow: unset;
-          max-width: unset;
-        }
+        margin-top: 0.25rem !important;
+        line-height: 120%;
+        margin-left: -0.75rem;
       }
       color: var(--color-text-inactive);
       flex-grow: 0;
-      font-family: Roboto;
       font-size: 1rem;
       font-weight: 400;
       font-stretch: normal;
       font-style: normal;
-      line-height: 1;
       letter-spacing: normal;
       text-align: left;
-      white-space: nowrap; /* Prevent text from wrapping */
-      overflow: hidden; /* Hide any content that overflows */
-      text-overflow: ellipsis; /* Display an ellipsis (...) for overflowed content */
-      max-width: 26ch;
     }
 
     &:hover a {
@@ -140,7 +125,7 @@
   margin-right: 0.25rem;
   margin-left: 0;
   position: relative;
-  top: 0.15rem;
+  top: 0.8rem;
 }
 
 .add-padding-left-12 {

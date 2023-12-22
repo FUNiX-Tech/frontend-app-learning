@@ -15,9 +15,9 @@ export default function Footer() {
           <div className="footer-section-logo">
             <img src={logo} alt="logo" />
           </div>
-          <p className="footer-section-location">
+          {/* <p className="footer-section-location">
             <img src={location_icon} alt="location_icon" />
-            Tầng 0, tòa nhà FPT, 17 Duy Tân, Cầu Giấy, Hà Nội
+            Tầng 0 tòa FPT, Duy Tân, Cầu Giấy, Hà Nội
           </p>
           <p className="footer-section-email">
             <img src={email_icon} alt="email_icon" />
@@ -26,7 +26,7 @@ export default function Footer() {
           <p className="footer-section-phone">
             <img src={phone_icon} alt="phone_icon" />
             0782 313 602 (Zalo, Viber)
-          </p>
+          </p> */}
         </div>
 
         {/* About us */}
@@ -92,10 +92,8 @@ export default function Footer() {
 
       <div className="footer-bottom">
         <p>
-          {/* @2023. All rights reserved. FUNIX-A member of FPT Corporation
-          funix.edu.vn */}
-          ©2023. Đã đăng ký Bản quyền. FUNIX-Thành viên của Tập đoàn FPT
-          funix.edu.vn
+          ©2023. Đã đăng ký Bản quyền. FUNiX - Thành viên của Công ty Cổ phần
+          Galaxy Education
         </p>
       </div>
     </footer>

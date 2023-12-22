@@ -42,8 +42,7 @@
   height: 100%;
   position: fixed;
   top: 0;
-  z-index: 25000;
-  padding-top: 12.6rem;
+  z-index: 5;
   left: 0;
   width: calc((100% - 47.75rem) / 2);
   background-color: var(--color-white);
@@ -51,7 +50,9 @@
   &.right-side {
     background-color: var(--background-content);
   }
-
+  & .content {
+    height: 100%;
+  }
   // background: var(--chakra-colors-gray-100);
   // border-right-width: 1px;
   // border-right-style: solid;
@@ -60,7 +61,7 @@
   #courseHome-utline {
     width: 18.75rem;
     transform: translateX(-18.75rem);
-    height: 37.5rem;
+    max-height: calc(100% - 6rem);
     overflow-y: scroll;
     transition: all 0.35s ease;
     position: relative;
@@ -72,9 +73,6 @@
       margin-left: auto;
       z-index: 100;
       transition: all 0.35s ease;
-    }
-
-    &.hidden {
     }
 
     @keyframes fade-out {
