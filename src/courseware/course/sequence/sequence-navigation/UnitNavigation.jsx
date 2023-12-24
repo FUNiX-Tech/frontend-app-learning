@@ -45,11 +45,11 @@ function UnitNavigation({
   const [hoverTitle, setHoverTitle] = useState(null);
 
   const location = useLocation();
-  //find next unit  or next lesson, previous lesson
+  //find next unit  or next Sequence, previous Sequence
   const handleHoverTitle = useCallback(() => {
-    const { title, sequenceIds: sequenceLessons } = sequences[sequenceId];
+    const { title, sequenceIds: newSequences } = sequences[sequenceId];
 
-    const unitTitles = sequenceLessons.map(
+    const unitTitles = newSequences.map(
       (sequenceId) => sequences[sequenceId].display_name
     );
 
@@ -69,51 +69,55 @@ function UnitNavigation({
       let clickPrevUnit =
         findIndexUnitTitle !== -1 && unitTitles[findIndexUnitTitle - 2];
 
-      const lessonTitles = sequenceIds.map(
+      const SequenceTitles = sequenceIds.map(
         (sequenceId) => sequences[sequenceId].title
       );
-      const findIndexLessonTitle = lessonTitles.findIndex(
-        (lessonTitle) => lessonTitle === title
+      const findIndexSequenceTitle = SequenceTitles.findIndex(
+        (SequenceTitle) => SequenceTitle === title
       );
-      const nextLesson =
-        findIndexLessonTitle !== -1 && lessonTitles[findIndexLessonTitle + 1];
-      const prevLesson =
-        findIndexLessonTitle !== -1 && lessonTitles[findIndexLessonTitle - 1];
-      let newNextLesson = "";
-      let newPrevLesson = "";
-      let clickNextLesson =
-        findIndexLessonTitle !== -1 && lessonTitles[findIndexLessonTitle + 2];
-      let clickPrevLesson =
-        findIndexLessonTitle !== -1 && lessonTitles[findIndexLessonTitle - 2];
+      const nextSequence =
+        findIndexSequenceTitle !== -1 &&
+        SequenceTitles[findIndexSequenceTitle + 1];
+      const prevSequence =
+        findIndexSequenceTitle !== -1 &&
+        SequenceTitles[findIndexSequenceTitle - 1];
+      let newNextSequence = "";
+      let newPrevSequence = "";
+      let clickNextSequence =
+        findIndexSequenceTitle !== -1 &&
+        SequenceTitles[findIndexSequenceTitle + 2];
+      let clickPrevSequence =
+        findIndexSequenceTitle !== -1 &&
+        SequenceTitles[findIndexSequenceTitle - 2];
 
-      if (nextLesson) {
-        newNextLesson = nextLesson.replace(/\([^)]*\)/, "");
+      if (nextSequence) {
+        newNextSequence = nextSequence.replace(/\([^)]*\)/, "");
       }
-      if (prevLesson) {
-        newPrevLesson = prevLesson.replace(/\([^)]*\)/, "");
+      if (prevSequence) {
+        newPrevSequence = prevSequence.replace(/\([^)]*\)/, "");
       }
 
       if (findIndexUnitTitle === 0) {
         return {
-          prevTitle: newPrevLesson,
+          prevTitle: newPrevSequence,
           nextTitle: nextUnit,
-          prevClick: clickPrevLesson ? clickPrevLesson : "",
+          prevClick: clickPrevSequence ? clickPrevSequence : "",
           nextClick: clickNextUnit ? clickNextUnit : "",
         };
       }
       if (findIndexUnitTitle === unitTitles.length - 1) {
         return {
           prevTitle: prevUnit,
-          nextTitle: newNextLesson,
+          nextTitle: newNextSequence,
           prevClick: clickPrevUnit ? clickPrevUnit : "",
-          nextClick: clickNextLesson ? clickNextLesson : "",
+          nextClick: clickNextSequence ? clickNextSequence : "",
         };
       }
       return {
         prevTitle: prevUnit,
         nextTitle: nextUnit,
-        prevClick: clickPrevUnit ? clickPrevUnit : newPrevLesson,
-        nextClick: clickNextUnit ? clickNextUnit : newNextLesson,
+        prevClick: clickPrevUnit ? clickPrevUnit : newPrevSequence,
+        nextClick: clickNextUnit ? clickNextUnit : newNextSequence,
       };
     }
   }, []);

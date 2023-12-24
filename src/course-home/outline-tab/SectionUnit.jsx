@@ -26,6 +26,7 @@ function SectionUnit({
   useHistory,
   lesson,
   unitId,
+  allSequenceIds,
 }) {
   const { complete, sequenceIds, title } = section;
   //check has one sequence complete
@@ -33,7 +34,6 @@ function SectionUnit({
   const {
     courseBlocks: { sequences },
   } = useModel("outline", courseId);
-
   const [open, setOpen] = useState(defaultOpen);
 
   useEffect(() => {
@@ -115,7 +115,9 @@ function SectionUnit({
       */}
 
       <ol className="list-unstyled bg-list-unstyled">
-        {sequenceIds.map((sequenceId, index) => {
+        {allSequenceIds.map((sequenceId, index) => {
+          const sequence = sequences[sequenceId];
+          const { complete } = sequence;
           return (
             <CollapsibleSequenceLinkUnit
               lesson={lesson}
@@ -128,6 +130,7 @@ function SectionUnit({
               useHistory={useHistory}
               unitId={unitId}
               hasOneComplete={hasOneSequenceComplete}
+              complete={complete}
             />
           );
         })}
