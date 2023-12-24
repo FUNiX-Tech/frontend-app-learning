@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import PropTypes from "prop-types";
 // import {
 //   injectIntl,
@@ -56,6 +56,15 @@ function SectionListUnit({
   //   };
 
   const rootCourseId = courses && Object.keys(courses)[0];
+  //Logic get all sequenceIds in section via sectionIds
+  const allSequenceIds = useMemo(() => {
+    const output = [];
+    for (let value of courses[rootCourseId].sectionIds) {
+      output.push(...sections[value].sequenceIds);
+    }
+    return output;
+  }, [rootCourseId, courses]);
+  console.log(allSequenceIds);
 
   return (
     <ol
@@ -64,7 +73,10 @@ function SectionListUnit({
         showLeftbarContent ? "list-unstyled show-leftbar" : " list-unstyled"
       }`} /* style={style} */
     >
-      {courses[rootCourseId].sectionIds.map((sectionId) => {
+      {courses[rootCourseId].sectionIds.map((sectionId, index) => {
+        if (index >= 1) {
+          return;
+        }
         return (
           <SectionUnit
             key={sectionId}
@@ -75,6 +87,7 @@ function SectionListUnit({
             useHistory={useHistory}
             lesson={lesson}
             unitId={unitId}
+            allSequenceIds={allSequenceIds}
           />
         );
       })}

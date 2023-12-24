@@ -38,17 +38,11 @@ function CollapsibleSequenceLinkUnit({
   lesson,
   unitId,
   hasOneComplete,
+  complete,
 }) {
   const sequence = sequences[id];
-  const {
-    complete,
-    description,
-    due,
-    legacyWebUrl,
-    showLink,
-    title,
-    sequenceIds,
-  } = sequence;
+  const { description, due, legacyWebUrl, showLink, title, sequenceIds } =
+    sequence;
 
   //location
   const location = useLocation();
@@ -246,7 +240,9 @@ function CollapsibleSequenceLinkUnit({
       >
         <ol
           className={`${
-            complete ? "list-unstyled add-padding-left-16" : "list-unstyled"
+            complete || hasOneComplete
+              ? "list-unstyled add-padding-left-16"
+              : "list-unstyled"
           }`}
         >
           {sequenceIds.map((sequenceId) => {
