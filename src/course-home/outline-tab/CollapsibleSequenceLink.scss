@@ -1,14 +1,122 @@
 .collapsible-sequence-link {
-	&-container {
-		& .collapsible-trigger {
-			display: block;
-		}
-		& .collapsible-icon {
-			display: none
-		}
-	}
+  &-container {
+    & .collapsible-trigger {
+      display: block;
+    }
+    & .collapsible-icon {
+      display: none;
+    }
+  }
 }
 
 .collapsible-icon {
-	margin-left: 0px !important;
+  margin-left: 0px !important;
+}
+
+.collapsible-sequence-link-container {
+  .toggle-btn {
+    border: none;
+    outline: none;
+    background: transparent;
+    cursor: pointer;
+    transition: 0.2s;
+
+    &.is-expand {
+      transform: rotate(180deg);
+    }
+
+    svg {
+      width: 1.5rem;
+    }
+  }
+
+  .subsection-title-item {
+    padding: 1rem 0;
+    span,
+    a {
+      text-decoration: none;
+      cursor: normal;
+      font-weight: 500;
+      color: var(--color-text-inactive);
+      font-size: 1rem;
+      transition: 0.2s;
+
+      &.completed {
+        color: var(--color-text-default);
+      }
+
+      &:hover {
+        color: var(--color-hover) !important;
+      }
+
+      &:active {
+        color: var(--color-active);
+      }
+    }
+  }
+
+  .unit-item {
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: center;
+
+    a {
+      text-decoration: none;
+      cursor: normal;
+      color: var(--color-text-inactive);
+      font-size: 0.875rem;
+      transition: 0.2s;
+      display: block;
+      height: 100%;
+
+      &:hover {
+        color: var(--color-hover);
+      }
+
+      &:active {
+        color: var(--color-active);
+        font-weight: 500;
+      }
+    }
+
+    &.completed a {
+      color: var(--color-text-default);
+    }
+
+    &.is-learning a {
+      color: var(--color-active);
+    }
+  }
+
+  .sequence-completed-icon-container {
+    width: 2rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    svg {
+      width: 1.25rem;
+      margin: 0;
+    }
+  }
+
+  //   override
+  .pgn_collapsible {
+    border: none;
+
+    .collapsible-trigger {
+      padding: 0;
+      border: none;
+      cursor: auto;
+    }
+
+    .collapsible-body {
+      padding: 0;
+      padding-left: 0;
+    }
+  }
+
+  .units-container {
+    border-bottom: 1px solid var(--color-stroke);
+  }
 }
