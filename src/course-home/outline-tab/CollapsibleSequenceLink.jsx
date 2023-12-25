@@ -69,10 +69,13 @@ function CollapsibleSequenceLink({
   }, [id]);
 
   const timezoneFormatArgs = userTimezone ? { timeZone: userTimezone } : {};
-  const newTitle = title.replace(
+  let newTitle = title.replace(
     /\b(Questions?|Question)\b/g,
     intl.formatMessage(messages.QuestionSequenceTitle)
   );
+
+  // remove question from title
+  newTitle = newTitle.replace(/\(\s*[0-9]+\s+Questions?\s*\)\s*$/i, "");
 
   // canLoadCourseware is true if the Courseware MFE is enabled, false otherwise
   let coursewareUrl = canLoadCourseware ? (
@@ -138,7 +141,7 @@ function CollapsibleSequenceLink({
                   : messages.incompleteAssignment
               )}
             </span>
-            <EffortEstimate className="ml-3 align-middle" block={sequence} />
+            {/* <EffortEstimate className="ml-3 align-middle" block={sequence} /> */}
           </div>
 
           <button
