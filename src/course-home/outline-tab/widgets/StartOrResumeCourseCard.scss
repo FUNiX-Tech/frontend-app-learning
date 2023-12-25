@@ -1,0 +1,11 @@
+.start-or-resume-course {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+
+  > span {
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+}

@@ -122,8 +122,11 @@ function OutlineTab({ intl }) {
 
   return (
     <>
-      <div data-learner-type={learnerType}>
-        <div className="d-none col-12  col-sm-auto  course-title-home">
+      <div
+        data-learner-type={learnerType}
+        className="row w-100 mx-0 my-3 justify-content-between"
+      >
+        <div className="col-12  col-sm-auto  course-title-home">
           <div role="heading" aria-level="1" className="h2">
             {title}
           </div>
@@ -168,6 +171,21 @@ function OutlineTab({ intl }) {
           <WelcomeMessage courseId={courseId} />
           {rootCourseId && (
             <>
+              <div className="row w-100 m-0 mb-3 justify-content-end">
+                <div className="col-12 col-md-auto p-0">
+                  <Button
+                    variant="outline-primary"
+                    block
+                    onClick={() => {
+                      setExpandAll(!expandAll);
+                    }}
+                  >
+                    {expandAll
+                      ? intl.formatMessage(messages.collapseAll)
+                      : intl.formatMessage(messages.expandAll)}
+                  </Button>
+                </div>
+              </div>
               <SectionList
                 course={courses[rootCourseId]}
                 courseId={courseId}
