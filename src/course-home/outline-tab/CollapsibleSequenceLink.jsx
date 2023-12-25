@@ -219,10 +219,11 @@ function CollapsibleSequenceLink({
         <ol className="list-unstyled p-0 units-container">
           {sequenceIds.map((sequenceId) => {
             const sequenceData = sequences[sequenceId];
+            console.log(sequenceData);
 
             let unitClasses = "m-0 unit-item";
 
-            if (resumeCourse.hasVisitedCourse) {
+            if (sequenceData.resume_block) {
               unitClasses += " is-learning";
             }
 
