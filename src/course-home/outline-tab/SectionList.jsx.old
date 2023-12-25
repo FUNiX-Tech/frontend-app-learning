@@ -45,7 +45,7 @@ function SectionList({
   resizeObserver.observe(document.body);
 
   const {
-    courseBlocks: { courses, sections, sequences },
+    courseBlocks: { courses, sections },
   } = useModel("outline", courseId);
 
   const style = {
@@ -55,10 +55,6 @@ function SectionList({
 
   const rootCourseId = courses && Object.keys(courses)[0];
 
-  let hasCompletedUnit = Object.keys(sequences).some(
-    (key) => sequences[key].complete
-  );
-
   return (
     <ol id="courseHome-utline" className="list-unstyled" style={style}>
       {courses[rootCourseId].sectionIds.map((sectionId) => {
@@ -66,12 +62,11 @@ function SectionList({
           <Section
             key={sectionId}
             courseId={courseId}
-            defaultOpen={true}
+            defaultOpen={false}
             expand={expandAll}
             section={sections[sectionId]}
             useHistory={useHistory}
             lesson={lesson}
-            hasCompletedUnit={hasCompletedUnit}
           />
         );
       })}
