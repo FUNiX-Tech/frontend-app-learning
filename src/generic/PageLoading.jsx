@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
-import { Spinner } from '@edx/paragon';
+import { Spinner } from "@edx/paragon";
 
 export default class PageLoading extends Component {
   renderSrMessage() {
@@ -9,11 +9,7 @@ export default class PageLoading extends Component {
       return null;
     }
 
-    return (
-      <span className="sr-only">
-        {this.props.srMessage}
-      </span>
-    );
+    return <span className="sr-only">{this.props.srMessage}</span>;
   }
 
   render() {
@@ -22,10 +18,14 @@ export default class PageLoading extends Component {
         <div
           className="d-flex justify-content-center align-items-center flex-column"
           style={{
-            height: '50vh',
+            height: "50vh",
           }}
         >
-          <Spinner animation="border" variant="primary" screenReaderText={this.renderSrMessage()} />
+          <Spinner
+            animation="border"
+            variant="primary"
+            screenReaderText={this.renderSrMessage()}
+          />
         </div>
       </div>
     );

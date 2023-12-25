@@ -31,6 +31,7 @@ function SectionUnit({
   const { complete, sequenceIds, title } = section;
   //check has one sequence complete
   const [hasOneSequenceComplete, setHasOneSequenceComplete] = useState(false);
+
   const {
     courseBlocks: { sequences },
   } = useModel("outline", courseId);

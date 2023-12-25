@@ -43,7 +43,7 @@ function CollapsibleSequenceLinkUnit({
   const sequence = sequences[id];
   const { description, due, legacyWebUrl, showLink, title, sequenceIds } =
     sequence;
-
+  //save unit sequenceId
   //location
   const location = useLocation();
 

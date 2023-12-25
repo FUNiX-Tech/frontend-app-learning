@@ -64,7 +64,6 @@ function SectionListUnit({
     }
     return output;
   }, [rootCourseId, courses]);
-  console.log(allSequenceIds);
 
   return (
     <ol

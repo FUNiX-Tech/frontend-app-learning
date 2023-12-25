@@ -100,10 +100,12 @@ const Feedback = ({ isShowFeedback, shouldDisplayDropdown }) => {
       setShowFileError(false);
       setErrorFileMessage("");
       setSuccessMessage("Cảm ơn đã gửi phản hồi");
+      let clearTimeOut = false;
       let timeOutId = setTimeout(() => {
         setSuccessMessage("");
+        clearTimeOut = true;
       }, 4000);
-      if (timeOutId) {
+      if (clearTimeOut) {
         clearTimeout(timeOutId);
       }
     } catch (error) {
@@ -135,6 +137,8 @@ const Feedback = ({ isShowFeedback, shouldDisplayDropdown }) => {
     e.preventDefault();
     setDragging(false);
     setErrorFileMessage("");
+    setSuccessMessage("");
+
     // Access the dropped files from the DataTransfer object
     const droppedFileList = e.dataTransfer.files;
     if (droppedFileList.length > 1) {

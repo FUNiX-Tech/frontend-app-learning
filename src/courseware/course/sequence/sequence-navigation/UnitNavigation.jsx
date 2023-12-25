@@ -96,7 +96,6 @@ function UnitNavigation({
       if (prevSequence) {
         newPrevSequence = prevSequence.replace(/\([^)]*\)/, "");
       }
-
       if (findIndexUnitTitle === 0) {
         return {
           prevTitle: newPrevSequence,

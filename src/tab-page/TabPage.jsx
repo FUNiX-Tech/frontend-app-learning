@@ -19,6 +19,7 @@ import LoadedTabPage from "./LoadedTabPage";
 import { setCallToActionToast } from "../course-home/data/slice";
 import LaunchCourseHomeTourButton from "../product-tours/newUserCourseHomeTour/LaunchCourseHomeTourButton";
 import HeaderLearning from "../header/HeaderLearning";
+import CourseLoading from "../learner-dashboard/CourseLoading";
 
 function TabPage({ intl, ...props }) {
   const { activeTabSlug, courseId, courseStatus, metadataModel } = props;
@@ -103,7 +104,20 @@ function TabPage({ intl, ...props }) {
         {/* <Header /> */}
         <HeaderLearning loading />
 
-        <PageLoading srMessage={intl.formatMessage(messages.loading)} />
+        {/* <PageLoading srMessage={intl.formatMessage(messages.loading)} /> */}
+        <div
+          style={{
+            width: "47.75rem",
+            margin: "0 auto",
+            padding: "2rem 0 2rem 2rem",
+          }}
+        >
+          <div className="d-flex flex-column w-100" style={{ gap: "0.625rem" }}>
+            <CourseLoading courseLearning />
+            <CourseLoading courseLearning />
+            <CourseLoading courseLearning />
+          </div>
+        </div>
         <Footer />
       </>
     );
@@ -161,7 +175,6 @@ function TabPage({ intl, ...props }) {
           isLoading
         />
         <LoadedTabPage {...props} />
-        <Footer />
       </>
     );
   }
