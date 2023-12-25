@@ -30,7 +30,7 @@ import WelcomeMessage from "./widgets/WelcomeMessage";
 import ProctoringInfoPanel from "./widgets/ProctoringInfoPanel";
 import AccountActivationAlert from "../../alerts/logistration-alert/AccountActivationAlert";
 import "./OutlineTab.scss";
-
+import Footer from "../../footer/Footer";
 /** [MM-P2P] Experiment */
 import { initHomeMMP2P, MMP2PFlyover } from "../../experiments/mm-p2p";
 
@@ -237,6 +237,7 @@ function OutlineTab({ intl }) {
           </div>
         )}
       </div>
+      <Footer />
     </>
   );
 }

@@ -119,6 +119,7 @@ function Course({
   const isShowFeedback = useSelector((state) => state.header.isShowFeedback);
   const isShowChatbot = useSelector((state) => state.header.isShowChatbot);
   const [groupSrc, setGroupSrc] = useState(group_active);
+  const [isShowWhenClickUnit, setIsShowWhenClickUnit] = useState(false);
 
   // useEffect(() => {
   //   setStyling(
@@ -200,23 +201,6 @@ function Course({
       window.removeEventListener("scroll", handleScroll);
     };
   }, [location.pathname]);
-
-  //set footer hidden
-  useEffect(() => {
-    const rightBar = document.querySelector(".sequence-navigation");
-    const leftBar = document.querySelector(".unit-left-sidebar");
-    const footer = document.querySelector("#custom-footer");
-
-    if (rightBar && leftBar && footer) {
-      footer.style.display = "none";
-    }
-  }, [
-    showLeftbarContent,
-    isShowChatbot,
-    isShowFeedback,
-    location.pathname,
-    sequences,
-  ]);
 
   return (
     <SidebarProvider courseId={courseId} unitId={unitId}>

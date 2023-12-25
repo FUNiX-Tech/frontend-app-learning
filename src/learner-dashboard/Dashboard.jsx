@@ -56,7 +56,7 @@ const Dashboard = ({ intl }) => {
               {loading && (
                 <div
                   className="pb-3 d-flex flex-column w-100 "
-                  style={{ gap: "10px" }}
+                  style={{ gap: "0.625rem" }}
                 >
                   <CourseLoading />
                   <CourseLoading />
