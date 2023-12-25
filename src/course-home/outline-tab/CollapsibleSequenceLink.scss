@@ -60,32 +60,31 @@
     display: flex;
     align-items: center;
 
-    .unit-title {
-      span,
-      a {
-        text-decoration: none;
-        cursor: normal;
-        color: var(--color-text-inactive);
-        font-size: 0.875rem;
-        transition: 0.2s;
+    a {
+      text-decoration: none;
+      cursor: normal;
+      color: var(--color-text-inactive);
+      font-size: 0.875rem;
+      transition: 0.2s;
+      display: block;
+      height: 100%;
 
-        &.completed {
-          color: var(--color-text-default);
-        }
-
-        &.is-learning {
-          color: var(--color-active);
-        }
-
-        &:hover {
-          color: var(--color-hover);
-        }
-
-        &:active {
-          color: var(--color-active);
-          font-weight: 500;
-        }
+      &:hover {
+        color: var(--color-hover);
       }
+
+      &:active {
+        color: var(--color-active);
+        font-weight: 500;
+      }
+    }
+
+    &.completed a {
+      color: var(--color-text-default);
+    }
+
+    &.is-learning a {
+      color: var(--color-active);
     }
   }
 

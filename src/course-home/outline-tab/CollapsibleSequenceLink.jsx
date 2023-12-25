@@ -46,7 +46,7 @@ function CollapsibleSequenceLink({
     title,
     sequenceIds,
   } = sequence;
-  const { userTimezone } = useModel("outline", courseId);
+  const { userTimezone, resumeCourse } = useModel("outline", courseId);
 
   const { canLoadCourseware } = useModel("courseHomeMeta", courseId);
   const [open, setOpen] = useState(expand);
@@ -74,8 +74,15 @@ function CollapsibleSequenceLink({
     intl.formatMessage(messages.QuestionSequenceTitle)
   );
 
+  const reg = new RegExp(
+    `\\(\\s*[0-9]+\\s+${intl.formatMessage(
+      messages.QuestionSequenceTitle
+    )}\\s*\\)\\s*$`,
+    "i"
+  );
+
   // remove question from title
-  newTitle = newTitle.replace(/\(\s*[0-9]+\s+Questions?\s*\)\s*$/i, "");
+  newTitle = newTitle.replace(reg, "");
 
   // canLoadCourseware is true if the Courseware MFE is enabled, false otherwise
   let coursewareUrl = canLoadCourseware ? (
@@ -213,29 +220,25 @@ function CollapsibleSequenceLink({
           {sequenceIds.map((sequenceId) => {
             const sequenceData = sequences[sequenceId];
 
+            let unitClasses = "m-0 unit-item";
+
+            if (resumeCourse.hasVisitedCourse) {
+              unitClasses += " is-learning";
+            }
+
+            if (sequenceData.complete) {
+              unitClasses += " completed";
+            }
+
             return (
-              <li key={sequenceId} className="m-0 unit-item">
-                {/* unit item */}
+              <li key={sequenceId} className={unitClasses}>
                 {hasCompletedUnit && (
                   <div className="sequence-completed-icon-container"></div>
                 )}
-                <div className="">
-                  <span
-                    className={
-                      sequenceData.resume_block
-                        ? "align-middle unit-title is-learning"
-                        : sequenceData.complete
-                        ? "align-middle unit-title complete"
-                        : "align-middle unit-title"
-                    }
-                  >
-                    <Link
-                      to={`/course/${courseId}/${sequence.id}/${sequenceId}`}
-                    >
-                      {sequenceData.display_name}
-                    </Link>
-                  </span>
-                </div>
+
+                <Link to={`/course/${courseId}/${sequence.id}/${sequenceId}`}>
+                  {sequenceData.display_name}
+                </Link>
               </li>
             );
           })}
