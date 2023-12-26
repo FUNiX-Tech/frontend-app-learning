@@ -27,6 +27,8 @@ import {
 } from "../../data/sessionStorage";
 import { useSelector } from "react-redux";
 import "./course.scss";
+import "./CourseResponsive.scss";
+
 import group from "./assets/group.svg";
 import group_active from "./assets/group_active.svg";
 import group_hover from "./assets/group_hover.svg";

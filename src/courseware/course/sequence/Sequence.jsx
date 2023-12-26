@@ -197,7 +197,7 @@ function Sequence({
           maxWidth: "calc(100% - 50.75rem)",
           paddingRight: "2rem",
           paddingTop: "0.5rem",
-          left: "2rem",
+          left: "4.5rem",
           margin: "0 auto",
         }}
       >

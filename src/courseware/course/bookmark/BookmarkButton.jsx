@@ -43,19 +43,18 @@ export default function BookmarkButton({ isBookmarked, isProcessing, unitId }) {
       onClick={toggleBookmark}
       state={state}
       disabledStates={["defaultProcessing", "bookmarkedProcessing"]}
-      // labels={{
-      //   default: addBookmarkLabel,
-      //   defaultProcessing: addBookmarkLabel,
-      //   bookmarked: hasBookmarkLabel,
-      //   bookmarkedProcessing: hasBookmarkLabel,
-      // }}
-
       labels={{
         default: "",
         defaultProcessing: "",
         bookmarked: "",
         bookmarkedProcessing: "",
       }}
+      // labels={{
+      //   default: addBookmarkLabel,
+      //   defaultProcessing: addBookmarkLabel,
+      //   bookmarked: hasBookmarkLabel,
+      //   bookmarkedProcessing: hasBookmarkLabel,
+      // }}
       icons={{
         default: <BookmarkOutlineIcon className="text-primary" />,
         defaultProcessing: <BookmarkOutlineIcon className="text-primary" />,

@@ -1,0 +1,41 @@
+//1200px -> 1364px
+@media (max-width: 85.1875rem) and (min-width: 75rem) {
+  .header2-container {
+    .course-title-lockup {
+      width: 41.5rem !important;
+    }
+  }
+}
+
+//992 px -> 1199px
+@media (min-width: 62rem) and (max-width: 74.9375rem) {
+  .header2-container {
+    .course-title-lockup {
+      width: 35.25rem !important;
+    }
+  }
+}
+//991px -> 768 px
+@media (min-width: 48rem) and (max-width: 61.9375rem) {
+  .header2-container {
+    .course-title-lockup {
+      width: calc(100% - 4rem) !important;
+      padding-left: 1.75rem !important;
+      padding-right: 0 !important;
+    }
+  }
+}
+
+@media (max-width: 47.9375rem) {
+  .header2-container {
+    .course-title-lockup {
+      width: calc(100% - 8rem) !important;
+      padding-left: 2rem !important;
+      padding-right: 0rem !important;
+    }
+    .actions {
+      position: relative;
+      left: 0.25rem;
+    }
+  }
+}

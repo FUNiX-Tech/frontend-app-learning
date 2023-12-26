@@ -67,11 +67,6 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
     }
   }, [pathname]);
 
-  const [scrollY] = useScroll();
-  const stylesBackgroundColor = {
-    backgroundColor: "#fff",
-  };
-
   return (
     <div
       id="courseTabsNavigation"
@@ -81,7 +76,6 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
         // `${scrollY > 50 ? "fixed-position" : ""}`
         "fixed-position"
       )}
-      style={scrollY > 50 ? stylesBackgroundColor : {}}
     >
       {/* sub Header - done */}
       <div className="sub-header-container">
