@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useCallback, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
-import { svgChatGPT, svgPlane, svgReset } from "./AIChabotAssets";
+import { injectIntl, intlShape } from "@edx/frontend-platform/i18n";
+import { svgChatGPT, svgSubmit, svgSubmitActive } from "./AIChabotAssets";
 
 import {
   fetchQueries,
@@ -12,10 +12,11 @@ import {
 import QueryItem from "./QueryItem";
 import * as uid from "uuid";
 import "./AIChatbot.scss";
+import messages from "./messages";
 
 const LIMIT = 5;
 
-export default function AIChatbot({ isShowChatbot }) {
+function AIChatbot({ intl, isShowChatbot }) {
   const [inputText, setInputText] = useState("");
   const [sessionId, setSessionId] = useState(0);
   const [queryList, setQueryList] = useState([]);
@@ -25,15 +26,15 @@ export default function AIChatbot({ isShowChatbot }) {
   const [isFetching, setIsFetching] = useState(false);
   const [isAsking, setIsAsking] = useState(false);
   const [isInitialLoading, setIsInitialLoading] = useState(true);
+  const [hasScrollBar, setHasScrollBar] = useState(false);
 
   const msgContainerRef = useRef();
   const inputRef = useRef();
   const submitBtnRef = useRef();
+  const inputWrapperRef = useRef();
 
   function onChangeInput(e) {
     setInputText(e.target.value);
-    inputRef.current.style.height = 0;
-    inputRef.current.style.height = inputRef.current.scrollHeight + "px";
   }
 
   function onInputKeyUp(e) {
@@ -71,6 +72,7 @@ export default function AIChatbot({ isShowChatbot }) {
       },
     ]);
     setInputText("");
+
     askChatbot(inputText, sessionId, hash)
       .then((data) => {
         setQueryList((prev) =>
@@ -108,12 +110,14 @@ export default function AIChatbot({ isShowChatbot }) {
     setSessionId(0);
   }
 
-  function clearInput() {
-    setInputText("");
-  }
-
-  function onCopyResponse(responseMsg) {
+  function onCopyResponse(ele, responseMsg) {
     navigator.clipboard.writeText(responseMsg);
+    if (ele) {
+      ele.classList.add("copied");
+      setTimeout(() => {
+        ele.classList.remove("copied");
+      }, 1000);
+    }
   }
 
   function onVote(queryId, type) {
@@ -211,6 +215,24 @@ export default function AIChatbot({ isShowChatbot }) {
     }
   }, [queryList]);
 
+  useEffect(() => {
+    if (!inputRef.current) return;
+    inputRef.current.style.height = 0;
+    inputRef.current.style.height = inputRef.current.scrollHeight + "px";
+    console.log(
+      inputWrapperRef.current.scrollHeight,
+      inputWrapperRef.current.offsetHeight
+    );
+    if (
+      inputWrapperRef.current.scrollHeight >
+      inputWrapperRef.current.offsetHeight
+    ) {
+      setHasScrollBar(true);
+    } else {
+      setHasScrollBar(false);
+    }
+  }, [inputText]);
+
   // html classes
   let chatbotContainerClasses =
     "sequence-navigation-tabs d-flex flex-grow-1 chatbot-container";
@@ -218,49 +240,41 @@ export default function AIChatbot({ isShowChatbot }) {
     chatbotContainerClasses += " active";
   }
 
+  if (navigator.userAgent.toLowerCase().indexOf("firefox") != -1) {
+    chatbotContainerClasses += " is-firefox";
+  }
+
   return (
     <div className={chatbotContainerClasses}>
       <div className="chatbot-header">
-        <div className="chatbot-header-title">
-          {svgChatGPT}
-          <div class="textbox">
-            <p>
-              <strong>Chat GPT</strong>
-            </p>
-            <p class="powerby">Power by FUNiX</p>
-          </div>
-        </div>
+        <span class="chatbot-name">Chat GPT</span>
       </div>
       {/* ================================= messages ================================= */}
       <div
-        style={{
-          flex: "1",
-          overflowY: "auto",
-          padding: "1rem .5rem",
-          width: "100%",
-        }}
         ref={msgContainerRef}
         onScroll={onScroll}
-        className="chatbotMessages"
+        className="chatbot-messages-list-container"
       >
-        <ul
-          style={{
-            listStyleType: "none",
-            width: "100%",
-            padding: 0,
-          }}
-          className="chat-gpt-response"
-        >
-          {isInitialLoading && (
+        {queryList.length === 0 && (
+          <div className="chatbot-intro">
+            <div className="chatbot-intro-avatar">{svgChatGPT}</div>
+            <p className="chatbot-intro-text">
+              {intl.formatMessage(messages.welcome)}
+            </p>
+          </div>
+        )}
+
+        <ul className="chatbot-messages-list">
+          {/* {isInitialLoading && (
             <li class="chatbot-initial-loading">
               <span class="chatbot-loader"></span>
             </li>
-          )}
+          )} */}
 
-          {isFetching && !isInitialLoading && (
+          {/* {isFetching && !isInitialLoading && (
             <li class="loading-more-msg">Loading more...</li>
-          )}
-          {isLastPage && <li class="no-more-messages">No more messages</li>}
+          )} */}
+          {/* {isLastPage && <li class="no-more-messages">No more messages</li>} */}
           {queryList.map((query) => {
             return (
               <li key={query.id}>
@@ -276,49 +290,44 @@ export default function AIChatbot({ isShowChatbot }) {
         </ul>
       </div>
 
-      <div
-        style={{
-          width: "100%",
-          padding: "1rem .5rem",
-          borderTop: "1px solid #e5e5e5",
-          display: "flex",
-          alignItems: "center",
-          gap: ".5rem",
-        }}
+      <form
+        onSubmit={onSubmit}
+        className={
+          hasScrollBar ? "chatbot-footer has-scrollbar" : "chatbot-footer"
+        }
       >
-        <button
-          onClick={clearInput}
-          title="clear input"
-          class="clear-input-btn"
-          type="button"
-        >
-          {svgReset}
-        </button>
-        <form onSubmit={onSubmit} class="chatbot-input-container">
+        <div ref={inputWrapperRef} className="chatbot-input-wrapper">
           <textarea
             class="chatbot-input"
             type="text"
-            placeholder="Gửi tin nhắn"
+            placeholder={intl.formatMessage(messages.sendMessage)}
             value={inputText}
             onChange={onChangeInput}
             ref={inputRef}
             onKeyUp={onInputKeyUp}
             onKeyDown={onInputKeyDown}
           />
-          <button
-            ref={submitBtnRef}
-            type="submit"
-            title="send"
-            class="chatbot-submit-btn"
-          >
-            {svgPlane}
-          </button>
-        </form>
-      </div>
+        </div>
+        <button
+          ref={submitBtnRef}
+          type="submit"
+          title="send"
+          class={
+            inputText.trim()
+              ? "chatbot-submit-btn"
+              : "chatbot-submit-btn disabled"
+          }
+        >
+          {inputText.trim() ? svgSubmitActive : svgSubmit}
+        </button>
+      </form>
     </div>
   );
 }
 
 AIChatbot.propTypes = {
   isShowChatbot: PropTypes.bool.isRequired,
+  intl: intlShape.isRequired,
 };
+
+export default injectIntl(AIChatbot);
