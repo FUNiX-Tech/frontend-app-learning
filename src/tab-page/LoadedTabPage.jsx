@@ -100,10 +100,10 @@ function LoadedTabPage({
           />
           <CourseTabsNavigation
             tabs={tabs}
-            className="mb-3"
+            className=""
             activeTabSlug={activeTabSlug}
           />
-          <div className="container-xl">{children}</div>
+          <div className="container-xl position-relative">{children}</div>
         </main>
       </div>
     </>
