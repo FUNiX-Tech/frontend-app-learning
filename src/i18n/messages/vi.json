@@ -463,5 +463,10 @@
   "dashboard.btn.introductionCourse": "Giới thiệu khoá học",
   "dashboard.notCourse": "Hiện tại bạn chưa đăng ký khoá học",
   "dashboard.complete": "hoàn thành",
-  "dashboard.btn.overviewCourse": "Xem lại khoá học"
+  "dashboard.btn.overviewCourse": "Xem lại khoá học",
+  "chatbot.welcome": "Xin chào. Tôi là Chat GPT sẽ trợ giúp bạn trả lời những câu bạn đang thắc mắc.",
+  "chatbot.sending": "Đang gửi...",
+  "chatbot.failedToSend": "Tin nhắn không gửi được.",
+  "chatbot.retry": "Thử lại.",
+  "chatbot.sendMessage": "Gửi tin nhắn"
 }
