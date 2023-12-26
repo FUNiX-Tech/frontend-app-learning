@@ -13,7 +13,7 @@
   bottom: 0;
   border-right: 1px solid var(--color-stroke);
   border-left: 1px solid var(--color-stroke);
-  background: white;
+  background: var(--background-content);
 }
 
 .chatbot-header {
@@ -213,6 +213,7 @@
   position: relative;
 
   .chatbot-input-wrapper {
+    background: white;
     max-height: 5.6rem;
     overflow-y: auto;
     border: 1px solid var(--color-stroke);
