@@ -4,16 +4,20 @@ import {
   svgUpVote,
   svgCopy,
   svgRetry,
+  svgCopied,
 } from "./AIChabotAssets";
+import PropTypes from "prop-types";
+import {
+  FormattedMessage,
+  FormattedDate,
+  injectIntl,
+  intlShape,
+} from "@edx/frontend-platform/i18n";
+import messages from "./messages";
 
-export default function QueryItem({
-  query,
-  onCopyResponse,
-  onVote,
-  onRetryAskChatbot,
-}) {
-  function writeResponseToClipboard() {
-    onCopyResponse(query.response_msg);
+function QueryItem({ intl, query, onCopyResponse, onVote, onRetryAskChatbot }) {
+  function writeResponseToClipboard(e) {
+    onCopyResponse(e.currentTarget, query.response_msg);
   }
 
   function clickDownvote() {
@@ -41,18 +45,17 @@ export default function QueryItem({
   return (
     <>
       <div class="ask-item">
-        <div class="ask-item-content">
-          {query.query_msg}
-          {query.status === "pending" && (
-            <span class="ask-item-pending">sending...</span>
-          )}
-        </div>
-
+        <div class="ask-item-content">{query.query_msg}</div>
+        {query.status === "pending" && (
+          <p class="ask-item-pending">{intl.formatMessage(messages.sending)}</p>
+        )}
         {query.status === "failed" && (
-          <div class="failed-to-ask" onClick={retryAskChatbot}>
-            <p>Message failed to send.</p>
-            <button class="retry-btn">{svgRetry}</button>
-          </div>
+          <p className="retry-msg">
+            {intl.formatMessage(messages.failedToSend)}{" "}
+            <span className="retry-btn" onClick={retryAskChatbot}>
+              {intl.formatMessage(messages.retry)}
+            </span>
+          </p>
         )}
       </div>
 
@@ -60,33 +63,19 @@ export default function QueryItem({
       {query.response_msg && (
         <div class="query-item answer-item">
           <div class="answer-item-inner">
-            <div class="answer-item-title">
-              {svgChatGPT}
-              <span>ChatGPT</span>
-            </div>
-
             <div class="answer-item-content">{query.response_msg}</div>
 
             <div class="answer-item-buttons">
-              <button onClick={writeResponseToClipboard}>{svgCopy}</button>
+              <button class="copy-btn" onClick={writeResponseToClipboard}>
+                {svgCopy}
+                {svgCopied}
+              </button>
               {query.vote != "down" && (
                 <button
-                  title={query.vote == "up" ? "remove vote" : "like"}
                   className={upvoteClassName}
                   onClick={query.vote == "up" ? clickRemoveVote : clickUpvote}
                 >
                   {svgUpVote}
-                </button>
-              )}
-              {query.vote != "up" && (
-                <button
-                  title={query.vote == "down" ? "remove vote" : "dislike"}
-                  className={downvoteClassName}
-                  onClick={
-                    query.vote == "down" ? clickRemoveVote : clickDownvote
-                  }
-                >
-                  {svgDownVote}
                 </button>
               )}
             </div>
@@ -96,3 +85,13 @@ export default function QueryItem({
     </>
   );
 }
+
+QueryItem.propTypes = {
+  isShowChatbot: PropTypes.bool.isRequired,
+  intl: intlShape.isRequired,
+  onCopyResponse: PropTypes.func.isRequired,
+  onVote: PropTypes.func.isRequired,
+  onRetryAskChatbot: PropTypes.func.isRequired,
+};
+
+export default injectIntl(QueryItem);
