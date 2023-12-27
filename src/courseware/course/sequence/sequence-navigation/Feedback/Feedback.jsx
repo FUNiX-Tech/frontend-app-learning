@@ -271,7 +271,7 @@ const Feedback = ({ isShowFeedback, shouldDisplayDropdown }) => {
             </label>
             <div>
               Kéo thả tệp tin hoặc
-              <label id="file-input-label" for="file-input">
+              <label id="file-input-label" htmlFor="file-input">
                 Tải ảnh lên
               </label>
               <input
