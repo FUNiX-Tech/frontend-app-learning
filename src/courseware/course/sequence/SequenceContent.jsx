@@ -16,7 +16,7 @@ import messages from "./messages";
 import BookmarkButton from "../bookmark/BookmarkButton";
 import { useEventListener } from "../../../generic/hooks";
 import Unit from "./Unit";
-
+import CourseLoading from "../../../learner-dashboard/CourseLoading";
 const IFRAME_FEATURE_POLICY =
   "microphone *; camera *; midi *; geolocation *; encrypted-media *";
 
@@ -125,7 +125,7 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
       <div className="position-relative">
         <h1 className="mb-0  unit-title header-title pr-5">{unit.title}</h1>
         <h2 className="sr-only">
-          {intl.formatMessage(messages["learn.header.h2.placeholder"])}
+          {intl.formatMessage(messages.headerPlaceholder)}
         </h2>
         <div
           className="position-absolute"
@@ -138,7 +138,7 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
           />
         </div>
       </div>
-      <div className="unit-iframe-wrapper">
+      <div className="unit-iframe-wrapper" style={{ minHeight: "31.25rem" }}>
         {/* {!load ||
           (!loading && (
             <div

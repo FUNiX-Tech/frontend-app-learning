@@ -1,24 +1,22 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 // import {
 //   injectIntl,
 //   intlShape,
 // } from '@edx/frontend-platform/i18n';
 
-import SectionUnit from "./SectionUnit";
+import Section from "./Section";
 import { useModel } from "../../generic/model-store";
 
 const MAX_HEIGHT_PERCENT = 80;
 
-function SectionListUnit({
+function SectionList({
   courseId,
   expandAll,
   relativeHeight,
   useHistory,
   lesson,
-  unitId,
-  showLeftbarContent,
 }) {
   const [height, setHeight] = useState(window.height);
   const resizeObserver = new ResizeObserver(() => {
@@ -50,34 +48,18 @@ function SectionListUnit({
     courseBlocks: { courses, sections },
   } = useModel("outline", courseId);
 
-  // const style = {
-  //     maxHeight: `${height}px`,
-  //     overflow : 'auto',
-  //   };
+  const style = {
+    maxHeight: `${height}px`,
+    overflow: "auto",
+  };
 
   const rootCourseId = courses && Object.keys(courses)[0];
-  //Logic get all sequenceIds in section via sectionIds
-  const allSequenceIds = useMemo(() => {
-    const output = [];
-    for (let value of courses[rootCourseId].sectionIds) {
-      output.push(...sections[value].sequenceIds);
-    }
-    return output;
-  }, [rootCourseId, courses]);
 
   return (
-    <ol
-      id="courseHome-utline"
-      className={`${
-        showLeftbarContent ? "list-unstyled show-leftbar" : " list-unstyled"
-      }`} /* style={style} */
-    >
-      {courses[rootCourseId].sectionIds.map((sectionId, index) => {
-        if (index >= 1) {
-          return;
-        }
+    <ol id="courseHome-utline" className="list-unstyled" style={style}>
+      {courses[rootCourseId].sectionIds.map((sectionId) => {
         return (
-          <SectionUnit
+          <Section
             key={sectionId}
             courseId={courseId}
             defaultOpen={false}
@@ -85,8 +67,6 @@ function SectionListUnit({
             section={sections[sectionId]}
             useHistory={useHistory}
             lesson={lesson}
-            unitId={unitId}
-            allSequenceIds={allSequenceIds}
           />
         );
       })}
@@ -94,7 +74,7 @@ function SectionListUnit({
   );
 }
 
-SectionListUnit.propTypes = {
+SectionList.propTypes = {
   courseId: PropTypes.string,
   expandAll: PropTypes.bool,
   relativeHeight: PropTypes.bool,
@@ -102,7 +82,7 @@ SectionListUnit.propTypes = {
   lesson: PropTypes.bool,
 };
 
-SectionListUnit.defaultProps = {
+SectionList.defaultProps = {
   courseId: "",
   expandAll: false,
   relativeHeight: false,
@@ -110,4 +90,4 @@ SectionListUnit.defaultProps = {
   lesson: false,
 };
 
-export default SectionListUnit;
+export default SectionList;

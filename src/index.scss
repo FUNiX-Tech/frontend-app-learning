@@ -16,6 +16,7 @@ body {
   overflow-y: scroll;
   scroll-behavior: smooth;
   background-color: var(--color-white);
+  overflow-x: hidden;
 }
 
 #root {
@@ -1162,10 +1163,11 @@ body {
 @import "experiments/mm-p2p/index.scss";
 
 .container-xl {
+  padding-top: 1rem !important;
   padding-left: 0px !important;
   padding-right: 0px !important;
 
-  max-width: 95% !important;
+  max-width: 100% !important;
 }
 
 .unit-container {
@@ -1222,7 +1224,7 @@ body {
     position: fixed;
     top: 0px;
     right: 0;
-    z-index: 10;
+    z-index: 5;
     width: calc((100% - 47.75rem) / 2);
     height: 100%;
     margin-bottom: 3rem !important;
@@ -1737,7 +1739,7 @@ html:root {
 
 .header-title {
   flex-grow: 0;
-  font-family: RobotoSerif;
+  font-family: "Roboto Serif", serif;
   font-size: 2rem;
   font-weight: 500;
   font-stretch: normal;
@@ -2133,4 +2135,21 @@ html:root {
 // fix  unlimited  scroll
 .pgn__checkpoint {
   display: none !important;
+}
+
+//responsive font-size
+@media (max-width: 48rem) {
+  html {
+    font-size: 87.5%;
+  }
+}
+@media (max-width: 36rem) {
+  .sequence-container.d-inline-flex.flex-row {
+    display: flex !important;
+  }
+  .sequence {
+    & .d-flex.ml-auto {
+      display: none !important;
+    }
+  }
 }

@@ -4,6 +4,7 @@ import { getConfig } from "@edx/frontend-platform";
 import { getAuthenticatedUser } from "@edx/frontend-platform/auth";
 import { useParams } from "react-router-dom";
 import "./HeaderLearning.scss";
+import "./HeaderLearningResponsive.scss";
 import AuthenticatedUserDropdown from "./AuthenticatedUserDropdown";
 import { useEffect } from "react";
 import { fetchSurveyCourse } from "./data/thunks";
@@ -25,7 +26,6 @@ const HeaderLearning = ({
 
   const authenticatedUser = getAuthenticatedUser();
   const { courseId: courseIdFromUrl } = useParams();
-  const [scrollY] = useScroll();
 
   // useEffect(async()=>{
   //   try {

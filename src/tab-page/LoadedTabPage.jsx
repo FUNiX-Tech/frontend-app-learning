@@ -1,20 +1,19 @@
-import React, {useState, useEffect} from 'react';
-import PropTypes from 'prop-types';
-import { Helmet } from 'react-helmet';
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { Helmet } from "react-helmet";
 
-import { getConfig } from '@edx/frontend-platform';
-import { useToggle } from '@edx/paragon';
+import { getConfig } from "@edx/frontend-platform";
+import { useToggle } from "@edx/paragon";
 
-import { CourseTabsNavigation } from '../course-tabs';
-import { useModel } from '../generic/model-store';
-import { AlertList } from '../generic/user-messages';
-import StreakModal from '../shared/streak-celebration';
-import InstructorToolbar from '../instructor-toolbar';
-import useEnrollmentAlert from '../alerts/enrollment-alert';
-import useLogistrationAlert from '../alerts/logistration-alert';
-import { useSelector } from 'react-redux';
-import ProductTours from '../product-tours/ProductTours';
-
+import { CourseTabsNavigation } from "../course-tabs";
+import { useModel } from "../generic/model-store";
+import { AlertList } from "../generic/user-messages";
+import StreakModal from "../shared/streak-celebration";
+import InstructorToolbar from "../instructor-toolbar";
+import useEnrollmentAlert from "../alerts/enrollment-alert";
+import useLogistrationAlert from "../alerts/logistration-alert";
+import { useSelector, useDispatch } from "react-redux";
+import ProductTours from "../product-tours/ProductTours";
 function LoadedTabPage({
   activeTabSlug,
   children,
@@ -22,34 +21,41 @@ function LoadedTabPage({
   metadataModel,
   unitId,
 }) {
-  const {
-    celebrations,
-    org,
-    originalUserIsStaff,
-    tabs,
-    title,
-    verifiedMode,
-  } = useModel('courseHomeMeta', courseId);
+  const { celebrations, org, originalUserIsStaff, tabs, title, verifiedMode } =
+    useModel("courseHomeMeta", courseId);
 
   // Logistration and enrollment alerts are only really used for the outline tab, but loaded here to put them above
   // breadcrumbs when they are visible.
   const logistrationAlert = useLogistrationAlert(courseId);
   const enrollmentAlert = useEnrollmentAlert(courseId);
 
-  const activeTab = tabs.filter(tab => tab.slug === activeTabSlug)[0];
+  const activeTab = tabs.filter((tab) => tab.slug === activeTabSlug)[0];
 
-  const streakLengthToCelebrate = celebrations && celebrations.streakLengthToCelebrate;
-  const streakDiscountCouponEnabled = celebrations && celebrations.streakDiscountEnabled && verifiedMode;
-  const [isStreakCelebrationOpen,, closeStreakCelebration] = useToggle(streakLengthToCelebrate);
+  const streakLengthToCelebrate =
+    celebrations && celebrations.streakLengthToCelebrate;
+  const streakDiscountCouponEnabled =
+    celebrations && celebrations.streakDiscountEnabled && verifiedMode;
+  const [isStreakCelebrationOpen, , closeStreakCelebration] = useToggle(
+    streakLengthToCelebrate
+  );
+  const dispatch = useDispatch();
+  const [show, setShow] = useState(false);
+  const [styling, setStyling] = useState("css-yeymkw");
+  const isShowChatGPT = useSelector(
+    (state) => state.header.isShowGlobalChatGPT
+  );
 
-  const [show , setShow] = useState(false)
-  const [styling, setStyling] = useState('css-yeymkw')
-  const isShowChatGPT = useSelector(state =>state.header.isShowGlobalChatGPT)
-  
   useEffect(() => {
-    setStyling(show ? (isShowChatGPT ? 'css-14u8e49' : 'css-jygthk') : (isShowChatGPT ? 'css-1mjee9h' : 'css-yeymkw'));
+    setStyling(
+      show
+        ? isShowChatGPT
+          ? "css-14u8e49"
+          : "css-jygthk"
+        : isShowChatGPT
+        ? "css-1mjee9h"
+        : "css-yeymkw"
+    );
   }, [show, isShowChatGPT]);
-
 
   return (
     <>
@@ -60,7 +66,9 @@ function LoadedTabPage({
         org={org}
       />
       <Helmet>
-        <title>{`${activeTab ? `${activeTab.title} | ` : ''}${title} | ${getConfig().SITE_NAME}`}</title>
+        <title>{`${activeTab ? `${activeTab.title} | ` : ""}${title} | ${
+          getConfig().SITE_NAME
+        }`}</title>
       </Helmet>
       {originalUserIsStaff && (
         <InstructorToolbar
@@ -78,9 +86,9 @@ function LoadedTabPage({
         streakDiscountCouponEnabled={streakDiscountCouponEnabled}
         verifiedMode={verifiedMode}
       />
-      
-        <div className={styling}>
-          <main id="main-content" className="d-flex flex-column flex-grow-1">
+
+      <div className={styling}>
+        <main id="main-content" className="d-flex flex-column flex-grow-1">
           <AlertList
             topic="outline"
             className="mx-5 mt-3"
@@ -89,12 +97,14 @@ function LoadedTabPage({
               ...logistrationAlert,
             }}
           />
-          <CourseTabsNavigation tabs={tabs} className="mb-3" activeTabSlug={activeTabSlug} />
-          <div className="container-xl">
-            {children}
-          </div>
+          <CourseTabsNavigation
+            tabs={tabs}
+            className=""
+            activeTabSlug={activeTabSlug}
+          />
+          <div className="container-xl position-relative">{children}</div>
         </main>
-        </div>
+      </div>
     </>
   );
 }
@@ -109,7 +119,7 @@ LoadedTabPage.propTypes = {
 
 LoadedTabPage.defaultProps = {
   children: null,
-  metadataModel: 'courseHomeMeta',
+  metadataModel: "courseHomeMeta",
   unitId: null,
 };
 

@@ -138,15 +138,17 @@ function Sequence({
           const courseTabsNavigation =
             document.getElementById("courseTabsNavigation")?.offsetHeight || 0;
 
-          window.scroll({
-            top:
-              event.data.scroll.top +
-              header +
-              instructorToolbar +
-              courseTabsNavigation,
-            left: 0,
-            behavior: "smooth",
-          });
+          setTimeout(() => {
+            window.scroll({
+              top:
+                event.data.scroll.top +
+                header +
+                instructorToolbar +
+                courseTabsNavigation,
+              left: 0,
+              behavior: "smooth",
+            });
+          }, 10)
         }
 
         if (event.data.reload) {
@@ -197,7 +199,7 @@ function Sequence({
           maxWidth: "calc(100% - 50.75rem)",
           paddingRight: "2rem",
           paddingTop: "0.5rem",
-          left: "2rem",
+          left: "4.5rem",
           margin: "0 auto",
         }}
       >
