@@ -138,15 +138,17 @@ function Sequence({
           const courseTabsNavigation =
             document.getElementById("courseTabsNavigation")?.offsetHeight || 0;
 
-          window.scroll({
-            top:
-              event.data.scroll.top +
-              header +
-              instructorToolbar +
-              courseTabsNavigation,
-            left: 0,
-            behavior: "smooth",
-          });
+          setTimeout(() => {
+            window.scroll({
+              top:
+                event.data.scroll.top +
+                header +
+                instructorToolbar +
+                courseTabsNavigation,
+              left: 0,
+              behavior: "smooth",
+            });
+          }, 10)
         }
 
         if (event.data.reload) {
