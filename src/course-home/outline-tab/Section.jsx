@@ -25,7 +25,7 @@ function Section({
   section,
   useHistory,
   lesson,
-  hasCompletedUnit,
+  hasCompletedSubSection,
 }) {
   const { complete, sequenceIds, title } = section;
   const {
@@ -42,8 +42,10 @@ function Section({
     setOpen(defaultOpen);
   }, []);
 
+
   return (
     <li>
+      <p>section {sequenceIds.length}</p>
       {sequenceIds.map((sequenceId, index) => (
         <CollapsibleSequenceLink
           lesson={lesson}
@@ -54,6 +56,7 @@ function Section({
           first={index === 0}
           expand={expand}
           useHistory={useHistory}
+          hasCompletedSubSection={hasCompletedSubSection}
         />
       ))}
     </li>
@@ -68,6 +71,7 @@ Section.propTypes = {
   section: PropTypes.shape().isRequired,
   useHistory: PropTypes.bool.isRequired,
   lesson: PropTypes.bool,
+  hasCompletedSubSection: PropTypes.bool,
 };
 
 export default injectIntl(Section);
