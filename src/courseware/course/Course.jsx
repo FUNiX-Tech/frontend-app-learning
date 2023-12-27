@@ -32,6 +32,7 @@ import "./CourseResponsive.scss";
 import group from "./assets/group.svg";
 import group_active from "./assets/group_active.svg";
 import group_hover from "./assets/group_hover.svg";
+import { toggleShowLeftbar, setOffMenuState } from "../../header/data/slice";
 
 /** [MM-P2P] Experiment */
 import { initCoursewareMMP2P, MMP2PBlockModal } from "../../experiments/mm-p2p";
@@ -114,14 +115,11 @@ function Course({
   }, [sequenceId]);
 
   const [show, setShow] = useState(false);
-  const [showLeftbarContent, setShowLeftbarContent] = useState(true);
   const location = useLocation();
   const [styling, setStyling] = useState("css-yeymkw");
-  const isShowChatGPT = useSelector((state) => state.header.isShowChatGPT);
-  const isShowFeedback = useSelector((state) => state.header.isShowFeedback);
-  const isShowChatbot = useSelector((state) => state.header.isShowChatbot);
-  const [groupSrc, setGroupSrc] = useState(group_active);
-  const [isShowWhenClickUnit, setIsShowWhenClickUnit] = useState(false);
+  const isShowLeftbar = useSelector((state) => state.header.isShowLeftbar);
+
+  const [groupSrc, setGroupSrc] = useState(group);
 
   // useEffect(() => {
   //   setStyling(
@@ -204,6 +202,21 @@ function Course({
     };
   }, [location.pathname]);
 
+  //set show leftbar icon
+  useEffect(() => {
+    if (isShowLeftbar) {
+      setGroupSrc(group_active);
+    } else {
+      setGroupSrc(group);
+    }
+  }, [location.pathname, isShowLeftbar]);
+
+  useEffect(() => {
+    if (window.innerWidth < 576) {
+      dispatch(setOffMenuState());
+    }
+  }, []);
+
   return (
     <SidebarProvider courseId={courseId} unitId={unitId}>
       <Helmet>
@@ -214,9 +227,7 @@ function Course({
 
       <div
         className={`${
-          !showLeftbarContent
-            ? "unit-left-sidebar"
-            : "unit-left-sidebar right-side"
+          !isShowLeftbar ? "unit-left-sidebar" : "unit-left-sidebar right-side"
         }`}
       >
         <div class="content">
@@ -225,21 +236,21 @@ function Course({
               setGroupSrc(group_hover);
             }}
             onMouseOut={() => {
-              if (showLeftbarContent) {
+              if (isShowLeftbar) {
                 setGroupSrc(group_active);
               } else {
                 setGroupSrc(group);
               }
             }}
             onClick={() => {
-              setShowLeftbarContent(!showLeftbarContent);
+              dispatch(toggleShowLeftbar());
 
-              if (!showLeftbarContent) {
+              if (!isShowLeftbar) {
                 setGroupSrc(group_active);
               }
             }}
             className={`${
-              !showLeftbarContent
+              !isShowLeftbar
                 ? "show-menu-lesson right-side"
                 : "show-menu-lesson left-side"
             }`}
@@ -250,7 +261,7 @@ function Course({
           <React.Fragment>
             <div
               className={`${
-                showLeftbarContent ? "menu-lesson show-leftbar" : "menu-lesson"
+                isShowLeftbar ? "menu-lesson show-leftbar" : "menu-lesson"
               }`}
             >
               <h2 className="menu-lesson-title">Mục lục bài học</h2>
@@ -261,7 +272,7 @@ function Course({
               relativeHeight
               useHistory
               lesson
-              showLeftbarContent={showLeftbarContent}
+              showLeftbarContent={isShowLeftbar}
             />
           </React.Fragment>
         </div>
@@ -289,7 +300,7 @@ function Course({
       <AlertList topic="sequence" />
       <div
         id="sequence-custom"
-        className={`${showLeftbarContent ? "d-flex show-leftbar" : "d-flex"}`}
+        className={`${isShowLeftbar ? "d-flex show-leftbar" : "d-flex"}`}
       >
         {/* <div className={show? 'css-16e9fpx' : 'css-17h1ao9'}> */}
         <div style={{ height: "100%" }}>

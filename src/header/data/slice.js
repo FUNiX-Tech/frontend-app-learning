@@ -6,9 +6,10 @@ const slice = createSlice({
   initialState: {
     isShowChatGPT: false,
     isShowGlobalChatGPT: false,
-    isShowLessonContent: true,
+    isShowLessonContent: false,
     isShowFeedback: false,
     isShowChatbot: true,
+    isShowLeftbar: true,
   },
   reducers: {
     showChatGPT: (state) => {
@@ -37,10 +38,14 @@ const slice = createSlice({
       state.isShowChatbot = false;
       state.isShowLessonContent = false;
     },
+    toggleShowLeftbar: (state) => {
+      state.isShowLeftbar = !state.isShowLeftbar;
+    },
+
     setOffMenuState: (state) => {
       state.isShowFeedback = false;
       state.isShowChatbot = false;
-      state.isShowLessonContent = false;
+      state.isShowLeftbar = false;
     },
   },
 });
@@ -53,6 +58,7 @@ export const {
   toggleShowFeedback,
   toggleShowChatbot,
   setOffMenuState,
+  toggleShowLeftbar,
 } = slice.actions;
 
 export const { reducer } = slice;

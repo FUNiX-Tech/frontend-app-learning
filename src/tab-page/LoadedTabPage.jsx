@@ -12,9 +12,8 @@ import StreakModal from "../shared/streak-celebration";
 import InstructorToolbar from "../instructor-toolbar";
 import useEnrollmentAlert from "../alerts/enrollment-alert";
 import useLogistrationAlert from "../alerts/logistration-alert";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import ProductTours from "../product-tours/ProductTours";
-
 function LoadedTabPage({
   activeTabSlug,
   children,
@@ -39,7 +38,7 @@ function LoadedTabPage({
   const [isStreakCelebrationOpen, , closeStreakCelebration] = useToggle(
     streakLengthToCelebrate
   );
-
+  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const [styling, setStyling] = useState("css-yeymkw");
   const isShowChatGPT = useSelector(

@@ -51,13 +51,20 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
   useEffect(() => {
     if (isShowRightMenu) {
       setRightMenuSrc(RightMenuActive);
+    } else {
+      setRightMenuSrc(RightMenu);
     }
     if (isShowChatbot) {
       setChatbotSrc(ChatbotActive);
+    } else {
+      setChatbotSrc(Chatbot);
     }
     if (isShowFeedback) {
       setFeedbackSrc(FeedbackActive);
+    } else {
+      setFeedbackSrc(Feedback);
     }
+
     if (pathname.includes("/dates") || pathname.includes("/home")) {
       dispatch(setOffMenuState());
       setRightMenuSrc(RightMenu);
@@ -65,7 +72,7 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
       setFeedbackSrc(Feedback);
       setHideMenu(true);
     }
-  }, [pathname]);
+  }, [pathname, isShowChatbot, isShowFeedback]);
 
   return (
     <div
