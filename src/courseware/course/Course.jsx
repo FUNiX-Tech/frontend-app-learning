@@ -212,7 +212,7 @@ function Course({
   }, [location.pathname, isShowLeftbar]);
 
   useEffect(() => {
-    if (window.innerWidth < 576) {
+    if (window.innerWidth < 992) {
       dispatch(setOffMenuState());
     }
   }, []);

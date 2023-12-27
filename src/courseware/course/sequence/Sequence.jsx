@@ -138,15 +138,17 @@ function Sequence({
           const courseTabsNavigation =
             document.getElementById("courseTabsNavigation")?.offsetHeight || 0;
 
-          window.scroll({
-            top:
-              event.data.scroll.top +
-              header +
-              instructorToolbar +
-              courseTabsNavigation,
-            left: 0,
-            behavior: "smooth",
-          });
+          setTimeout(() => {
+            window.scroll({
+              top:
+                event.data.scroll.top +
+                header +
+                instructorToolbar +
+                courseTabsNavigation,
+              left: 0,
+              behavior: "smooth",
+            });
+          }, 10);
         }
 
         if (event.data.reload) {
@@ -191,14 +193,14 @@ function Sequence({
       // <PageLoading srMessage={intl.formatMessage(messages.loadingSequence)} />
 
       <div
-        className="pb-3 d-flex flex-column position-relative"
+        className="pb-3 d-flex flex-column position-absolute"
         style={{
           gap: "10px",
-          maxWidth: "calc(100% - 50.75rem)",
+          maxWidth: "50%",
           paddingRight: "2rem",
           paddingTop: "0.5rem",
-          left: "4.5rem",
-          margin: "0 auto",
+          left: "calc(50% + 2.5rem)",
+          transform: "translateX(-50%)",
         }}
       >
         <CourseLoading courseLearning />

@@ -326,10 +326,10 @@ body {
     }
 
     &.active.feedback {
-      width: auto !important;
+      width: auto;
     }
     &.active.chatbot {
-      width: 18.75rem !important;
+      width: 18.75rem;
     }
 
     @keyframes fade-out {
