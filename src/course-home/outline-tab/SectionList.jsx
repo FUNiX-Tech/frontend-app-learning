@@ -55,9 +55,13 @@ function SectionList({
 
   const rootCourseId = courses && Object.keys(courses)[0];
 
-  let hasCompletedUnit = Object.keys(sequences).some(
-    (key) => sequences[key].complete
-  );
+  let hasCompletedSubSection = Object.values(sections).some(section => {
+    const { sequenceIds: subsectionIds } = section;
+    return subsectionIds.some(subsectionId => {
+      return sequences[subsectionId].complete;
+    })
+  })
+
 
   return (
     <ol id="courseHome-utline" className="list-unstyled" style={style}>
@@ -71,7 +75,7 @@ function SectionList({
             section={sections[sectionId]}
             useHistory={useHistory}
             lesson={lesson}
-            hasCompletedUnit={hasCompletedUnit}
+            hasCompletedSubSection={hasCompletedSubSection}
           />
         );
       })}
@@ -85,6 +89,7 @@ SectionList.propTypes = {
   relativeHeight: PropTypes.bool,
   useHistory: PropTypes.bool,
   lesson: PropTypes.bool,
+  hasCompletedSubSection: PropTypes.bool,
 };
 
 SectionList.defaultProps = {

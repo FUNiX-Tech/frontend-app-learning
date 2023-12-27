@@ -25,7 +25,7 @@ function Section({
   section,
   useHistory,
   lesson,
-  hasCompletedUnit,
+  hasCompletedSubSection,
 }) {
   const { complete, sequenceIds, title } = section;
   const {
@@ -42,6 +42,7 @@ function Section({
     setOpen(defaultOpen);
   }, []);
 
+
   return (
     <li>
       {sequenceIds.map((sequenceId, index) => (
@@ -54,7 +55,7 @@ function Section({
           first={index === 0}
           expand={expand}
           useHistory={useHistory}
-          hasCompletedUnit={hasCompletedUnit}
+          hasCompletedSubSection={hasCompletedSubSection}
         />
       ))}
     </li>
@@ -69,7 +70,7 @@ Section.propTypes = {
   section: PropTypes.shape().isRequired,
   useHistory: PropTypes.bool.isRequired,
   lesson: PropTypes.bool,
-  hasCompletedUnit: PropTypes.bool,
+  hasCompletedSubSection: PropTypes.bool,
 };
 
 export default injectIntl(Section);
