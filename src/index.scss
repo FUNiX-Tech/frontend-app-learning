@@ -2143,3 +2143,13 @@ html:root {
     font-size: 87.5%;
   }
 }
+@media (max-width: 36rem) {
+  .sequence-container.d-inline-flex.flex-row {
+    display: flex !important;
+  }
+  .sequence {
+    & .d-flex.ml-auto {
+      display: none !important;
+    }
+  }
+}

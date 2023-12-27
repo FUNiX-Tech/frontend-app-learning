@@ -121,13 +121,13 @@
 
 @media (max-width: 47.9375rem) {
   .unit-container {
-    width: calc(90%);
+    width: calc(95%);
   }
   .unit-left-sidebar {
     width: 0rem;
     &.right-side {
       z-index: 1000;
-      width: 40%;
+      width: 95%;
     }
     .show-menu-lesson.right-side {
       right: -4rem;
@@ -141,13 +141,13 @@
     width: 0;
 
     &.sequence-navigation.active {
-      width: 40%;
+      width: 95%;
 
       z-index: 1000;
     }
 
     &.sequence-navigation.no-active {
-      z-index: 2 !important;
+      z-index: 1 !important;
       width: 0;
     }
   }
