@@ -54,7 +54,6 @@ function Section({
           first={index === 0}
           expand={expand}
           useHistory={useHistory}
-          hasCompletedUnit={hasCompletedUnit}
         />
       ))}
     </li>
@@ -69,7 +68,6 @@ Section.propTypes = {
   section: PropTypes.shape().isRequired,
   useHistory: PropTypes.bool.isRequired,
   lesson: PropTypes.bool,
-  hasCompletedUnit: PropTypes.bool,
 };
 
 export default injectIntl(Section);

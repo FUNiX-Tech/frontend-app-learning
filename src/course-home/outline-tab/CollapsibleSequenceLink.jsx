@@ -34,7 +34,6 @@ function CollapsibleSequenceLink({
   expand,
   useHistory,
   lesson,
-  hasCompletedUnit,
 }) {
   const sequence = sequences[id];
   const {
@@ -46,8 +45,8 @@ function CollapsibleSequenceLink({
     title,
     sequenceIds,
   } = sequence;
-  const { userTimezone, resumeCourse } = useModel("outline", courseId);
 
+  const { userTimezone, resumeCourse } = useModel("outline", courseId);
   const { canLoadCourseware } = useModel("courseHomeMeta", courseId);
   const [open, setOpen] = useState(expand);
 
@@ -111,13 +110,15 @@ function CollapsibleSequenceLink({
 
   const displayTitle = showLink ? coursewareUrl : newTitle;
 
+  const completedAllUnits = sequenceIds.every(sequenceId => sequences[sequenceId].complete)
+
   const sectionTitle = (
     <div>
       <div className=" w-100 m-0">
         <div className="d-flex align-items-center justify-content-between">
           <div className=" p-0 text-break">
             <div className="align-middle d-flex align-items-center subsection-title-item">
-              {hasCompletedUnit && (
+              {completedAllUnits && (
                 <div className="sequence-completed-icon-container">
                   {complete && (
                     <svg
@@ -219,7 +220,6 @@ function CollapsibleSequenceLink({
         <ol className="list-unstyled p-0 units-container">
           {sequenceIds.map((sequenceId) => {
             const sequenceData = sequences[sequenceId];
-            console.log(sequenceData);
 
             let unitClasses = "m-0 unit-item";
 
@@ -233,7 +233,7 @@ function CollapsibleSequenceLink({
 
             return (
               <li key={sequenceId} className={unitClasses}>
-                {hasCompletedUnit && (
+                {completedAllUnits && (
                   <div className="sequence-completed-icon-container"></div>
                 )}
 
@@ -258,7 +258,6 @@ CollapsibleSequenceLink.propTypes = {
   sequences: PropTypes.shape().isRequired,
   useHistory: PropTypes.bool.isRequired,
   lesson: PropTypes.bool,
-  hasCompletedUnit: PropTypes.bool,
 };
 
 export default injectIntl(CollapsibleSequenceLink);
