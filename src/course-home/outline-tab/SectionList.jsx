@@ -55,12 +55,13 @@ function SectionList({
 
   const rootCourseId = courses && Object.keys(courses)[0];
 
-  let hasCompletedSubSection =sections.some(section => {
+  let hasCompletedSubSection = Object.values(sections).some(section => {
     const { sequenceIds: subsectionIds } = section;
     return subsectionIds.some(subsectionId => {
       return sequences[subsectionId].complete;
     })
   })
+
 
   return (
     <ol id="courseHome-utline" className="list-unstyled" style={style}>

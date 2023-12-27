@@ -45,7 +45,6 @@ function Section({
 
   return (
     <li>
-      <p>section {sequenceIds.length}</p>
       {sequenceIds.map((sequenceId, index) => (
         <CollapsibleSequenceLink
           lesson={lesson}
