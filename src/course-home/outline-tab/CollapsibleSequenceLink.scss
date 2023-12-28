@@ -33,7 +33,7 @@
       }
 
       &:active {
-        color: var(--color-active);
+        color: var(--color-active) !important;
       }
     }
   }
@@ -61,11 +61,7 @@
     border-bottom: 1px solid var(--color-stroke);
 
     .subsection-title-item a {
-      color: var(--color-active);
-
-      &:hover {
-        color: var(--color-hover);
-      }
+      color: var(--color-hover);
     }
   }
 
@@ -110,11 +106,11 @@
 
 
       &:hover {
-        color: var(--color-hover);
+        color: var(--color-hover) !important;
       }
 
       &:active {
-        color: var(--color-active);
+        color: var(--color-active) !important;;
         font-weight: 500;
       }
     }
