@@ -13,26 +13,10 @@
   margin-left: 0px !important;
 }
 
-.collapsible-sequence-link-container {
-  .toggle-btn {
-    border: none;
-    outline: none;
-    background: transparent;
-    cursor: pointer;
-    transition: 0.2s;
-
-    &.is-expand {
-      transform: rotate(180deg);
-    }
-
-    svg {
-      width: 1.5rem;
-    }
-  }
+.subsection-item {
+  border-bottom: 1px solid transparent;
 
   .subsection-title-item {
-    padding: 1rem 0;
-    span,
     a {
       text-decoration: none;
       cursor: normal;
@@ -40,13 +24,11 @@
       color: var(--color-text-inactive);
       font-size: 1rem;
       transition: 0.2s;
+      padding: 1rem 0;
+      display: flex;
 
       &.completed {
         color: var(--color-text-default);
-      }
-
-      &:hover {
-        color: var(--color-hover) !important;
       }
 
       &:active {
@@ -55,6 +37,57 @@
     }
   }
 
+  .toggle-btn {
+    border: none;
+    outline: none;
+    background: transparent;
+    cursor: pointer;
+    transition: 0.2s;
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    min-width: 30px;
+
+    svg {
+      width: 1.5rem;
+      transform: translateX(50%);
+      transition: 0.2s;
+    }
+  }
+
+  &:hover {
+    border-bottom: 1px solid var(--color-stroke);
+
+    .subsection-title-item a {
+      color: var(--color-active);
+
+      &:hover {
+        color: var(--color-hover);
+      }
+    }
+  }
+
+  &.learned .subsection-title-item a {
+    color: var(--color-text-default);
+  }
+
+  &.is-expand {
+    border-bottom: 1px solid transparent;
+
+    .toggle-btn svg {
+      transform: translateX(50%) rotate(180deg);
+      flex-shrink: 0;
+      min-width: 0;
+    }
+
+    .subsection-title-item a {
+      color: var(--color-active);
+    }
+  }
+}
+
+.collapsible-sequence-link-container {
   .unit-item {
     padding: 0.5rem 0;
     display: flex;
@@ -85,6 +118,7 @@
 
     &.is-learning a {
       color: var(--color-active);
+      font-weight: 500;
     }
   }
 
