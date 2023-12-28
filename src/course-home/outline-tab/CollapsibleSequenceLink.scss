@@ -60,8 +60,8 @@
   &:hover {
     border-bottom: 1px solid var(--color-stroke);
 
-    .subsection-title-item a {
-      color: var(--color-hover);
+    a {
+      color: var(--color-hover) !important;
     }
   }
 
@@ -69,9 +69,6 @@
     .subsection-title-item a {
       color: var(--color-text-default);
       
-    }
-    &:hover .subsection-title-item a {
-      color: var(--color-hover);
     }
   }
 
