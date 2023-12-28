@@ -14,6 +14,7 @@
 }
 
 .subsection-item {
+  overflow: hidden;
   border-bottom: 1px solid transparent;
 
   .subsection-title-item {
@@ -32,7 +33,7 @@
       }
 
       &:active {
-        color: var(--color-active);
+        color: var(--color-active) !important;
       }
     }
   }
@@ -59,17 +60,16 @@
   &:hover {
     border-bottom: 1px solid var(--color-stroke);
 
-    .subsection-title-item a {
-      color: var(--color-active);
-
-      &:hover {
-        color: var(--color-hover);
-      }
+    a {
+      color: var(--color-hover) !important;
     }
   }
 
-  &.learned .subsection-title-item a {
-    color: var(--color-text-default);
+  &.learned {
+    .subsection-title-item a {
+      color: var(--color-text-default);
+      
+    }
   }
 
   &.is-expand {
@@ -89,7 +89,6 @@
 
 .collapsible-sequence-link-container {
   .unit-item {
-    padding: 0.5rem 0;
     display: flex;
     align-items: center;
 
@@ -101,13 +100,17 @@
       transition: 0.2s;
       display: block;
       height: 100%;
+      display: flex;
+      width: 100%;
+      padding: 0.5rem 0;
+
 
       &:hover {
-        color: var(--color-hover);
+        color: var(--color-hover) !important;
       }
 
       &:active {
-        color: var(--color-active);
+        color: var(--color-active) !important;;
         font-weight: 500;
       }
     }
