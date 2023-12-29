@@ -42,9 +42,9 @@ export const svgUpVote = (
     <path
       d="m4.661 7.332 2.667-6a2 2 0 0 1 2 2v2.667h3.774a1.333 1.333 0 0 1 1.333 1.533l-.92 6a1.333 1.333 0 0 1-1.334 1.133h-7.52m0-7.333v7.333m0-7.333h-2a1.333 1.333 0 0 0-1.333 1.333v4.667a1.333 1.333 0 0 0 1.333 1.333h2"
       stroke="#7B7B7B"
-      stroke-width="1.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 );
@@ -60,16 +60,16 @@ export const svgCopy = (
     <path
       d="M9.875 1h-3.75c-.345 0-.625.313-.625.7v1.4c0 .386.28.7.625.7h3.75c.345 0 .625-.314.625-.7V1.7c0-.387-.28-.7-.625-.7z"
       stroke="#7B7B7B"
-      stroke-width="1.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M10.5 2.4h1.25c.332 0 .65.148.884.41.234.263.366.619.366.99v9.8c0 .37-.132.727-.366.99-.235.262-.553.41-.884.41h-7.5c-.332 0-.65-.148-.884-.41A1.49 1.49 0 0 1 3 13.6V3.8c0-.371.132-.727.366-.99.235-.262.552-.41.884-.41H5.5"
       stroke="#7B7B7B"
-      stroke-width="1.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 );

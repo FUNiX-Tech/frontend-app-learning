@@ -244,15 +244,18 @@ function Course({
             }}
             onClick={() => {
               dispatch(toggleShowLeftbar());
-
               if (!isShowLeftbar) {
                 setGroupSrc(group_active);
               }
             }}
             className={`${
               !isShowLeftbar
-                ? "show-menu-lesson right-side"
-                : "show-menu-lesson left-side"
+                ? `show-menu-lesson right-side ${
+                    groupSrc === group_hover && "hover"
+                  }`
+                : `show-menu-lesson left-side ${
+                    groupSrc === group_hover && "hover"
+                  }`
             }`}
           >
             <img src={groupSrc} alt={group} />

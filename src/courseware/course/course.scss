@@ -97,11 +97,8 @@
       border-color: var(--color-text-inactive);
       right: -1rem;
       z-index: 2000;
-      &:hover {
-        border: 1px solid var(--color-hover);
-      }
     }
-    &:hover {
+    &.hover:hover {
       border: 1px solid var(--color-hover);
     }
     display: flex;
