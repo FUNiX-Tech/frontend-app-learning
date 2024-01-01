@@ -34,7 +34,7 @@ function CollapsibleSequenceLink({
   expand,
   useHistory,
   lesson,
-  hasCompletedSubSection
+  hasCompletedSubSection,
 }) {
   const sequence = sequences[id];
   const {
@@ -111,10 +111,23 @@ function CollapsibleSequenceLink({
 
   const displayTitle = showLink ? coursewareUrl : newTitle;
 
+  const learned = sequenceIds.some(
+    (subsectionId) => sequences[subsectionId].complete
+  );
+
+  let subsectionClasses = "subsection-item";
+  if (open) {
+    subsectionClasses += " is-expand";
+  }
+
+  if (learned) {
+    subsectionClasses += " learned";
+  }
+
   const sectionTitle = (
-    <div>
+    <div className={subsectionClasses}>
       <div className=" w-100 m-0">
-        <div className="d-flex align-items-center justify-content-between">
+        <div className="d-flex align-items-stretch justify-content-between">
           <div className=" p-0 text-break">
             <div className="align-middle d-flex align-items-center subsection-title-item">
               {hasCompletedSubSection && (
@@ -151,8 +164,8 @@ function CollapsibleSequenceLink({
             {/* <EffortEstimate className="ml-3 align-middle" block={sequence} /> */}
           </div>
 
-          <button
-            className={open ? "toggle-btn is-expand" : "toggle-btn"}
+          <div
+            className="toggle-btn"
             onClick={() => {
               setOpen((prev) => !prev);
             }}
@@ -169,7 +182,7 @@ function CollapsibleSequenceLink({
                 fill="#576F8A"
               />
             </svg>
-          </button>
+          </div>
         </div>
       </div>
 

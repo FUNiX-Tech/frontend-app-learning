@@ -71,14 +71,12 @@
     padding: 0 1.5rem 0 4rem !important;
   }
   .unit-left-sidebar {
-    width: 0rem;
+    width: 2rem;
     &.right-side {
       z-index: 1000;
       width: 40%;
     }
-    .show-menu-lesson.right-side {
-      right: -3rem;
-    }
+
     .menu-lesson,
     #courseHome-utline {
       width: unset;
@@ -98,12 +96,12 @@
 
   .sequence-navigation .sequence-navigation-tabs.active {
     z-index: 1000;
-    width: 14rem;
+    width: 100%;
   }
   .sequence-navigation .sequence-navigation-tabs .feedback,
   .sequence-navigation .sequence-navigation-tabs,
   .sequence-navigation-tabs-container {
-    width: unset;
+    width: 100%;
     .file-container p.file-inform {
       white-space: wrap;
     }
@@ -125,14 +123,12 @@
     padding: 0 1.5rem 0 4rem !important;
   }
   .unit-left-sidebar {
-    width: 0rem;
+    width: 2rem;
     &.right-side {
       z-index: 1000;
       width: 50%;
     }
-    .show-menu-lesson.right-side {
-      right: -3rem;
-    }
+
     .menu-lesson,
     #courseHome-utline {
       width: unset;
@@ -153,12 +149,12 @@
 
   .sequence-navigation .sequence-navigation-tabs.active {
     z-index: 1000;
-    width: unset;
+    width: 100%;
   }
   .sequence-navigation .sequence-navigation-tabs .feedback,
   .sequence-navigation .sequence-navigation-tabs,
   .sequence-navigation-tabs-container {
-    width: unset;
+    width: 100%;
     .file-container p.file-inform {
       white-space: wrap;
     }
@@ -179,14 +175,12 @@
     padding: 0 1.5rem 0 4rem !important;
   }
   .unit-left-sidebar {
-    width: 0rem;
+    width: 2rem;
     &.right-side {
       z-index: 1000;
       width: calc(100% - 1.25rem);
     }
-    .show-menu-lesson.right-side {
-      right: -3rem;
-    }
+
     .menu-lesson,
     #courseHome-utline {
       width: unset;

@@ -32,6 +32,8 @@ import { isMobile } from "../../../experiments/mm-p2p/utils";
 import { MMP2PFlyover, MMP2PFlyoverMobile } from "../../../experiments/mm-p2p";
 import CourseLoading from "../../../learner-dashboard/CourseLoading";
 
+
+
 function Sequence({
   unitId,
   sequenceId,
@@ -76,6 +78,19 @@ function Sequence({
       previousSequenceHandler();
     }
   };
+
+  /** Lấy iframe từ 'message' event */
+  const getFrameByEvent = (event) => {
+    try {
+      const output = Array.from(document.getElementsByTagName('iframe')).filter(iframe => {
+        return iframe.contentWindow === event.source;
+      })[0];
+
+      return output
+    } catch {
+      return undefined
+    }
+  }
 
   const handleNavigate = (destinationUnitId) => {
     unitNavigationHandler(destinationUnitId);
@@ -160,6 +175,15 @@ function Sequence({
             );
           });
         }
+      }
+
+      /** resize unit height */
+      if (type === 'unit.resize') {
+        const unitIframe = getFrameByEvent(event);
+        if (!unitIframe) return;
+        
+        unitIframe.style.transition = event.data.resize.transition;
+        unitIframe.style.height = event.data.resize.iframeHeight + "px";
       }
     }
     global.addEventListener("message", receiveMessage);

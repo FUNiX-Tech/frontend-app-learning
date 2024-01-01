@@ -152,6 +152,7 @@ function AIChatbot({ intl, isShowChatbot }) {
         );
       })
       .catch((error) => {
+        console.error(error);
         setQueryList((prev) =>
           prev.map((item) =>
             item.id == queryId ? { ...item, status: "failed" } : item
@@ -169,7 +170,7 @@ function AIChatbot({ intl, isShowChatbot }) {
       .then((data) => {
         data.data.query_list.reverse();
 
-        if (data.data.remain_page == 0) {
+        if (data.data.remain_page <= 0) {
           setIsLastPage(true);
         }
 
