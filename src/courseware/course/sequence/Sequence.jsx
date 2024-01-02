@@ -32,8 +32,6 @@ import { isMobile } from "../../../experiments/mm-p2p/utils";
 import { MMP2PFlyover, MMP2PFlyoverMobile } from "../../../experiments/mm-p2p";
 import CourseLoading from "../../../learner-dashboard/CourseLoading";
 
-
-
 function Sequence({
   unitId,
   sequenceId,
@@ -45,6 +43,7 @@ function Sequence({
   mmp2p,
   sequences,
   sequenceIds,
+  isCompleteCourse,
 }) {
   const course = useModel("coursewareMeta", courseId);
   const { isStaff, originalUserIsStaff } = useModel("courseHomeMeta", courseId);
@@ -82,15 +81,17 @@ function Sequence({
   /** Lấy iframe từ 'message' event */
   const getFrameByEvent = (event) => {
     try {
-      const output = Array.from(document.getElementsByTagName('iframe')).filter(iframe => {
-        return iframe.contentWindow === event.source;
-      })[0];
+      const output = Array.from(document.getElementsByTagName("iframe")).filter(
+        (iframe) => {
+          return iframe.contentWindow === event.source;
+        }
+      )[0];
 
-      return output
+      return output;
     } catch {
-      return undefined
+      return undefined;
     }
-  }
+  };
 
   const handleNavigate = (destinationUnitId) => {
     unitNavigationHandler(destinationUnitId);
@@ -178,10 +179,10 @@ function Sequence({
       }
 
       /** resize unit height */
-      if (type === 'unit.resize') {
+      if (type === "unit.resize") {
         const unitIframe = getFrameByEvent(event);
         if (!unitIframe) return;
-        
+
         unitIframe.style.transition = event.data.resize.transition;
         unitIframe.style.height = event.data.resize.iframeHeight + "px";
       }
@@ -283,6 +284,7 @@ function Sequence({
 
         <div className="unit-container flex-grow-1">
           <UnitNavigation
+            isCompleteCourse={isCompleteCourse}
             sequenceIds={sequenceIds}
             sequences={sequences}
             top
@@ -305,6 +307,7 @@ function Sequence({
             unitId={unitId}
           />
           <UnitNavigation
+            isCompleteCourse={isCompleteCourse}
             sequenceIds={sequenceIds}
             sequences={sequences}
             top={false}

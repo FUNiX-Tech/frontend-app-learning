@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react";
 import { getAuthenticatedHttpClient } from "@edx/frontend-platform/auth";
 import { getAuthenticatedUser } from "@edx/frontend-platform/auth";
 
-import { camelCaseObject, getConfig } from "@edx/frontend-platform";
+import { getConfig } from "@edx/frontend-platform";
 
 const Feedback = ({ isShowFeedback, shouldDisplayDropdown }) => {
   //get user

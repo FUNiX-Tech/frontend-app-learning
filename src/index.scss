@@ -4,7 +4,7 @@
 @import "~@edx/brand/paragon/overrides";
 
 @import "~@edx/frontend-component-footer/dist/footer";
-@import "https://askmentor.funix.edu.vn/hf40-livechat/hf40-livechat.css";
+// @import "https://askmentor.funix.edu.vn/hf40-livechat/hf40-livechat.css";
 @import "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css";
 
 :root {
@@ -1010,6 +1010,46 @@ body {
         margin-left: 0.5rem;
       }
     }
+    &.show {
+      background-color: var(--color-active);
+      border: none;
+      & > span {
+        color: var(--color-white);
+      }
+      & svg {
+        path {
+          fill: var(--color-white);
+        }
+      }
+      &:hover {
+        border: none !important;
+        background-color: var(--color-hover);
+      }
+      &:active {
+        background-color: var(--color-active) !important;
+        border: none !important;
+      }
+    }
+    &:disabled {
+      background-color: var(--color-disable) !important;
+      border: none;
+
+      & > span {
+        color: var(--color-white);
+      }
+      & svg {
+        path {
+          fill: var(--color-white);
+        }
+      }
+      &:hover,
+      &:active {
+        border: none;
+      }
+      &:active {
+        background-color: var(--color-disable) !important;
+      }
+    }
 
     &:active {
       border: none;
@@ -1034,6 +1074,7 @@ body {
     &:active:hover {
       border: none;
     }
+
     &:hover {
       border: 1px solid var(--color-hover);
       background: var(--background-color-hover);

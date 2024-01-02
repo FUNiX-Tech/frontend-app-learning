@@ -19,6 +19,7 @@ function SectionListUnit({
   lesson,
   unitId,
   showLeftbarContent,
+  sequenceIds,
 }) {
   const [height, setHeight] = useState(window.height);
   const resizeObserver = new ResizeObserver(() => {
@@ -56,14 +57,6 @@ function SectionListUnit({
   //   };
 
   const rootCourseId = courses && Object.keys(courses)[0];
-  //Logic get all sequenceIds in section via sectionIds
-  const allSequenceIds = useMemo(() => {
-    const output = [];
-    for (let value of courses[rootCourseId].sectionIds) {
-      output.push(...sections[value].sequenceIds);
-    }
-    return output;
-  }, [rootCourseId, courses]);
 
   return (
     <ol
@@ -86,7 +79,7 @@ function SectionListUnit({
             useHistory={useHistory}
             lesson={lesson}
             unitId={unitId}
-            allSequenceIds={allSequenceIds}
+            allSequenceIds={sequenceIds}
           />
         );
       })}
