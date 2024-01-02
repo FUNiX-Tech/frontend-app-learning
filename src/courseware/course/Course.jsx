@@ -65,6 +65,14 @@ function Course({
     return output;
   }, [rootCourseId, courses]);
 
+  const isCompleteCourse = useMemo(() => {
+    const outputArr = [];
+    for (let value of courses[rootCourseId].sectionIds) {
+      outputArr.push(sections[value]);
+    }
+    return outputArr.every((section) => section.complete);
+  }, [rootCourseId, courses]);
+
   const pageTitleBreadCrumbs = [sequence, section, course]
     .filter((element) => element != null)
     .map((element) => element.title);
@@ -270,6 +278,7 @@ function Course({
               <h2 className="menu-lesson-title">Mục lục bài học</h2>
             </div>
             <SectionListUnit
+              sequenceIds={allSequenceIds}
               courseId={courseId}
               unitId={unitId}
               relativeHeight
@@ -337,6 +346,7 @@ function Course({
           mmp2p={MMP2P}
         />
         <Sequence
+          isCompleteCourse={isCompleteCourse}
           sequenceIds={allSequenceIds}
           sequences={sequences}
           unitId={unitId}
