@@ -275,7 +275,7 @@ function CollapsibleSequenceLinkUnit({
                         />
                       )}
                     </div> */}
-                  <div className="col  text-break">
+                  <div className="col text-break unit-link-wrapper p-0">
                     <NavLink
                       className={`${
                         sequenceData.complete
