@@ -102,6 +102,9 @@
         margin-top: 0.25rem !important;
         line-height: 120%;
         margin-left: -0.75rem;
+        width: 100%;
+        margin-right: 0;
+        padding-right: 0;
       }
       color: var(--color-text-inactive);
       flex-grow: 0;
@@ -134,4 +137,13 @@
 
 .add-padding-left-16 {
   padding-left: 1rem;
+}
+
+.pgn-transition-replace-group {
+  width: 100%;
+  padding-right: 0;
+
+  .unit-link-wrapper {
+    padding-right: 0;
+  }
 }
