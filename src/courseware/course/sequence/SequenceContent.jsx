@@ -176,7 +176,7 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
                   scrolling="no"
                   referrerPolicy="origin"
                   style={{
-                    display: isSelectedUnit ? "block" : "none",
+                    display: shouldDisplayContent ? "block" : "none",
                   }}
                   height={iframeHeightValues.find((h) => h.id === e.id)?.height}
                 />
