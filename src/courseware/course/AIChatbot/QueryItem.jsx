@@ -87,7 +87,6 @@ function QueryItem({ intl, query, onCopyResponse, onVote, onRetryAskChatbot }) {
 }
 
 QueryItem.propTypes = {
-  isShowChatbot: PropTypes.bool.isRequired,
   intl: intlShape.isRequired,
   onCopyResponse: PropTypes.func.isRequired,
   onVote: PropTypes.func.isRequired,

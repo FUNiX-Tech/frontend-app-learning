@@ -31,6 +31,7 @@ function UnitNavigation({
   sequences,
   sequenceIds,
   isCompleteCourse,
+  isPassedProject,
 }) {
   const { isFirstUnit, isLastUnit } = useSequenceNavigationMetadata(
     sequenceId,
@@ -164,7 +165,7 @@ function UnitNavigation({
         variant="outline-primary"
         className={`next-button d-flex align-items-center justify-content-center ${
           isViewNextResultBtn && "show"
-        } ${isLastUnit && isCompleteCourse && "show"}`}
+        } ${isLastUnit && isCompleteCourse && isPassedProject && "show"}`}
         onClick={() => {
           if (!isLastUnit) {
             buttonOnClick();
@@ -181,7 +182,7 @@ function UnitNavigation({
             });
           }
         }}
-        disabled={!isCompleteCourse && disabled}
+        disabled={(!isCompleteCourse || !isPassedProject) && disabled}
         onMouseOver={() => {
           if (!isViewNextResultBtn || !isLastUnit) {
             setHoverTitleState((prevState) => {

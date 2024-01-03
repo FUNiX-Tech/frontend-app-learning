@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types";
 import { injectIntl, intlShape } from "@edx/frontend-platform/i18n";
 import { svgChatGPT, svgSubmit, svgSubmitActive } from "./AIChabotAssets";
+import { useSelector } from "react-redux";
 
 import {
   fetchQueries,
@@ -16,7 +17,7 @@ import messages from "./messages";
 
 const LIMIT = 5;
 
-function AIChatbot({ intl, isShowChatbot }) {
+function AIChatbot({ intl }) {
   const [inputText, setInputText] = useState("");
   const [sessionId, setSessionId] = useState(0);
   const [queryList, setQueryList] = useState([]);
@@ -27,6 +28,8 @@ function AIChatbot({ intl, isShowChatbot }) {
   const [isAsking, setIsAsking] = useState(false);
   const [isInitialLoading, setIsInitialLoading] = useState(true);
   const [hasScrollBar, setHasScrollBar] = useState(false);
+
+  const isShowChatbot = useSelector((state) => state.header.isShowChatbot);
 
   const msgContainerRef = useRef();
   const inputRef = useRef();
@@ -235,8 +238,7 @@ function AIChatbot({ intl, isShowChatbot }) {
   }, [inputText]);
 
   // html classes
-  let chatbotContainerClasses =
-    "sequence-navigation-tabs d-flex flex-grow-1 chatbot-container";
+  let chatbotContainerClasses = "chatbot-container";
   if (isShowChatbot) {
     chatbotContainerClasses += " active";
   }
@@ -327,7 +329,6 @@ function AIChatbot({ intl, isShowChatbot }) {
 }
 
 AIChatbot.propTypes = {
-  isShowChatbot: PropTypes.bool.isRequired,
   intl: intlShape.isRequired,
 };
 

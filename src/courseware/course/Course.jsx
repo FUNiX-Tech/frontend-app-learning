@@ -1,10 +1,11 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import PropTypes from "prop-types";
 import { Helmet } from "react-helmet";
 import { useDispatch } from "react-redux";
 import { getConfig } from "@edx/frontend-platform";
 import { breakpoints, useWindowSize } from "@edx/paragon";
 import { useLocation } from "react-router-dom";
+import { getAuthenticatedUser } from "@edx/frontend-platform/auth";
 
 import { AlertList } from "../../generic/user-messages";
 
@@ -33,6 +34,7 @@ import group from "./assets/group.svg";
 import group_active from "./assets/group_active.svg";
 import group_hover from "./assets/group_hover.svg";
 import { toggleShowLeftbar, setOffMenuState } from "../../header/data/slice";
+import AIChatbot from "./AIChatbot/AIChatbot";
 
 /** [MM-P2P] Experiment */
 import { initCoursewareMMP2P, MMP2PBlockModal } from "../../experiments/mm-p2p";
@@ -46,6 +48,21 @@ function Course({
   unitNavigationHandler,
   windowWidth,
 }) {
+  ///////////////////// chatbot /////////////////////////
+  const isShowChatbot = useSelector((state) => state.header.isShowChatbot);
+  ///////////////////// chatbot end /////////////////////
+
+  //passed  project state
+  const [isPassedProject, setIsPassedProject] = useState(false);
+  //get user
+  const authenticatedUser = getAuthenticatedUser();
+  const [show, setShow] = useState(false);
+  const location = useLocation();
+  const [styling, setStyling] = useState("css-yeymkw");
+  const isShowLeftbar = useSelector((state) => state.header.isShowLeftbar);
+
+  const [groupSrc, setGroupSrc] = useState(group);
+
   const course = useModel("coursewareMeta", courseId);
   const {
     courseBlocks: { sequences, courses, sections },
@@ -65,6 +82,7 @@ function Course({
     return output;
   }, [rootCourseId, courses]);
 
+  //Complete All Sections Course
   const isCompleteCourse = useMemo(() => {
     const outputArr = [];
     for (let value of courses[rootCourseId].sectionIds) {
@@ -76,6 +94,66 @@ function Course({
   const pageTitleBreadCrumbs = [sequence, section, course]
     .filter((element) => element != null)
     .map((element) => element.title);
+
+  //Get project name
+  const projectName = useMemo(() => {
+    const outputArr = [];
+    for (let value of courses[rootCourseId].sectionIds) {
+      outputArr.push(sections[value]);
+    }
+    return outputArr[outputArr.length - 1].title;
+  }, [rootCourseId, courses]);
+
+  const getPortalUrl = useCallback(async () => {
+    try {
+      const url = new URL(
+        `${getConfig().LMS_BASE_URL}/api/funix_portal/portal_host`
+      );
+      const data = await fetch(url.href);
+      const response = await data.json();
+      if (response) {
+        return response;
+      }
+    } catch (error) {}
+  }, []);
+
+  //Get Assignment Passed
+  const getAssignmentPassed = useCallback(async (url) => {
+    try {
+      const lesson_url = window.location.href;
+      const regex = /course-v1:([^/]+)/;
+      const course_id = lesson_url.match(regex)[0];
+      const dataSend = {
+        email: authenticatedUser.email,
+        project_name: projectName,
+        course_code: course_id,
+      };
+      const data = await fetch(`${url}/api/v1/project/user`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataSend),
+      });
+      const response = await data.json();
+      if (response) {
+        return response.data;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  //call func get passed state of project
+  useEffect(async () => {
+    const url = await getPortalUrl();
+    const data = await getAssignmentPassed(url.HOST);
+    if (data && data?.status === "passed") {
+      setIsPassedProject(true);
+    } else {
+      setIsPassedProject(false);
+    }
+  }, [location.pathname]);
 
   // Below the tabs, above the breadcrumbs alerts (appearing in the order listed here)
   const dispatch = useDispatch();
@@ -121,13 +199,6 @@ function Course({
       )
     );
   }, [sequenceId]);
-
-  const [show, setShow] = useState(false);
-  const location = useLocation();
-  const [styling, setStyling] = useState("css-yeymkw");
-  const isShowLeftbar = useSelector((state) => state.header.isShowLeftbar);
-
-  const [groupSrc, setGroupSrc] = useState(group);
 
   // useEffect(() => {
   //   setStyling(
@@ -202,11 +273,23 @@ function Course({
       }
     };
 
+    function resizeRightbar() {
+      const bottomHeader = document.querySelector("#courseTabsNavigation");
+      document.querySelector(".rightbar").style.top = `${
+        bottomHeader.getBoundingClientRect().bottom
+      }px`;
+    }
+
+    resizeRightbar();
     window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", resizeRightbar);
+    window.addEventListener("resize", resizeRightbar);
 
     // Cleanup event listener on component unmount
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", resizeRightbar);
+      window.removeEventListener("resize", resizeRightbar);
     };
   }, [location.pathname]);
 
@@ -310,6 +393,11 @@ function Course({
       </div>*/}
 
       <AlertList topic="sequence" />
+
+      <div className={isShowChatbot ? "rightbar is-show" : "rightbar"}>
+        <AIChatbot isShowChatbot={isShowChatbot} />
+      </div>
+
       <div
         id="sequence-custom"
         className={`${isShowLeftbar ? "d-flex show-leftbar" : "d-flex"}`}
@@ -346,6 +434,7 @@ function Course({
           mmp2p={MMP2P}
         />
         <Sequence
+          isPassedProject={isPassedProject}
           isCompleteCourse={isCompleteCourse}
           sequenceIds={allSequenceIds}
           sequences={sequences}
@@ -355,6 +444,7 @@ function Course({
           unitNavigationHandler={unitNavigationHandler}
           nextSequenceHandler={nextSequenceHandler}
           previousSequenceHandler={previousSequenceHandler}
+          chatbot={<AIChatbot isShowChatbot={true} />}
           //* * [MM-P2P] Experiment */
           mmp2p={MMP2P}
         />
