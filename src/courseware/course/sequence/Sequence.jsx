@@ -66,13 +66,18 @@ function Sequence({
   );
 
   const handleNext = () => {
-    const nextIndex = sequence.unitIds.indexOf(unitId) + 1;
-    if (nextIndex < sequence.unitIds.length) {
-      const newUnitId = sequence.unitIds[nextIndex];
-      handleNavigate(newUnitId);
+    if (sequence && sequence.unitIds && Array.isArray(sequence.unitIds)) {
+      const nextIndex = sequence.unitIds.indexOf(unitId) + 1;
+      if (nextIndex < sequence.unitIds.length) {
+        const newUnitId = sequence.unitIds[nextIndex];
+        handleNavigate(newUnitId);
+      } else {
+        nextSequenceHandler();
+      }
     } else {
       nextSequenceHandler();
     }
+    
   };
 
   const handlePrevious = () => {
