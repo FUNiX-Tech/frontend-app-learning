@@ -68,7 +68,6 @@
   &.learned {
     .subsection-title-item a {
       color: var(--color-text-default);
-      
     }
   }
 
@@ -79,6 +78,7 @@
       transform: translateX(50%) rotate(180deg);
       flex-shrink: 0;
       min-width: 0;
+      margin: 0 5px;
     }
 
     .subsection-title-item a {
@@ -104,13 +104,12 @@
       width: 100%;
       padding: 0.5rem 0;
 
-
       &:hover {
         color: var(--color-hover) !important;
       }
 
       &:active {
-        color: var(--color-active) !important;;
+        color: var(--color-active) !important;
         font-weight: 500;
       }
     }
