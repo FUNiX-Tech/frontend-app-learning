@@ -283,6 +283,7 @@ function Sequence({
         {shouldDisplayNotificationTriggerInSequence && <SidebarTriggers />}
 
         <div className="unit-container flex-grow-1">
+          {/* unit navigation buttons top  */}
           <UnitNavigation
             isCompleteCourse={isCompleteCourse}
             sequenceIds={sequenceIds}
@@ -306,6 +307,7 @@ function Sequence({
             sequenceId={sequenceId}
             unitId={unitId}
           />
+          {/* unit navigation buttons bottom  */}
           <UnitNavigation
             isCompleteCourse={isCompleteCourse}
             sequenceIds={sequenceIds}

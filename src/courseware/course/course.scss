@@ -159,3 +159,48 @@
     z-index: 2000;
   }
 }
+
+// rightbar
+:root {
+  --unit-width: 700px;
+  --unit-side-padding: 32px;
+}
+
+@media screen and (max-width: 1400px) {
+  :root {
+    --unit-width: 600px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  :root {
+    --unit-width: 500px;
+  }
+}
+
+.rightbar {
+  position: fixed;
+  bottom: 0;
+  z-index: 9999;
+  max-width: calc(300px + 1rem);
+  left: 100vw;
+  top: 0;
+  transition: 0.2s;
+  margin-right: 1rem;
+
+  &.is-show {
+    left: calc(100vw / 2 + var(--unit-width) / 2 + var(--unit-side-padding));
+
+    @media screen and (max-width: 992px) {
+      left: 60vw;
+    }
+
+    @media screen and (max-width: 768px) {
+      left: 50vw;
+    }
+
+    @media screen and (max-width: 320px) {
+      left: 0;
+    }
+  }
+}

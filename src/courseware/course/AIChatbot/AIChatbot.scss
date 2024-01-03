@@ -12,6 +12,9 @@
   top: 0;
   bottom: 0;
   background: var(--background-content);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .chatbot-header {

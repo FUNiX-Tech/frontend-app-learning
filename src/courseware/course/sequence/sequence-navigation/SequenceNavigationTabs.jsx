@@ -6,7 +6,6 @@ import UnitButton from "./UnitButton";
 import SequenceNavigationDropdown from "./SequenceNavigationDropdown";
 import useIndexOfLastVisibleChild from "../../../../generic/tabs/useIndexOfLastVisibleChild";
 import { useSelector } from "react-redux";
-import AIChatbot from "./AIChatbot/AIChatbot";
 import Feedback from "./Feedback/Feedback";
 
 import sequence from "..";
@@ -27,8 +26,6 @@ export default function SequenceNavigationTabs({
   const isShowRightMenu = useSelector(
     (state) => state.header.isShowLessonContent
   );
-
-  const isShowChatbot = useSelector((state) => state.header.isShowChatbot);
 
   const isShowFeedback = useSelector((state) => state.header.isShowFeedback);
   //Right side bar scrolling hander
@@ -145,12 +142,6 @@ export default function SequenceNavigationTabs({
           ))}
         </div> */}
 
-        {/* Chat GPT */}
-
-        <AIChatbot
-          isShowChatbot={isShowChatbot}
-          shouldDisplayDropdown={shouldDisplayDropdown}
-        />
         {/* Feedback */}
         <Feedback
           isShowFeedback={isShowFeedback}
