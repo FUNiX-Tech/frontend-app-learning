@@ -31,6 +31,8 @@ import SequenceContent from "./SequenceContent";
 import { isMobile } from "../../../experiments/mm-p2p/utils";
 import { MMP2PFlyover, MMP2PFlyoverMobile } from "../../../experiments/mm-p2p";
 import CourseLoading from "../../../learner-dashboard/CourseLoading";
+import { useSequenceNavigationMetadata } from "./sequence-navigation/hooks";
+
 
 function Sequence({
   unitId,
@@ -57,6 +59,11 @@ function Sequence({
   );
   const shouldDisplayNotificationTriggerInSequence =
     useWindowSize().width < breakpoints.small.minWidth;
+
+  const { isFirstUnit, isLastUnit } = useSequenceNavigationMetadata(
+      sequenceId,
+      unitId
+  );
 
   const handleNext = () => {
     const nextIndex = sequence.unitIds.indexOf(unitId) + 1;
@@ -177,7 +184,10 @@ function Sequence({
           });
         }
       }
-
+      if (type == 'quiz_submit'){
+        const buttonOnClick = isLastUnit ? goToCourseExitPage : handleNext;
+        buttonOnClick()
+      }
       /** resize unit height */
       if (type === "unit.resize") {
         const unitIframe = getFrameByEvent(event);
