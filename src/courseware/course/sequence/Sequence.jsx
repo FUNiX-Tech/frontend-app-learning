@@ -44,6 +44,7 @@ function Sequence({
   sequences,
   sequenceIds,
   isCompleteCourse,
+  isPassedProject,
 }) {
   const course = useModel("coursewareMeta", courseId);
   const { isStaff, originalUserIsStaff } = useModel("courseHomeMeta", courseId);
@@ -285,6 +286,7 @@ function Sequence({
         <div className="unit-container flex-grow-1">
           {/* unit navigation buttons top  */}
           <UnitNavigation
+            isPassedProject={isPassedProject}
             isCompleteCourse={isCompleteCourse}
             sequenceIds={sequenceIds}
             sequences={sequences}
@@ -309,6 +311,7 @@ function Sequence({
           />
           {/* unit navigation buttons bottom  */}
           <UnitNavigation
+            isPassedProject={isPassedProject}
             isCompleteCourse={isCompleteCourse}
             sequenceIds={sequenceIds}
             sequences={sequences}
