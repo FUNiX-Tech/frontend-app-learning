@@ -94,7 +94,10 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
               ? SkeletonTabs
               : tabs.map(({ url, title, slug }) => {
                   if (url.endsWith("/home") || url.endsWith("/dates")) {
-                    const to = url.slice(url.indexOf("/", 10));
+                    const to = url.replace(
+                      /^https?:\/\/.+\/(.+\/)?course\//,
+                      "/course/"
+                    );
                     return (
                       <NavLink
                         key={slug}
