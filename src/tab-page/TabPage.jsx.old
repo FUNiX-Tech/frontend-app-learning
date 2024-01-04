@@ -40,9 +40,69 @@ function TabPage({ intl, ...props }) {
     email = user.email;
   }
 
+  // useEffect(() => {
+  //   // check if dome have #hflivechat element
+  //   if (!document.getElementById('hflivechat') && email) {
+  //     // Add audio element with display none to prevent autoplay
+  //     const audio = document.createElement('audio');
+  //     audio.setAttribute('style', 'display:none');
+  //     audio.setAttribute('src', 'https://askmentor.funix.edu.vn/sounds/chime.mp3');
+  //     audio.setAttribute('type', 'audio/mpeg');
+  //     // Add audio element to body
+  //     document.body.appendChild(audio);
+
+  //     // Add jquery
+  //     const jquery = document.createElement('script');
+  //     jquery.src = 'https://code.jquery.com/jquery-3.3.1.min.js';
+  //     jquery.addEventListener('load', () => {
+  //       const hfScript = document.createElement('script');
+  //       hfScript.setAttribute('src', `${getConfig().LMS_BASE_URL}/static/livechat/livechat.js`)
+  //       // hfScript.setAttribute('src', 'https://askmentor.funix.edu.vn/hf40-livechat/hf40-livechat.js');
+  //       // hfScript.addEventListener('load', () => {
+  //       //   // eslint-disable-next-line no-undef
+  //       //   initHF40('https://askmentor.funix.edu.vn', false, email);
+  //       // });
+  //       document.head.appendChild(hfScript);
+  //     });
+  //     document.body.appendChild(jquery);
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   if (toggleFeature?.includes("feedback")) {
+  //     if (!document.getElementById("feed-back-script")) {
+  //       // Because the feedback style is depend on LMS style so we need to add it to the head
+  //       // Append link to style in body
+  //       const feedbackStyle = document.createElement("link");
+  //       feedbackStyle.setAttribute("rel", "stylesheet");
+  //       feedbackStyle.setAttribute(
+  //         "href",
+  //         `${getConfig().LMS_BASE_URL}/static/feedback/feedback.css`
+  //       );
+
+  //       // Append link to head
+  //       document.head.appendChild(feedbackStyle);
+
+  //       const feedScript = document.createElement("script");
+  //       feedScript.setAttribute(
+  //         "src",
+  //         `${getConfig().LMS_BASE_URL}/static/feedback/add_feedback.js`
+  //       );
+  //       feedScript.setAttribute("id", "feed-back-script");
+  //       feedScript.addEventListener("load", () => {
+  //         // eslint-disable-next-line no-undef
+  //         initFUNiXFeedback(getConfig().LMS_BASE_URL, true);
+  //       });
+  //       document.head.appendChild(feedScript);
+  //     }
+  //   }
+  // });
+
   if (courseStatus === "loading") {
     return (
       <>
+        {/* <Header /> */}
+        {/* <HeaderLearning loading /> */}
         <HeaderLearning
           courseOrg={org}
           courseNumber={number}
@@ -50,8 +110,22 @@ function TabPage({ intl, ...props }) {
           intl={intl}
           isLoading
         />
-        <LoadedTabPage {...props} />
-        {!props.shouldHideFooter && <Footer />}
+
+        {/* <PageLoading srMessage={intl.formatMessage(messages.loading)} /> */}
+        <div
+          style={{
+            width: "47.75rem",
+            margin: "0 auto",
+            padding: "2rem 0 2rem 2rem",
+          }}
+        >
+          <div className="d-flex flex-column w-100" style={{ gap: "0.625rem" }}>
+            <CourseLoading courseLearning />
+            <CourseLoading courseLearning />
+            <CourseLoading courseLearning />
+          </div>
+        </div>
+        <Footer />
       </>
     );
   }
@@ -95,6 +169,11 @@ function TabPage({ intl, ...props }) {
         {metadataModel === "courseHomeMeta" && (
           <LaunchCourseHomeTourButton srOnly />
         )}
+        {/* <Header
+          courseOrg={org}
+          courseNumber={number}
+          courseTitle={title}
+        /> */}
         <HeaderLearning
           courseOrg={org}
           courseNumber={number}
