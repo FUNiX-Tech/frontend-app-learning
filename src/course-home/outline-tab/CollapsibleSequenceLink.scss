@@ -54,6 +54,7 @@
       width: 1.5rem;
       transform: translateX(50%);
       transition: 0.2s;
+      margin: 0 5px;
     }
   }
 
@@ -78,7 +79,6 @@
       transform: translateX(50%) rotate(180deg);
       flex-shrink: 0;
       min-width: 0;
-      margin: 0 5px;
     }
 
     .subsection-title-item a {
