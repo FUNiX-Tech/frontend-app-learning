@@ -223,10 +223,7 @@ function AIChatbot({ intl }) {
     if (!inputRef.current) return;
     inputRef.current.style.height = 0;
     inputRef.current.style.height = inputRef.current.scrollHeight + "px";
-    console.log(
-      inputWrapperRef.current.scrollHeight,
-      inputWrapperRef.current.offsetHeight
-    );
+
     if (
       inputWrapperRef.current.scrollHeight >
       inputWrapperRef.current.offsetHeight

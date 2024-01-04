@@ -22,8 +22,6 @@ const HeaderLearning = ({
   loading,
   isDashoard,
 }) => {
-  // console.log('=======', courseOrg, courseNumber, courseTitle)
-
   const authenticatedUser = getAuthenticatedUser();
   const { courseId: courseIdFromUrl } = useParams();
 
@@ -136,7 +134,7 @@ const HeaderLearning = ({
           }`}
         >
           <span className={`${isDashoard ? "d-block" : "d-block header-2"}`}>
-            {isDashoard ? headerDashboard : titleContent}vvvv
+            {isDashoard ? headerDashboard : titleContent}
           </span>
         </div>
         <div className="actions d-flex align-items-center">

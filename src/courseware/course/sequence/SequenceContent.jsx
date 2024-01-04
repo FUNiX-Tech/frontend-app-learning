@@ -85,10 +85,6 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
       const { type, payload } = data;
       if (type === "plugin.resize" && payload.height > 0) {
         setIframeHeight(payload.height);
-        console.log("event dataaaaaaaaaaa:::", data);
-        console.log("event dataaaaaaaaaaa:::", data);
-        console.log("event dataaaaaaaaaaa:::", data);
-        console.log("event dataaaaaaaaaaa:::", data);
       }
     },
     [unitId, iframeHeight, setIframeHeight, loadedIframeId]
