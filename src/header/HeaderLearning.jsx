@@ -136,7 +136,7 @@ const HeaderLearning = ({
           }`}
         >
           <span className={`${isDashoard ? "d-block" : "d-block header-2"}`}>
-            {isDashoard ? headerDashboard : titleContent}
+            {isDashoard ? headerDashboard : titleContent}vvvv
           </span>
         </div>
         <div className="actions d-flex align-items-center">

@@ -1,45 +1,77 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { OuterExamTimer } from '@edx/frontend-lib-special-exams';
-import { useModel } from '../generic/model-store';
-import TabPage from './TabPage';
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams, useLocation } from "react-router-dom";
+import { OuterExamTimer } from "@edx/frontend-lib-special-exams";
+import { useModel } from "../generic/model-store";
+import TabPage from "./TabPage";
+
+const tabNames = ["outline", "dates", "courseware"];
 
 export default function TabContainer(props) {
-  const {
-    children,
-    fetch,
-    slice,
-    tab,
-  } = props;
-
+  const { children, fetch, slice, tab } = props;
+  const [tabStatus, setTabStatus] = useState("idle");
+  const [prevTab, setPrevTab] = useState("");
 
   const { courseId: courseIdFromUrl } = useParams();
+  const location = useLocation();
+
   const dispatch = useDispatch();
   useEffect(() => {
     // The courseId from the URL is the course we WANT to load.
     dispatch(fetch(courseIdFromUrl));
-  }, [courseIdFromUrl]);
+  }, [courseIdFromUrl, tab]);
 
   // The courseId from the store is the course we HAVE loaded.  If the URL changes,
   // we don't want the application to adjust to it until it has actually loaded the new data.
-  const {
-    courseId,
-    courseStatus,
-  } = useSelector(state => state[slice]);
+  const { courseId, courseStatus } = useSelector((state) => state[slice]);
 
-  const {toggleFeature}  = useModel('courseHomeMeta', courseId)
-  
+  const { toggleFeature } = useModel("courseHomeMeta", courseId);
+
   useEffect(() => {
-    if (tab === 'dates') {
+    if (tab === "dates") {
       if (toggleFeature) {
-        if (!toggleFeature.includes('dates')) {
-          window.location.href = `/course/${courseId}/home`
-        } 
+        if (!toggleFeature.includes("dates")) {
+          window.location.href = `/course/${courseId}/home`;
+        }
       }
     }
   }, [tab, toggleFeature]);
+
+  useEffect(() => {
+    setPrevTab(tab);
+    setTabStatus("idle");
+  }, [tab]);
+
+  useEffect(() => {
+    if (courseStatus === "loading" && tabStatus === "idle") {
+      setTabStatus("pending");
+    }
+
+    if (courseStatus === "loaded" && tabStatus === "pending") {
+      setTabStatus("loaded");
+    }
+  }, [courseStatus, tabStatus]);
+
+  const loadingEle = <span>Loading...</span>;
+
+  const justNavigatedFromOtherTab = tab !== prevTab;
+
+  let shouldShowLoading =
+    courseStatus === "loading" ||
+    justNavigatedFromOtherTab ||
+    tabStatus === "pending";
+
+  console.log("from tabcontainer:::");
+  console.log("from tabcontainer:::");
+  console.log("from tabcontainer:::");
+  console.log("tab", tab);
+  console.log("prevTab", prevTab);
+  console.log("shouldShowLoading", shouldShowLoading);
+  console.log("courseStatus", courseStatus);
+  console.log("from tabcontainer:::");
+  console.log("from tabcontainer:::");
+  console.log("from tabcontainer:::");
 
   return (
     <TabPage
@@ -47,9 +79,13 @@ export default function TabContainer(props) {
       courseId={courseId}
       courseStatus={courseStatus}
       metadataModel={`${slice}Meta`}
+      shouldShowLoading={shouldShowLoading}
     >
       {courseId && <OuterExamTimer courseId={courseId} />}
-      {children}
+
+      {shouldShowLoading && loadingEle}
+
+      {!shouldShowLoading && children}
     </TabPage>
   );
 }

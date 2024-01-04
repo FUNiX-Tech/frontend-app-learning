@@ -32,6 +32,8 @@ import { isMobile } from "../../../experiments/mm-p2p/utils";
 import { MMP2PFlyover, MMP2PFlyoverMobile } from "../../../experiments/mm-p2p";
 import CourseLoading from "../../../learner-dashboard/CourseLoading";
 
+import SkeletonSequence from "./SkeletonSequence";
+
 function Sequence({
   unitId,
   sequenceId,
@@ -213,6 +215,8 @@ function Sequence({
     if (!sequenceId) {
       return <div> {intl.formatMessage(messages.noContent)} </div>;
     }
+
+    return <SkeletonSequence />;
     return (
       // <PageLoading srMessage={intl.formatMessage(messages.loadingSequence)} />
 
