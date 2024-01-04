@@ -31,6 +31,8 @@ import SequenceContent from "./SequenceContent";
 import { isMobile } from "../../../experiments/mm-p2p/utils";
 import { MMP2PFlyover, MMP2PFlyoverMobile } from "../../../experiments/mm-p2p";
 import CourseLoading from "../../../learner-dashboard/CourseLoading";
+import { useSequenceNavigationMetadata } from "./sequence-navigation/hooks";
+
 
 function Sequence({
   unitId,
@@ -59,14 +61,24 @@ function Sequence({
   const shouldDisplayNotificationTriggerInSequence =
     useWindowSize().width < breakpoints.small.minWidth;
 
+  const { isFirstUnit, isLastUnit } = useSequenceNavigationMetadata(
+      sequenceId,
+      unitId
+  );
+
   const handleNext = () => {
-    const nextIndex = sequence.unitIds.indexOf(unitId) + 1;
-    if (nextIndex < sequence.unitIds.length) {
-      const newUnitId = sequence.unitIds[nextIndex];
-      handleNavigate(newUnitId);
+    if (sequence && sequence.unitIds && Array.isArray(sequence.unitIds)) {
+      const nextIndex = sequence.unitIds.indexOf(unitId) + 1;
+      if (nextIndex < sequence.unitIds.length) {
+        const newUnitId = sequence.unitIds[nextIndex];
+        handleNavigate(newUnitId);
+      } else {
+        nextSequenceHandler();
+      }
     } else {
       nextSequenceHandler();
     }
+    
   };
 
   const handlePrevious = () => {
@@ -178,7 +190,10 @@ function Sequence({
           });
         }
       }
-
+      if (type == 'quiz_submit'){
+        const buttonOnClick = isLastUnit ? goToCourseExitPage : handleNext;
+        buttonOnClick()
+      }
       /** resize unit height */
       if (type === "unit.resize") {
         const unitIframe = getFrameByEvent(event);
