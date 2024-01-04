@@ -6,6 +6,7 @@ import { getConfig } from "@edx/frontend-platform";
 import { breakpoints, useWindowSize } from "@edx/paragon";
 import { useLocation } from "react-router-dom";
 import { getAuthenticatedUser } from "@edx/frontend-platform/auth";
+import { updateModel, updateModels } from "../../generic/model-store";
 
 import { AlertList } from "../../generic/user-messages";
 
@@ -35,6 +36,7 @@ import group_active from "./assets/group_active.svg";
 import group_hover from "./assets/group_hover.svg";
 import { toggleShowLeftbar, setOffMenuState } from "../../header/data/slice";
 import AIChatbot from "./AIChatbot/AIChatbot";
+import { getSequenceMetadata } from "../data/api";
 
 /** [MM-P2P] Experiment */
 import { initCoursewareMMP2P, MMP2PBlockModal } from "../../experiments/mm-p2p";
@@ -51,7 +53,7 @@ function Course({
   ///////////////////// chatbot /////////////////////////
   const isShowChatbot = useSelector((state) => state.header.isShowChatbot);
   ///////////////////// chatbot end /////////////////////
-
+  const dispatch = useDispatch();
   //passed  project state
   const [isPassedProject, setIsPassedProject] = useState(false);
   //get user
@@ -155,9 +157,29 @@ function Course({
     }
   }, [location.pathname]);
 
-  // Below the tabs, above the breadcrumbs alerts (appearing in the order listed here)
-  const dispatch = useDispatch();
+  const updatedUnitsAndSequence = useCallback(async (dispatch, sequenceId) => {
+    const { sequence, units } = await getSequenceMetadata(sequenceId);
+    if (sequence.blockType === "sequential") {
+      dispatch(
+        updateModel({
+          modelType: "sequences",
+          model: sequence,
+        })
+      );
+      dispatch(
+        updateModels({
+          modelType: "units",
+          models: units,
+        })
+      );
+    }
+  }, []);
 
+  useEffect(() => {
+    updatedUnitsAndSequence(dispatch, sequenceId);
+  }, [unitId, sequenceId]);
+
+  // Below the tabs, above the breadcrumbs alerts (appearing in the order listed here)
   const [firstSectionCelebrationOpen, setFirstSectionCelebrationOpen] =
     useState(false);
   // If streakLengthToCelebrate is populated, that modal takes precedence. Wait til the next load to display
