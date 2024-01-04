@@ -349,13 +349,6 @@ class CoursewareContainer extends Component {
       },
     } = this.props;
 
-    console.log("from coursecontainer", courseStatus);
-    console.log("from coursecontainer", courseStatus);
-    console.log("from coursecontainer", courseStatus);
-    console.log("from coursecontainer", courseStatus);
-    console.log("from coursecontainer", courseStatus);
-    console.log("from coursecontainer", courseStatus);
-
     return (
       <TabPage
         activeTabSlug="courseware"
@@ -364,6 +357,7 @@ class CoursewareContainer extends Component {
         courseStatus={courseStatus}
         metadataModel="coursewareMeta"
         shouldShowLoading={courseStatus === "loading"}
+        shouldHideFooter={true}
       >
         <Course
           courseId={courseId}

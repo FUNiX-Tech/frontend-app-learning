@@ -51,7 +51,7 @@ function TabPage({ intl, ...props }) {
           isLoading
         />
         <LoadedTabPage {...props} />
-        <Footer />
+        {!props.shouldHideFooter && <Footer />}
       </>
     );
   }

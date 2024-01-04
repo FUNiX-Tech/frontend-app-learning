@@ -1,36 +1,16 @@
 import Skeleton from "react-loading-skeleton";
+import "./SkeletonContent.scss";
 
-export default function SkeletonSequence() {
-  const titleSkeleton = (
-    <div
-      style={{ marginBottom: "2rem" }}
-      className="d-flex align-items-center justify-content-between w-100"
-    >
-      <div
-        style={{
-          width: "70%",
-          height: "1.25rem",
-        }}
-      >
-        <Skeleton width="100%" height="100%" />
-      </div>
-      <Skeleton width="1.5rem" height="1rem" />
-    </div>
-  );
-
+export default function SkeletonSequence({ withSidebar }) {
   return (
-    <div className="d-flex justify-content-center">
-      <div
-        style={{
-          width: "700px",
-          maxWidth: "calc(100vw - 3rem)",
-          margin: "0 auto",
-        }}
-      >
-        <div
-          className="d-flex justify-content-between"
-          style={{ marginBottom: "2rem" }}
-        >
+    <div className="skeleton_content">
+      {withSidebar && (
+        <div className="skeleton_content_sidebar skeleton_content_leftbar">
+          <Skeleton height="100%" width="100%" />
+        </div>
+      )}
+      <div className="skeleton_content_inner">
+        <div className="d-flex justify-content-between w-100 mb-3">
           <Skeleton height="2rem" width={70} />
           <Skeleton height="2rem" width={70} />
         </div>
@@ -55,6 +35,11 @@ export default function SkeletonSequence() {
         <Skeleton width="80%" />
         <br />
       </div>
+      {withSidebar && (
+        <div className="skeleton_content_sidebar skeleton_content_rightbar">
+          <Skeleton height="100%" width="100%" />
+        </div>
+      )}
     </div>
   );
 }

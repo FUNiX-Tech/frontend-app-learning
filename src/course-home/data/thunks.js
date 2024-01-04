@@ -80,24 +80,6 @@ export function fetchTab(courseId, tab, getTabData, targetUserId) {
 }
 
 export function fetchDatesTab(courseId, targetUserId) {
-  console.log("FETCH DATES TAB");
-  console.log("FETCH DATES TAB");
-  console.log("FETCH DATES TAB");
-  console.log("FETCH DATES TAB");
-  console.log("FETCH DATES TAB");
-  console.log("FETCH DATES TAB");
-  console.log("FETCH DATES TAB");
-  console.log("FETCH DATES TAB");
-  console.log("FETCH DATES TAB");
-  console.log("FETCH DATES TAB");
-  console.log("FETCH DATES TAB");
-  console.log("FETCH DATES TAB");
-  console.log("FETCH DATES TAB");
-  console.log("FETCH DATES TAB");
-  console.log("FETCH DATES TAB");
-  console.log("FETCH DATES TAB");
-  console.log("FETCH DATES TAB");
-  console.log("FETCH DATES TAB");
   return fetchTab(
     courseId,
     "dates",

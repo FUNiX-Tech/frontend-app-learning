@@ -33,7 +33,18 @@ export default function SkeletonOutline() {
         <Skeleton height="2rem" width={170} />
       </div>
 
-      {new Array(12).fill(1).map(() => titleSkeleton)}
+      {titleSkeleton}
+      {titleSkeleton}
+      {titleSkeleton}
+      {titleSkeleton}
+      {titleSkeleton}
+      {titleSkeleton}
+      {titleSkeleton}
+      {titleSkeleton}
+      {titleSkeleton}
+      {titleSkeleton}
+      {titleSkeleton}
+      {titleSkeleton}
     </div>
   );
 }

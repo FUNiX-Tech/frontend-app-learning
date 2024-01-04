@@ -73,25 +73,6 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
     }
   }, [pathname, isShowChatbot, isShowFeedback]);
 
-  console.log("from cuorse tabs tabs:", tabs);
-  console.log("from cuorse tabs tabs:", tabs);
-  console.log("from cuorse tabs tabs:", tabs);
-  console.log("from cuorse tabs tabs:", tabs);
-  console.log("from cuorse tabs tabs:", tabs);
-  console.log("from cuorse tabs tabs:", tabs);
-  console.log("from cuorse tabs tabs:", tabs);
-  console.log("from cuorse tabs tabs:", tabs);
-  console.log("from cuorse tabs tabs:", tabs);
-  console.log("from cuorse tabs tabs:", tabs);
-  console.log("from cuorse tabs tabs:", tabs);
-  console.log("from cuorse tabs tabs:", tabs);
-  console.log("from cuorse tabs tabs:", tabs);
-  console.log("from cuorse tabs tabs:", tabs);
-  console.log("from cuorse tabs tabs:", tabs);
-  console.log("from cuorse tabs tabs:", tabs);
-  console.log("from cuorse tabs tabs:", tabs);
-  console.log("from cuorse tabs tabs:", tabs);
-
   return (
     <>
       <div

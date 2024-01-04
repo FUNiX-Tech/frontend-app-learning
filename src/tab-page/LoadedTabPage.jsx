@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Helmet } from "react-helmet";
 
@@ -16,6 +17,7 @@ import { useSelector, useDispatch } from "react-redux";
 import ProductTours from "../product-tours/ProductTours";
 import SkeletonOutline from "./SkeletonOutline";
 import SkeletonDates from "./SkeletonDates";
+import SkeletonSequence from "../courseware/course/sequence/SkeletonSequence";
 
 function LoadedTabPage({
   activeTabSlug,
@@ -28,6 +30,9 @@ function LoadedTabPage({
   const { celebrations, org, originalUserIsStaff, tabs, title, verifiedMode } =
     useModel("courseHomeMeta", courseId);
 
+  const location = useLocation();
+  const pathname = location.pathname;
+
   // Logistration and enrollment alerts are only really used for the outline tab, but loaded here to put them above
   // breadcrumbs when they are visible.
   const logistrationAlert = useLogistrationAlert(courseId);
@@ -36,8 +41,6 @@ function LoadedTabPage({
 
   const activeTab =
     tabs?.filter((tab) => tab.slug === activeTabSlug)[0] || undefined;
-
-  console.log(tabs);
 
   const streakLengthToCelebrate =
     celebrations && celebrations.streakLengthToCelebrate;
@@ -53,6 +56,18 @@ function LoadedTabPage({
     (state) => state.header.isShowGlobalChatGPT
   );
 
+  function getTabFromPathname(pathname) {
+    if (pathname.endsWith("/dates")) return "dates";
+    if (pathname.endsWith("/home")) return "outline";
+    return "courseware";
+  }
+
+  function getSkeleton(tab) {
+    if (tab === "dates") return <SkeletonDates />;
+    if (tab === "outline") return <SkeletonOutline />;
+    return <SkeletonSequence withSidebar />;
+  }
+
   useEffect(() => {
     setStyling(
       show
@@ -65,24 +80,8 @@ function LoadedTabPage({
     );
   }, [show, isShowChatGPT]);
 
-  // if (!activeTab) return <h1>hello no activetab</h1>;
-
-  console.log("shou;d", shouldShowLoading, activeTab);
-  console.log("shou;d", shouldShowLoading, activeTab);
-  console.log("shou;d", shouldShowLoading, activeTab);
-  console.log("shou;d", shouldShowLoading, activeTab);
-  console.log("shou;d", shouldShowLoading, activeTab);
-  console.log("shou;d", shouldShowLoading, activeTab);
-  console.log("FROM LOADEDTAB", activeTab?.slug);
-  console.log("FROM LOADEDTAB", activeTab?.slug);
-  console.log("FROM LOADEDTAB", activeTab?.slug);
-  console.log("FROM LOADEDTAB", activeTab?.slug);
-  console.log("FROM LOADEDTAB", activeTab?.slug);
-  console.log("FROM LOADEDTAB", activeTab?.slug);
-  console.log("FROM LOADEDTAB", activeTab?.slug);
-
-  let skeleton =
-    activeTab?.slug === "dates" ? <SkeletonDates /> : <SkeletonOutline />;
+  let tabFromUrl = getTabFromPathname(location.pathname);
+  let skeleton = getSkeleton(tabFromUrl);
 
   return (
     <>

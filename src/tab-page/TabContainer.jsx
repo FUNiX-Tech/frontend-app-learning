@@ -6,15 +6,12 @@ import { OuterExamTimer } from "@edx/frontend-lib-special-exams";
 import { useModel } from "../generic/model-store";
 import TabPage from "./TabPage";
 
-const tabNames = ["outline", "dates", "courseware"];
-
 export default function TabContainer(props) {
   const { children, fetch, slice, tab } = props;
   const [tabStatus, setTabStatus] = useState("idle");
   const [prevTab, setPrevTab] = useState("");
 
   const { courseId: courseIdFromUrl } = useParams();
-  const location = useLocation();
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -61,17 +58,6 @@ export default function TabContainer(props) {
     courseStatus === "loading" ||
     justNavigatedFromOtherTab ||
     tabStatus === "pending";
-
-  console.log("from tabcontainer:::");
-  console.log("from tabcontainer:::");
-  console.log("from tabcontainer:::");
-  console.log("tab", tab);
-  console.log("prevTab", prevTab);
-  console.log("shouldShowLoading", shouldShowLoading);
-  console.log("courseStatus", courseStatus);
-  console.log("from tabcontainer:::");
-  console.log("from tabcontainer:::");
-  console.log("from tabcontainer:::");
 
   return (
     <TabPage
