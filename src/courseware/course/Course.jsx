@@ -1,10 +1,12 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import PropTypes from "prop-types";
 import { Helmet } from "react-helmet";
 import { useDispatch } from "react-redux";
 import { getConfig } from "@edx/frontend-platform";
 import { breakpoints, useWindowSize } from "@edx/paragon";
 import { useLocation } from "react-router-dom";
+import { getAuthenticatedUser } from "@edx/frontend-platform/auth";
+import { updateModel, updateModels } from "../../generic/model-store";
 
 import { AlertList } from "../../generic/user-messages";
 
@@ -34,6 +36,7 @@ import group_active from "./assets/group_active.svg";
 import group_hover from "./assets/group_hover.svg";
 import { toggleShowLeftbar, setOffMenuState } from "../../header/data/slice";
 import AIChatbot from "./AIChatbot/AIChatbot";
+import { getSequenceMetadata } from "../data/api";
 
 /** [MM-P2P] Experiment */
 import { initCoursewareMMP2P, MMP2PBlockModal } from "../../experiments/mm-p2p";
@@ -50,6 +53,17 @@ function Course({
   ///////////////////// chatbot /////////////////////////
   const isShowChatbot = useSelector((state) => state.header.isShowChatbot);
   ///////////////////// chatbot end /////////////////////
+  const dispatch = useDispatch();
+  //passed  project state
+  const [isPassedProject, setIsPassedProject] = useState(false);
+  //get user
+  const authenticatedUser = getAuthenticatedUser();
+  const [show, setShow] = useState(false);
+  const location = useLocation();
+  const [styling, setStyling] = useState("css-yeymkw");
+  const isShowLeftbar = useSelector((state) => state.header.isShowLeftbar);
+
+  const [groupSrc, setGroupSrc] = useState(group);
 
   const course = useModel("coursewareMeta", courseId);
   const {
@@ -70,13 +84,102 @@ function Course({
     return output;
   }, [rootCourseId, courses]);
 
+  //Complete All Sections Course
+  const isCompleteCourse = useMemo(() => {
+    const outputArr = [];
+    for (let value of courses[rootCourseId].sectionIds) {
+      outputArr.push(sections[value]);
+    }
+    return outputArr.every((section) => section.complete);
+  }, [rootCourseId, courses]);
+
   const pageTitleBreadCrumbs = [sequence, section, course]
     .filter((element) => element != null)
     .map((element) => element.title);
 
-  // Below the tabs, above the breadcrumbs alerts (appearing in the order listed here)
-  const dispatch = useDispatch();
+  //Get project name
+  const projectName = useMemo(() => {
+    const outputArr = [];
+    for (let value of courses[rootCourseId].sectionIds) {
+      outputArr.push(sections[value]);
+    }
+    return outputArr[outputArr.length - 1].title;
+  }, [rootCourseId, courses]);
 
+  const getPortalUrl = useCallback(async () => {
+    try {
+      const url = new URL(
+        `${getConfig().LMS_BASE_URL}/api/funix_portal/portal_host`
+      );
+      const data = await fetch(url.href);
+      const response = await data.json();
+      if (response) {
+        return response;
+      }
+    } catch (error) {}
+  }, []);
+
+  //Get Assignment Passed
+  const getAssignmentPassed = useCallback(async (url) => {
+    try {
+      const lesson_url = window.location.href;
+      const regex = /course-v1:([^/]+)/;
+      const course_id = lesson_url.match(regex)[0];
+      const dataSend = {
+        email: authenticatedUser.email,
+        project_name: projectName,
+        course_code: course_id,
+      };
+      const data = await fetch(`${url}/api/v1/project/user`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataSend),
+      });
+      const response = await data.json();
+      if (response) {
+        return response.data;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  //call func get passed state of project
+  useEffect(async () => {
+    const url = await getPortalUrl();
+    const data = await getAssignmentPassed(url.HOST);
+    if (data && data?.status === "passed") {
+      setIsPassedProject(true);
+    } else {
+      setIsPassedProject(false);
+    }
+  }, [location.pathname]);
+
+  const updatedUnitsAndSequence = useCallback(async (dispatch, sequenceId) => {
+    const { sequence, units } = await getSequenceMetadata(sequenceId);
+    if (sequence.blockType === "sequential") {
+      dispatch(
+        updateModel({
+          modelType: "sequences",
+          model: sequence,
+        })
+      );
+      dispatch(
+        updateModels({
+          modelType: "units",
+          models: units,
+        })
+      );
+    }
+  }, []);
+
+  useEffect(() => {
+    updatedUnitsAndSequence(dispatch, sequenceId);
+  }, [unitId, sequenceId]);
+
+  // Below the tabs, above the breadcrumbs alerts (appearing in the order listed here)
   const [firstSectionCelebrationOpen, setFirstSectionCelebrationOpen] =
     useState(false);
   // If streakLengthToCelebrate is populated, that modal takes precedence. Wait til the next load to display
@@ -118,13 +221,6 @@ function Course({
       )
     );
   }, [sequenceId]);
-
-  const [show, setShow] = useState(false);
-  const location = useLocation();
-  const [styling, setStyling] = useState("css-yeymkw");
-  const isShowLeftbar = useSelector((state) => state.header.isShowLeftbar);
-
-  const [groupSrc, setGroupSrc] = useState(group);
 
   // useEffect(() => {
   //   setStyling(
@@ -287,6 +383,7 @@ function Course({
               <h2 className="menu-lesson-title">Mục lục bài học</h2>
             </div>
             <SectionListUnit
+              sequenceIds={allSequenceIds}
               courseId={courseId}
               unitId={unitId}
               relativeHeight
@@ -359,6 +456,8 @@ function Course({
           mmp2p={MMP2P}
         />
         <Sequence
+          isPassedProject={isPassedProject}
+          isCompleteCourse={isCompleteCourse}
           sequenceIds={allSequenceIds}
           sequences={sequences}
           unitId={unitId}
