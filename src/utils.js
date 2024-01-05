@@ -11,7 +11,11 @@ export const appendBrowserTimezoneToUrl = (url) => {
   const browserTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const urlObject = new URL(url);
   if (browserTimezone) {
-    urlObject.searchParams.append('browser_timezone', browserTimezone);
+    urlObject.searchParams.append("browser_timezone", browserTimezone);
   }
   return urlObject.href;
 };
+
+export function urlToPath(url) {
+  return url.replace(/^https?:\/\/.+\/(.+\/)?course\//, "/course/");
+}
