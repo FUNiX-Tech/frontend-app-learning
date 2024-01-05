@@ -182,8 +182,8 @@ function Course({
     }
   }, []);
 
-  useEffect(() => {
-    updatedUnitsAndSequence(dispatch, sequenceId);
+  useEffect(async () => {
+    await updatedUnitsAndSequence(dispatch, sequenceId);
   }, [unitId, sequenceId]);
 
   // Below the tabs, above the breadcrumbs alerts (appearing in the order listed here)
