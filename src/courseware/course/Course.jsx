@@ -6,6 +6,7 @@ import { getConfig } from "@edx/frontend-platform";
 import { breakpoints, useWindowSize } from "@edx/paragon";
 import { useLocation } from "react-router-dom";
 import { getAuthenticatedUser } from "@edx/frontend-platform/auth";
+import { getAuthenticatedHttpClient } from "@edx/frontend-platform/auth";
 import { updateModel, updateModels } from "../../generic/model-store";
 
 import { AlertList } from "../../generic/user-messages";
@@ -111,10 +112,10 @@ function Course({
       const url = new URL(
         `${getConfig().LMS_BASE_URL}/api/funix_portal/portal_host`
       );
-      const data = await fetch(url.href);
-      const response = await data.json();
+      const response = await getAuthenticatedHttpClient().get(url.href);
+      // const response = await data.json();
       if (response) {
-        return response;
+        return response.data;
       }
     } catch (error) {}
   }, []);
@@ -158,20 +159,26 @@ function Course({
   }, [location.pathname]);
 
   const updatedUnitsAndSequence = useCallback(async (dispatch, sequenceId) => {
-    const { sequence, units } = await getSequenceMetadata(sequenceId);
-    if (sequence.blockType === "sequential") {
-      dispatch(
-        updateModel({
-          modelType: "sequences",
-          model: sequence,
-        })
-      );
-      dispatch(
-        updateModels({
-          modelType: "units",
-          models: units,
-        })
-      );
+    if (sequenceId) {
+      try {
+        const { sequence, units } = await getSequenceMetadata(sequenceId);
+        if (sequence.blockType === "sequential") {
+          dispatch(
+            updateModel({
+              modelType: "sequences",
+              model: sequence,
+            })
+          );
+          dispatch(
+            updateModels({
+              modelType: "units",
+              models: units,
+            })
+          );
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
   }, []);
 

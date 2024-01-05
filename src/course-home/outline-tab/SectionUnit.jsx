@@ -45,9 +45,10 @@ function SectionUnit({
     setOpen(defaultOpen);
   }, []);
 
-  const sectionTitle = (
-    <div className=" w-100 m-0">
-      {/* <div className=" p-0">
+  // const sectionTitle = (
+  //   <div className=" w-100 m-0">
+  {
+    /* <div className=" p-0">
         {complete ? (
           <FontAwesomeIcon
             icon={fasCheckCircle}
@@ -65,15 +66,18 @@ function SectionUnit({
             title={intl.formatMessage(messages.incompleteSection)}
           />
         )}
-      </div> */}
-      {/* <div className=" ml-3 p-0 font-weight-bold text-dark-500">
+      </div> */
+  }
+  {
+    /* <div className=" ml-3 p-0 font-weight-bold text-dark-500">
         <span className="align-middle">{title}</span>
             <span className="sr-only">
         {intl.formatMessage(complete ? messages.completedSection : messages.incompleteSection)}
         </span>
-      </div> */}
-    </div>
-  );
+      </div> */
+  }
+  //   </div>
+  // );
   useEffect(() => {
     sequenceIds.map((sequenceId, index) => {
       const sequence = sequences[sequenceId];

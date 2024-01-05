@@ -5,11 +5,26 @@
 
 @import "~@edx/frontend-component-footer/dist/footer";
 // @import "https://askmentor.funix.edu.vn/hf40-livechat/hf40-livechat.css";
-@import "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css";
+// @import "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css";
+@import "./assets/font-awesome-4.7.0/css/font-awesome.min.css";
 
 :root {
   //loading
   --bg-color-loading: #ececec;
+}
+@font-face {
+  font-family: "Roboto";
+  src: url(./assets/fonts/Roboto-Medium.woff2) format("woff2");
+  font-weight: 500;
+}
+@font-face {
+  font-family: "Roboto";
+  src: url(./assets/fonts/Roboto-Regular.woff2) format("woff2");
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Roboto Serif";
+  src: url(./assets/fonts/RobotoSerif.woff2) format("woff2");
 }
 
 body {
@@ -37,11 +52,11 @@ body {
       box-sizing: content-box;
       position: relative;
       top: 0.1em;
-      height: 2rem;
 
       img {
         display: block;
-        height: 100%;
+        width: 4.22875rem;
+        height: 2rem;
       }
     }
   }
