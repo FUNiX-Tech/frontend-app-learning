@@ -14,6 +14,9 @@ const Dashboard = ({ intl }) => {
   const [listCourse, setListCourse] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  //icon src
+  const [iconVectorSrc, setIconVectorSrc] = useState(iconVector);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -66,7 +69,12 @@ const Dashboard = ({ intl }) => {
               {listCourse.length == 0 && !loading && (
                 <>
                   <span className="d-flex flex-column  align-items-center model-not-course ">
-                    <img src={iconVector} width="37px" height="30px" />
+                    <img
+                      src={iconVectorSrc}
+                      width="37px"
+                      height="30px"
+                      alt="iconVector"
+                    />
                     <span className="text-not-course">
                       {intl.formatMessage(messages.notCourse)}
                     </span>

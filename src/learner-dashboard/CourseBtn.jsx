@@ -2,6 +2,8 @@ import PropTypes from "prop-types";
 import { getConfig } from "@edx/frontend-platform";
 import messages from "./messages";
 import { injectIntl, intlShape } from "@edx/frontend-platform/i18n";
+import { Link } from "react-router-dom";
+import { urlToPath } from "../utils";
 
 const CourseBtn = ({ intl, courseRun }) => {
   return (
@@ -29,11 +31,14 @@ const CourseBtn = ({ intl, courseRun }) => {
               <span>{intl.formatMessage(messages.btnIntroductionCourse)}</span>
             </button>
           </a>
-          <a href={courseRun.homeUrl} className="remove-link-effect">
+          <Link
+            to={urlToPath(courseRun.homeUrl)}
+            className="remove-link-effect"
+          >
             <button className="primary-btn-medium btn-modify">
               <span>{intl.formatMessage(messages.btnBeginCourse)}</span>
             </button>
-          </a>
+          </Link>
         </>
       )}
     </>

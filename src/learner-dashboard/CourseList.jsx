@@ -4,6 +4,8 @@ import messages from "./messages";
 import { getConfig } from "@edx/frontend-platform";
 import CourseLoading from "./CourseLoading";
 import CourseBtn from "./CourseBtn";
+import { urlToPath } from "../utils";
+import { Link } from "react-router-dom";
 
 const CourseList = ({ intl, courses }) => {
   return (
@@ -14,41 +16,28 @@ const CourseList = ({ intl, courses }) => {
         if (complete) {
           complete_ = complete_.toFixed(0);
         }
+        const imgPath = courseRun.resumeUrl
+          ? urlToPath(courseRun.resumeUrl)
+          : urlToPath(courseRun.homeUrl);
+
+        const titlePath = imgPath;
+
         return (
           <div className="d-flex border w-100 " key={courseRun.courseId}>
             <div className="">
-              {courseRun.resumeUrl ? (
-                <a href={`${getConfig().LMS_BASE_URL}${courseRun.resumeUrl}`}>
-                  <img
-                    src={`${getConfig().LMS_BASE_URL}${course.bannerImgSrc}`}
-                    width="346px"
-                    height="193px"
-                  />
-                </a>
-              ) : (
-                <a href={courseRun.homeUrl}>
-                  <img
-                    src={`${getConfig().LMS_BASE_URL}${course.bannerImgSrc}`}
-                    width="346px"
-                    height="193px"
-                  />
-                </a>
-              )}
+              <Link to={imgPath}>
+                <img
+                  src={`${getConfig().LMS_BASE_URL}${course.bannerImgSrc}`}
+                  width="346px"
+                  height="193px"
+                />
+              </Link>
             </div>
             <div className="p-3 w-100 d-flex flex-column justify-content-between">
               <div className="course-title">
-                {courseRun.resumeUrl ? (
-                  <a
-                    className="text-course-title"
-                    href={`${getConfig().LMS_BASE_URL}${courseRun.resumeUrl}`}
-                  >
-                    {course.courseName}
-                  </a>
-                ) : (
-                  <a className="text-course-title" href={courseRun.homeUrl}>
-                    {course.courseName}
-                  </a>
-                )}
+                <Link className="text-course-title" to={titlePath}>
+                  {course.courseName}
+                </Link>
 
                 <span className="text-course-name">
                   {courseProvider.name} - {course.courseNumber}

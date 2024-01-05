@@ -12,6 +12,7 @@ import notification_icon from "./assets/notification.svg";
 import avatar_icon from "./assets/avatar.svg";
 import useScroll from "../course-tabs/useScroll";
 import { NavLink } from "react-router-dom";
+import { useState } from "react";
 
 const HeaderLearning = ({
   courseOrg,
@@ -24,6 +25,11 @@ const HeaderLearning = ({
 }) => {
   const authenticatedUser = getAuthenticatedUser();
   const { courseId: courseIdFromUrl } = useParams();
+
+  //notification icon
+  const [notificationSrc, setNotificationSrc] = useState(notification_icon);
+  //header logo
+  const [headerLogoSrc, setHeaderLogoSrc] = useState(getConfig().LOGO_URL);
 
   // useEffect(async()=>{
   //   try {
@@ -44,11 +50,11 @@ const HeaderLearning = ({
 
   // Header for dashboard
   const headerDashboard = (
-    <div className="d-flex align-items-center course-title-lockup">
-      <ul>
-        <li>
+    <div className="d-flex align-items-center course-title-lockup h-100">
+      <ul className="h-100">
+        <li className="h-100">
           <NavLink
-            className="header-dashboard-link"
+            className="d-flex align-items-center header-dashboard-link h-100"
             activeClassName="active"
             end
             to="/dashboard"
@@ -79,6 +85,9 @@ const HeaderLearning = ({
       className={`${
         isDashoard ? "learning-header dashboard" : "learning-header"
       }`}
+      style={{
+        height: "4rem",
+      }}
     >
       {/* <a className="sr-only sr-only-focusable" href="#main-content">{intl.formatMessage(messages.skipNavLink)}</a> */}
       {/* <div className="container-xl py-2 d-flex align-items-center">
@@ -109,7 +118,7 @@ const HeaderLearning = ({
 
       <div
         className={`${
-          !isDashoard ? "header2-container" : "header1-container"
+          !isDashoard ? "header2-container" : "header1-container h-100"
         } d-flex align-items-center`}
       >
         <div className="logo-container">
@@ -118,28 +127,26 @@ const HeaderLearning = ({
             href={`${getConfig().LMS_BASE_URL}/dashboard`}
             className="logo logo_img"
           >
-            <img
-              className="d-block"
-              src={getConfig().LOGO_URL}
-              alt={getConfig().LOGO_URL}
-            />
+            <img className="d-block" src={headerLogoSrc} alt={headerLogoSrc} />
           </a>
         </div>
 
         <div
           className={`${
             isDashoard
-              ? "d-flex align-items-center course-title-lockup header-dashboard"
+              ? "d-flex align-items-center course-title-lockup header-dashboard h-100"
               : "d-flex align-items-center course-title-lockup"
           }`}
         >
-          <span className={`${isDashoard ? "d-block" : "d-block header-2"}`}>
+          <span
+            className={`${isDashoard ? "d-block h-100" : "d-block header-2"}`}
+          >
             {isDashoard ? headerDashboard : titleContent}
           </span>
         </div>
         <div className="actions d-flex align-items-center">
           <button className="action-button">
-            <img src={notification_icon} alt={notification_icon} />
+            <img src={notificationSrc} alt={notificationSrc} />
           </button>
           {/* <button className="action-button">
             <img src={avatar_icon} alt={avatar_icon} />
