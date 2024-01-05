@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Footer.scss";
 import logo from "./assets/logo.png";
 
@@ -7,13 +7,14 @@ import phone_icon from "./assets/phone_icon.svg";
 import email_icon from "./assets/mail_icon.svg";
 
 export default function Footer() {
+  const [footerLogoSrc, setFooterLogoSrc] = useState(logo);
   return (
     <footer id="custom-footer" className="border-top">
       <div className="footer-container">
         {/* Logo, address, phone */}
         <div className="footer-section">
           <div className="footer-section-logo">
-            <img src={logo} alt="logo" />
+            <img src={footerLogoSrc} alt="footer-logo" />
           </div>
           {/* <p className="footer-section-location">
             <img src={location_icon} alt="location_icon" />

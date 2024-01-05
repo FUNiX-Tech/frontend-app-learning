@@ -12,6 +12,7 @@ import notification_icon from "./assets/notification.svg";
 import avatar_icon from "./assets/avatar.svg";
 import useScroll from "../course-tabs/useScroll";
 import { NavLink } from "react-router-dom";
+import { useState } from "react";
 
 const HeaderLearning = ({
   courseOrg,
@@ -24,6 +25,11 @@ const HeaderLearning = ({
 }) => {
   const authenticatedUser = getAuthenticatedUser();
   const { courseId: courseIdFromUrl } = useParams();
+
+  //notification icon
+  const [notificationSrc, setNotificationSrc] = useState(notification_icon);
+  //header logo
+  const [headerLogoSrc, setHeaderLogoSrc] = useState(getConfig().LOGO_URL);
 
   // useEffect(async()=>{
   //   try {
@@ -121,11 +127,7 @@ const HeaderLearning = ({
             href={`${getConfig().LMS_BASE_URL}/dashboard`}
             className="logo logo_img"
           >
-            <img
-              className="d-block"
-              src={getConfig().LOGO_URL}
-              alt={getConfig().LOGO_URL}
-            />
+            <img className="d-block" src={headerLogoSrc} alt={headerLogoSrc} />
           </a>
         </div>
 
@@ -144,7 +146,7 @@ const HeaderLearning = ({
         </div>
         <div className="actions d-flex align-items-center">
           <button className="action-button">
-            <img src={notification_icon} alt={notification_icon} />
+            <img src={notificationSrc} alt={notificationSrc} />
           </button>
           {/* <button className="action-button">
             <img src={avatar_icon} alt={avatar_icon} />
