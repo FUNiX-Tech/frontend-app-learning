@@ -26,6 +26,7 @@ import FeedbackActive from "./assets/Feedback_active.svg";
 import ChatbotActive from "./assets/Chatbot_active.svg";
 import useScroll from "./useScroll";
 import SkeletonTabs from "./SkeletonTabs";
+import { urlToPath } from "../utils";
 
 function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
   //icon src state
@@ -94,10 +95,7 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
               ? SkeletonTabs
               : tabs.map(({ url, title, slug }) => {
                   if (url.endsWith("/home") || url.endsWith("/dates")) {
-                    const to = url.replace(
-                      /^https?:\/\/.+\/(.+\/)?course\//,
-                      "/course/"
-                    );
+                    const to = urlToPath(url);
                     return (
                       <NavLink
                         key={slug}
