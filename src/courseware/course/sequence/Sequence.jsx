@@ -190,8 +190,8 @@ function Sequence({
         }
       }
       if (type == 'quiz_submit'){
-        const buttonOnClick = isLastUnit ? goToCourseExitPage : handleNext;
-        buttonOnClick()
+        const {sequental_id , vertical_id  } = event.data
+        history.push(`/course/${courseId}/${sequental_id}/${vertical_id}`);
       }
       /** resize unit height */
       if (type === "unit.resize") {
