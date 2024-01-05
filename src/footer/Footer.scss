@@ -18,13 +18,12 @@
     .footer-section {
       .footer-section-logo {
         display: block;
-        width: 4.22875rem;
+
         margin-right: 2.5rem;
         & img {
           display: block;
-          width: auto;
+          width: 4.22875rem;
           height: 2rem;
-          object-fit: cover;
         }
       }
 

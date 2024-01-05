@@ -10,7 +10,7 @@ import {
   setOffMenuState,
   setOnMenuState,
 } from "../header/data/slice";
-import { useLocation } from "react-router-dom";
+import { useLocation, NavLink, Link } from "react-router-dom";
 
 import messages from "./messages";
 import Tabs from "../generic/tabs/Tabs";
@@ -24,8 +24,8 @@ import ChatbotHover from "./assets/Chatbot_hover.svg";
 import RightMenuActive from "./assets/RightMenu_active.svg";
 import FeedbackActive from "./assets/Feedback_active.svg";
 import ChatbotActive from "./assets/Chatbot_active.svg";
-
 import useScroll from "./useScroll";
+import SkeletonTabs from "./SkeletonTabs";
 
 function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
   //icon src state
@@ -74,40 +74,64 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
   }, [pathname, isShowChatbot, isShowFeedback]);
 
   return (
-    <div
-      id="courseTabsNavigation"
-      className={classNames(
-        "course-tabs-navigation",
-        className,
-        // `${scrollY > 50 ? "fixed-position" : ""}`
-        "fixed-position"
-      )}
-    >
-      {/* sub Header - done */}
-      <div className="sub-header-container">
-        <Tabs
-          className="nav-underline-tabs d-flex sub-header-content"
-          aria-label={intl.formatMessage(messages.courseMaterial)}
-        >
-          {tabs.map(({ url, title, slug }) => {
-            return (
-              <a
-                key={slug}
-                className={classNames("nav-item flex-shrink-0 nav-link", {
-                  active: slug === activeTabSlug,
-                })}
-                href={url}
-              >
-                {title}
-              </a>
-            );
-          })}
-        </Tabs>
+    <>
+      <div
+        id="courseTabsNavigation"
+        className={classNames(
+          "course-tabs-navigation",
+          className,
+          // `${scrollY > 50 ? "fixed-position" : ""}`
+          "fixed-position"
+        )}
+      >
+        {/* sub Header - done */}
+        <div className="sub-header-container">
+          <Tabs
+            className="nav-underline-tabs d-flex sub-header-content"
+            aria-label={intl.formatMessage(messages.courseMaterial)}
+          >
+            {!tabs
+              ? SkeletonTabs
+              : tabs.map(({ url, title, slug }) => {
+                  if (url.endsWith("/home") || url.endsWith("/dates")) {
+                    const to = url.replace(
+                      /^https?:\/\/.+\/(.+\/)?course\//,
+                      "/course/"
+                    );
+                    return (
+                      <NavLink
+                        key={slug}
+                        className={classNames(
+                          "nav-item flex-shrink-0 nav-link",
+                          {
+                            active: slug === activeTabSlug,
+                          }
+                        )}
+                        to={to}
+                      >
+                        {title}
+                      </NavLink>
+                    );
+                  }
 
-        {/* sub header Icon */}
-        {!hideMenu && (
-          <div className="sub-header-icon d-flex">
-            {/* <div className="sub-header-icon-item tool-tip-1">
+                  return (
+                    <a
+                      key={slug}
+                      className={classNames("nav-item flex-shrink-0 nav-link", {
+                        active: slug === activeTabSlug,
+                      })}
+                      href={url}
+                    >
+                      {title}
+                    </a>
+                  );
+                })}
+          </Tabs>
+
+          {/* sub header Icon */}
+          {!hideMenu && (
+            <div className="sub-header-icon d-flex">
+              {/* <div className="sub-header-icon-item tool-tip-1">
               <img
                 onMouseOver={() => {
                   if (!isShowRightMenu) {
@@ -130,56 +154,57 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
               />
             </div> */}
 
-            <div className="sub-header-icon-item tool-tip-3">
-              <img
-                onMouseOver={() => {
-                  if (!isShowChatbot) {
-                    setChatbotSrc(ChatbotHover);
-                  }
-                }}
-                onMouseOut={() => {
-                  if (!isShowChatbot) {
-                    setChatbotSrc(Chatbot);
-                  } else {
-                    setChatbotSrc(ChatbotActive);
-                  }
-                }}
-                src={chatbotSrc}
-                alt={`Chatbot`}
-                onClick={() => {
-                  setRightMenuSrc(RightMenu);
-                  setFeedbackSrc(Feedback);
-                  setChatbotSrc(ChatbotActive);
-                  dispatch(toggleShowChatbot());
-                }}
-              />
-            </div>
-            <div className="sub-header-icon-item tool-tip-2">
-              <img
-                onMouseOver={() => {
-                  setFeedbackSrc(FeedbackHover);
-                }}
-                onMouseOut={() => {
-                  if (!isShowFeedback) {
+              <div className="sub-header-icon-item tool-tip-3">
+                <img
+                  onMouseOver={() => {
+                    if (!isShowChatbot) {
+                      setChatbotSrc(ChatbotHover);
+                    }
+                  }}
+                  onMouseOut={() => {
+                    if (!isShowChatbot) {
+                      setChatbotSrc(Chatbot);
+                    } else {
+                      setChatbotSrc(ChatbotActive);
+                    }
+                  }}
+                  src={chatbotSrc}
+                  alt={`Chatbot`}
+                  onClick={() => {
+                    setRightMenuSrc(RightMenu);
                     setFeedbackSrc(Feedback);
-                  } else {
+                    setChatbotSrc(ChatbotActive);
+                    dispatch(toggleShowChatbot());
+                  }}
+                />
+              </div>
+              <div className="sub-header-icon-item tool-tip-2">
+                <img
+                  onMouseOver={() => {
+                    setFeedbackSrc(FeedbackHover);
+                  }}
+                  onMouseOut={() => {
+                    if (!isShowFeedback) {
+                      setFeedbackSrc(Feedback);
+                    } else {
+                      setFeedbackSrc(FeedbackActive);
+                    }
+                  }}
+                  src={feedbackSrc}
+                  alt={`Feedback`}
+                  onClick={() => {
+                    setRightMenuSrc(RightMenu);
                     setFeedbackSrc(FeedbackActive);
-                  }
-                }}
-                src={feedbackSrc}
-                alt={`Feedback`}
-                onClick={() => {
-                  setRightMenuSrc(RightMenu);
-                  setFeedbackSrc(FeedbackActive);
-                  setChatbotSrc(Chatbot);
-                  dispatch(toggleShowFeedback());
-                }}
-              />
+                    setChatbotSrc(Chatbot);
+                    dispatch(toggleShowFeedback());
+                  }}
+                />
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

@@ -34,6 +34,8 @@ import CourseLoading from "../../../learner-dashboard/CourseLoading";
 import { useSequenceNavigationMetadata } from "./sequence-navigation/hooks";
 
 
+import SkeletonSequence from "./SkeletonSequence";
+
 function Sequence({
   unitId,
   sequenceId,
@@ -230,6 +232,8 @@ function Sequence({
     if (!sequenceId) {
       return <div> {intl.formatMessage(messages.noContent)} </div>;
     }
+
+    return <SkeletonSequence />;
     return (
       // <PageLoading srMessage={intl.formatMessage(messages.loadingSequence)} />
 

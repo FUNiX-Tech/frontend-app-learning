@@ -22,8 +22,6 @@ const HeaderLearning = ({
   loading,
   isDashoard,
 }) => {
-  // console.log('=======', courseOrg, courseNumber, courseTitle)
-
   const authenticatedUser = getAuthenticatedUser();
   const { courseId: courseIdFromUrl } = useParams();
 

@@ -57,7 +57,7 @@ function SectionListUnit({
   //   };
 
   const rootCourseId = courses && Object.keys(courses)[0];
-
+  
   return (
     <ol
       id="courseHome-utline"
