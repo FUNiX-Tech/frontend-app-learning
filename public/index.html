@@ -10,14 +10,20 @@
       type="image/x-icon"
     />
     <link
-      rel="stylesheet"
+      rel="preload"
+      as="style"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
     />
-    <% if (htmlWebpackPlugin.options.OPTIMIZELY_PROJECT_ID) { %>
-    <script src="https://www.edx.org/optimizelyjs/<%= htmlWebpackPlugin.options.OPTIMIZELY_PROJECT_ID %>.js"></script>
-    <% } %>
+    <link
+      rel="preload"
+      as="style"
+      src="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"
+    />
   </head>
   <body>
     <div id="root"></div>
+    <% if (htmlWebpackPlugin.options.OPTIMIZELY_PROJECT_ID) { %>
+    <script src="https://www.edx.org/optimizelyjs/<%= htmlWebpackPlugin.options.OPTIMIZELY_PROJECT_ID %>.js"></script>
+    <% } %>
   </body>
 </html>
