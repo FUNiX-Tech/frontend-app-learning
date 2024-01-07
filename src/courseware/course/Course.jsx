@@ -55,6 +55,7 @@ function Course({
   const isShowChatbot = useSelector((state) => state.header.isShowChatbot);
   ///////////////////// chatbot end /////////////////////
   const dispatch = useDispatch();
+
   //passed  project state
   const [isPassedProject, setIsPassedProject] = useState(false);
   //get user
@@ -150,41 +151,13 @@ function Course({
   //call func get passed state of project
   useEffect(async () => {
     const url = await getPortalUrl();
-    const data = await getAssignmentPassed(url.HOST);
+    const data = url && (await getAssignmentPassed(url.HOST));
     if (data && data?.status === "passed") {
       setIsPassedProject(true);
     } else {
       setIsPassedProject(false);
     }
   }, [location.pathname]);
-
-  const updatedUnitsAndSequence = useCallback(async (dispatch, sequenceId) => {
-    if (sequenceId) {
-      try {
-        const { sequence, units } = await getSequenceMetadata(sequenceId);
-        if (sequence.blockType === "sequential") {
-          dispatch(
-            updateModel({
-              modelType: "sequences",
-              model: sequence,
-            })
-          );
-          dispatch(
-            updateModels({
-              modelType: "units",
-              models: units,
-            })
-          );
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  }, []);
-
-  useEffect(async () => {
-    await updatedUnitsAndSequence(dispatch, sequenceId);
-  }, [unitId, sequenceId]);
 
   // Below the tabs, above the breadcrumbs alerts (appearing in the order listed here)
   const [firstSectionCelebrationOpen, setFirstSectionCelebrationOpen] =
@@ -389,6 +362,7 @@ function Course({
             >
               <h2 className="menu-lesson-title">Mục lục bài học</h2>
             </div>
+
             <SectionListUnit
               sequenceIds={allSequenceIds}
               courseId={courseId}
@@ -397,6 +371,7 @@ function Course({
               useHistory
               lesson
               showLeftbarContent={isShowLeftbar}
+              sequenceId={sequenceId}
             />
           </React.Fragment>
         </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import { Link, NavLink } from "react-router-dom";
@@ -14,7 +14,7 @@ import { faCheckCircle as farCheckCircle } from "@fortawesome/free-regular-svg-i
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { history } from "@edx/frontend-platform";
 import EffortEstimate from "../../shared/effort-estimate";
-import { useModel } from "../../generic/model-store";
+import { useModel, useModels } from "../../generic/model-store";
 import { useLocation } from "react-router-dom";
 
 import messages from "./messages";
@@ -39,13 +39,16 @@ function CollapsibleSequenceLinkUnit({
   unitId,
   hasOneComplete,
   complete,
+  newSequences,
 }) {
   const sequence = sequences[id];
+  let newSequence;
+  if (Object.keys(newSequences).length > 0) {
+    newSequence = newSequences[id];
+  }
+  // const newSequence = newSequences[id];
   const { description, due, legacyWebUrl, showLink, title, sequenceIds } =
     sequence;
-  //save unit sequenceId
-  //location
-  const location = useLocation();
 
   //Set open full text if true
 
@@ -83,7 +86,9 @@ function CollapsibleSequenceLinkUnit({
   let coursewareUrl = canLoadCourseware ? (
     <NavLink
       className={`${
-        complete ? "complete" : `${hasOneComplete && "add-padding-left-16"}`
+        newSequence.complete || complete
+          ? "complete"
+          : `${hasOneComplete && "add-padding-left-16"}`
       }`}
       activeClassName="active"
       to={`/course/${courseId}/${id}`}
@@ -100,7 +105,9 @@ function CollapsibleSequenceLinkUnit({
       coursewareUrl = (
         <NavLink
           className={`${
-            complete ? "complete" : `${hasOneComplete && "add-padding-left-16"}`
+            newSequence?.complete || complete
+              ? "complete"
+              : `${hasOneComplete && "add-padding-left-16"}`
           }`}
           activeClassName="active"
           // to={`/course/${courseId}/${id}/${firstSequence}`}
@@ -116,7 +123,9 @@ function CollapsibleSequenceLinkUnit({
       coursewareUrl = (
         <NavLink
           className={`${
-            complete ? "complete" : `${hasOneComplete && "add-padding-left-16"}`
+            newSequence?.complete || complete
+              ? "complete"
+              : `${hasOneComplete && "add-padding-left-16"}`
           }`}
           activeClassName="active"
           to={`/course/${courseId}/${id}`}
@@ -138,7 +147,7 @@ function CollapsibleSequenceLinkUnit({
         <div className="text-break">
           <span className="d-flex align-items-flex-start align-middle">
             <React.Fragment>
-              {complete ? (
+              {newSequence?.complete || complete ? (
                 // <FontAwesomeIcon
                 //   icon={fasCheckCircle}
 
@@ -240,14 +249,14 @@ function CollapsibleSequenceLinkUnit({
       >
         <ol
           className={`${
-            complete || hasOneComplete
+            newSequence?.complete || complete || hasOneComplete
               ? "list-unstyled add-padding-left-16"
               : "list-unstyled"
           }`}
         >
           {sequenceIds.map((sequenceId) => {
             const sequenceData = sequences[sequenceId];
-
+            const unit = useModel("units", sequenceId);
             return (
               <li key={sequenceId}>
                 {/* <div className={classNames("", { "mt-2": !first })}> */}
@@ -278,7 +287,7 @@ function CollapsibleSequenceLinkUnit({
                   <div className="col text-break unit-link-wrapper p-0">
                     <NavLink
                       className={`${
-                        sequenceData.complete
+                        (unit && unit.complete) || sequenceData.complete
                           ? "unit-link complete-unit"
                           : "unit-link"
                       }`}
