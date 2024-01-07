@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 // import {
 //   injectIntl,
@@ -8,6 +8,7 @@ import PropTypes from "prop-types";
 
 import SectionUnit from "./SectionUnit";
 import { useModel } from "../../generic/model-store";
+import { getOutlineTabData } from "../data/api";
 
 const MAX_HEIGHT_PERCENT = 80;
 
@@ -20,6 +21,7 @@ function SectionListUnit({
   unitId,
   showLeftbarContent,
   sequenceIds,
+  sequenceId,
 }) {
   const [height, setHeight] = useState(window.height);
   const resizeObserver = new ResizeObserver(() => {
@@ -55,9 +57,19 @@ function SectionListUnit({
   //     maxHeight: `${height}px`,
   //     overflow : 'auto',
   //   };
+  //newSequences
+  const [newSequences, setNewSequences] = useState([]);
 
   const rootCourseId = courses && Object.keys(courses)[0];
-  
+  useEffect(async () => {
+    if (courseId) {
+      const data = await getOutlineTabData(courseId);
+      if (data) {
+        setNewSequences(data.courseBlocks.sequences);
+      }
+    }
+  }, [unitId, sequenceId, courseId]);
+
   return (
     <ol
       id="courseHome-utline"
@@ -80,6 +92,7 @@ function SectionListUnit({
             lesson={lesson}
             unitId={unitId}
             allSequenceIds={sequenceIds}
+            newSequences={newSequences}
           />
         );
       })}

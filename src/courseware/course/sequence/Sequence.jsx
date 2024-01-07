@@ -33,7 +33,6 @@ import { MMP2PFlyover, MMP2PFlyoverMobile } from "../../../experiments/mm-p2p";
 import CourseLoading from "../../../learner-dashboard/CourseLoading";
 import { useSequenceNavigationMetadata } from "./sequence-navigation/hooks";
 
-
 import SkeletonSequence from "./SkeletonSequence";
 
 function Sequence({
@@ -64,8 +63,8 @@ function Sequence({
     useWindowSize().width < breakpoints.small.minWidth;
 
   const { isFirstUnit, isLastUnit } = useSequenceNavigationMetadata(
-      sequenceId,
-      unitId
+    sequenceId,
+    unitId
   );
 
   const handleNext = () => {
@@ -80,7 +79,6 @@ function Sequence({
     } else {
       nextSequenceHandler();
     }
-    
   };
 
   const handlePrevious = () => {
@@ -192,8 +190,8 @@ function Sequence({
           });
         }
       }
-      if (type == 'quiz_submit'){
-        const {sequental_id , vertical_id  } = event.data
+      if (type == "quiz_submit") {
+        const { sequental_id, vertical_id } = event.data;
         history.push(`/course/${courseId}/${sequental_id}/${vertical_id}`);
       }
       /** resize unit height */
@@ -234,25 +232,6 @@ function Sequence({
     }
 
     return <SkeletonSequence />;
-    return (
-      // <PageLoading srMessage={intl.formatMessage(messages.loadingSequence)} />
-
-      <div
-        className="pb-3 d-flex flex-column position-absolute"
-        style={{
-          gap: "10px",
-          maxWidth: "50%",
-          paddingRight: "2rem",
-          paddingTop: "0.5rem",
-          left: "calc(50% + 2.5rem)",
-          transform: "translateX(-50%)",
-        }}
-      >
-        <CourseLoading courseLearning />
-        <CourseLoading courseLearning />
-        <CourseLoading courseLearning />
-      </div>
-    );
   }
 
   if (sequenceStatus === "loaded" && sequence.isHiddenAfterDue) {
