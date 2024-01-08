@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { injectIntl, intlShape } from "@edx/frontend-platform/i18n";
+import { getConfig } from "@edx/frontend-platform";
 import classNames from "classnames";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -27,7 +28,8 @@ import ChatbotActive from "./assets/Chatbot_active.svg";
 import useScroll from "./useScroll";
 import SkeletonTabs from "./SkeletonTabs";
 import { urlToPath } from "../utils";
-
+import { fetchDashboard } from "../course-home/data";
+import { setCourseInRun } from "../course-home/data/slice";
 function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
   //icon src state
   const [rightMenuSrc, setRightMenuSrc] = useState(RightMenu);
@@ -41,6 +43,7 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
   );
   const isShowFeedback = useSelector((state) => state.header.isShowFeedback);
   const isShowChatbot = useSelector((state) => state.header.isShowChatbot);
+  const courseInRun = useSelector((state) => state.courseHome.courseInRun);
 
   //redux dispatch
   const dispatch = useDispatch();
@@ -48,6 +51,8 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
   //location
   const location = useLocation();
   const pathname = location.pathname;
+  // memoized ResumUrl
+  let memoizedResumUrl = useRef(null);
 
   //Handle load effect set active icon
   useEffect(() => {
@@ -74,6 +79,31 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
     }
   }, [pathname, isShowChatbot, isShowFeedback]);
 
+  //get running course
+  useEffect(() => {
+    const fetchCourse = async () => {
+      try {
+        const data = await fetchDashboard();
+
+        const lesson_url = window.location.href;
+
+        const regex = /course-v1:([^/]+)/;
+        const course_id = lesson_url.match(regex)[0];
+        const course = data.courses.find(
+          (course) => course.courseRun.courseId === course_id
+        );
+        if (course) {
+          dispatch(setCourseInRun(course));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchCourse();
+    return () => {
+      fetchCourse();
+    };
+  }, [dispatch]);
   return (
     <>
       <div
@@ -93,23 +123,52 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
           >
             {!tabs
               ? SkeletonTabs
-              : tabs.map(({ url, title, slug }) => {
+              : tabs.map(({ url, title, slug }, index) => {
                   if (url.endsWith("/home") || url.endsWith("/dates")) {
-                    const to = urlToPath(url);
-                    return (
-                      <NavLink
-                        key={slug}
-                        className={classNames(
-                          "nav-item flex-shrink-0 nav-link",
-                          {
-                            active: slug === activeTabSlug,
-                          }
-                        )}
-                        to={to}
-                      >
-                        {title}
-                      </NavLink>
-                    );
+                    const resumeUrl = courseInRun?.courseRun.resumeUrl
+                      ? pathname.includes("/dates")
+                        ? `${getConfig().LMS_BASE_URL}${
+                            courseInRun.courseRun.resumeUrl
+                          }`
+                        : "#"
+                      : "#";
+                    const to = index === 0 ? resumeUrl : urlToPath(url);
+                    if (index !== 0) {
+                      return (
+                        <NavLink
+                          key={slug}
+                          className={classNames(
+                            "nav-item flex-shrink-0 nav-link",
+                            {
+                              active: slug === activeTabSlug,
+                            }
+                          )}
+                          to={to}
+                        >
+                          {title}
+                        </NavLink>
+                      );
+                    } else {
+                      return (
+                        <a
+                          key={slug}
+                          className={classNames(
+                            "nav-item flex-shrink-0 nav-link",
+                            {
+                              active: slug === activeTabSlug,
+                            }
+                          )}
+                          href={to}
+                          onClick={(e) => {
+                            if (to == "#") {
+                              e.preventDefault();
+                            }
+                          }}
+                        >
+                          {title}
+                        </a>
+                      );
+                    }
                   }
 
                   return (

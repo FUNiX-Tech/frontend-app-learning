@@ -135,7 +135,7 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
             const shouldDisplayContent = isSelectedUnit && thisUnitIsLoaded;
 
             return (
-              <>
+              <div key={e.id}>
                 {isSelectedUnit && !thisUnitIsLoaded && (
                   <div>
                     <br />
@@ -176,7 +176,7 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
                   }}
                   height={iframeHeightValues.find((h) => h.id === e.id)?.height}
                 />
-              </>
+              </div>
             );
           })}
         </div>
