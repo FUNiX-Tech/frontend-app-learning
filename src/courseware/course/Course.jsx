@@ -121,37 +121,38 @@ function Course({
     } catch (error) {}
   }, []);
 
-  //Get Assignment Passed
-  const getAssignmentPassed = useCallback(async (url) => {
-    try {
-      const lesson_url = window.location.href;
-      const regex = /course-v1:([^/]+)/;
-      const course_id = lesson_url.match(regex)[0];
-      const dataSend = {
-        email: authenticatedUser.email,
-        project_name: projectName,
-        course_code: course_id,
-      };
-      const data = await fetch(`${url}/api/v1/project/user`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(dataSend),
-      });
-      const response = await data.json();
-      if (response) {
-        return response.data;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
-
   //call func get passed state of project
-  useEffect(async () => {
-    const url = await getPortalUrl();
-    const data = url && (await getAssignmentPassed(url.HOST));
+  useEffect(() => {
+    //Get Assignment Passed
+    const getAssignmentPassed = async () => {
+      try {
+        const url = await getPortalUrl();
+
+        const lesson_url = window.location.href;
+        const regex = /course-v1:([^/]+)/;
+        const course_id = lesson_url.match(regex)[0];
+        const dataSend = {
+          email: authenticatedUser.email,
+          project_name: projectName,
+          course_code: course_id,
+        };
+        const data = await fetch(`${url.HOST}/api/v1/project/user`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(dataSend),
+        });
+        const response = await data.json();
+        if (response) {
+          return response.data;
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const data = getAssignmentPassed();
     if (data && data?.status === "passed") {
       setIsPassedProject(true);
     } else {
