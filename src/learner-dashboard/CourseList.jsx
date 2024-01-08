@@ -7,6 +7,22 @@ import CourseBtn from "./CourseBtn";
 import { urlToPath } from "../utils";
 import { Link } from "react-router-dom";
 
+function CustomLink(props) {
+  const { path, children, ...rest } = props;
+
+  const Comp = path.startsWith("http") ? "a" : Link;
+
+  return (
+    <Comp
+      to={path.startsWith("http") ? undefined : path}
+      href={path.startsWith("http") ? path : undefined}
+      {...rest}
+    >
+      {children}
+    </Comp>
+  );
+}
+
 const CourseList = ({ intl, courses }) => {
   return (
     <div className="d-flex flex-column w-100" style={{ gap: "10px" }}>
@@ -17,7 +33,7 @@ const CourseList = ({ intl, courses }) => {
           complete_ = complete_.toFixed(0);
         }
         const imgPath = courseRun.resumeUrl
-          ? courseRun.resumeUrl
+          ? `${getConfig().LMS_BASE_URL}${courseRun.resumeUrl}`
           : urlToPath(courseRun.homeUrl);
 
         const titlePath = imgPath;
@@ -25,26 +41,19 @@ const CourseList = ({ intl, courses }) => {
         return (
           <div className="d-flex border w-100 " key={courseRun.courseId}>
             <div>
-              <Link
-                to={imgPath.startsWith("http") ? undefined : imgPath}
-                href={imgPath.startsWith("http") ? imgPath : undefined}
-              >
+              <CustomLink path={imgPath}>
                 <img
                   src={`${getConfig().LMS_BASE_URL}${course.bannerImgSrc}`}
                   width="346px"
                   height="193px"
                 />
-              </Link>
+              </CustomLink>
             </div>
             <div className="p-3 w-100 d-flex flex-column justify-content-between">
               <div className="course-title">
-                <Link
-                  className="text-course-title"
-                  to={titlePath.startsWith("http") ? undefined : titlePath}
-                  href={titlePath.startsWith("http") ? titlePath : undefined}
-                >
+                <CustomLink className="text-course-title" path={titlePath}>
                   {course.courseName}
-                </Link>
+                </CustomLink>
 
                 <span className="text-course-name">
                   {courseProvider.name} - {course.courseNumber}
