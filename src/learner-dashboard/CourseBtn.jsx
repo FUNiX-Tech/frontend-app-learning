@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { urlToPath } from "../utils";
 
 const CourseBtn = ({ intl, courseRun }) => {
+  console.log("from course btn", courseRun.resumeUrl);
   return (
     <>
       {courseRun.resumeUrl ? (
