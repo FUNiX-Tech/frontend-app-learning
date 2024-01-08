@@ -17,15 +17,18 @@ const CourseList = ({ intl, courses }) => {
           complete_ = complete_.toFixed(0);
         }
         const imgPath = courseRun.resumeUrl
-          ? urlToPath(courseRun.resumeUrl)
+          ? courseRun.resumeUrl
           : urlToPath(courseRun.homeUrl);
 
         const titlePath = imgPath;
 
         return (
           <div className="d-flex border w-100 " key={courseRun.courseId}>
-            <div className="">
-              <Link to={imgPath}>
+            <div>
+              <Link
+                to={imgPath.startsWith("http") ? undefined : imgPath}
+                href={imgPath.startsWith("http") ? imgPath : undefined}
+              >
                 <img
                   src={`${getConfig().LMS_BASE_URL}${course.bannerImgSrc}`}
                   width="346px"
@@ -35,7 +38,11 @@ const CourseList = ({ intl, courses }) => {
             </div>
             <div className="p-3 w-100 d-flex flex-column justify-content-between">
               <div className="course-title">
-                <Link className="text-course-title" to={titlePath}>
+                <Link
+                  className="text-course-title"
+                  to={titlePath.startsWith("http") ? undefined : titlePath}
+                  href={titlePath.startsWith("http") ? titlePath : undefined}
+                >
                   {course.courseName}
                 </Link>
 
