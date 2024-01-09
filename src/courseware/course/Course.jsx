@@ -158,7 +158,7 @@ function Course({
     } else {
       setIsPassedProject(false);
     }
-  }, [location.pathname]);
+  }, [courseId]);
 
   // Below the tabs, above the breadcrumbs alerts (appearing in the order listed here)
   const [firstSectionCelebrationOpen, setFirstSectionCelebrationOpen] =

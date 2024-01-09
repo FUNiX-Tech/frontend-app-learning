@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 // import {
 //   injectIntl,
@@ -23,6 +23,7 @@ function SectionListUnit({
   sequenceIds,
   sequenceId,
 }) {
+  const isMounted = useRef(true);
   const [height, setHeight] = useState(window.height);
   const resizeObserver = new ResizeObserver(() => {
     // Get height of #section-list-container
@@ -61,13 +62,19 @@ function SectionListUnit({
   const [newSequences, setNewSequences] = useState([]);
 
   const rootCourseId = courses && Object.keys(courses)[0];
-  useEffect(async () => {
-    if (courseId) {
-      const data = await getOutlineTabData(courseId);
-      if (data) {
-        setNewSequences(data.courseBlocks.sequences);
+  useEffect(() => {
+    const fetchNewSequence = async (courseId) => {
+      if (courseId) {
+        const data = await getOutlineTabData(courseId);
+        if (data && isMounted.current) {
+          setNewSequences(data.courseBlocks.sequences);
+        }
       }
-    }
+    };
+    fetchNewSequence(courseId);
+    return () => {
+      isMounted.current = false;
+    };
   }, [unitId, sequenceId, courseId]);
 
   return (
