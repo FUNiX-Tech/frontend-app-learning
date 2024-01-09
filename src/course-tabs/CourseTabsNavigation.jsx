@@ -131,7 +131,7 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
                             courseInRun.courseRun.resumeUrl
                           }`
                         : "#"
-                      : "#";
+                      : urlToPath(url);
                     const to = index === 0 ? resumeUrl : urlToPath(url);
                     if (index !== 0) {
                       return (
