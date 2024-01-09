@@ -136,7 +136,7 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
 
             return (
               <div key={e.id}>
-                {isSelectedUnit && !thisUnitIsLoaded && (
+                {/* {isSelectedUnit && !thisUnitIsLoaded && (
                   <div>
                     <br />
                     <Skeleton width="50%" />
@@ -155,7 +155,7 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
                     <Skeleton width="70%" />
                     <Skeleton width="80%" />
                   </div>
-                )}
+                )} */}
 
                 <iframe
                   id="unit-iframe"
@@ -172,7 +172,7 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
                   scrolling="no"
                   referrerPolicy="origin"
                   style={{
-                    display: shouldDisplayContent ? "block" : "none",
+                    display: isSelectedUnit ? "block" : "none",
                   }}
                   height={iframeHeightValues.find((h) => h.id === e.id)?.height}
                 />
