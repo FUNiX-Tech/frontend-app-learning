@@ -122,7 +122,7 @@ function Course({
   }, []);
 
   //call func get passed state of project
-  useEffect(() => {
+  useEffect(async () => {
     //Get Assignment Passed
     const getAssignmentPassed = async () => {
       try {
@@ -136,6 +136,7 @@ function Course({
           project_name: projectName,
           course_code: course_id,
         };
+
         const data = await fetch(`${url.HOST}/api/v1/project/user`, {
           method: "POST",
           headers: {
@@ -144,22 +145,19 @@ function Course({
           body: JSON.stringify(dataSend),
         });
         const response = await data.json();
-        if (response) {
-          return response.data;
-        }
+        return response.data.status;
       } catch (error) {
         console.log(error);
       }
     };
 
-    const data = getAssignmentPassed();
-    if (data && data?.status === "passed") {
+    const data = await getAssignmentPassed();
+    if (data && data === "passed") {
       setIsPassedProject(true);
     } else {
       setIsPassedProject(false);
     }
-  }, [courseId]);
-
+  }, [unitId, sequenceId, courseId, location.pathname]);
   // Below the tabs, above the breadcrumbs alerts (appearing in the order listed here)
   const [firstSectionCelebrationOpen, setFirstSectionCelebrationOpen] =
     useState(false);
