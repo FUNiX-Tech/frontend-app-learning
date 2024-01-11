@@ -68,17 +68,17 @@ function LoadedTabPage({
     return <SkeletonSequence withSidebar />;
   }
 
-  useEffect(() => {
-    setStyling(
-      show
-        ? isShowChatGPT
-          ? "css-14u8e49"
-          : "css-jygthk"
-        : isShowChatGPT
-        ? "css-1mjee9h"
-        : "css-yeymkw"
-    );
-  }, [show, isShowChatGPT]);
+  // useEffect(() => {
+  //   setStyling(
+  //     show
+  //       ? isShowChatGPT
+  //         ? "css-14u8e49"
+  //         : "css-jygthk"
+  //       : isShowChatGPT
+  //       ? "css-1mjee9h"
+  //       : "css-yeymkw"
+  //   );
+  // }, [show, isShowChatGPT]);
 
   let tabFromUrl = getTabFromPathname(location.pathname);
   let skeleton = getSkeleton(tabFromUrl);
