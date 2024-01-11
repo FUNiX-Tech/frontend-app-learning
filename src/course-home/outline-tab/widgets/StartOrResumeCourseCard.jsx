@@ -7,6 +7,7 @@ import { sendTrackingLogEvent } from "@edx/frontend-platform/analytics";
 import messages from "../messages";
 import { useModel } from "../../../generic/model-store";
 import "./StartOrResumeCourseCard.scss";
+import CustomButton from "../../../custom-components/CustomButton";
 
 function StartOrResumeCourseCard({ intl }) {
   const { courseId } = useSelector((state) => state.courseHome);
@@ -43,11 +44,11 @@ function StartOrResumeCourseCard({ intl }) {
           href={resumeCourseUrl}
           onClick={() => logResumeCourseClick()}
         >
-          <button className="primary-btn-medium ">
+          <CustomButton className="primary-btn-medium ">
             {hasVisitedCourse
               ? intl.formatMessage(messages.resume)
               : intl.formatMessage(messages.start)}
-          </button>
+          </CustomButton>
         </a>
       </div>
 
