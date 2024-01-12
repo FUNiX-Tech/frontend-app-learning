@@ -9,25 +9,22 @@
     padding: 0 2rem;
     width: 47.75rem;
 
-    .footer-section {
-      .footer-section-logo {
+    .footer-section-logo {
+      display: block;
+      width: 5.5rem;
+      & img {
         display: block;
-        margin-right: 2.5rem;
-        & img {
-          display: block;
-          width: 4.22875rem;
-          height: 2rem;
-        }
+        width: 100%;
+        height: auto;
       }
     }
-  }
-
-  .footer-bottom {
-    margin-top: 1rem;
-    margin-bottom: 0;
-    color: var(--color-text-default);
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 100%;
+    .footer-bottom {
+      margin-top: 1rem;
+      margin-bottom: 0;
+      color: var(--color-text-default);
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 100%;
+    }
   }
 }

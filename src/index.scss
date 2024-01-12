@@ -56,11 +56,11 @@ body {
       box-sizing: content-box;
       position: relative;
       top: 0.1em;
-
+      width: 5.5rem;
       img {
         display: block;
-        width: 4.22875rem;
-        height: 2rem;
+        width: 100%;
+        height: auto;
       }
     }
   }

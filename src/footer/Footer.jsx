@@ -6,15 +6,13 @@ export default function Footer() {
   return (
     <footer id="custom-footer" className="border-top">
       <div className="footer-container">
-        <div className="footer-section">
-          <div className="footer-section-logo">
-            <img src={logo} alt="footer-logo" />
-          </div>
-          <p className="footer-bottom">
-            ©2023. Đã đăng ký Bản quyền. FUNiX - Thành viên của Công ty Cổ phần
-            Galaxy Education
-          </p>
+        <div className="footer-section-logo">
+          <img src={logo} alt="footer-logo" />
         </div>
+        <p className="footer-bottom">
+          ©2023. Đã đăng ký Bản quyền. FUNiX - Thành viên của Công ty Cổ phần
+          Galaxy Education
+        </p>
       </div>
     </footer>
   );
