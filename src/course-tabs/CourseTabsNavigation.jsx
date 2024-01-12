@@ -28,8 +28,10 @@ import ChatbotActive from "./assets/Chatbot_active.svg";
 import useScroll from "./useScroll";
 import SkeletonTabs from "./SkeletonTabs";
 import { urlToPath } from "../utils";
-import { fetchDashboard } from "../course-home/data";
 import { setCourseInRun } from "../course-home/data/slice";
+import { getAuthenticatedHttpClient } from "@edx/frontend-platform/auth";
+import { useModel } from "./../generic/model-store";
+
 function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
   //icon src state
   const [rightMenuSrc, setRightMenuSrc] = useState(RightMenu);
@@ -44,15 +46,16 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
   const isShowFeedback = useSelector((state) => state.header.isShowFeedback);
   const isShowChatbot = useSelector((state) => state.header.isShowChatbot);
   const courseInRun = useSelector((state) => state.courseHome.courseInRun);
+  const { courseId } = useSelector((state) => state.courseHome);
 
   //redux dispatch
   const dispatch = useDispatch();
 
+  const { resumeCourse } = useModel("outline", courseId);
+
   //location
   const location = useLocation();
   const pathname = location.pathname;
-  // memoized ResumUrl
-  let memoizedResumUrl = useRef(null);
 
   //Handle load effect set active icon
   useEffect(() => {
@@ -83,27 +86,20 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
   useEffect(() => {
     const fetchCourse = async () => {
       try {
-        const data = await fetchDashboard();
+        // const data = await fetchDashboard();
 
-        const lesson_url = window.location.href;
-
-        const regex = /course-v1:([^/]+)/;
-        const course_id = lesson_url.match(regex)[0];
-        const course = data.courses.find(
-          (course) => course.courseRun.courseId === course_id
-        );
-        if (course) {
-          dispatch(setCourseInRun(course));
-        }
+        const url = `${
+          getConfig().LMS_BASE_URL
+        }/api/course_home/outline/${courseId}`;
+        const response = await getAuthenticatedHttpClient().get(url);
+        console.log(response);
+        dispatch(setCourseInRun(response.data.resume_course));
       } catch (error) {
         console.log(error);
       }
     };
     fetchCourse();
-    return () => {
-      fetchCourse();
-    };
-  }, [dispatch]);
+  }, []);
   return (
     <>
       <div
@@ -125,13 +121,11 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
               ? SkeletonTabs
               : tabs.map(({ url, title, slug }, index) => {
                   if (url.endsWith("/home") || url.endsWith("/dates")) {
-                    const resumeUrl = courseInRun?.courseRun.resumeUrl
+                    const resumeUrl = courseInRun
                       ? pathname.includes("/dates")
-                        ? `${getConfig().LMS_BASE_URL}${
-                            courseInRun.courseRun.resumeUrl
-                          }`
-                        : "#"
-                      : urlToPath(url);
+                        ? courseInRun?.url
+                        : urlToPath(url)
+                      : resumeCourse?.url;
                     const to = index === 0 ? resumeUrl : urlToPath(url);
                     if (index !== 0) {
                       return (
@@ -160,7 +154,7 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
                           )}
                           href={to}
                           onClick={(e) => {
-                            if (to == "#") {
+                            if (to === "#") {
                               e.preventDefault();
                             }
                           }}

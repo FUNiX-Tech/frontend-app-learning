@@ -37,7 +37,7 @@ const Dashboard = ({ intl }) => {
 
       <div
         className="container container-padding"
-        style={{ width: "47.75rem" }}
+        style={{ width: "47.75rem", maxWidth: "100%" }}
       >
         <div className="d-flex flex-column">
           {/* <div className=" pb-2 pr-2 pt-0 pl-0">
