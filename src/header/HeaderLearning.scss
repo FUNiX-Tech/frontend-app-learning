@@ -360,3 +360,14 @@
   max-width: 30px;
   height: auto;
 }
+
+.header-2 {
+  flex-grow: 0;
+  color: var(--color-text-default);
+  font-feature-settings: "clig" off, "liga" off;
+  font-family: Roboto;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%;
+}
