@@ -131,7 +131,26 @@
       text-align: left;
       min-width: 0;
       word-break: break-word;
-      white-space: pre-line;
+      // white-space: pre-line;
+
+      // typography for answer item content 
+      p, ul, ol {
+        margin-bottom: 1rem;
+      }
+
+      ul, ol {
+        padding-left: 2rem;
+      }
+
+      ul ul {
+        list-style-type: circle;
+      }
+
+      li {
+        margin-bottom: 0.5rem;
+      }
+
+
     }
 
     .answer-item-buttons {
