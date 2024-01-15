@@ -409,6 +409,11 @@ function AIChatbot({ intl }) {
                 key={session.id}
                 className="session_item"
                 onClick={() => {
+                  if (session.session_id === sessionId) {
+                    setMode("chat");
+                    return;
+                  }
+
                   setSessionId(session.session_id);
                   setQueryList([]);
                   setPage(1);
