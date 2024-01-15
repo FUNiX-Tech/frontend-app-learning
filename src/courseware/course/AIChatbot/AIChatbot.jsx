@@ -2,9 +2,11 @@ import React, { useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types";
 import { injectIntl, intlShape } from "@edx/frontend-platform/i18n";
 import { svgChatGPT, svgSubmit, svgSubmitActive } from "./AIChabotAssets";
+import { useSelector } from "react-redux";
 
 import {
   fetchQueries,
+  fetchSessions,
   askChatbot,
   voteChatbotResponse,
   retryAskChatbot,
@@ -16,7 +18,7 @@ import messages from "./messages";
 
 const LIMIT = 5;
 
-function AIChatbot({ intl, isShowChatbot }) {
+function AIChatbot({ intl }) {
   const [inputText, setInputText] = useState("");
   const [sessionId, setSessionId] = useState(0);
   const [queryList, setQueryList] = useState([]);
@@ -27,6 +29,14 @@ function AIChatbot({ intl, isShowChatbot }) {
   const [isAsking, setIsAsking] = useState(false);
   const [isInitialLoading, setIsInitialLoading] = useState(true);
   const [hasScrollBar, setHasScrollBar] = useState(false);
+
+  // session
+  const [mode, setMode] = useState("chat"); // chat | session
+  const [sessionList, setSessionList] = useState([]);
+  const [isLastSessionPage, setIsLastSessionPage] = useState(false);
+  const [sessionPage, setSessionPage] = useState(1);
+
+  const isShowChatbot = useSelector((state) => state.header.isShowChatbot);
 
   const msgContainerRef = useRef();
   const inputRef = useRef();
@@ -78,6 +88,11 @@ function AIChatbot({ intl, isShowChatbot }) {
         setQueryList((prev) =>
           prev.map((item) => (item.hash == data.hash ? data.data : item))
         );
+
+        if (sessionId === 0) {
+          setSessionId(data.data.session_id);
+          setSessionList((prev) => [data.data, ...prev]);
+        }
       })
       .catch((error) => {
         console.error(error);
@@ -97,17 +112,20 @@ function AIChatbot({ intl, isShowChatbot }) {
       initiated &&
       e.currentTarget.scrollTop < 50 &&
       !isFetching &&
-      !isLastPage
+      !isLastPage &&
+      mode === "chat"
     ) {
       setPage((prev) => prev + 1);
     }
   }
 
   function startNewSession() {
+    setMode("chat");
     setQueryList([]);
     setInitiated(false);
-    setPage(1);
+    setPage(0);
     setSessionId(0);
+    if (inputRef?.current) inputRef.current.focus();
   }
 
   function onCopyResponse(ele, responseMsg) {
@@ -164,9 +182,21 @@ function AIChatbot({ intl, isShowChatbot }) {
       });
   }
 
+  function toggleMode() {
+    setMode((prev) => {
+      return prev === "chat" ? "session" : "chat";
+    });
+  }
+
+  function fetchMoreSessionList() {
+    setSessionPage((prev) => prev + 1);
+  }
+
   useEffect(() => {
+    if (page === 0 || sessionId === 0 || isFetching) return;
+
     setIsFetching(true);
-    fetchQueries(sessionId, page, LIMIT)
+    fetchQueries(sessionId, queryList.length, LIMIT)
       .then((data) => {
         data.data.query_list.reverse();
 
@@ -175,12 +205,6 @@ function AIChatbot({ intl, isShowChatbot }) {
         }
 
         setQueryList((prev) => [...data.data.query_list, ...prev]);
-        if (
-          data.data.query_list.length > 0 &&
-          data.data.query_list[0].session_id != sessionId
-        ) {
-          setSessionId(data.data.query_list[0].session_id);
-        }
       })
       .catch(console.error)
       .finally(() => {
@@ -195,10 +219,12 @@ function AIChatbot({ intl, isShowChatbot }) {
         }
         setIsFetching(false);
       });
-  }, [page]);
+  }, [page, sessionId]);
 
   useEffect(() => {
-    if (queryList.length > 0 && !initiated) {
+    if (queryList.length === 0) return;
+
+    if (!initiated) {
       if (msgContainerRef.current) {
         msgContainerRef.current.scrollTop =
           msgContainerRef.current.scrollHeight -
@@ -207,7 +233,7 @@ function AIChatbot({ intl, isShowChatbot }) {
       setInitiated(true);
     }
 
-    if (queryList.length > 0 && initiated) {
+    if (initiated) {
       if (isAsking) {
         msgContainerRef.current.scrollTop =
           msgContainerRef.current.scrollHeight -
@@ -220,10 +246,7 @@ function AIChatbot({ intl, isShowChatbot }) {
     if (!inputRef.current) return;
     inputRef.current.style.height = 0;
     inputRef.current.style.height = inputRef.current.scrollHeight + "px";
-    console.log(
-      inputWrapperRef.current.scrollHeight,
-      inputWrapperRef.current.offsetHeight
-    );
+
     if (
       inputWrapperRef.current.scrollHeight >
       inputWrapperRef.current.offsetHeight
@@ -234,9 +257,44 @@ function AIChatbot({ intl, isShowChatbot }) {
     }
   }, [inputText]);
 
+  useEffect(() => {
+    if (!inputRef?.current) return;
+    inputRef.current.style.height = 0;
+    inputRef.current.style.height = inputRef.current.scrollHeight + "px";
+  }, [mode]);
+
+  useEffect(() => {
+    if (sessionPage === 0) return;
+    // setIsFetching(true);
+    fetchSessions(sessionList.length, LIMIT)
+      .then((data) => {
+        // data.data.session_list.reverse();
+
+        if (data.data.remain_page <= 0) {
+          setIsLastSessionPage(true);
+        }
+
+        setSessionList((prev) => [...prev, ...data.data.session_list]);
+        if (sessionId === 0 && data.data.session_list.length > 0) {
+          setSessionId(data.data.session_list[0].session_id);
+        }
+      })
+      .catch(console.error)
+      .finally(() => {
+        // if (!isInitialLoading) {
+        //   if (msgContainerRef.current.scrollTop <= 50 && !isLastPage) {
+        //     msgContainerRef.current.scrollTop = 51;
+        //   }
+        // }
+        // if (isInitialLoading) {
+        //   setIsInitialLoading(false);
+        // }
+        // setIsFetching(false);
+      });
+  }, [sessionPage]);
+
   // html classes
-  let chatbotContainerClasses =
-    "sequence-navigation-tabs d-flex flex-grow-1 chatbot-container";
+  let chatbotContainerClasses = "chatbot-container";
   if (isShowChatbot) {
     chatbotContainerClasses += " active";
   }
@@ -245,10 +303,65 @@ function AIChatbot({ intl, isShowChatbot }) {
     chatbotContainerClasses += " is-firefox";
   }
 
+  let chatbotFooterClasses = "chatbot-footer";
+  if (hasScrollBar) {
+    chatbotFooterClasses += " has-scrollbar";
+  }
+  if (mode === "session") {
+    chatbotFooterClasses += " d-none";
+  }
+
   return (
     <div className={chatbotContainerClasses}>
       <div className="chatbot-header">
-        <span class="chatbot-name">Chat GPT</span>
+        <p class="chatbot-name">Chat GPT</p>
+        <div>
+          <button
+            title="New chat"
+            onClick={startNewSession}
+            id="chatbot-new-session-btn"
+          >
+            +
+          </button>
+          <button
+            onClick={toggleMode}
+            id="chatbot-sessions-list-btn"
+            title={mode === "chat" ? "Sessions" : "Chat"}
+          >
+            {mode === "chat" && (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                />
+              </svg>
+            )}
+            {mode === "session" && (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.068.157 2.148.279 3.238.364.466.037.893.281 1.153.671L12 21l2.652-3.978c.26-.39.687-.634 1.153-.67 1.09-.086 2.17-.208 3.238-.365 1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z"
+                />
+              </svg>
+            )}
+          </button>
+        </div>
       </div>
       {/* ================================= messages ================================= */}
       <div
@@ -276,58 +389,87 @@ function AIChatbot({ intl, isShowChatbot }) {
             <li class="loading-more-msg">Loading more...</li>
           )} */}
           {/* {isLastPage && <li class="no-more-messages">No more messages</li>} */}
-          {queryList.map((query) => {
-            return (
-              <li key={query.id}>
-                <QueryItem
-                  query={query}
-                  onCopyResponse={onCopyResponse}
-                  onVote={onVote}
-                  onRetryAskChatbot={onRetryAskChatbot}
-                />
+          {mode === "chat" &&
+            queryList.map((query) => {
+              return (
+                <li key={query.id}>
+                  <QueryItem
+                    query={query}
+                    onCopyResponse={onCopyResponse}
+                    onVote={onVote}
+                    onRetryAskChatbot={onRetryAskChatbot}
+                  />
+                </li>
+              );
+            })}
+
+          {mode === "session" &&
+            sessionList.map((session) => (
+              <li
+                key={session.id}
+                className="session_item"
+                onClick={() => {
+                  setSessionId(session.session_id);
+                  setQueryList([]);
+                  setPage(1);
+                  setMode("chat");
+                  setIsLastPage(false);
+                }}
+              >
+                <div className="session_item_header">
+                  <span>{new Date(session.created).toLocaleString("vi")}</span>
+                </div>
+                <div className="session_item_ask">
+                  <span>{session.query_msg}</span>
+                </div>
+                <div
+                  className="session_item_answer"
+                  dangerouslySetInnerHTML={{ __html: session.response_msg }}
+                ></div>
               </li>
-            );
-          })}
+            ))}
+
+          {mode === "session" && !isLastSessionPage && (
+            <li id="fetch_more_sessions" onClick={fetchMoreSessionList}>
+              Xem thêm
+            </li>
+          )}
         </ul>
       </div>
 
-      <form
-        onSubmit={onSubmit}
-        className={
-          hasScrollBar ? "chatbot-footer has-scrollbar" : "chatbot-footer"
-        }
-      >
-        <div ref={inputWrapperRef} className="chatbot-input-wrapper">
-          <textarea
-            class="chatbot-input"
-            type="text"
-            placeholder={intl.formatMessage(messages.sendMessage)}
-            value={inputText}
-            onChange={onChangeInput}
-            ref={inputRef}
-            onKeyUp={onInputKeyUp}
-            onKeyDown={onInputKeyDown}
-          />
-        </div>
-        <button
-          ref={submitBtnRef}
-          type="submit"
-          title="send"
-          class={
-            inputText.trim()
-              ? "chatbot-submit-btn"
-              : "chatbot-submit-btn disabled"
-          }
-        >
-          {inputText.trim() ? svgSubmitActive : svgSubmit}
-        </button>
-      </form>
+      {mode === "chat" && (
+        <form onSubmit={onSubmit} className={chatbotFooterClasses}>
+          <div ref={inputWrapperRef} className="chatbot-input-wrapper">
+            <textarea
+              class="chatbot-input"
+              type="text"
+              placeholder={intl.formatMessage(messages.sendMessage)}
+              value={inputText}
+              onChange={onChangeInput}
+              ref={inputRef}
+              onKeyUp={onInputKeyUp}
+              onKeyDown={onInputKeyDown}
+            />
+          </div>
+          <button
+            ref={submitBtnRef}
+            type="submit"
+            title="send"
+            class={
+              inputText.trim()
+                ? "chatbot-submit-btn"
+                : "chatbot-submit-btn disabled"
+            }
+          >
+            {inputText.trim() ? svgSubmitActive : svgSubmit}
+          </button>
+        </form>
+      )}
     </div>
   );
 }
 
 AIChatbot.propTypes = {
-  isShowChatbot: PropTypes.bool.isRequired,
   intl: intlShape.isRequired,
 };
 

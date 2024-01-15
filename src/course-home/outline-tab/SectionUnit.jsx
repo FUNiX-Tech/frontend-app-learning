@@ -27,11 +27,13 @@ function SectionUnit({
   lesson,
   unitId,
   allSequenceIds,
+  newSequences,
 }) {
   const { complete, sequenceIds, title } = section;
   //check has one sequence complete
   const [hasOneSequenceComplete, setHasOneSequenceComplete] = useState(false);
-
+  // hasCompleteSequence
+  const [hasComepleteSequence, setHasCompleteSequence] = useState(false);
   const {
     courseBlocks: { sequences },
   } = useModel("outline", courseId);
@@ -45,9 +47,10 @@ function SectionUnit({
     setOpen(defaultOpen);
   }, []);
 
-  const sectionTitle = (
-    <div className=" w-100 m-0">
-      {/* <div className=" p-0">
+  // const sectionTitle = (
+  //   <div className=" w-100 m-0">
+  {
+    /* <div className=" p-0">
         {complete ? (
           <FontAwesomeIcon
             icon={fasCheckCircle}
@@ -65,24 +68,34 @@ function SectionUnit({
             title={intl.formatMessage(messages.incompleteSection)}
           />
         )}
-      </div> */}
-      {/* <div className=" ml-3 p-0 font-weight-bold text-dark-500">
+      </div> */
+  }
+  {
+    /* <div className=" ml-3 p-0 font-weight-bold text-dark-500">
         <span className="align-middle">{title}</span>
             <span className="sr-only">
         {intl.formatMessage(complete ? messages.completedSection : messages.incompleteSection)}
         </span>
-      </div> */}
-    </div>
-  );
+      </div> */
+  }
+  //   </div>
+  // );
   useEffect(() => {
-    sequenceIds.map((sequenceId, index) => {
-      const sequence = sequences[sequenceId];
-      const { complete } = sequence;
+    allSequenceIds.map((sequenceId, index) => {
+      if (Object.keys(newSequences).length > 0) {
+        const sequence = newSequences[sequenceId];
+        const { complete } = sequence;
+        if (complete) {
+          setHasOneSequenceComplete(true);
+        }
+      }
+      const oldSequence = sequences[sequenceId];
+      const { complete } = oldSequence;
       if (complete) {
         setHasOneSequenceComplete(true);
       }
     });
-  }, []);
+  }, [newSequences]);
 
   return (
     <li className="bg-light">
@@ -118,6 +131,7 @@ function SectionUnit({
       <ol className="list-unstyled bg-list-unstyled">
         {allSequenceIds.map((sequenceId, index) => {
           const sequence = sequences[sequenceId];
+
           const { complete } = sequence;
           return (
             <CollapsibleSequenceLinkUnit
@@ -132,6 +146,8 @@ function SectionUnit({
               unitId={unitId}
               hasOneComplete={hasOneSequenceComplete}
               complete={complete}
+              sequence={sequence}
+              newSequences={newSequences}
             />
           );
         })}

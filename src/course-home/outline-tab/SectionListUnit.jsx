@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useMemo } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 // import {
 //   injectIntl,
@@ -8,6 +8,7 @@ import PropTypes from "prop-types";
 
 import SectionUnit from "./SectionUnit";
 import { useModel } from "../../generic/model-store";
+import { getOutlineTabData } from "../data/api";
 
 const MAX_HEIGHT_PERCENT = 80;
 
@@ -19,7 +20,10 @@ function SectionListUnit({
   lesson,
   unitId,
   showLeftbarContent,
+  sequenceIds,
+  sequenceId,
 }) {
+  const isMounted = useRef(true);
   const [height, setHeight] = useState(window.height);
   const resizeObserver = new ResizeObserver(() => {
     // Get height of #section-list-container
@@ -54,16 +58,24 @@ function SectionListUnit({
   //     maxHeight: `${height}px`,
   //     overflow : 'auto',
   //   };
+  //newSequences
+  const [newSequences, setNewSequences] = useState([]);
 
   const rootCourseId = courses && Object.keys(courses)[0];
-  //Logic get all sequenceIds in section via sectionIds
-  const allSequenceIds = useMemo(() => {
-    const output = [];
-    for (let value of courses[rootCourseId].sectionIds) {
-      output.push(...sections[value].sequenceIds);
-    }
-    return output;
-  }, [rootCourseId, courses]);
+  useEffect(() => {
+    const fetchNewSequence = async (courseId) => {
+      if (courseId) {
+        const data = await getOutlineTabData(courseId);
+        if (data && isMounted.current) {
+          setNewSequences(data.courseBlocks.sequences);
+        }
+      }
+    };
+    fetchNewSequence(courseId);
+    return () => {
+      isMounted.current = false;
+    };
+  }, [unitId, sequenceId, courseId]);
 
   return (
     <ol
@@ -86,7 +98,8 @@ function SectionListUnit({
             useHistory={useHistory}
             lesson={lesson}
             unitId={unitId}
-            allSequenceIds={allSequenceIds}
+            allSequenceIds={sequenceIds}
+            newSequences={newSequences}
           />
         );
       })}

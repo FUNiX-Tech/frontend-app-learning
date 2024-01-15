@@ -15,9 +15,8 @@ import { AppContext } from "@edx/frontend-platform/react";
 import messages from "./messages";
 import BookmarkButton from "../bookmark/BookmarkButton";
 import { useEventListener } from "../../../generic/hooks";
-import { Pl } from "react-bootstrap";
-import Skeleton from "react-loading-skeleton";
-
+import Unit from "./Unit";
+import CourseLoading from "../../../learner-dashboard/CourseLoading";
 const IFRAME_FEATURE_POLICY =
   "microphone *; camera *; midi *; geolocation *; encrypted-media *";
 
@@ -25,7 +24,6 @@ const ContentLock = React.lazy(() => import("./content-lock"));
 
 function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
   const sequence = useModel("sequences", sequenceId);
-  const [loadedUnits, setLoadedUnits] = useState([]);
 
   // Go back to the top of the page whenever the unit or sequence changes.
   useEffect(() => {
@@ -52,6 +50,13 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
   }
 
   const unit = useModel("units", unitId);
+  // if (!unitId || !unit) {
+  //   return (
+  //     <div>
+  //       {intl.formatMessage(messages.noContent)}
+  //     </div>
+  //   );
+  // }
 
   const { authenticatedUser } = useContext(AppContext);
   const view = authenticatedUser ? "student_view" : "public_view";
@@ -60,11 +65,9 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
     let iframeUrl = `${
       getConfig().LMS_BASE_URL
     }/xblock/${unitId}?show_title=0&show_bookmark_button=0&recheck_access=1&view=${view}`;
-
     if (sequence.format) {
       iframeUrl += `&format=${sequence.format}`;
     }
-
     return iframeUrl;
   };
 
@@ -75,16 +78,24 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
   const [loadedIframeId, setLoadedIframeId] = useState(unitId);
   const [iframeHeight, setIframeHeight] = useState(0);
   const [iframeHeightValues, setIframeHeightValues] = useState([]);
+  const [load, setLoad] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoadedIframeId(unitId);
   }, [unitId]);
+
+  const handleIframeLoad = (id) => {
+    setLoading(true);
+  };
 
   const receiveMessage = useCallback(
     ({ data }) => {
       const { type, payload } = data;
       if (type === "plugin.resize" && payload.height > 0) {
         setIframeHeight(payload.height);
+
+        // document.getElementById('unit-iframe').setAttribute('data-height', payload.height);
       }
     },
     [unitId, iframeHeight, setIframeHeight, loadedIframeId]
@@ -110,6 +121,7 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
 
   return (
     <div className="unit">
+      {/* <div style={{ marginLeft: "-15px" }}> */}
       <div className="position-relative">
         <h1 className="mb-0  unit-title header-title pr-5">{unit.title}</h1>
         <h2 className="sr-only">
@@ -126,37 +138,40 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
           />
         </div>
       </div>
-
       <div className="unit-iframe-wrapper" style={{ minHeight: "31.25rem" }}>
-        <div>
-          {iframeURLS.map((e) => {
-            const isSelectedUnit = loadedIframeId === e.id;
-            const thisUnitIsLoaded = loadedUnits.includes(e.id);
-            const shouldDisplayContent = isSelectedUnit && thisUnitIsLoaded;
+        {/* {!load ||
+          (!loading && (
+            <div
+              className="pb-3 d-flex flex-column w-100 "
+              style={{ gap: "10px" }}
+            >
+              <CourseLoading />
+              <CourseLoading />
+              <CourseLoading />
+            </div>
+          ))} */}
 
-            return (
-              <div key={e.id}>
-                {/* {isSelectedUnit && !thisUnitIsLoaded && (
-                  <div>
-                    <br />
-                    <Skeleton width="50%" />
-                    <Skeleton width="70%" />
-                    <Skeleton width="80%" />
-                    <br />
-                    <Skeleton width="50%" />
-                    <Skeleton width="70%" />
-                    <Skeleton width="80%" />
-                    <br />
-                    <Skeleton width="50%" />
-                    <Skeleton width="70%" />
-                    <Skeleton width="80%" />
-                    <br />
-                    <Skeleton width="50%" />
-                    <Skeleton width="70%" />
-                    <Skeleton width="80%" />
-                  </div>
-                )} */}
-
+        {load && (
+          <iframe
+            id="unit-iframe"
+            src={getIframeUrl(unitId)}
+            allow={IFRAME_FEATURE_POLICY}
+            allowFullScreen
+            height={iframeHeight}
+            scrolling="no"
+            referrerPolicy="origin"
+            // data-height={iframeHeight}
+            onLoad={() => handleIframeLoad(unitId)}
+          />
+        )}
+        {loading && (
+          <div>
+            {/* <div>
+        <p>iframeHeight:{iframeHeight}</p>
+      </div> */}
+            {iframeURLS.map((e) => {
+              const isLoaded = loadedIframeId === e.id;
+              return (
                 <iframe
                   id="unit-iframe"
                   key={e.id}
@@ -165,23 +180,28 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
                   allow={IFRAME_FEATURE_POLICY}
                   allowFullScreen
                   onLoad={() => {
-                    setLoadedUnits((prev) => {
-                      return [...prev, e.id];
-                    });
+                    setLoad(false);
                   }}
                   scrolling="no"
                   referrerPolicy="origin"
-                  style={{
-                    display: isSelectedUnit ? "block" : "none",
-                  }}
+                  style={{ display: isLoaded && !load ? "block" : "none" }}
                   height={iframeHeightValues.find((h) => h.id === e.id)?.height}
                 />
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
+    // <Unit
+    //   courseId={courseId}
+    //   format={sequence.format}
+    //   key={unitId}
+    //   id={unitId}
+    //   onLoaded={unitLoadedHandler}
+    //   /** [MM-P2P] Experiment */
+    //   mmp2p={mmp2p}
+    // />
   );
 }
 

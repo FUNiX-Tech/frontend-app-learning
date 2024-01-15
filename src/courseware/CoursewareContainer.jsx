@@ -356,6 +356,8 @@ class CoursewareContainer extends Component {
         unitId={routeUnitId}
         courseStatus={courseStatus}
         metadataModel="coursewareMeta"
+        shouldShowLoading={courseStatus === "loading"}
+        shouldHideFooter={true}
       >
         <Course
           courseId={courseId}

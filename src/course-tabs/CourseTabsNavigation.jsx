@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { injectIntl, intlShape } from "@edx/frontend-platform/i18n";
+import { getConfig } from "@edx/frontend-platform";
 import classNames from "classnames";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -10,7 +11,7 @@ import {
   setOffMenuState,
   setOnMenuState,
 } from "../header/data/slice";
-import { useLocation } from "react-router-dom";
+import { useLocation, NavLink, Link } from "react-router-dom";
 
 import messages from "./messages";
 import Tabs from "../generic/tabs/Tabs";
@@ -24,8 +25,12 @@ import ChatbotHover from "./assets/Chatbot_hover.svg";
 import RightMenuActive from "./assets/RightMenu_active.svg";
 import FeedbackActive from "./assets/Feedback_active.svg";
 import ChatbotActive from "./assets/Chatbot_active.svg";
-
 import useScroll from "./useScroll";
+import SkeletonTabs from "./SkeletonTabs";
+import { urlToPath } from "../utils";
+import { setCourseInRun } from "../course-home/data/slice";
+import { getAuthenticatedHttpClient } from "@edx/frontend-platform/auth";
+import { useModel } from "./../generic/model-store";
 
 function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
   //icon src state
@@ -40,9 +45,13 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
   );
   const isShowFeedback = useSelector((state) => state.header.isShowFeedback);
   const isShowChatbot = useSelector((state) => state.header.isShowChatbot);
+  const courseInRun = useSelector((state) => state.courseHome.courseInRun);
+  const { courseId } = useSelector((state) => state.courseHome);
 
   //redux dispatch
   const dispatch = useDispatch();
+
+  const { resumeCourse } = useModel("outline", courseId);
 
   //location
   const location = useLocation();
@@ -73,41 +82,107 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
     }
   }, [pathname, isShowChatbot, isShowFeedback]);
 
-  return (
-    <div
-      id="courseTabsNavigation"
-      className={classNames(
-        "course-tabs-navigation",
-        className,
-        // `${scrollY > 50 ? "fixed-position" : ""}`
-        "fixed-position"
-      )}
-    >
-      {/* sub Header - done */}
-      <div className="sub-header-container">
-        <Tabs
-          className="nav-underline-tabs d-flex sub-header-content"
-          aria-label={intl.formatMessage(messages.courseMaterial)}
-        >
-          {tabs.map(({ url, title, slug }) => {
-            return (
-              <a
-                key={slug}
-                className={classNames("nav-item flex-shrink-0 nav-link", {
-                  active: slug === activeTabSlug,
-                })}
-                href={url}
-              >
-                {title}
-              </a>
-            );
-          })}
-        </Tabs>
+  //get running course
+  useEffect(() => {
+    const fetchCourse = async () => {
+      try {
+        // const data = await fetchDashboard();
 
-        {/* sub header Icon */}
-        {!hideMenu && (
-          <div className="sub-header-icon d-flex">
-            {/* <div className="sub-header-icon-item tool-tip-1">
+        const url = `${
+          getConfig().LMS_BASE_URL
+        }/api/course_home/outline/${courseId}`;
+        const response = await getAuthenticatedHttpClient().get(url);
+        console.log(response);
+        dispatch(setCourseInRun(response.data.resume_course));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchCourse();
+  }, []);
+  return (
+    <>
+      <div
+        id="courseTabsNavigation"
+        className={classNames(
+          "course-tabs-navigation",
+          className,
+          // `${scrollY > 50 ? "fixed-position" : ""}`
+          "fixed-position"
+        )}
+      >
+        {/* sub Header - done */}
+        <div className="sub-header-container">
+          <Tabs
+            className="nav-underline-tabs d-flex sub-header-content"
+            aria-label={intl.formatMessage(messages.courseMaterial)}
+          >
+            {!tabs
+              ? SkeletonTabs
+              : tabs.map(({ url, title, slug }, index) => {
+                  if (url.endsWith("/home") || url.endsWith("/dates")) {
+                    const resumeUrl = courseInRun
+                      ? pathname.includes("/dates")
+                        ? courseInRun?.url
+                        : urlToPath(url)
+                      : resumeCourse?.url;
+                    const to = index === 0 ? resumeUrl : urlToPath(url);
+                    if (index !== 0) {
+                      return (
+                        <NavLink
+                          key={slug}
+                          className={classNames(
+                            "nav-item flex-shrink-0 nav-link",
+                            {
+                              active: slug === activeTabSlug,
+                            }
+                          )}
+                          to={to}
+                        >
+                          {title}
+                        </NavLink>
+                      );
+                    } else {
+                      return (
+                        <a
+                          key={slug}
+                          className={classNames(
+                            "nav-item flex-shrink-0 nav-link",
+                            {
+                              active: slug === activeTabSlug,
+                            }
+                          )}
+                          href={to}
+                          onClick={(e) => {
+                            if (to === "#") {
+                              e.preventDefault();
+                            }
+                          }}
+                        >
+                          {title}
+                        </a>
+                      );
+                    }
+                  }
+
+                  return (
+                    <a
+                      key={slug}
+                      className={classNames("nav-item flex-shrink-0 nav-link", {
+                        active: slug === activeTabSlug,
+                      })}
+                      href={url}
+                    >
+                      {title}
+                    </a>
+                  );
+                })}
+          </Tabs>
+
+          {/* sub header Icon */}
+          {!hideMenu && (
+            <div className="sub-header-icon d-flex">
+              {/* <div className="sub-header-icon-item tool-tip-1">
               <img
                 onMouseOver={() => {
                   if (!isShowRightMenu) {
@@ -130,56 +205,57 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
               />
             </div> */}
 
-            <div className="sub-header-icon-item tool-tip-3">
-              <img
-                onMouseOver={() => {
-                  if (!isShowChatbot) {
-                    setChatbotSrc(ChatbotHover);
-                  }
-                }}
-                onMouseOut={() => {
-                  if (!isShowChatbot) {
-                    setChatbotSrc(Chatbot);
-                  } else {
-                    setChatbotSrc(ChatbotActive);
-                  }
-                }}
-                src={chatbotSrc}
-                alt={`Chatbot`}
-                onClick={() => {
-                  setRightMenuSrc(RightMenu);
-                  setFeedbackSrc(Feedback);
-                  setChatbotSrc(ChatbotActive);
-                  dispatch(toggleShowChatbot());
-                }}
-              />
-            </div>
-            <div className="sub-header-icon-item tool-tip-2">
-              <img
-                onMouseOver={() => {
-                  setFeedbackSrc(FeedbackHover);
-                }}
-                onMouseOut={() => {
-                  if (!isShowFeedback) {
+              <div className="sub-header-icon-item tool-tip-3">
+                <img
+                  onMouseOver={() => {
+                    if (!isShowChatbot) {
+                      setChatbotSrc(ChatbotHover);
+                    }
+                  }}
+                  onMouseOut={() => {
+                    if (!isShowChatbot) {
+                      setChatbotSrc(Chatbot);
+                    } else {
+                      setChatbotSrc(ChatbotActive);
+                    }
+                  }}
+                  src={chatbotSrc}
+                  alt={`Chatbot`}
+                  onClick={() => {
+                    setRightMenuSrc(RightMenu);
                     setFeedbackSrc(Feedback);
-                  } else {
+                    setChatbotSrc(ChatbotActive);
+                    dispatch(toggleShowChatbot());
+                  }}
+                />
+              </div>
+              <div className="sub-header-icon-item tool-tip-2">
+                <img
+                  onMouseOver={() => {
+                    setFeedbackSrc(FeedbackHover);
+                  }}
+                  onMouseOut={() => {
+                    if (!isShowFeedback) {
+                      setFeedbackSrc(Feedback);
+                    } else {
+                      setFeedbackSrc(FeedbackActive);
+                    }
+                  }}
+                  src={feedbackSrc}
+                  alt={`Feedback`}
+                  onClick={() => {
+                    setRightMenuSrc(RightMenu);
                     setFeedbackSrc(FeedbackActive);
-                  }
-                }}
-                src={feedbackSrc}
-                alt={`Feedback`}
-                onClick={() => {
-                  setRightMenuSrc(RightMenu);
-                  setFeedbackSrc(FeedbackActive);
-                  setChatbotSrc(Chatbot);
-                  dispatch(toggleShowFeedback());
-                }}
-              />
+                    setChatbotSrc(Chatbot);
+                    dispatch(toggleShowFeedback());
+                  }}
+                />
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

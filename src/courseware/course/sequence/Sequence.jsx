@@ -31,8 +31,9 @@ import SequenceContent from "./SequenceContent";
 import { isMobile } from "../../../experiments/mm-p2p/utils";
 import { MMP2PFlyover, MMP2PFlyoverMobile } from "../../../experiments/mm-p2p";
 import CourseLoading from "../../../learner-dashboard/CourseLoading";
+import { useSequenceNavigationMetadata } from "./sequence-navigation/hooks";
 
-
+import SkeletonSequence from "./SkeletonSequence";
 
 function Sequence({
   unitId,
@@ -45,6 +46,8 @@ function Sequence({
   mmp2p,
   sequences,
   sequenceIds,
+  isCompleteCourse,
+  isPassedProject,
 }) {
   const course = useModel("coursewareMeta", courseId);
   const { isStaff, originalUserIsStaff } = useModel("courseHomeMeta", courseId);
@@ -59,11 +62,20 @@ function Sequence({
   const shouldDisplayNotificationTriggerInSequence =
     useWindowSize().width < breakpoints.small.minWidth;
 
+  const { isFirstUnit, isLastUnit } = useSequenceNavigationMetadata(
+    sequenceId,
+    unitId
+  );
+
   const handleNext = () => {
-    const nextIndex = sequence.unitIds.indexOf(unitId) + 1;
-    if (nextIndex < sequence.unitIds.length) {
-      const newUnitId = sequence.unitIds[nextIndex];
-      handleNavigate(newUnitId);
+    if (sequence && sequence.unitIds && Array.isArray(sequence.unitIds)) {
+      const nextIndex = sequence.unitIds.indexOf(unitId) + 1;
+      if (nextIndex < sequence.unitIds.length) {
+        const newUnitId = sequence.unitIds[nextIndex];
+        handleNavigate(newUnitId);
+      } else {
+        nextSequenceHandler();
+      }
     } else {
       nextSequenceHandler();
     }
@@ -82,15 +94,17 @@ function Sequence({
   /** Lấy iframe từ 'message' event */
   const getFrameByEvent = (event) => {
     try {
-      const output = Array.from(document.getElementsByTagName('iframe')).filter(iframe => {
-        return iframe.contentWindow === event.source;
-      })[0];
+      const output = Array.from(document.getElementsByTagName("iframe")).filter(
+        (iframe) => {
+          return iframe.contentWindow === event.source;
+        }
+      )[0];
 
-      return output
+      return output;
     } catch {
-      return undefined
+      return undefined;
     }
-  }
+  };
 
   const handleNavigate = (destinationUnitId) => {
     unitNavigationHandler(destinationUnitId);
@@ -176,12 +190,15 @@ function Sequence({
           });
         }
       }
-
+      if (type == "quiz_submit") {
+        const { sequental_id, vertical_id } = event.data;
+        history.push(`/course/${courseId}/${sequental_id}/${vertical_id}`);
+      }
       /** resize unit height */
-      if (type === 'unit.resize') {
+      if (type === "unit.resize") {
         const unitIframe = getFrameByEvent(event);
         if (!unitIframe) return;
-        
+
         unitIframe.style.transition = event.data.resize.transition;
         unitIframe.style.height = event.data.resize.iframeHeight + "px";
       }
@@ -213,25 +230,8 @@ function Sequence({
     if (!sequenceId) {
       return <div> {intl.formatMessage(messages.noContent)} </div>;
     }
-    return (
-      // <PageLoading srMessage={intl.formatMessage(messages.loadingSequence)} />
 
-      <div
-        className="pb-3 d-flex flex-column position-absolute"
-        style={{
-          gap: "10px",
-          maxWidth: "50%",
-          paddingRight: "2rem",
-          paddingTop: "0.5rem",
-          left: "calc(50% + 2.5rem)",
-          transform: "translateX(-50%)",
-        }}
-      >
-        <CourseLoading courseLearning />
-        <CourseLoading courseLearning />
-        <CourseLoading courseLearning />
-      </div>
-    );
+    return <SkeletonSequence />;
   }
 
   if (sequenceStatus === "loaded" && sequence.isHiddenAfterDue) {
@@ -282,7 +282,10 @@ function Sequence({
         {shouldDisplayNotificationTriggerInSequence && <SidebarTriggers />}
 
         <div className="unit-container flex-grow-1">
+          {/* unit navigation buttons top  */}
           <UnitNavigation
+            isPassedProject={isPassedProject}
+            isCompleteCourse={isCompleteCourse}
             sequenceIds={sequenceIds}
             sequences={sequences}
             top
@@ -304,7 +307,10 @@ function Sequence({
             sequenceId={sequenceId}
             unitId={unitId}
           />
+          {/* unit navigation buttons bottom  */}
           <UnitNavigation
+            isPassedProject={isPassedProject}
+            isCompleteCourse={isCompleteCourse}
             sequenceIds={sequenceIds}
             sequences={sequences}
             top={false}

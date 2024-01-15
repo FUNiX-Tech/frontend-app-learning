@@ -1,3 +1,14 @@
+.header-title {
+  flex-grow: 0;
+  font-family: "Roboto Serif", serif;
+  font-size: 2rem;
+  font-weight: 500;
+  font-stretch: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: left;
+  color: var(--color-text-default);
+}
 .btn-toggle-section {
   border: 2px solid #2015ff;
   background: none;
@@ -63,7 +74,6 @@
     width: 18.75rem;
     transform: translateX(-18.75rem);
     max-height: calc(100% - 6rem);
-    overflow-y: scroll;
     transition: all 0.35s ease;
     position: relative;
     z-index: -100;
@@ -74,6 +84,21 @@
       margin-left: auto;
       z-index: 100;
       transition: all 0.35s ease;
+      &::-webkit-scrollbar {
+        width: 0.5rem;
+      }
+      /* Track */
+
+      /* Handle */
+      &::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 999px;
+      }
+
+      /* Handle on hover */
+      &::-webkit-scrollbar-thumb:hover {
+        background: #555;
+      }
     }
 
     @keyframes fade-out {
@@ -157,5 +182,50 @@
   z-index: 0;
   &.show-leftbar {
     z-index: 2000;
+  }
+}
+
+// rightbar
+:root {
+  --unit-width: 700px;
+  --unit-side-padding: 32px;
+}
+
+@media screen and (max-width: 1400px) {
+  :root {
+    --unit-width: 600px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  :root {
+    --unit-width: 500px;
+  }
+}
+
+.rightbar {
+  position: fixed;
+  bottom: 0;
+  z-index: 9999;
+  max-width: calc(300px + 1rem);
+  left: 100vw;
+  top: 0;
+  transition: 0.2s;
+  margin-right: 1rem;
+
+  &.is-show {
+    left: calc(100vw / 2 + var(--unit-width) / 2 + var(--unit-side-padding));
+
+    @media screen and (max-width: 992px) {
+      left: 60vw;
+    }
+
+    @media screen and (max-width: 768px) {
+      left: 50vw;
+    }
+
+    @media screen and (max-width: 320px) {
+      left: 0;
+    }
   }
 }

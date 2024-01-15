@@ -1,7 +1,6 @@
 import React, { useCallback, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Button } from "@edx/paragon";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
   faChevronRight,
@@ -31,6 +30,8 @@ function UnitNavigation({
   top,
   sequences,
   sequenceIds,
+  isCompleteCourse,
+  isPassedProject,
 }) {
   const { isFirstUnit, isLastUnit } = useSequenceNavigationMetadata(
     sequenceId,
@@ -42,6 +43,8 @@ function UnitNavigation({
     prevTitle: "",
     nextTitle: "",
   });
+  const [isViewNextResultBtn, setIsViewNextResultBtn] = useState(false);
+  // const [isViewPrevResultBtn, setIsViewPrevResultBtn] = useState(false);
   const [hoverTitle, setHoverTitle] = useState(null);
 
   const location = useLocation();
@@ -96,12 +99,27 @@ function UnitNavigation({
       if (prevSequence) {
         newPrevSequence = prevSequence.replace(/\([^)]*\)/, "");
       }
+      let isResultBtnNext;
+      // let isResultBtnPrev;
+      if (nextUnit && nextUnit.trim().toLowerCase().includes("xem kết quả")) {
+        isResultBtnNext = true;
+      } else {
+        isResultBtnNext = false;
+      }
+
+      // if (prevUnit && prevUnit.trim().toLowerCase().includes("xem kết quả")) {
+      //   isResultBtnPrev = true;
+      // } else {
+      //   isResultBtnPrev = false;
+      // }
       if (findIndexUnitTitle === 0) {
         return {
           prevTitle: newPrevSequence,
           nextTitle: nextUnit,
           prevClick: clickPrevSequence ? clickPrevSequence : "",
           nextClick: clickNextUnit ? clickNextUnit : "",
+          isResultBtnNext: isResultBtnNext,
+          // isResultBtnprev: isResultBtnPrev,
         };
       }
       if (findIndexUnitTitle === unitTitles.length - 1) {
@@ -110,13 +128,18 @@ function UnitNavigation({
           nextTitle: newNextSequence,
           prevClick: clickPrevUnit ? clickPrevUnit : "",
           nextClick: clickNextSequence ? clickNextSequence : "",
+          isResultBtnNext: isResultBtnNext,
+          // isResultBtnPrev: isResultBtnPrev,
         };
       }
+
       return {
         prevTitle: prevUnit,
         nextTitle: nextUnit,
         prevClick: clickPrevUnit ? clickPrevUnit : newPrevSequence,
         nextClick: clickNextUnit ? clickNextUnit : newNextSequence,
+        isResultBtnNext: isResultBtnNext,
+        // isResultBtnPrev: isResultBtnPrev,
       };
     }
   }, []);
@@ -124,7 +147,9 @@ function UnitNavigation({
   useEffect(() => {
     const data = handleHoverTitle();
     setHoverTitle(data);
-  }, [location.pathname, sequenceId, unitId]);
+    setIsViewNextResultBtn(data.isResultBtnNext);
+    // setIsViewPrevResultBtn(data.isResultBtnPrev)
+  }, [location.pathname, sequenceId, unitId, isViewNextResultBtn]);
 
   const { courseId } = useSelector((state) => state.courseware);
 
@@ -133,38 +158,50 @@ function UnitNavigation({
     const buttonOnClick = isLastUnit ? goToCourseExitPage : onClickNext;
 
     const disabled = isLastUnit && !exitActive;
-    const buttonText = intl.formatMessage(messages.nextButton);
-    const nextArrow = isRtl(getLocale()) ? faChevronLeft : faChevronRight;
+    // const buttonText = intl.formatMessage(messages.nextButton);
+    // const nextArrow = isRtl(getLocale()) ? faChevronLeft : faChevronRight;
     return (
       <Button
         variant="outline-primary"
-        className="next-button d-flex align-items-center justify-content-center"
+        className={`next-button d-flex align-items-center justify-content-center ${
+          isViewNextResultBtn && "show"
+        } ${isLastUnit && isCompleteCourse && isPassedProject && "show"}`}
         onClick={() => {
-          buttonOnClick();
-          handleHoverTitle();
-          setHoverTitleState((prevState) => {
-            return {
-              ...prevState,
-              nextTitle: hoverTitle.nextClick && hoverTitle.nextClick,
-            };
-          });
+          if (!isLastUnit) {
+            buttonOnClick();
+            if (isViewNextResultBtn) {
+              setIsViewNextResultBtn(false);
+            }
+
+            handleHoverTitle();
+            setHoverTitleState((prevState) => {
+              return {
+                ...prevState,
+                nextTitle: hoverTitle.nextClick && hoverTitle.nextClick,
+              };
+            });
+          }
         }}
-        disabled={disabled}
+        disabled={(!isCompleteCourse || !isPassedProject) && disabled}
         onMouseOver={() => {
-          setHoverTitleState((prevState) => {
-            return {
-              ...prevState,
-              nextTitle: hoverTitle.nextTitle && hoverTitle.nextTitle,
-            };
-          });
+          if (!isViewNextResultBtn || !isLastUnit) {
+            setHoverTitleState((prevState) => {
+              return {
+                ...prevState,
+                nextTitle: hoverTitle.nextTitle && hoverTitle.nextTitle,
+              };
+            });
+          }
         }}
         onMouseOut={() => {
-          setHoverTitleState((prevState) => {
-            return {
-              ...prevState,
-              nextTitle: prevState.nextTitle && "",
-            };
-          });
+          if (!isViewNextResultBtn || !isLastUnit) {
+            setHoverTitleState((prevState) => {
+              return {
+                ...prevState,
+                nextTitle: prevState.nextTitle && "",
+              };
+            });
+          }
         }}
       >
         <UnitNavigationEffortEstimate sequenceId={sequenceId} unitId={unitId}>
@@ -173,7 +210,11 @@ function UnitNavigation({
         {/* <FontAwesomeIcon icon={nextArrow} className="ml-2" size="sm" /> */}
 
         <span className="d-flex align-items-center">
-          {hoverTitleState.nextTitle && hoverTitleState.nextTitle}
+          {isLastUnit && "Hoàn thành khoá học"}
+          {isViewNextResultBtn ? "Xem kết quả" : ""}
+          {!isViewNextResultBtn &&
+            hoverTitleState.nextTitle &&
+            hoverTitleState.nextTitle}
           <svg
             className="right"
             style={{ width: "1.5rem", height: "1.5rem" }}
