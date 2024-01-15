@@ -176,6 +176,10 @@
       word-break: break-word;
       // white-space: pre-line;
 
+      * {
+        font-family: "Roboto", sans-serif;
+      }
+
       // typography for answer item content
       p,
       ul,
@@ -194,6 +198,15 @@
 
       li {
         margin-bottom: 0.5rem;
+      }
+
+      pre {
+        font-size: 0.75px;
+      }
+
+      strong,
+      b {
+        font-weight: 500;
       }
     }
 
