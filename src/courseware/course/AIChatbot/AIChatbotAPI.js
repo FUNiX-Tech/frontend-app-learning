@@ -5,8 +5,14 @@ function baseUrl() {
   return `${getConfig().LMS_BASE_URL}/api/chatbot/`;
 }
 
-export const fetchQueries = async (session_id = 0, skip = 1, limit = 5) => {
+export const fetchQueries = async (session_id = 0, skip = 0, limit = 5) => {
   const url = `${baseUrl()}query/${session_id}/${skip}/${limit}/`;
+  const { data } = await getAuthenticatedHttpClient().get(url);
+  return data;
+};
+
+export const fetchSessions = async (skip = 0, limit = 5) => {
+  const url = `${baseUrl()}session/${skip}/${limit}/`;
   const { data } = await getAuthenticatedHttpClient().get(url);
   return data;
 };

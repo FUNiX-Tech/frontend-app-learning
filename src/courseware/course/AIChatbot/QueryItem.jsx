@@ -63,7 +63,7 @@ function QueryItem({ intl, query, onCopyResponse, onVote, onRetryAskChatbot }) {
       {query.response_msg && (
         <div class="query-item answer-item">
           <div class="answer-item-inner">
-            <div class="answer-item-content">{query.response_msg}</div>
+            <div class="answer-item-content" dangerouslySetInnerHTML={{__html:query.response_msg}}></div>
 
             <div class="answer-item-buttons">
               <button class="copy-btn" onClick={writeResponseToClipboard}>

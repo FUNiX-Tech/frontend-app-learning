@@ -19,10 +19,53 @@
 
 .chatbot-header {
   padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
   .chatbot-name {
     font-weight: 500;
     font-size: 1.25rem;
     color: var(--color-text-default);
+  }
+
+  > div {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    #chatbot-new-session-btn {
+      background: transparent;
+      border: none;
+      outline: none;
+      font-size: 1.5rem;
+      width: 30px;
+      height: 30px;
+      text-align: center;
+      line-height: 30px;
+      border: 1px solid transparent;
+      border-radius: 4px;
+
+      &:hover {
+        border: 1px solid var(--color-stroke);
+      }
+    }
+
+    #chatbot-sessions-list-btn {
+      border: none;
+      outline: none;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      width: 30px;
+      height: 30px;
+      svg {
+        width: 20px;
+      }
+      &:hover {
+        border: 1px solid var(--color-stroke);
+      }
+    }
   }
 }
 
@@ -131,7 +174,27 @@
       text-align: left;
       min-width: 0;
       word-break: break-word;
-      white-space: pre-line;
+      // white-space: pre-line;
+
+      // typography for answer item content
+      p,
+      ul,
+      ol {
+        margin-bottom: 1rem;
+      }
+
+      ul,
+      ol {
+        padding-left: 2rem;
+      }
+
+      ul ul {
+        list-style-type: circle;
+      }
+
+      li {
+        margin-bottom: 0.5rem;
+      }
     }
 
     .answer-item-buttons {
@@ -314,5 +377,63 @@
         right: 1.5rem;
       }
     }
+  }
+}
+
+// session
+.session_item {
+  border: 1px solid var(--color-stroke);
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--background-color-hover);
+  }
+
+  .session_item_header span {
+    font-size: 0.75rem;
+    color: var(--color-text-inactive);
+  }
+
+  .session_item_ask {
+    height: 2rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    span {
+      font-size: 1rem;
+    }
+  }
+
+  .session_item_answer {
+    height: 1rem;
+    overflow: hidden;
+
+    > p {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+      height: 1rem;
+      color: var(--color-text-inactive);
+    }
+
+    * {
+      font-size: 0.75rem;
+    }
+  }
+}
+
+#fetch_more_sessions {
+  display: flex;
+  padding: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-active);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--color-hover);
   }
 }
