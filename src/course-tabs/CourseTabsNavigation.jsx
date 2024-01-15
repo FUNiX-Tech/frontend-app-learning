@@ -129,18 +129,19 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
                     const to = index === 0 ? resumeUrl : urlToPath(url);
                     if (index !== 0) {
                       return (
-                        <NavLink
-                          key={slug}
-                          className={classNames(
-                            "nav-item flex-shrink-0 nav-link",
-                            {
-                              active: slug === activeTabSlug,
-                            }
-                          )}
-                          to={to}
-                        >
-                          {title}
-                        </NavLink>
+                        // <NavLink
+                        //   key={slug}
+                        //   className={classNames(
+                        //     "nav-item flex-shrink-0 nav-link",
+                        //     {
+                        //       active: slug === activeTabSlug,
+                        //     }
+                        //   )}
+                        //   to={to}
+                        // >
+                        //   {title}
+                        // </NavLink>
+                        <a></a>
                       );
                     } else {
                       return (
@@ -166,15 +167,16 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
                   }
 
                   return (
-                    <a
-                      key={slug}
-                      className={classNames("nav-item flex-shrink-0 nav-link", {
-                        active: slug === activeTabSlug,
-                      })}
-                      href={url}
-                    >
-                      {title}
-                    </a>
+                    // <a
+                    //   key={slug}
+                    //   className={classNames("nav-item flex-shrink-0 nav-link", {
+                    //     active: slug === activeTabSlug,
+                    //   })}
+                    //   href={url}
+                    // >
+                    //   {title}
+                    // </a>
+                    <a></a>
                   );
                 })}
           </Tabs>
