@@ -11,7 +11,7 @@ import {
   voteChatbotResponse,
   retryAskChatbot,
 } from "./AIChatbotAPI";
-import QueryItem from "./QueryItem";
+import QueryList from "./QueryList";
 import * as uid from "uuid";
 import "./AIChatbot.scss";
 import messages from "./messages";
@@ -389,19 +389,14 @@ function AIChatbot({ intl }) {
             <li class="loading-more-msg">Loading more...</li>
           )} */}
           {/* {isLastPage && <li class="no-more-messages">No more messages</li>} */}
-          {mode === "chat" &&
-            queryList.map((query) => {
-              return (
-                <li key={query.id}>
-                  <QueryItem
-                    query={query}
-                    onCopyResponse={onCopyResponse}
-                    onVote={onVote}
-                    onRetryAskChatbot={onRetryAskChatbot}
-                  />
-                </li>
-              );
-            })}
+          {mode === "chat" && (
+            <QueryList
+              queryList={queryList}
+              onCopyResponse={onCopyResponse}
+              onVote={onVote}
+              onRetryAskChatbot={onRetryAskChatbot}
+            />
+          )}
 
           {mode === "session" &&
             sessionList.map((session) => (
