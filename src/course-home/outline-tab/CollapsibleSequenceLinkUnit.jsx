@@ -11,8 +11,15 @@ import {
 } from "@edx/frontend-platform/i18n";
 import { faCheckCircle as fasCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { faCheckCircle as farCheckCircle } from "@fortawesome/free-regular-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon, faMinus } from "@fortawesome/react-fontawesome";
 import { history } from "@edx/frontend-platform";
+import { IconButton } from "@edx/paragon";
+import {
+  KeyboardArrowDown,
+  KeyboardArrowUp,
+  CheckBoxOutlineBlank,
+  CheckBoxIcon,
+} from "@edx/paragon/icons";
 import EffortEstimate from "../../shared/effort-estimate";
 import { useModel, useModels } from "../../generic/model-store";
 import { useLocation } from "react-router-dom";
@@ -42,6 +49,7 @@ function CollapsibleSequenceLinkUnit({
   newSequences,
 }) {
   const sequence = sequences[id];
+
   let newSequence;
   if (Object.keys(newSequences).length > 0) {
     newSequence = newSequences[id];
@@ -55,6 +63,11 @@ function CollapsibleSequenceLinkUnit({
   const { userTimezone } = useModel("outline", courseId);
 
   const course = useModel("coursewareMeta", courseId);
+
+  //active sequence and unit
+  const [activeSequence, setActiveSequence] = useState(false);
+
+  console.log(sequence);
 
   const { canLoadCourseware } = useModel("courseHomeMeta", courseId);
   const [open, setOpen] = useState(expand);
@@ -84,17 +97,30 @@ function CollapsibleSequenceLinkUnit({
 
   // canLoadCourseware is true if the Courseware MFE is enabled, false otherwise
   let coursewareUrl = canLoadCourseware ? (
-    <NavLink
+    <a
       className={`${
         newSequence.complete || complete
           ? "complete"
           : `${hasOneComplete && "add-padding-left-16"}`
       }`}
-      activeClassName="active"
-      to={`/course/${courseId}/${id}`}
+      // isActive={(match, location) => {
+      //   if (match) {
+      //     setActiveSequence(true);
+      //     return true;
+      //   } else {
+      //     setActiveSequence(false);
+      //     return false;
+      //   }
+      // }}
+      // activeClassName="active"
+      // to={`/course/${courseId}/${id}`}
+      onClick={(e) => {
+        e.preventDefault();
+      }}
+      href="#"
     >
       {newTitle}
-    </NavLink>
+    </a>
   ) : (
     <Hyperlink destination={legacyWebUrl}>{newTitle}</Hyperlink>
   );
@@ -103,35 +129,61 @@ function CollapsibleSequenceLinkUnit({
     if (useHistory) {
       const firstSequence = sequenceIds[0] || id;
       coursewareUrl = (
-        <NavLink
+        <a
           className={`${
             newSequence?.complete || complete
               ? "complete"
               : `${hasOneComplete && "add-padding-left-16"}`
           }`}
-          activeClassName="active"
-          // to={`/course/${courseId}/${id}/${firstSequence}`}
-          to={`/course/${courseId}/${id}`}
+          // isActive={(match, location) => {
+          //   if (match) {
+          //     setActiveSequence(true);
+          //     return true;
+          //   } else {
+          //     setActiveSequence(false);
+          //     return false;
+          //   }
+          // }}
+          // activeClassName="active"
+          // // to={`/course/${courseId}/${id}/${firstSequence}`}
+          // to={`/course/${courseId}/${id}`}
+          // onClick={(e) => {
+          //   handleHistoryClick(e, courseId, id, firstSequence);
+          // }}
           onClick={(e) => {
-            handleHistoryClick(e, courseId, id, firstSequence);
+            e.preventDefault();
           }}
+          href="#"
         >
           {newTitle}
-        </NavLink>
+        </a>
       );
     } else {
       coursewareUrl = (
-        <NavLink
+        <a
           className={`${
             newSequence?.complete || complete
               ? "complete"
               : `${hasOneComplete && "add-padding-left-16"}`
           }`}
-          activeClassName="active"
-          to={`/course/${courseId}/${id}`}
+          // isActive={(match, location) => {
+          //   if (match) {
+          //     setActiveSequence(true);
+          //     return true;
+          //   } else {
+          //     setActiveSequence(false);
+          //     return false;
+          //   }
+          // }}
+          // activeClassName="active"
+          // to={`/course/${courseId}/${id}`}
+          onClick={(e) => {
+            e.preventDefault();
+          }}
+          href="#"
         >
           {newTitle}
-        </NavLink>
+        </a>
       );
     }
   }
@@ -139,15 +191,17 @@ function CollapsibleSequenceLinkUnit({
   const displayTitle = showLink ? coursewareUrl : newTitle;
   // console.log(id)
   const sectionTitle = (
-    <div
-      className={classNames("w-100", { "": !first })}
-      style={{ backgroundColor: "#FAFBFB" }}
-    >
-      <div className="position-relative w-100 m-0">
+    <div className={classNames("w-100", { "": !first })}>
+      <div className="w-100 m-0">
+        {!open ? (
+          <KeyboardArrowDown className="icon-toggle" />
+        ) : (
+          <KeyboardArrowUp className="icon-toggle" />
+        )}
         <div className="text-break">
           <span className="d-flex align-items-flex-start align-middle">
             <React.Fragment>
-              {newSequence?.complete || complete ? (
+              {/* {newSequence?.complete || complete ? (
                 // <FontAwesomeIcon
                 //   icon={fasCheckCircle}
 
@@ -171,14 +225,36 @@ function CollapsibleSequenceLinkUnit({
                 </svg>
               ) : (
                 ""
-              )}
+              )} */}
             </React.Fragment>
             {displayTitle}
           </span>
+          <p className="sequence-effort-time">
+            {sequenceIds.length} / {sequenceIds.length} |{" "}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="17"
+              viewBox="0 0 16 17"
+              fill="none"
+            >
+              <path
+                d="M7.99968 1.88477C6.68113 1.88477 5.3922 2.27576 4.29588 3.0083C3.19955 3.74084 2.34506 4.78203 1.84048 6.00021C1.3359 7.21838 1.20387 8.55883 1.46111 9.85203C1.71834 11.1452 2.35328 12.3331 3.28563 13.2655C4.21798 14.1978 5.40587 14.8328 6.69907 15.09C7.99228 15.3472 9.33272 15.2152 10.5509 14.7106C11.7691 14.206 12.8103 13.3516 13.5428 12.2552C14.2753 11.1589 14.6663 9.86997 14.6663 8.55143C14.6644 6.78392 13.9614 5.08937 12.7116 3.83955C11.4617 2.58973 9.76718 1.88673 7.99968 1.88477ZM7.99968 13.7366C6.97414 13.7366 5.97164 13.4325 5.11894 12.8628C4.26624 12.293 3.60164 11.4832 3.20919 10.5357C2.81674 9.58825 2.71405 8.54568 2.91412 7.53985C3.1142 6.53402 3.60804 5.61011 4.3332 4.88495C5.05836 4.15979 5.98227 3.66595 6.9881 3.46588C7.99392 3.26581 9.03649 3.36849 9.98396 3.76095C10.9314 4.1534 11.7412 4.818 12.311 5.6707C12.8808 6.5234 13.1849 7.5259 13.1849 8.55143C13.1834 9.92618 12.6366 11.2442 11.6645 12.2163C10.6924 13.1884 9.37442 13.7351 7.99968 13.7366ZM12.1972 8.55143C12.1972 8.74789 12.1192 8.9363 11.9802 9.07521C11.8413 9.21413 11.6529 9.29217 11.4565 9.29217H7.99968C7.80322 9.29217 7.61481 9.21413 7.47589 9.07521C7.33698 8.9363 7.25894 8.74789 7.25894 8.55143V5.09464C7.25894 4.89819 7.33698 4.70977 7.47589 4.57086C7.61481 4.43194 7.80322 4.3539 7.99968 4.3539C8.19613 4.3539 8.38454 4.43194 8.52346 4.57086C8.66237 4.70977 8.74042 4.89819 8.74042 5.09464V7.81069H11.4565C11.6529 7.81069 11.8413 7.88873 11.9802 8.02765C12.1192 8.16656 12.1972 8.35497 12.1972 8.55143Z"
+                fill="#2C3744"
+              />
+            </svg>
+            {sequence?.effortTime ? sequence?.effortTime / 60 : 0} phút
+          </p>
           {/* <span className="sr-only">
-            , {intl.formatMessage(complete ? messages.completedAssignment : messages.incompleteAssignment)}
-          </span>
-          <EffortEstimate className="ml-3 align-middle" block={sequence} /> */}
+            ,{" "}
+            {intl.formatMessage(
+              complete
+                ? messages.completedAssignment
+                : messages.incompleteAssignment
+            )}
+          </span> */}
+
+          {/* <EffortEstimate className="ml-3 align-middle" block={sequence} /> */}
         </div>
       </div>
       {due && (
@@ -215,21 +291,23 @@ function CollapsibleSequenceLinkUnit({
   );
 
   return (
-    <li className="collapsible-sequence-link-container-unit">
+    <li
+      className={`collapsible-sequence-link-container-unit ${
+        activeSequence && "active"
+      }`}
+    >
       <Collapsible
-        className="border-0 collapsible-tab"
+        className={`border-0 collapsible-tab ${open && "active"}`}
         title={sectionTitle}
         open={open}
         onToggle={() => {
           setOpen(!open);
         }}
-        // onToggle={() => {
-        //   setOpen(false);
-        // }}
+
         // iconWhenClosed={
         //   <IconButton
-        //     alt={intl.formatMessage(messages.openSection)}
-        //     icon={faPlus}
+        //     // alt={intl.formatMessage(messages.openSection)}
+        //     icon={KeyboardArrowDown}
         //     onClick={() => {
         //       setOpen(true);
         //     }}
@@ -238,7 +316,7 @@ function CollapsibleSequenceLinkUnit({
         // }
         // iconWhenOpen={
         //   <IconButton
-        //     alt={intl.formatMessage(genericMessages.close)}
+        //     // alt={intl.formatMessage(genericMessages.close)}
         //     icon={faMinus}
         //     onClick={() => {
         //       setOpen(false);
@@ -250,8 +328,8 @@ function CollapsibleSequenceLinkUnit({
         <ol
           className={`${
             newSequence?.complete || complete || hasOneComplete
-              ? "list-unstyled add-padding-left-16"
-              : "list-unstyled"
+              ? "list-unstyled "
+              : "list-unstyled "
           }`}
         >
           {sequenceIds.map((sequenceId) => {
@@ -260,6 +338,7 @@ function CollapsibleSequenceLinkUnit({
             return (
               <li key={sequenceId}>
                 {/* <div className={classNames("", { "mt-2": !first })}> */}
+
                 <div>
                   {/* <div className="col-auto p-0">
                       {sequenceData.complete ? (
@@ -284,7 +363,11 @@ function CollapsibleSequenceLinkUnit({
                         />
                       )}
                     </div> */}
-                  <div className="col text-break unit-link-wrapper p-0">
+                  <div
+                    className={`col d-flex  align-items-center text-break unit-link-wrapper p-0 ${
+                      location.pathname.includes(sequenceId) && "active"
+                    }`}
+                  >
                     <NavLink
                       className={`${
                         (unit && unit.complete) || sequenceData.complete
@@ -294,6 +377,17 @@ function CollapsibleSequenceLinkUnit({
                       to={`/course/${courseId}/${sequence.id}/${sequenceId}`}
                       activeClassName={"active"}
                     >
+                      {(unit && unit.complete) || sequenceData.complete ? (
+                        <CheckBoxIcon
+                          onClick={(e) => e.preventDefault()}
+                          className="check-icon complete"
+                        />
+                      ) : (
+                        <CheckBoxOutlineBlank
+                          onClick={(e) => e.preventDefault()}
+                          className="check-icon"
+                        />
+                      )}
                       {sequenceData.display_name}
                     </NavLink>
                   </div>
