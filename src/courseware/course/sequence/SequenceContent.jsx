@@ -110,7 +110,9 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
   }, [iframeHeight]);
 
   useEffect(() => {
-    setWillLoadUnits((prev) => Array.from(new Set([...prev, unitId])));
+    if (willLoadUnits.includes(unitId)) return;
+
+    setWillLoadUnits((prev) => [...prev, unitId]);
   }, [unitId]);
 
   useEffect(() => {
