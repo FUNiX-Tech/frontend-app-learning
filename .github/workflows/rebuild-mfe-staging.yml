@@ -1,10 +1,26 @@
-name: Deploy to AWS
+name: Deploy MFE Staging
 on:
   workflow_dispatch
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Send noti begining...
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          fields: workflow,job,message,commit,repo,ref,author,took
+          custom_payload: |
+            {
+              username: 'github-action',
+              icon_emoji: ':octocat:',
+              attachments: [{
+                color: 'good',
+                text: `${process.env.AS_AUTHOR.split(/[<@]/)[1]} start deploying MFE "${process.env.AS_MESSAGE}" in ${process.env.AS_REF.replace('refs/heads/', '')}`,
+              }]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}     
       - name: Re deploy MFE
         uses: appleboy/ssh-action@v0.1.4
         with:
@@ -30,7 +46,7 @@ jobs:
               icon_emoji: ':octocat:',
               attachments: [{
                 color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
-                text: `${process.env.AS_AUTHOR.split(/[<@]/)[1]} Deploy Openedx "${process.env.AS_MESSAGE}" in ${process.env.AS_REF.replace('refs/heads/', '')} ${'${{ job.status }}' === 'success' ? 'succeeded' : '${{ job.status }}' === 'failure' ? 'failed' : '${{ job.status }}'} in ${process.env.AS_TOOK}`,
+                text: `${process.env.AS_AUTHOR.split(/[<@]/)[1]} Deploy MFE "${process.env.AS_MESSAGE}" in ${process.env.AS_REF.replace('refs/heads/', '')} ${'${{ job.status }}' === 'success' ? 'succeeded' : '${{ job.status }}' === 'failure' ? 'failed' : '${{ job.status }}'} in ${process.env.AS_TOOK}`,
               }]
             }
         env:
