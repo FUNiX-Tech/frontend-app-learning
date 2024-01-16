@@ -6,11 +6,9 @@
   .unit-left-sidebar {
     width: calc((100% - 41.5rem) / 2);
     .menu-lesson,
-    #courseHome-utline {
+    #courseHome-utline,
+    .left-icon-container {
       width: 16.75rem;
-    }
-    .show-menu-lesson.right-side {
-      right: -1rem;
     }
   }
   .sequence #courseware-sequenceNavigation {
@@ -38,11 +36,9 @@
   .unit-left-sidebar {
     width: calc((100% - 35.25rem) / 2);
     .menu-lesson,
-    #courseHome-utline {
+    #courseHome-utline,
+    .left-icon-container {
       width: 13.375rem;
-    }
-    .show-menu-lesson.right-side {
-      right: -1rem;
     }
   }
   .sequence #courseware-sequenceNavigation {
@@ -72,13 +68,14 @@
   }
   .unit-left-sidebar {
     width: 2rem;
-    &.right-side {
+    &.left-side {
       z-index: 1000;
       width: 40%;
     }
 
     .menu-lesson,
-    #courseHome-utline {
+    #courseHome-utline,
+    .left-icon-container {
       width: unset;
     }
   }
@@ -124,13 +121,14 @@
   }
   .unit-left-sidebar {
     width: 2rem;
-    &.right-side {
+    &.left-side {
       z-index: 1000;
       width: 50%;
     }
 
     .menu-lesson,
-    #courseHome-utline {
+    #courseHome-utline,
+    .left-icon-container {
       width: unset;
     }
   }
@@ -176,13 +174,14 @@
   }
   .unit-left-sidebar {
     width: 2rem;
-    &.right-side {
+    &.left-side {
       z-index: 1000;
-      width: calc(100% - 1.25rem);
+      width: 100%;
     }
 
     .menu-lesson,
-    #courseHome-utline {
+    #courseHome-utline,
+    .left-icon-container {
       width: unset;
     }
   }

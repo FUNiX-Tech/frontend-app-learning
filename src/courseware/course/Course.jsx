@@ -32,9 +32,10 @@ import { useSelector } from "react-redux";
 import "./course.scss";
 import "./CourseResponsive.scss";
 
-import group from "./assets/group.svg";
-import group_active from "./assets/group_active.svg";
-import group_hover from "./assets/group_hover.svg";
+import left_on from "./assets/left_on.svg";
+import left_off from "./assets/left_off.svg";
+import left_on_hover from "./assets/left_on_hover.svg";
+import left_off_hover from "./assets/left_off_hover.svg";
 import { toggleShowLeftbar, setOffMenuState } from "../../header/data/slice";
 import AIChatbot from "./AIChatbot/AIChatbot";
 import { getSequenceMetadata } from "../data/api";
@@ -65,7 +66,7 @@ function Course({
   const [styling, setStyling] = useState("css-yeymkw");
   const isShowLeftbar = useSelector((state) => state.header.isShowLeftbar);
 
-  const [groupSrc, setGroupSrc] = useState(group);
+  const [groupSrc, setGroupSrc] = useState(left_off);
 
   const course = useModel("coursewareMeta", courseId);
   const {
@@ -297,9 +298,9 @@ function Course({
   //set show leftbar icon
   useEffect(() => {
     if (isShowLeftbar) {
-      setGroupSrc(group_active);
+      setGroupSrc(left_on);
     } else {
-      setGroupSrc(group);
+      setGroupSrc(left_off);
     }
   }, [location.pathname, isShowLeftbar]);
 
@@ -319,38 +320,46 @@ function Course({
 
       <div
         className={`${
-          !isShowLeftbar ? "unit-left-sidebar" : "unit-left-sidebar right-side"
+          !isShowLeftbar ? "unit-left-sidebar" : "unit-left-sidebar left-side"
         }`}
       >
         <div class="content">
-          <div
-            onMouseOver={() => {
-              setGroupSrc(group_hover);
-            }}
-            onMouseOut={() => {
-              if (isShowLeftbar) {
-                setGroupSrc(group_active);
-              } else {
-                setGroupSrc(group);
-              }
-            }}
-            onClick={() => {
-              dispatch(toggleShowLeftbar());
-              if (!isShowLeftbar) {
-                setGroupSrc(group_active);
-              }
-            }}
-            className={`${
-              !isShowLeftbar
-                ? `show-menu-lesson right-side ${
-                    groupSrc === group_hover && "hover"
-                  }`
-                : `show-menu-lesson left-side ${
-                    groupSrc === group_hover && "hover"
-                  }`
-            }`}
-          >
-            <img src={groupSrc} alt={group} />
+          <div className="left-icon-container">
+            <div
+              onMouseOver={() => {
+                if (isShowLeftbar) {
+                  setGroupSrc(left_on_hover);
+                } else {
+                  setGroupSrc(left_off_hover);
+                }
+              }}
+              onMouseOut={() => {
+                if (isShowLeftbar) {
+                  setGroupSrc(left_on);
+                } else {
+                  setGroupSrc(left_off);
+                }
+              }}
+              onClick={() => {
+                dispatch(toggleShowLeftbar());
+                if (!isShowLeftbar) {
+                  setGroupSrc(left_off);
+                } else {
+                  setGroupSrc(left_on);
+                }
+              }}
+              className={`${
+                !isShowLeftbar
+                  ? `show-menu-lesson left-side ${
+                      groupSrc === left_on_hover && "hover"
+                    }`
+                  : `show-menu-lesson right-side ${
+                      groupSrc === left_off_hover && "hover"
+                    }`
+              }`}
+            >
+              <img src={groupSrc} alt="Expand Lesson" />
+            </div>
           </div>
 
           <React.Fragment>
