@@ -1,4 +1,4 @@
-name: Deploy to AWS
+name: Deploy MFE Staging
 on:
   workflow_dispatch
 jobs:
