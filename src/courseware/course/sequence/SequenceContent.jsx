@@ -151,7 +151,7 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
         <div>
           {iframeURLS.map((e) => {
             const isSelectedUnit = unitId === e.id;
-            if (willLoadUnits.includes(e.id))
+            if (willLoadUnits?.includes(e.id))
               return (
                 <div key={e.id}>
                   <iframe

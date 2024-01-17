@@ -57,16 +57,16 @@ function CollapsibleSequenceLink({
 
   const [subText, setSubText] = useState("");
 
-  useEffect(async () => {
-    try {
-      const { sub_text } = await subTextSuquence(id);
-      if (sub_text.length > 0) {
-        setSubText(sub_text);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }, [id]);
+  // useEffect(async () => {
+  //   try {
+  //     const { sub_text } = await subTextSuquence(id);
+  //     if (sub_text.length > 0) {
+  //       setSubText(sub_text);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }, [id]);
 
   const timezoneFormatArgs = userTimezone ? { timeZone: userTimezone } : {};
   let newTitle = title.replace(
