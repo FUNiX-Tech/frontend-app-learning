@@ -23,7 +23,7 @@ function SectionListUnit({
   sequenceIds,
   sequenceId,
 }) {
-  const isMounted = useRef(true);
+  // const isMounted = useRef(true);
   const [height, setHeight] = useState(window.height);
   const resizeObserver = new ResizeObserver(() => {
     // Get height of #section-list-container
@@ -59,23 +59,23 @@ function SectionListUnit({
   //     overflow : 'auto',
   //   };
   //newSequences
-  const [newSequences, setNewSequences] = useState([]);
+  // const [newSequences, setNewSequences] = useState([]);
 
   const rootCourseId = courses && Object.keys(courses)[0];
-  useEffect(() => {
-    const fetchNewSequence = async (courseId) => {
-      if (courseId) {
-        const data = await getOutlineTabData(courseId);
-        if (data && isMounted.current) {
-          setNewSequences(data.courseBlocks.sequences);
-        }
-      }
-    };
-    fetchNewSequence(courseId);
-    return () => {
-      isMounted.current = false;
-    };
-  }, [unitId, sequenceId, courseId]);
+  // useEffect(() => {
+  //   const fetchNewSequence = async (courseId) => {
+  //     if (courseId) {
+  //       const data = await getOutlineTabData(courseId);
+  //       if (data && isMounted.current) {
+  //         setNewSequences(data.courseBlocks.sequences);
+  //       }
+  //     }
+  //   };
+  //   fetchNewSequence(courseId);
+  //   return () => {
+  //     isMounted.current = false;
+  //   };
+  // }, [unitId, sequenceId, courseId]);
 
   return (
     <ol
@@ -99,7 +99,7 @@ function SectionListUnit({
             lesson={lesson}
             unitId={unitId}
             allSequenceIds={sequenceIds}
-            newSequences={newSequences}
+            // newSequences={newSequences}
           />
         );
       })}

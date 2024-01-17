@@ -88,7 +88,9 @@
     & .collapsible-body {
       padding: 0 !important;
       background-color: unset !important;
-
+      & .border-bottom {
+        border-bottom: 1px solid var(--color-stroke);
+      }
       & .unit-padding {
         padding: 0;
       }
@@ -119,6 +121,7 @@
         font-weight: 400;
         padding: 1rem 0 1rem 1rem !important;
       }
+
       font-weight: 500;
 
       flex-grow: 0;
@@ -149,11 +152,13 @@
     }
 
     & .check-icon {
-      width: 1rem;
       margin-right: 0.5rem;
+      width: 1rem;
       min-width: 1rem;
       height: 1rem;
       margin-top: 0.1rem;
+      svg {
+      }
       &.complete {
         path {
           fill: #5aa447 !important;
