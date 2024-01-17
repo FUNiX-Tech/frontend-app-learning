@@ -84,6 +84,8 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
 
   //get running course
   useEffect(() => {
+    if (!courseId) return;
+
     const fetchCourse = async () => {
       try {
         // const data = await fetchDashboard();
