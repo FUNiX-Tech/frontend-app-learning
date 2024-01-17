@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import { Link, NavLink } from "react-router-dom";
-import { Hyperlink, Collapsible } from "@edx/paragon";
+import { Hyperlink, Collapsible, Icon } from "@edx/paragon";
 import {
   FormattedMessage,
   FormattedTime,
@@ -44,19 +44,19 @@ function CollapsibleSequenceLinkUnit({
   useHistory,
   lesson,
   unitId,
-  hasOneComplete,
-  complete,
-  newSequences,
+  // hasOneComplete,
+  // complete,
 }) {
   const sequence = sequences[id];
 
-  let newSequence;
-  if (Object.keys(newSequences).length > 0) {
-    newSequence = newSequences[id];
-  }
+  // let newSequence;
+  // if (Object.keys(newSequences).length > 0) {
+  //   newSequence = newSequences[id];
+  // }
   // const newSequence = newSequences[id];
   const { description, due, legacyWebUrl, showLink, title, sequenceIds } =
     sequence;
+  const unit = useModel("units", id);
 
   //Set open full text if true
 
@@ -98,11 +98,11 @@ function CollapsibleSequenceLinkUnit({
   // canLoadCourseware is true if the Courseware MFE is enabled, false otherwise
   let coursewareUrl = canLoadCourseware ? (
     <a
-      className={`${
-        newSequence.complete || complete
-          ? "complete"
-          : `${hasOneComplete && "add-padding-left-16"}`
-      }`}
+      // className={`${
+      //   newSequence.complete || complete
+      //     ? "complete"
+      //     : `${hasOneComplete && "add-padding-left-16"}`
+      // }`}
       // isActive={(match, location) => {
       //   if (match) {
       //     setActiveSequence(true);
@@ -130,11 +130,11 @@ function CollapsibleSequenceLinkUnit({
       const firstSequence = sequenceIds[0] || id;
       coursewareUrl = (
         <a
-          className={`${
-            newSequence?.complete || complete
-              ? "complete"
-              : `${hasOneComplete && "add-padding-left-16"}`
-          }`}
+          // className={`${
+          //   newSequence?.complete || complete
+          //     ? "complete"
+          //     : `${hasOneComplete && "add-padding-left-16"}`
+          // }`}
           // isActive={(match, location) => {
           //   if (match) {
           //     setActiveSequence(true);
@@ -161,11 +161,11 @@ function CollapsibleSequenceLinkUnit({
     } else {
       coursewareUrl = (
         <a
-          className={`${
-            newSequence?.complete || complete
-              ? "complete"
-              : `${hasOneComplete && "add-padding-left-16"}`
-          }`}
+          // className={`${
+          //   newSequence?.complete || complete
+          //     ? "complete"
+          //     : `${hasOneComplete && "add-padding-left-16"}`
+          // }`}
           // isActive={(match, location) => {
           //   if (match) {
           //     setActiveSequence(true);
@@ -230,7 +230,14 @@ function CollapsibleSequenceLinkUnit({
             {displayTitle}
           </span>
           <p className="sequence-effort-time">
-            {sequenceIds.length} / {sequenceIds.length} |{" "}
+            {
+              sequenceIds.filter((sequenceId) => {
+                const unit = useModel("units", sequenceId);
+                const unitOther = sequences[sequenceId];
+                return unit?.complete || unitOther?.complete;
+              }).length
+            }{" "}
+            / {sequenceIds.length} |{" "}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -325,14 +332,8 @@ function CollapsibleSequenceLinkUnit({
         //   />
         // }
       >
-        <ol
-          className={`${
-            newSequence?.complete || complete || hasOneComplete
-              ? "list-unstyled "
-              : "list-unstyled "
-          }`}
-        >
-          {sequenceIds.map((sequenceId) => {
+        <ol className="list-unstyled border-bottom">
+          {sequenceIds.map((sequenceId, index) => {
             const sequenceData = sequences[sequenceId];
             const unit = useModel("units", sequenceId);
             return (
@@ -378,15 +379,73 @@ function CollapsibleSequenceLinkUnit({
                       activeClassName={"active"}
                     >
                       {(unit && unit.complete) || sequenceData.complete ? (
-                        <CheckBoxIcon
+                        <svg
                           onClick={(e) => e.preventDefault()}
                           className="check-icon complete"
-                        />
+                          width="16"
+                          height="17"
+                          viewBox="0 0 16 17"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <g clip-path="url(#clip0_4588_65155)">
+                            <rect
+                              x="2"
+                              y="2.55078"
+                              width="12"
+                              height="11"
+                              fill="white"
+                            />
+                            <path
+                              d="M6.75556 9.79523L4.84444 7.88411C4.68148 7.72115 4.47407 7.63967 4.22222 7.63967C3.97037 7.63967 3.76296 7.72115 3.6 7.88411C3.43704 8.04708 3.35556 8.25448 3.35556 8.50634C3.35556 8.75819 3.43704 8.9656 3.6 9.12856L6.13333 11.6619C6.31111 11.8397 6.51852 11.9286 6.75556 11.9286C6.99259 11.9286 7.2 11.8397 7.37778 11.6619L12.4 6.63967C12.563 6.47671 12.6444 6.2693 12.6444 6.01745C12.6444 5.7656 12.563 5.55819 12.4 5.39523C12.237 5.23226 12.0296 5.15078 11.7778 5.15078C11.5259 5.15078 11.3185 5.23226 11.1556 5.39523L6.75556 9.79523ZM1.77778 16.5508C1.28889 16.5508 0.87037 16.3767 0.522222 16.0286C0.174074 15.6804 0 15.2619 0 14.773V2.32856C0 1.83967 0.174074 1.42115 0.522222 1.073C0.87037 0.724855 1.28889 0.550781 1.77778 0.550781H14.2222C14.7111 0.550781 15.1296 0.724855 15.4778 1.073C15.8259 1.42115 16 1.83967 16 2.32856V14.773C16 15.2619 15.8259 15.6804 15.4778 16.0286C15.1296 16.3767 14.7111 16.5508 14.2222 16.5508H1.77778Z"
+                              fill="#5AA447"
+                            />
+                          </g>
+                          <defs>
+                            <clipPath id="clip0_4588_65155">
+                              <rect
+                                width="16"
+                                height="16"
+                                fill="white"
+                                transform="translate(0 0.550781)"
+                              />
+                            </clipPath>
+                          </defs>
+                        </svg>
                       ) : (
-                        <CheckBoxOutlineBlank
+                        <svg
                           onClick={(e) => e.preventDefault()}
                           className="check-icon"
-                        />
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="17"
+                          viewBox="0 0 16 17"
+                          fill="none"
+                        >
+                          <g clip-path="url(#clip0_4646_25367)">
+                            <rect
+                              x="1"
+                              y="1.55078"
+                              width="14"
+                              height="14"
+                              fill="white"
+                            />
+                            <path
+                              d="M1.77778 16.5508C1.28889 16.5508 0.87037 16.3767 0.522222 16.0286C0.174074 15.6804 0 15.2619 0 14.773V2.32856C0 1.83967 0.174074 1.42115 0.522222 1.073C0.87037 0.724855 1.28889 0.550781 1.77778 0.550781H14.2222C14.7111 0.550781 15.1296 0.724855 15.4778 1.073C15.8259 1.42115 16 1.83967 16 2.32856V14.773C16 15.2619 15.8259 15.6804 15.4778 16.0286C15.1296 16.3767 14.7111 16.5508 14.2222 16.5508H1.77778ZM1.5 15.0508H14.5V2.05078H1.5V15.0508Z"
+                              fill="#2C3744"
+                            />
+                          </g>
+                          <defs>
+                            <clipPath id="clip0_4646_25367">
+                              <rect
+                                width="16"
+                                height="16"
+                                fill="white"
+                                transform="translate(0 0.550781)"
+                              />
+                            </clipPath>
+                          </defs>
+                        </svg>
                       )}
                       {sequenceData.display_name}
                     </NavLink>
