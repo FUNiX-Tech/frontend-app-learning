@@ -84,6 +84,8 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
 
   //get running course
   useEffect(() => {
+    if (!courseId) return;
+
     const fetchCourse = async () => {
       try {
         // const data = await fetchDashboard();
@@ -180,81 +182,6 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
                   );
                 })}
           </Tabs>
-
-          {/* sub header Icon */}
-          {!hideMenu && (
-            <div className="sub-header-icon d-flex">
-              {/* <div className="sub-header-icon-item tool-tip-1">
-              <img
-                onMouseOver={() => {
-                  if (!isShowRightMenu) {
-                    setRightMenuSrc(RightMenuHover);
-                  }
-                }}
-                onMouseOut={() => {
-                  if (!isShowRightMenu) {
-                    setRightMenuSrc(RightMenu);
-                  }
-                }}
-                src={rightMenuSrc}
-                alt={`RightMenu`}
-                onClick={() => {
-                  setRightMenuSrc(RightMenuActive);
-                  setFeedbackSrc(Feedback);
-                  setChatbotSrc(Chatbot);
-                  dispatch(toggleShowLesson());
-                }}
-              />
-            </div> */}
-
-              <div className="sub-header-icon-item tool-tip-3">
-                <img
-                  onMouseOver={() => {
-                    if (!isShowChatbot) {
-                      setChatbotSrc(ChatbotHover);
-                    }
-                  }}
-                  onMouseOut={() => {
-                    if (!isShowChatbot) {
-                      setChatbotSrc(Chatbot);
-                    } else {
-                      setChatbotSrc(ChatbotActive);
-                    }
-                  }}
-                  src={chatbotSrc}
-                  alt={`Chatbot`}
-                  onClick={() => {
-                    setRightMenuSrc(RightMenu);
-                    setFeedbackSrc(Feedback);
-                    setChatbotSrc(ChatbotActive);
-                    dispatch(toggleShowChatbot());
-                  }}
-                />
-              </div>
-              <div className="sub-header-icon-item tool-tip-2">
-                <img
-                  onMouseOver={() => {
-                    setFeedbackSrc(FeedbackHover);
-                  }}
-                  onMouseOut={() => {
-                    if (!isShowFeedback) {
-                      setFeedbackSrc(Feedback);
-                    } else {
-                      setFeedbackSrc(FeedbackActive);
-                    }
-                  }}
-                  src={feedbackSrc}
-                  alt={`Feedback`}
-                  onClick={() => {
-                    setRightMenuSrc(RightMenu);
-                    setFeedbackSrc(FeedbackActive);
-                    setChatbotSrc(Chatbot);
-                    dispatch(toggleShowFeedback());
-                  }}
-                />
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </>
