@@ -26,7 +26,7 @@ const ContentLock = React.lazy(() => import("./content-lock"));
 function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
   const sequence = useModel("sequences", sequenceId);
   const [loadedUnits, setLoadedUnits] = useState([]);
-  const [willLoadUnits, setWillLoadUnits] = useState([unitId]);
+  const [willLoadUnits, setWillLoadUnits] = useState(unitId ? [unitId] : []);
 
   // Go back to the top of the page whenever the unit or sequence changes.
   useEffect(() => {
@@ -110,7 +110,8 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
   }, [iframeHeight]);
 
   useEffect(() => {
-    if (willLoadUnits.includes(unitId)) return;
+    if (!unitId) return;
+    if (willLoadUnits?.includes(unitId)) return;
 
     setWillLoadUnits((prev) => [...prev, unitId]);
   }, [unitId]);
@@ -125,6 +126,7 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
           return [...prev, item.id];
         }
       }
+      return prev;
     });
   }, [loadedUnits]);
 
