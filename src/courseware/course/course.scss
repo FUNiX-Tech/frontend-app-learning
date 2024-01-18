@@ -247,12 +247,14 @@
 
       svg {
         transition: 0.2s;
+        fill: #576f8a;
       }
 
       &:hover {
-        border: 1px solid var(--color-hover);
+        border: 1px solid var(--color-active);
+        background: var(--color-active);
         svg {
-          stroke: var(--color-hover);
+          fill: white;
         }
       }
 
@@ -260,15 +262,13 @@
         border: 1px solid var(--color-active);
 
         svg {
-          stroke: var(--color-active);
+          fill: white;
         }
       }
 
-      &:first-child {
-        border: 1px solid #7f7f7f;
-        &:hover {
-          border: 1px solid var(--color-hover);
-        }
+      border: 1px solid #7f7f7f;
+      &:hover {
+        border: 1px solid var(--color-active);
       }
     }
   }
