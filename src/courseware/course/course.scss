@@ -223,14 +223,27 @@
   z-index: 9999;
   max-width: calc(300px + 1rem);
   right: 0;
-  transform: translateX(100%);
+  transform: translateX(calc(100% + 1rem));
   top: 0;
   transition: transform 0.2s;
   margin-right: 1rem;
 
+  // bad fixing
+  &::after {
+    left: 100%;
+    width: 2rem;
+    height: 10%;
+    background: var(--background-content);
+    position: absolute;
+    display: block;
+    content: "";
+    top: 0;
+    height: 100vh;
+  }
+
   #chatbot-feedback-btns {
     position: absolute;
-    left: -2rem;
+    left: -3rem;
     display: flex;
     top: 1rem;
     flex-direction: column;
