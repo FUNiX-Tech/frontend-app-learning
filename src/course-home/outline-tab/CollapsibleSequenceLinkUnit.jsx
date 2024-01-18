@@ -1,38 +1,32 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import { Link, NavLink } from "react-router-dom";
-import { Hyperlink, Collapsible, Icon } from "@edx/paragon";
+import { NavLink } from "react-router-dom";
+import { Hyperlink, Collapsible } from "@edx/paragon";
 import {
   FormattedMessage,
   FormattedTime,
   injectIntl,
   intlShape,
 } from "@edx/frontend-platform/i18n";
-import { faCheckCircle as fasCheckCircle } from "@fortawesome/free-solid-svg-icons";
-import { faCheckCircle as farCheckCircle } from "@fortawesome/free-regular-svg-icons";
-import { FontAwesomeIcon, faMinus } from "@fortawesome/react-fontawesome";
+// import { faCheckCircle as fasCheckCircle } from "@fortawesome/free-solid-svg-icons";
+// import { faCheckCircle as farCheckCircle } from "@fortawesome/free-regular-svg-icons";
+// import { FontAwesomeIcon, faMinus } from "@fortawesome/react-fontawesome";
 import { history } from "@edx/frontend-platform";
-import { IconButton } from "@edx/paragon";
-import {
-  KeyboardArrowDown,
-  KeyboardArrowUp,
-  CheckBoxOutlineBlank,
-  CheckBoxIcon,
-} from "@edx/paragon/icons";
-import EffortEstimate from "../../shared/effort-estimate";
+import { KeyboardArrowDown, KeyboardArrowUp } from "@edx/paragon/icons";
+// import EffortEstimate from "../../shared/effort-estimate";
 import { useModel, useModels } from "../../generic/model-store";
-import { useLocation } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
 
-import messages from "./messages";
+// import messages from "./messages";
 // import genericMessages from '../../generic/messages';
 import "./CollapsibleSequenceLinkUnit.scss";
-import { subTextSuquence } from "../data/index";
+// import { subTextSuquence } from "../data/index";
 
-function handleHistoryClick(e, courseId, sequenceId, unitId) {
-  e.preventDefault();
-  history.push(`/course/${courseId}/${sequenceId}/${unitId}`);
-}
+// function handleHistoryClick(e, courseId, sequenceId, unitId) {
+//   e.preventDefault();
+//   history.push(`/course/${courseId}/${sequenceId}/${unitId}`);
+// }
 
 function CollapsibleSequenceLinkUnit({
   id,
@@ -56,7 +50,7 @@ function CollapsibleSequenceLinkUnit({
   // const newSequence = newSequences[id];
   const { description, due, legacyWebUrl, showLink, title, sequenceIds } =
     sequence;
-  const unit = useModel("units", id);
+  // const unit = useModel("units", id);
 
   //Set open full text if true
 
@@ -66,8 +60,6 @@ function CollapsibleSequenceLinkUnit({
 
   //active sequence and unit
   const [activeSequence, setActiveSequence] = useState(false);
-
-  console.log(sequence);
 
   const { canLoadCourseware } = useModel("courseHomeMeta", courseId);
   const [open, setOpen] = useState(expand);
@@ -471,4 +463,4 @@ CollapsibleSequenceLinkUnit.propTypes = {
   lesson: PropTypes.bool,
 };
 
-export default injectIntl(CollapsibleSequenceLinkUnit);
+export default injectIntl(React.memo(CollapsibleSequenceLinkUnit));

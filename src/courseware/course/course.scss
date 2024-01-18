@@ -110,22 +110,15 @@
       }
     }
   }
-  .left-icon-container {
-    position: relative;
-    width: 20.625rem;
-  }
 
   .show-menu-lesson {
-    position: absolute;
     z-index: 2000;
     cursor: pointer;
-    margin-top: 0.75rem;
     right: 1rem;
     transition-duration: var(--chakra-transition-duration-normal);
     transition: 0.35s all ease;
+
     &.left-side {
-      transform: translateX(100%);
-      right: 100%;
       z-index: 2000;
       border-left-width: 0;
       border-top-left-radius: 0;
@@ -160,17 +153,25 @@
 .menu-lesson {
   width: 20.125rem;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 1rem;
   line-height: 1.5;
-  transform: translateX(-20.125rem);
+  transform: translateX(-17.125rem);
   transition: all 0.35s ease;
   position: relative;
-  z-index: -100;
-  border-bottom: 1px solid #d1d7dc;
+  & .icon-left-menu-wrapper {
+    & svg:hover {
+      path {
+        fill: var(--color-white);
+      }
+    }
+  }
   &.show-leftbar {
     transform: translateX(0);
     z-index: 100;
     transition: all 0.35s ease;
+    border-bottom: 1px solid #d1d7dc;
   }
 
   .menu-lesson-title {
@@ -181,7 +182,7 @@
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
-
+    margin-top: 0.25rem;
     letter-spacing: normal;
     text-align: left;
     margin-bottom: 0;

@@ -6,9 +6,17 @@
   .unit-left-sidebar {
     width: calc((100% - 41.5rem) / 2);
     .menu-lesson,
-    #courseHome-utline,
-    .left-icon-container {
+    #courseHome-utline {
       width: 16.75rem;
+    }
+    .menu-lesson {
+      transform: translateX(-13.75rem);
+      border-bottom: 0;
+      &.show-leftbar {
+        transform: translateX(0);
+
+        border-bottom: 1px solid #d1d7dc;
+      }
     }
   }
   .sequence #courseware-sequenceNavigation {
@@ -36,9 +44,17 @@
   .unit-left-sidebar {
     width: calc((100% - 35.25rem) / 2);
     .menu-lesson,
-    #courseHome-utline,
-    .left-icon-container {
+    #courseHome-utline {
       width: 13.375rem;
+    }
+    .menu-lesson {
+      transform: translateX(-10.5rem);
+      border-bottom: 0;
+      &.show-leftbar {
+        transform: translateX(0);
+
+        border-bottom: 1px solid #d1d7dc;
+      }
     }
   }
   .sequence #courseware-sequenceNavigation {
@@ -74,9 +90,17 @@
     }
 
     .menu-lesson,
-    #courseHome-utline,
-    .left-icon-container {
+    #courseHome-utline {
       width: unset;
+    }
+    .menu-lesson {
+      transform: translateX(-3.25rem);
+      border-bottom: 0;
+      &.show-leftbar {
+        transform: translateX(0);
+
+        border-bottom: 1px solid #d1d7dc;
+      }
     }
   }
   .sequence #courseware-sequenceNavigation {
@@ -127,9 +151,17 @@
     }
 
     .menu-lesson,
-    #courseHome-utline,
-    .left-icon-container {
+    #courseHome-utline {
       width: unset;
+    }
+    .menu-lesson {
+      transform: translateX(-3.25rem);
+      border-bottom: 0;
+      &.show-leftbar {
+        transform: translateX(0);
+
+        border-bottom: 1px solid #d1d7dc;
+      }
     }
   }
   .sequence #courseware-sequenceNavigation {
@@ -180,9 +212,17 @@
     }
 
     .menu-lesson,
-    #courseHome-utline,
-    .left-icon-container {
+    #courseHome-utline {
       width: unset;
+    }
+    .menu-lesson {
+      transform: translateX(-3.25rem);
+      border-bottom: 0;
+      &.show-leftbar {
+        transform: translateX(0);
+
+        border-bottom: 1px solid #d1d7dc;
+      }
     }
   }
   .sequence #courseware-sequenceNavigation {

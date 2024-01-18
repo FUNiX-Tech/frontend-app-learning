@@ -32,10 +32,6 @@ import { useSelector } from "react-redux";
 import "./course.scss";
 import "./CourseResponsive.scss";
 
-import left_on from "./assets/left_on.svg";
-import left_off from "./assets/left_off.svg";
-import left_on_hover from "./assets/left_on_hover.svg";
-import left_off_hover from "./assets/left_off_hover.svg";
 import {
   toggleShowLeftbar,
   setOffMenuState,
@@ -70,8 +66,6 @@ function Course({
   const location = useLocation();
   const [styling, setStyling] = useState("css-yeymkw");
   const isShowLeftbar = useSelector((state) => state.header.isShowLeftbar);
-
-  const [groupSrc, setGroupSrc] = useState(left_off);
 
   const course = useModel("coursewareMeta", courseId);
   const {
@@ -308,15 +302,6 @@ function Course({
     };
   }, [location.pathname]);
 
-  //set show leftbar icon
-  useEffect(() => {
-    if (isShowLeftbar) {
-      setGroupSrc(left_on);
-    } else {
-      setGroupSrc(left_off);
-    }
-  }, [location.pathname, isShowLeftbar]);
-
   useEffect(() => {
     if (window.innerWidth < 992) {
       dispatch(setOffMenuState());
@@ -344,61 +329,7 @@ function Course({
           !isShowLeftbar ? "unit-left-sidebar" : "unit-left-sidebar left-side"
         }`}
       >
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <g id="Icon/Left">
-            <path
-              id="Vector"
-              d="M10.8008 12.0008L14.7008 15.9008C14.8841 16.0841 14.9758 16.3174 14.9758 16.6008C14.9758 16.8841 14.8841 17.1174 14.7008 17.3008C14.5174 17.4841 14.2841 17.5758 14.0008 17.5758C13.7174 17.5758 13.4841 17.4841 13.3008 17.3008L8.70078 12.7008C8.60078 12.6008 8.52995 12.4924 8.48828 12.3758C8.44661 12.2591 8.42578 12.1341 8.42578 12.0008C8.42578 11.8674 8.44661 11.7424 8.48828 11.6258C8.52995 11.5091 8.60078 11.4008 8.70078 11.3008L13.3008 6.70078C13.4841 6.51745 13.7174 6.42578 14.0008 6.42578C14.2841 6.42578 14.5174 6.51745 14.7008 6.70078C14.8841 6.88411 14.9758 7.11745 14.9758 7.40078C14.9758 7.68411 14.8841 7.91745 14.7008 8.10078L10.8008 12.0008Z"
-              fill="white"
-            />
-          </g>
-        </svg>
-
         <div class="content">
-          <div className="left-icon-container">
-            <div
-              onMouseOver={() => {
-                if (isShowLeftbar) {
-                  setGroupSrc(left_on_hover);
-                } else {
-                  setGroupSrc(left_off_hover);
-                }
-              }}
-              onMouseOut={() => {
-                if (isShowLeftbar) {
-                  setGroupSrc(left_on);
-                } else {
-                  setGroupSrc(left_off);
-                }
-              }}
-              onClick={() => {
-                dispatch(toggleShowLeftbar());
-                if (!isShowLeftbar) {
-                  setGroupSrc(left_off);
-                } else {
-                  setGroupSrc(left_on);
-                }
-              }}
-              className={`${
-                !isShowLeftbar
-                  ? `show-menu-lesson left-side ${
-                      groupSrc === left_on_hover && "hover"
-                    }`
-                  : `show-menu-lesson right-side ${
-                      groupSrc === left_off_hover && "hover"
-                    }`
-              }`}
-            >
-              <img src={groupSrc} alt="Expand Lesson" />
-            </div>
-          </div>
-
           <React.Fragment>
             <div
               className={`${
@@ -406,6 +337,41 @@ function Course({
               }`}
             >
               <h2 className="menu-lesson-title">Mục lục bài học</h2>
+              <div
+                className="icon-left-menu-wrapper"
+                onClick={() => dispatch(toggleShowLeftbar())}
+              >
+                {!isShowLeftbar && (
+                  <svg
+                    className="show-menu-lesson left-side"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <path
+                      d="M12.6008 12.0008L8.70078 8.10078C8.51745 7.91745 8.42578 7.68411 8.42578 7.40078C8.42578 7.11745 8.51745 6.88411 8.70078 6.70078C8.88411 6.51745 9.11745 6.42578 9.40078 6.42578C9.68411 6.42578 9.91745 6.51745 10.1008 6.70078L14.7008 11.3008C14.8008 11.4008 14.8716 11.5091 14.9133 11.6258C14.9549 11.7424 14.9758 11.8674 14.9758 12.0008C14.9758 12.1341 14.9549 12.2591 14.9133 12.3758C14.8716 12.4924 14.8008 12.6008 14.7008 12.7008L10.1008 17.3008C9.91745 17.4841 9.68411 17.5758 9.40078 17.5758C9.11745 17.5758 8.88411 17.4841 8.70078 17.3008C8.51745 17.1174 8.42578 16.8841 8.42578 16.6008C8.42578 16.3174 8.51745 16.0841 8.70078 15.9008L12.6008 12.0008Z"
+                      fill="#576F8A"
+                    />
+                  </svg>
+                )}
+                {isShowLeftbar && (
+                  <svg
+                    className="show-menu-lesson right-side"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <path
+                      d="M10.8008 12.0008L14.7008 15.9008C14.8841 16.0841 14.9758 16.3174 14.9758 16.6008C14.9758 16.8841 14.8841 17.1174 14.7008 17.3008C14.5174 17.4841 14.2841 17.5758 14.0008 17.5758C13.7174 17.5758 13.4841 17.4841 13.3008 17.3008L8.70078 12.7008C8.60078 12.6008 8.52995 12.4924 8.48828 12.3758C8.44661 12.2591 8.42578 12.1341 8.42578 12.0008C8.42578 11.8674 8.44661 11.7424 8.48828 11.6258C8.52995 11.5091 8.60078 11.4008 8.70078 11.3008L13.3008 6.70078C13.4841 6.51745 13.7174 6.42578 14.0008 6.42578C14.2841 6.42578 14.5174 6.51745 14.7008 6.70078C14.8841 6.88411 14.9758 7.11745 14.9758 7.40078C14.9758 7.68411 14.8841 7.91745 14.7008 8.10078L10.8008 12.0008Z"
+                      fill="#576F8A"
+                    />
+                  </svg>
+                )}
+              </div>
             </div>
 
             <SectionListUnit
