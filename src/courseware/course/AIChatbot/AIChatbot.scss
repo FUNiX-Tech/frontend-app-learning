@@ -34,34 +34,24 @@
     align-items: center;
     gap: 5px;
 
-    #chatbot-new-session-btn {
-      background: transparent;
+    .chatbot-header-btn {
       border: none;
       outline: none;
-      font-size: 1.5rem;
-      width: 30px;
-      height: 30px;
-      text-align: center;
-      line-height: 30px;
+      background: transparent;
       border: 1px solid transparent;
       border-radius: 4px;
+      width: 30px;
+      height: 30px;
 
-      &:hover {
-        border: 1px solid var(--color-stroke);
+      &#chatbot-new-session-btn {
+        font-size: 1.5rem;
+        line-height: 30px;
       }
-    }
 
-    #chatbot-sessions-list-btn {
-      border: none;
-      outline: none;
-      background: transparent;
-      border: 1px solid transparent;
-      border-radius: 4px;
-      width: 30px;
-      height: 30px;
       svg {
         width: 20px;
       }
+
       &:hover {
         border: 1px solid var(--color-stroke);
       }
