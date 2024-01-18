@@ -26,6 +26,7 @@ const ContentLock = React.lazy(() => import("./content-lock"));
 function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
   const sequence = useModel("sequences", sequenceId);
   const [loadedUnits, setLoadedUnits] = useState([]);
+  const [willLoadUnits, setWillLoadUnits] = useState(unitId ? [unitId] : []);
 
   // Go back to the top of the page whenever the unit or sequence changes.
   useEffect(() => {
@@ -108,6 +109,27 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
     }
   }, [iframeHeight]);
 
+  useEffect(() => {
+    if (!unitId) return;
+    if (willLoadUnits?.includes(unitId)) return;
+
+    setWillLoadUnits((prev) => [...prev, unitId]);
+  }, [unitId]);
+
+  useEffect(() => {
+    if (loadedUnits.length === 0) return;
+    if (iframeURLS.length == willLoadUnits.length) return;
+
+    setWillLoadUnits((prev) => {
+      for (const item of iframeURLS) {
+        if (!willLoadUnits.includes(item.id)) {
+          return [...prev, item.id];
+        }
+      }
+      return prev;
+    });
+  }, [loadedUnits]);
+
   return (
     <div className="unit">
       <div className="position-relative">
@@ -130,54 +152,33 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
       <div className="unit-iframe-wrapper" style={{ minHeight: "31.25rem" }}>
         <div>
           {iframeURLS.map((e) => {
-            const isSelectedUnit = loadedIframeId === e.id;
-            const thisUnitIsLoaded = loadedUnits.includes(e.id);
-            const shouldDisplayContent = isSelectedUnit && thisUnitIsLoaded;
-
-            return (
-              <div key={e.id}>
-                {/* {isSelectedUnit && !thisUnitIsLoaded && (
-                  <div>
-                    <br />
-                    <Skeleton width="50%" />
-                    <Skeleton width="70%" />
-                    <Skeleton width="80%" />
-                    <br />
-                    <Skeleton width="50%" />
-                    <Skeleton width="70%" />
-                    <Skeleton width="80%" />
-                    <br />
-                    <Skeleton width="50%" />
-                    <Skeleton width="70%" />
-                    <Skeleton width="80%" />
-                    <br />
-                    <Skeleton width="50%" />
-                    <Skeleton width="70%" />
-                    <Skeleton width="80%" />
-                  </div>
-                )} */}
-
-                <iframe
-                  id="unit-iframe"
-                  key={e.id}
-                  data-unit-usage-id={e.id}
-                  src={e.url}
-                  allow={IFRAME_FEATURE_POLICY}
-                  allowFullScreen
-                  onLoad={() => {
-                    setLoadedUnits((prev) => {
-                      return [...prev, e.id];
-                    });
-                  }}
-                  scrolling="no"
-                  referrerPolicy="origin"
-                  style={{
-                    display: isSelectedUnit ? "block" : "none",
-                  }}
-                  height={iframeHeightValues.find((h) => h.id === e.id)?.height}
-                />
-              </div>
-            );
+            const isSelectedUnit = unitId === e.id;
+            if (willLoadUnits?.includes(e.id))
+              return (
+                <div key={e.id}>
+                  <iframe
+                    id="unit-iframe"
+                    key={e.id}
+                    data-unit-usage-id={e.id}
+                    src={e.url}
+                    allow={IFRAME_FEATURE_POLICY}
+                    allowFullScreen
+                    onLoad={() => {
+                      setLoadedUnits((prev) => {
+                        return [...prev, e.id];
+                      });
+                    }}
+                    scrolling="no"
+                    referrerPolicy="origin"
+                    style={{
+                      display: isSelectedUnit ? "block" : "none",
+                    }}
+                    height={
+                      iframeHeightValues.find((h) => h.id === e.id)?.height
+                    }
+                  />
+                </div>
+              );
           })}
         </div>
       </div>
