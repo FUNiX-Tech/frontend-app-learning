@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { injectIntl, intlShape } from "@edx/frontend-platform/i18n";
 import { svgChatGPT, svgSubmit, svgSubmitActive } from "./AIChabotAssets";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import {
   fetchQueries,
@@ -15,6 +16,7 @@ import QueryList from "./QueryList";
 import * as uid from "uuid";
 import "./AIChatbot.scss";
 import messages from "./messages";
+import { toggleShowChatbot } from "../../../header/data/slice";
 
 const LIMIT = 5;
 
@@ -42,6 +44,8 @@ function AIChatbot({ intl }) {
   const inputRef = useRef();
   const submitBtnRef = useRef();
   const inputWrapperRef = useRef();
+
+  const dispatch = useDispatch();
 
   function onChangeInput(e) {
     setInputText(e.target.value);
@@ -192,6 +196,10 @@ function AIChatbot({ intl }) {
     setSessionPage((prev) => prev + 1);
   }
 
+  function hideChatbot() {
+    dispatch(toggleShowChatbot());
+  }
+
   useEffect(() => {
     if (page === 0 || sessionId === 0 || isFetching) return;
 
@@ -320,6 +328,7 @@ function AIChatbot({ intl }) {
             title="New chat"
             onClick={startNewSession}
             id="chatbot-new-session-btn"
+            className="chatbot-header-btn"
           >
             +
           </button>
@@ -327,6 +336,7 @@ function AIChatbot({ intl }) {
             onClick={toggleMode}
             id="chatbot-sessions-list-btn"
             title={mode === "chat" ? "Sessions" : "Chat"}
+            className="chatbot-header-btn"
           >
             {mode === "chat" && (
               <svg
@@ -360,6 +370,24 @@ function AIChatbot({ intl }) {
                 />
               </svg>
             )}
+          </button>
+          <button
+            title="Hide"
+            onClick={hideChatbot}
+            className="chatbot-header-btn"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+            >
+              <path
+                d="m15.834 5.343-1.175-1.175L10 8.826 5.342 4.168 4.167 5.343l4.658 4.658-4.658 4.659 1.175 1.175L10 11.176l4.659 4.659 1.175-1.175L11.175 10l4.659-4.658z"
+                fill="#2D2F31"
+              />
+            </svg>
           </button>
         </div>
       </div>
