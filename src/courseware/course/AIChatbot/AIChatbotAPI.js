@@ -36,6 +36,15 @@ export const voteChatbotResponse = async (query_id, vote) => {
   return data;
 };
 
+export const giveFeedbackChatbot = async (query_id, feedback) => {
+  const url = `${baseUrl()}query/feedback/`;
+  const { data } = await getAuthenticatedHttpClient().put(url, {
+    query_id,
+    feedback,
+  });
+  return data;
+};
+
 export const retryAskChatbot = async (query_id) => {
   const url = `${baseUrl()}query/retry/`;
   const { data } = await getAuthenticatedHttpClient().put(url, {
