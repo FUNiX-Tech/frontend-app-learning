@@ -43,6 +43,7 @@ import { getSequenceMetadata } from "../data/api";
 
 /** [MM-P2P] Experiment */
 import { initCoursewareMMP2P, MMP2PBlockModal } from "../../experiments/mm-p2p";
+import ChatbotFeedbackModal from "./AIChatbot/ChatbotFeedbackModal";
 
 function Course({
   courseId,
@@ -56,6 +57,7 @@ function Course({
   ///////////////////// chatbot /////////////////////////
   const isShowChatbot = useSelector((state) => state.header.isShowChatbot);
   const isShowFeedback = useSelector((state) => state.header.isShowFeedback);
+  const { feedback } = useSelector((state) => state.chatbot);
   ///////////////////// chatbot end /////////////////////
   const dispatch = useDispatch();
 
@@ -324,6 +326,8 @@ function Course({
           getConfig().SITE_NAME
         }`}</title>
       </Helmet>
+      {feedback.isShowModal && <ChatbotFeedbackModal />}
+
       <div
         className={`${
           !isShowLeftbar ? "unit-left-sidebar" : "unit-left-sidebar left-side"

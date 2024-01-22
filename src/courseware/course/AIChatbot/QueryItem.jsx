@@ -1,39 +1,89 @@
 import {
   svgChatGPT,
-  svgDownVote,
   svgUpVote,
   svgCopy,
   svgRetry,
   svgCopied,
 } from "./AIChabotAssets";
 import PropTypes from "prop-types";
-import {
-  FormattedMessage,
-  FormattedDate,
-  injectIntl,
-  intlShape,
-} from "@edx/frontend-platform/i18n";
+import { injectIntl, intlShape } from "@edx/frontend-platform/i18n";
 import messages from "./messages";
+import { showChatbotFeedbackModal, voteResponse } from "./slice";
+import { useDispatch } from "react-redux";
+import { useRef } from "react";
 
-function QueryItem({ intl, query, onCopyResponse, onVote, onRetryAskChatbot }) {
-  function writeResponseToClipboard(e) {
-    onCopyResponse(e.currentTarget, query.response_msg);
+function QueryItem({ intl, query, onRetryAskChatbot }) {
+  const dispatch = useDispatch();
+  const copyBtnRef = useRef();
+
+  function onClickDownVoteBtn() {
+    if (query.vote !== "down") {
+      dispatch(
+        voteResponse({
+          queryId: query.id,
+          vote: "down",
+        })
+      );
+      return;
+    }
+
+    if (!query.feedback) {
+      dispatch(showChatbotFeedbackModal(query.id));
+      return;
+    }
+
+    dispatch(
+      voteResponse({
+        queryId: query.id,
+        vote: "remove",
+      })
+    );
   }
 
-  function clickDownvote() {
-    onVote(query.id, "down");
+  function onClickUpVoteBtn() {
+    if (query.vote === "up") {
+      dispatch(
+        voteResponse({
+          queryId: query.id,
+          vote: "remove",
+        })
+      );
+      return;
+    }
+
+    dispatch(
+      voteResponse({
+        queryId: query.id,
+        vote: "up",
+      })
+    );
   }
 
-  function clickUpvote() {
-    onVote(query.id, "up");
-  }
+  function writeResponseToClipboard() {
+    let tmp = document.createElement("DIV");
+    tmp.innerHTML = query.response_msg;
+    const textContent = tmp.textContent || tmp.innerText || "";
 
-  function clickRemoveVote() {
-    onVote(query.id, "remove");
+    navigator.clipboard.writeText(textContent);
+
+    copyBtnRef.current?.classList.add("copied");
+    setTimeout(() => {
+      copyBtnRef.current?.classList.remove("copied");
+    }, 1000);
   }
 
   function retryAskChatbot() {
     onRetryAskChatbot(query.id);
+  }
+
+  function getFeedbackDisplay(feedbackContent) {
+    if (!feedbackContent) return "Send feedback?";
+
+    const reasons = ["Inaccurate", "Offensive", "Unhelpful"];
+
+    if (reasons.includes(feedbackContent)) return feedbackContent;
+
+    return "Other";
   }
 
   let upvoteClassName = "upvote-btn";
@@ -63,19 +113,36 @@ function QueryItem({ intl, query, onCopyResponse, onVote, onRetryAskChatbot }) {
       {query.response_msg && (
         <div class="query-item answer-item">
           <div class="answer-item-inner">
-            <div class="answer-item-content" dangerouslySetInnerHTML={{__html:query.response_msg}}></div>
+            <div
+              class="answer-item-content"
+              dangerouslySetInnerHTML={{ __html: query.response_msg }}
+            ></div>
 
             <div class="answer-item-buttons">
-              <button class="copy-btn" onClick={writeResponseToClipboard}>
+              <button
+                ref={copyBtnRef}
+                class="copy-btn"
+                onClick={writeResponseToClipboard}
+              >
                 {svgCopy}
                 {svgCopied}
               </button>
+
               {query.vote != "down" && (
+                <button className={upvoteClassName} onClick={onClickUpVoteBtn}>
+                  {svgUpVote}
+                </button>
+              )}
+
+              {query.vote !== "up" && (
                 <button
-                  className={upvoteClassName}
-                  onClick={query.vote == "up" ? clickRemoveVote : clickUpvote}
+                  className={downvoteClassName}
+                  onClick={onClickDownVoteBtn}
                 >
                   {svgUpVote}
+                  {query.vote === "down" && (
+                    <span>{getFeedbackDisplay(query.feedback)}</span>
+                  )}
                 </button>
               )}
             </div>
