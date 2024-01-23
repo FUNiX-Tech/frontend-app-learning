@@ -153,9 +153,30 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
         <div>
           {iframeURLS.map((e) => {
             const isSelectedUnit = unitId === e.id;
+            const hasLoaded = loadedUnits.includes(unitId)
+
             if (willLoadUnits?.includes(e.id))
               return (
                 <div key={e.id}>
+                  {!hasLoaded && isSelectedUnit && <>
+                    <br />
+                    <Skeleton width="50%" />
+                    <Skeleton width="70%" />
+                    <Skeleton width="80%" />
+                    <br />
+                    <Skeleton width="50%" />
+                    <Skeleton width="70%" />
+                    <Skeleton width="80%" />
+                    <br />
+                    <Skeleton width="50%" />
+                    <Skeleton width="70%" />
+                    <Skeleton width="80%" />
+                    <br />
+                    <Skeleton width="50%" />
+                    <Skeleton width="70%" />
+                    <Skeleton width="80%" />
+                    <br />
+                  </>}
                   <iframe
                     id="unit-iframe"
                     key={e.id}
@@ -171,7 +192,7 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
                     scrolling="no"
                     referrerPolicy="origin"
                     style={{
-                      display: isSelectedUnit ? "block" : "none",
+                      display: isSelectedUnit && hasLoaded ? "block" : "none",
                     }}
                     height={
                       iframeHeightValues.find((h) => h.id === e.id)?.height
