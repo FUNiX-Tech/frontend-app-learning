@@ -6,6 +6,7 @@ import messages from "./messages";
 import { injectIntl } from "@edx/frontend-platform/i18n";
 import { fetchQueries } from "./slice";
 import AIChatbotFooter from "./AIChatbotFooter";
+import ChatbotListError from "./ChatbotListError";
 
 function QueryList({ intl, mode, onVote, onRetryAskChatbot }) {
   const { query } = useSelector((state) => state.chatbot);
@@ -47,18 +48,8 @@ function QueryList({ intl, mode, onVote, onRetryAskChatbot }) {
 
   // need to re-position this
   if (query.status === "failed") {
-    return (
-      <div
-        className="query-list-error"
-        style={{
-          height: "100%",
-          flex: 1,
-        }}
-      >
-        <p>🥲 Something wrong happened.</p>
-        <p className="text-center text-danger">{query.error}</p>
-      </div>
-    );
+    if (mode === 'session') return null;
+    return <ChatbotListError error={query.error} />;
   }
 
   let classes = "chatbot-messages-list-container";

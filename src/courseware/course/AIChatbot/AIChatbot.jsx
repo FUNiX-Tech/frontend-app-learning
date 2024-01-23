@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { injectIntl, intlShape } from "@edx/frontend-platform/i18n";
 import { useSelector, useDispatch } from "react-redux";
 import { voteChatbotResponse } from "./AIChatbotAPI";
@@ -12,12 +12,24 @@ import {
   fetchQueries,
   retryAskChatbot,
   setRetryAskChatbotStatus,
+  writeChatbotResponse,
+  finishChatbotResponse,
+  connectionOpen,
+  connectionClose,
 } from "./slice";
+
+import {
+  startChatConnection,
+  stopChatConnection,
+} from "../../../connection/chatbot";
+
 import "./AIChatbot.scss";
 
 function AIChatbot({ intl }) {
   const [mode, setMode] = useState("chat"); // chat | session
-  const { session, ask } = useSelector((state) => state.chatbot);
+  const { session, ask, query, connected } = useSelector(
+    (state) => state.chatbot
+  );
 
   const isShowChatbot = useSelector((state) => state.header.isShowChatbot);
 
@@ -47,8 +59,13 @@ function AIChatbot({ intl }) {
       return;
     }
 
+    const queryItem = query.items.find((item) => item.id == queryId);
+    if (!queryItem) {
+      alert(`Not found query item with id ${queryId}`);
+      return;
+    }
     dispatch(setRetryAskChatbotStatus(queryId));
-    dispatch(retryAskChatbot(queryId));
+    dispatch(retryAskChatbot(queryItem.query_msg));
   }
 
   function toggleMode() {
@@ -77,6 +94,38 @@ function AIChatbot({ intl }) {
   if (navigator.userAgent.toLowerCase().indexOf("firefox") != -1) {
     chatbotContainerClasses += " is-firefox";
   }
+
+  useEffect(() => {
+    if (connected) return;
+
+    function onResponse(msg) {
+      dispatch(writeChatbotResponse(msg));
+    }
+
+    function onResponseFinished() {
+      dispatch(finishChatbotResponse());
+    }
+
+    function onWebSocketError(msg) {
+      dispatch(finishChatbotResponse(msg));
+      dispatch(connectionClose());
+    }
+
+    function onConnect() {
+      dispatch(connectionOpen());
+    }
+
+    startChatConnection(
+      onResponse,
+      onResponseFinished,
+      onWebSocketError,
+      onConnect
+    );
+
+    return () => {
+      stopChatConnection();
+    };
+  }, [connected]);
 
   return (
     <>

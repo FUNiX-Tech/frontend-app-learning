@@ -1,0 +1,17 @@
+.chatbot-list-error {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .chatbot-list-error-inner {
+    p {
+      text-align: center;
+
+      &:last-child {
+        color: grey;
+        font-size: 0.75rem;
+      }
+    }
+  }
+}
