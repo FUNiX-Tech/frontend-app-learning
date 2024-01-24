@@ -1,19 +1,23 @@
 import { useRef, useEffect, useState } from "react";
 import { svgSubmitActive, svgSubmit } from "./AIChabotAssets";
 import { useSelector, useDispatch } from "react-redux";
-import { setInputText, setChatbotInputHistory } from "./slice";
+import { setInputText, setChatbotInputHistory, reConnect } from "./slice";
 import { injectIntl } from "@edx/frontend-platform/i18n";
 import messages from "./messages";
 
 function AIChatbotFooter({ intl, mode, onSubmit }) {
   const [hasScrollBar, setHasScrollBar] = useState(false);
-  const { ask } = useSelector((state) => state.chatbot);
+  const { ask, connection } = useSelector((state) => state.chatbot);
 
   const dispatch = useDispatch();
 
   const submitBtnRef = useRef();
   const inputRef = useRef();
   const inputWrapperRef = useRef();
+
+  function retryConnect() {
+    dispatch(reConnect());
+  }
 
   function onInputKeyUp(e) {
     if (e.keyCode === 13 || e.which == 13) {
@@ -74,11 +78,33 @@ function AIChatbotFooter({ intl, mode, onSubmit }) {
     chatbotFooterClasses += " d-none";
   }
 
+  if (connection.error) {
+    return (
+      <div className="border-top py-2">
+        <p className="text-center">
+          {connection.error} - Cannot connect to chatbot.
+        </p>
+        <div className="d-flex justify-content-center">
+          <button
+            onClick={retryConnect}
+            style={{
+              background: "transparent",
+              border: "none",
+              color: "var(--color-active)",
+            }}
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <form onSubmit={onSubmit} className={chatbotFooterClasses}>
       <div ref={inputWrapperRef} className="chatbot-input-wrapper">
         <textarea
-          class="chatbot-input"
+          className="chatbot-input"
           type="text"
           placeholder={intl.formatMessage(messages.sendMessage)}
           value={ask.input}

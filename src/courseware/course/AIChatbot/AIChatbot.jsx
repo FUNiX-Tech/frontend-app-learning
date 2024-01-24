@@ -18,6 +18,7 @@ import {
   reConnect,
   askChatbot,
   setChatbotCourseId,
+  connectionError,
 } from "./slice";
 
 import {
@@ -176,6 +177,7 @@ function AIChatbot() {
     function onWebSocketError(msg) {
       dispatch(finishChatbotResponse(msg));
       dispatch(connectionClose());
+      dispatch(connectionError(msg));
     }
 
     function onConnect() {
