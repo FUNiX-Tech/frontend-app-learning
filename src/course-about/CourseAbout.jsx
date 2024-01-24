@@ -11,6 +11,7 @@ import TargetCourse from "./component/TargetCourse";
 import ParticipantCourse from "./component/ParticipantCourse";
 import InputRequired from "./component/InputRequired";
 import { useMediaQuery } from 'react-responsive';
+import StartTeacher from "./component/StartTeacher";
 
 
 
@@ -131,7 +132,9 @@ const CourseAbout = (props)=>{
                       <div className="about-section d-flex flex-column " style={{gap:'10px'}}>
                            <InputRequired inputRequired={data.input_required}/>
                       </div>
-                    
+                      <div className="about-section d-flex flex-column " style={{gap:'10px'}}>
+                          <StartTeacher teachers={data?.teachers} />
+                      </div>
                 </div>
 
             </div>
