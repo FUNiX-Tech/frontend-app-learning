@@ -2,7 +2,8 @@ import { useParams, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 import HeaderLearning from "../header/HeaderLearning";
-import { getConfig } from "@edx/frontend-platform";
+import { getConfig ,history} from "@edx/frontend-platform";
+import { getAuthenticatedUser } from "@edx/frontend-platform/auth";
 import './courseAbout.scss'
 import {Collapsible} from '@edx/paragon'
 import CourseTree from "./component/CourseTree";
@@ -20,6 +21,7 @@ const CourseAbout = (props)=>{
     const { fetch } = props;
     const { courseId: courseIdFromUrl } = useParams();
     const [data, setData] = useState([])
+    const [auth, setAuth] = useState(false)
   
     const elementTitleRef = useRef(null)
     const [isFixed, setIsFixed] = useState(false);
@@ -31,7 +33,7 @@ const CourseAbout = (props)=>{
       try {
         const data = await fetch(courseIdFromUrl);
         setData(data)
-        console.log('===========', data)
+
       } catch (error) {
         console.log('=============', error)
       }
@@ -65,17 +67,36 @@ const CourseAbout = (props)=>{
         padding:isFixed &&  '16px 8px 16px 80px',
       };
 
+      const handlerLogin = ()=>{
+
+        history.push('/login' )
+        
+      }
+
+      useEffect(()=>{
+        const authenticatedUser = getAuthenticatedUser();
+        if(authenticatedUser){
+          setAuth(true)
+        }
+      },[])
+
 
 
     return (
         <div >
-            <div className="" style={{padding:'10px 16px'}}>
+            {auth ? <HeaderLearning about /> : <div className="d-flex justify-content-between" style={{padding:'10px 16px'}}>
                     <a
                     href={`${getConfig().LMS_BASE_URL}/dashboard`}
                     className="logo logo_img"
                     width='100%'
                 > <img className="d-block" src={getConfig().LOGO_URL} alt='logo' width='60px' height='25px' /> </a>
-            </div>
+
+                <div>
+                    <button  onClick={handlerLogin} className="primary-btn-small  btn-modify custom-btn-default">
+                      <span>Đăng nhập</span>
+                    </button>
+                </div>
+            </div>}
             <div className="container-about">
                 <div className=""  style={{background:'#EEF7FF'}}>
                   {!isDesktop ?  <div className="" style={{padding:'56px'}}>
@@ -87,7 +108,7 @@ const CourseAbout = (props)=>{
                             <span dangerouslySetInnerHTML={{ __html: data?.overview }}></span>
                           </div>
                           <div>
-                            <CourseCardAbout />
+                            <CourseCardAbout lab={data.lab} quiz={data.quiz} project={data.project}  />
                           </div>
                   </div>:  
                   <div className="">
@@ -103,7 +124,7 @@ const CourseAbout = (props)=>{
                             <div>
                                 <img style={{borderTopRightRadius:'4px', borderTopLeftRadius:'4px'}} src={`${getConfig().LMS_BASE_URL}${data.course_image_urls?.small}`} alt='course' width='100%'/>
                             </div>
-                            <CourseCardAbout />
+                            <CourseCardAbout  lab={data.lab} quiz={data.quiz} project={data.project} />
                     
                         </div>
                         

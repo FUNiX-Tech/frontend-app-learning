@@ -45,7 +45,7 @@ export const InfoAbout = ()=>{
 }
 
 
-const CourseCardAbout = ({imgs})=>{
+const CourseCardAbout = ({imgs, quiz, lab, project})=>{
     // console.log('=====', imgs)
 
     //responsive
@@ -68,15 +68,15 @@ const CourseCardAbout = ({imgs})=>{
             </div>                    
             <div className='card-text-item'>
                 <img src={labIcon} alt='time' />
-                <span>3 Bài Lab</span>
+                <span>{lab} Bài Lab</span>
             </div>                    
             <div className='card-text-item'>
                 <img src={quizIcon} alt='time' />
-                <span>6 Bài trắc nghiệm Quiz</span>
+                <span>{quiz} Bài trắc nghiệm Quiz</span>
             </div>
             <div className='card-text-item'>
                 <img src={projectIcon} alt='time' />
-                <span>3 Dự án phải nộp</span>
+                <span>{project/2} Dự án phải nộp</span>
             </div>
             
         </div> : <div></div>}

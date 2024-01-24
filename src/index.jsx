@@ -130,7 +130,7 @@ subscribe(APP_READY, () => {
                   <TabContainer
                     tab="dates"
                     fetch={(courseId) => {
-                      console.log("match ", match);
+               
                       return fetchDatesTab(courseId, match.params.targetUserId);
                     }}
                     slice="courseHome"
