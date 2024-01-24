@@ -79,3 +79,11 @@ export const retryAskChatbot = async (query_id) => {
 export const cancelQuery = () => {
   //
 };
+
+export const saveChabotErrorToDB = async (error_msg) => {
+  const url = `${baseUrl()}error/`;
+  const { data } = await getAuthenticatedHttpClient().post(url, {
+    error_msg,
+  });
+  return data;
+};
