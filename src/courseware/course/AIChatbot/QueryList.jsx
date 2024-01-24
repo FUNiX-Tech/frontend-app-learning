@@ -6,9 +6,10 @@ import messages from "./messages";
 import { injectIntl } from "@edx/frontend-platform/i18n";
 import { fetchQueries } from "./slice";
 import AIChatbotFooter from "./AIChatbotFooter";
+import ChatbotListError from "./ChatbotListError";
 
-function QueryList({ intl, mode, onVote, onRetryAskChatbot }) {
-  const { query } = useSelector((state) => state.chatbot);
+function QueryList({ intl, mode, onVote, onRetryAskChatbot, onSubmit }) {
+  const { query, session } = useSelector((state) => state.chatbot);
   const dispatch = useDispatch();
 
   const msgContainerRef = useRef();
@@ -29,7 +30,10 @@ function QueryList({ intl, mode, onVote, onRetryAskChatbot }) {
 
   useEffect(() => {
     if (query.initiated) return;
-    if (query.items.length === 0) return;
+    if (
+      query.items.filter((item) => item.session_id === session.id).length === 0
+    )
+      return;
 
     const container = document.querySelector(
       ".chatbot-messages-list-container"
@@ -47,18 +51,8 @@ function QueryList({ intl, mode, onVote, onRetryAskChatbot }) {
 
   // need to re-position this
   if (query.status === "failed") {
-    return (
-      <div
-        className="query-list-error"
-        style={{
-          height: "100%",
-          flex: 1,
-        }}
-      >
-        <p>🥲 Something wrong happened.</p>
-        <p className="text-center text-danger">{query.error}</p>
-      </div>
-    );
+    if (mode === "session") return null;
+    return <ChatbotListError error={query.error} />;
   }
 
   let classes = "chatbot-messages-list-container";
@@ -77,19 +71,20 @@ function QueryList({ intl, mode, onVote, onRetryAskChatbot }) {
             </div>
           )}
 
-          {query.items.map((query) => (
-            <li key={query.id}>
-              <QueryItem
-                query={query}
-                onVote={onVote}
-                onRetryAskChatbot={onRetryAskChatbot}
-              />
-            </li>
-          ))}
+          {query.items
+            .filter((item) => item.session_id === session.id)
+            .map((query) => (
+              <li key={query.id}>
+                <QueryItem
+                  query={query}
+                  onRetryAskChatbot={onRetryAskChatbot}
+                />
+              </li>
+            ))}
         </ul>
       </div>
 
-      {mode === "chat" && <AIChatbotFooter mode={mode} />}
+      {mode === "chat" && <AIChatbotFooter mode={mode} onSubmit={onSubmit} />}
     </>
   );
 }

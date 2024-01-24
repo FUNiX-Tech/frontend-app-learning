@@ -1,13 +1,13 @@
 import { useRef, useEffect, useState } from "react";
 import { svgSubmitActive, svgSubmit } from "./AIChabotAssets";
 import { useSelector, useDispatch } from "react-redux";
-import { setInputText, askChatbot, setChatbotInputHistory } from "./slice";
+import { setInputText, setChatbotInputHistory } from "./slice";
 import { injectIntl } from "@edx/frontend-platform/i18n";
 import messages from "./messages";
 
-function AIChatbotFooter({ intl, mode }) {
+function AIChatbotFooter({ intl, mode, onSubmit }) {
   const [hasScrollBar, setHasScrollBar] = useState(false);
-  const { ask, query } = useSelector((state) => state.chatbot);
+  const { ask } = useSelector((state) => state.chatbot);
 
   const dispatch = useDispatch();
 
@@ -39,17 +39,6 @@ function AIChatbotFooter({ intl, mode }) {
 
   function onChangeInput(e) {
     dispatch(setInputText(e.target.value));
-  }
-
-  function onSubmit(e) {
-    e.preventDefault();
-    if (query.status === "pending") return;
-    if (!ask.input.trim()) return;
-    if (ask.status === "pending") {
-      alert("Too many request!");
-      return;
-    }
-    dispatch(askChatbot());
   }
 
   useEffect(() => {

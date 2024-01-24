@@ -1,0 +1,24 @@
+.chatbot-header .chatbot-name {
+  position: relative;
+
+  .light {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 1px;
+    background: #000;
+
+    &.connected {
+      background: greenyellow;
+    }
+
+    &.closed {
+      background: red;
+    }
+
+    &.idle {
+      background: orange;
+    }
+  }
+}
