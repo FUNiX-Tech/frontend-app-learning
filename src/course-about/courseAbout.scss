@@ -104,6 +104,7 @@
     .collapsible-body{
         display: flex;
         flex-direction: column;
+        padding-top: 20px !important;
         span {
             padding:16px 16px 10px 16px;
         }
@@ -166,6 +167,7 @@
 
 
 .collapsible-body{
+    padding-top: 20px !important;
     ul{
         font-size: 16px;
         line-height: 21px;
@@ -187,9 +189,85 @@
     }
 }
 
-.slide{
-    display: none;
+
+
+.slide-card{
+    padding: 0px 0px 16px 0px;
+    border-radius: 4px;
+    border: 1px solid #D7D7D7;
+    width: 227px;
+    height: 325px;
+
+    .teach-name{
+        padding-top: 10px;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 24px;
+        
+    }
+    .teacher-position{
+        font-size: 14px;
+        line-height: 21px;
+        font-weight: 500;
+    }
+    
 }
-.active{
-    display: block;
+.teacher-workplace{
+    font-size: 14px;
+    line-height: 21px;
+    font-weight: 400;
+    color :  #576F8A ;
+}
+
+.silde-teacher {
+    min-height: 227px !important;
+}
+
+.swiper-slide{
+    margin-right: 20px !important;
+    width: 227px;
+}
+
+.swiper-btn{
+    &::after{
+        content: none !important;
+    }
+    color: black !important;
+    border-radius: 50%;
+    background-color: #ffff;
+    height: 32px !important;
+    width: 32px !important;
+    margin-right: 10px !important;
+    border: 1px solid #D7D7D7;
+}
+
+.swiper-button-next{
+    right : -10px !important;
+}
+
+.swiper-button-prev{
+    left : -8px !important;
+}
+
+.swiper-button-disabled {
+    display: none !important;
+}
+
+.card-item {
+    padding: 16px 54px 16px 24px;
+    border : 1px solid #D7D7D7 !important;
+    border-radius: 4;
+    height:120px;
+}
+
+.teacher-tag{
+    padding: 4px 8px 4px 8px;
+    border-radius: 4px;
+    background-color:#EEF7FF ;
+    span{
+        color : #007AE6;
+        font-size: 16px;
+        line-height: 24px;
+        font-family: 500;
+    }
 }

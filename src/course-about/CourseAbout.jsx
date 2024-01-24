@@ -12,6 +12,7 @@ import ParticipantCourse from "./component/ParticipantCourse";
 import InputRequired from "./component/InputRequired";
 import { useMediaQuery } from 'react-responsive';
 import StartTeacher from "./component/StartTeacher";
+import ExpertTeacher from "./component/ExpertTeacher";
 
 
 
@@ -19,7 +20,7 @@ const CourseAbout = (props)=>{
     const { fetch } = props;
     const { courseId: courseIdFromUrl } = useParams();
     const [data, setData] = useState([])
-
+  
     const elementTitleRef = useRef(null)
     const [isFixed, setIsFixed] = useState(false);
 
@@ -129,12 +130,19 @@ const CourseAbout = (props)=>{
                             <ParticipantCourse participant={data.participant} />
                       </div>
 
+                      
                       <div className="about-section d-flex flex-column " style={{gap:'10px'}}>
                            <InputRequired inputRequired={data.input_required}/>
                       </div>
+
                       <div className="about-section d-flex flex-column " style={{gap:'10px'}}>
                           <StartTeacher teachers={data?.teachers} />
                       </div>
+
+                      <div className="about-section d-flex flex-column " style={{gap:'10px'}}>
+                          <ExpertTeacher teachers={data?.teachers} />
+                      </div>
+
                 </div>
 
             </div>
