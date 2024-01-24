@@ -69,7 +69,7 @@ const CourseAbout = (props)=>{
 
       const handlerLogin = ()=>{
 
-        history.push('/login' )
+         window.location.href = getConfig().LOGIN_URL
         
       }
 
