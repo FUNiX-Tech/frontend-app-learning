@@ -20,7 +20,7 @@ import { Switch } from "react-router-dom";
 
 import { messages as footerMessages } from "@edx/frontend-component-footer";
 import { Helmet } from "react-helmet";
-import { fetchDiscussionTab, fetchLiveTab } from "./course-home/data/thunks";
+import { fetchAboutCourse, fetchDiscussionTab, fetchLiveTab } from "./course-home/data/thunks";
 import DiscussionTab from "./course-home/discussion-tab/DiscussionTab";
 
 import {
@@ -61,6 +61,7 @@ import CourseAccessErrorPage from "./generic/CourseAccessErrorPage";
 
 import StaticPage from "./static-page/StaticPage";
 import Dashboard from "./learner-dashboard/Dashboard";
+import CourseAbout from "./course-about/CourseAbout";
 
 subscribe(APP_READY, () => {
   // Init chart
@@ -87,6 +88,12 @@ subscribe(APP_READY, () => {
           <UserMessagesProvider>
             <Switch>
               <PageRoute path="/dashboard" component={Dashboard} />
+              <PageRoute path='/:courseId/about' 
+                  >
+                    
+                
+                  <CourseAbout  fetch={fetchAboutCourse} />
+              </PageRoute>
               <PageRoute
                 exact
                 path="/goal-unsubscribe/:token"
@@ -123,7 +130,7 @@ subscribe(APP_READY, () => {
                   <TabContainer
                     tab="dates"
                     fetch={(courseId) => {
-                      console.log("match ", match);
+               
                       return fetchDatesTab(courseId, match.params.targetUserId);
                     }}
                     slice="courseHome"
