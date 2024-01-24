@@ -15,6 +15,7 @@ import {
   getLiveTabIframe,
   getSubtextSequence,
   getLearnerHomeInit,
+  getAboutCourse
 } from "./api";
 
 import { addModel } from "../../generic/model-store";
@@ -188,4 +189,10 @@ export async function subTextSuquence(sequenceId) {
 
 export async function fetchDashboard() {
   return getLearnerHomeInit();
+}
+
+
+export async  function fetchAboutCourse(courseId) {
+  console.log('===========', courseId)
+  return getAboutCourse(courseId)
 }
