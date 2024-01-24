@@ -28,7 +28,8 @@ export async function startChatConnection(
     throw new Error("Failed to get Chatbot host.");
   }
 
-  const CHATBOT_HOST = response?.data?.data?.CHATBOT_HOST;
+  let CHATBOT_HOST = response?.data?.data?.CHATBOT_HOST;
+  // CHATBOT_HOST = "wss://172.188.64.77:8001/v01_dev/chat";
 
   if (!CHATBOT_HOST)
     throw new Error("Not found CHATBOT_HOST in site config response.");
@@ -49,12 +50,16 @@ export async function startChatConnection(
   };
 
   websocket.onerror = (error) => {
-    const message = `${error.code} - ${error.reason}`;
+    const message = `${error.code} - Error when connecting to chatbot server.`;
+    console.log("CONNERROR", error);
     onError(message);
   };
 
   websocket.onclose = (event) => {
-    const message = `${event.code} - ${event.reason}`;
+    let message = event.code;
+    console.log("ONCLOSE", event);
+
+    if (event.reason) message += ` - ${event.reason}`;
     onError(message);
   };
 
@@ -86,5 +91,7 @@ export function sendMessageToChatbot(query, chat_id, course_id) {
 }
 
 function _getAccessToken() {
+  // return "sAj7OgYnjzfKGIVEVEQRDmXlRZhPfF";
+  // return "uT1uK4xbFygDmZI5YGJ0jXfGkH8Ymr";
   return Cookies.get("accessToken");
 }

@@ -8,7 +8,7 @@ import { fetchQueries } from "./slice";
 import AIChatbotFooter from "./AIChatbotFooter";
 import ChatbotListError from "./ChatbotListError";
 
-function QueryList({ intl, mode, onVote, onRetryAskChatbot, onSubmit }) {
+function QueryList({ intl, mode, onRetryAskChatbot, onSubmit }) {
   const { query, session } = useSelector((state) => state.chatbot);
   const dispatch = useDispatch();
 

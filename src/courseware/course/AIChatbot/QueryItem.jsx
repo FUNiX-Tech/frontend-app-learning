@@ -1,10 +1,4 @@
-import {
-  svgChatGPT,
-  svgUpVote,
-  svgCopy,
-  svgRetry,
-  svgCopied,
-} from "./AIChabotAssets";
+import { svgUpVote, svgCopy, svgCopied } from "./AIChabotAssets";
 import PropTypes from "prop-types";
 import { injectIntl, intlShape } from "@edx/frontend-platform/i18n";
 import messages from "./messages";
@@ -127,9 +121,7 @@ function QueryItem({ intl, query, onRetryAskChatbot }) {
   return (
     <>
       <div class="ask-item">
-        <div class="ask-item-content">
-          {query.query_msg} {query.status}
-        </div>
+        <div class="ask-item-content">{query.query_msg}</div>
         {query.status === "pending" && (
           <p class="ask-item-pending">
             {intl.formatMessage(messages.sending)}

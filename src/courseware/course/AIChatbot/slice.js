@@ -310,7 +310,11 @@ const chatbotSlice = createSlice({
       state.connection.status = "failed";
     },
     connectionOpen: (state, action) => {
+      state.connection.error = "";
       state.connection.status = "succeeded";
+    },
+    connectionError: (state, action) => {
+      state.connection.error = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -565,6 +569,7 @@ export const {
   connectionOpen,
   reConnect,
   setChatbotCourseId,
+  connectionError,
 } = chatbotSlice.actions;
 export default chatbotSlice.reducer;
 
