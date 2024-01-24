@@ -42,9 +42,11 @@ function CourseDashboardItem({ intl, courseData }) {
 
   return (
     <div
-      className="course_dashboard_item d-flex border "
+      className="course_dashboard_item d-flex border"
       key={courseRun.courseId}
     >
+
+      {/* course item image */}
       <div class="course_dashboard_item_thumb">
         <CustomLink path={goToPath}>
           <img
@@ -55,7 +57,9 @@ function CourseDashboardItem({ intl, courseData }) {
         </CustomLink>
       </div>
 
-      <div className="p-3 w-100 d-flex flex-column justify-content-between">
+      {/* course item content: title, description, navigation button */}
+      <div className="p-3 w-100 d-flex flex-column justify-content-between course_dashboard_item_content">
+        {/* course item title, description */}
         <div className="course-title">
           <CustomLink className="text-course-title" path={goToPath}>
             {course.courseName}
@@ -66,6 +70,7 @@ function CourseDashboardItem({ intl, courseData }) {
           </span>
         </div>
 
+        {/* course item progress-bar */}
         {courseRun.resumeUrl && (
           <div className="pt-3">
             <div className="progress" style={{ height: "5px" }}>
@@ -85,9 +90,11 @@ function CourseDashboardItem({ intl, courseData }) {
           </div>
         )}
 
-        <div className=" d-flex  align-self-end" style={{ gap: "10px" }}>
+        {/* course item button */}
+        <div className="d-flex course_btn_navigate" style={{ gap: "10px" }}>
           <CourseBtn intl={intl} goToPath={goToPath} courseRun={courseRun} />
         </div>
+        
       </div>
     </div>
   );
