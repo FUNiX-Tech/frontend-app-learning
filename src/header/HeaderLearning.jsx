@@ -133,8 +133,8 @@ const HeaderLearning = ({
         <div
           className={`${
             isDashoard
-              ? "d-flex align-items-center course-title-lockup header-dashboard h-100"
-              : "d-flex align-items-center course-title-lockup"
+              ? "align-items-center course-title-lockup header-dashboard h-100"
+              : "align-items-center course-title-lockup"
           }`}
         >
           <span
@@ -145,9 +145,11 @@ const HeaderLearning = ({
         </div>
         <div className="actions d-flex align-items-center">
           <button className="action-button">
-            {window.innerWidth > 992 && (
-              <img src={notificationSrc} alt={notificationSrc} />
-            )}
+            <img
+              className="d-none d-lg-block"
+              src={notificationSrc}
+              alt={notificationSrc}
+            />
           </button>
           {/* <button className="action-button">
             <img src={avatar_icon} alt={avatar_icon} />
