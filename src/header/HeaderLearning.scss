@@ -150,6 +150,7 @@
           font-size: 0.875rem;
           color: var(--color-white);
           font-weight: 400;
+          line-height: 1.5;
         }
 
         img {
@@ -405,7 +406,7 @@
 }
 
 .dropdown-menu-right {
-  width: 12.875rem;
+  min-width: 12.875rem;
   padding: 0;
   border: 1px solid var(--color-stroke);
   inset: unset !important;
@@ -423,7 +424,7 @@
       color: var(--color-white);
       background: #4667a8;
       border-radius: 50%;
-      width: 2.5rem;
+      min-width: 2.5rem;
       height: 2.5rem;
       display: flex;
       justify-content: center;
