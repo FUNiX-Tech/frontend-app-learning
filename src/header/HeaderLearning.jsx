@@ -25,7 +25,6 @@ const HeaderLearning = ({
 }) => {
   const authenticatedUser = getAuthenticatedUser();
   const { courseId: courseIdFromUrl } = useParams();
-
   //notification icon
   const [notificationSrc, setNotificationSrc] = useState(notification_icon);
   //header logo
@@ -146,7 +145,9 @@ const HeaderLearning = ({
         </div>
         <div className="actions d-flex align-items-center">
           <button className="action-button">
-            <img src={notificationSrc} alt={notificationSrc} />
+            {window.innerWidth > 992 && (
+              <img src={notificationSrc} alt={notificationSrc} />
+            )}
           </button>
           {/* <button className="action-button">
             <img src={avatar_icon} alt={avatar_icon} />
@@ -154,8 +155,10 @@ const HeaderLearning = ({
           {showUserDropdown && authenticatedUser && (
             <AuthenticatedUserDropdown
               username={authenticatedUser.username}
+              email={authenticatedUser.email}
               isLoading={loading}
               courseId={courseIdFromUrl}
+              isDashoard={isDashoard}
             />
           )}
         </div>

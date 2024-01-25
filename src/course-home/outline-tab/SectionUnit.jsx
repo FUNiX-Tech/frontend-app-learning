@@ -27,13 +27,13 @@ function SectionUnit({
   lesson,
   unitId,
   allSequenceIds,
-  newSequences,
+  // newSequences,
 }) {
-  const { complete, sequenceIds, title } = section;
+  // const { complete, sequenceIds, title } = section;
   //check has one sequence complete
-  const [hasOneSequenceComplete, setHasOneSequenceComplete] = useState(false);
+  // const [hasOneSequenceComplete, setHasOneSequenceComplete] = useState(false);
   // hasCompleteSequence
-  const [hasComepleteSequence, setHasCompleteSequence] = useState(false);
+  // const [hasComepleteSequence, setHasCompleteSequence] = useState(false);
   const {
     courseBlocks: { sequences },
   } = useModel("outline", courseId);
@@ -80,22 +80,22 @@ function SectionUnit({
   }
   //   </div>
   // );
-  useEffect(() => {
-    allSequenceIds.map((sequenceId, index) => {
-      if (Object.keys(newSequences).length > 0) {
-        const sequence = newSequences[sequenceId];
-        const { complete } = sequence;
-        if (complete) {
-          setHasOneSequenceComplete(true);
-        }
-      }
-      const oldSequence = sequences[sequenceId];
-      const { complete } = oldSequence;
-      if (complete) {
-        setHasOneSequenceComplete(true);
-      }
-    });
-  }, [newSequences]);
+  // useEffect(() => {
+  //   allSequenceIds.map((sequenceId, index) => {
+  //     if (Object.keys(newSequences).length > 0) {
+  //       const sequence = newSequences[sequenceId];
+  //       const { complete } = sequence;
+  //       if (complete) {
+  //         setHasOneSequenceComplete(true);
+  //       }
+  //     }
+  //     const oldSequence = sequences[sequenceId];
+  //     const { complete } = oldSequence;
+  //     if (complete) {
+  //       setHasOneSequenceComplete(true);
+  //     }
+  //   });
+  // }, [newSequences]);
 
   return (
     <li className="bg-light">
@@ -144,10 +144,10 @@ function SectionUnit({
               expand={expand}
               useHistory={useHistory}
               unitId={unitId}
-              hasOneComplete={hasOneSequenceComplete}
-              complete={complete}
+              // hasOneComplete={hasOneSequenceComplete}
+              // complete={complete}
               sequence={sequence}
-              newSequences={newSequences}
+              // newSequences={newSequences}
             />
           );
         })}

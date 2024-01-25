@@ -84,15 +84,14 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
 
   //get running course
   useEffect(() => {
+    if (!courseId) return;
+
     const fetchCourse = async () => {
       try {
-        // const data = await fetchDashboard();
-
         const url = `${
           getConfig().LMS_BASE_URL
         }/api/course_home/outline/${courseId}`;
         const response = await getAuthenticatedHttpClient().get(url);
-        console.log(response);
         dispatch(setCourseInRun(response.data.resume_course));
       } catch (error) {
         console.log(error);
@@ -111,149 +110,78 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
           "fixed-position"
         )}
       >
+        {window.innerWidth > 992 && (
+          <div className="sub-header-container">
+            <Tabs
+              className="nav-underline-tabs d-flex sub-header-content"
+              aria-label={intl.formatMessage(messages.courseMaterial)}
+            >
+              {!tabs
+                ? SkeletonTabs
+                : tabs.map(({ url, title, slug }, index) => {
+                    if (url.endsWith("/home") || url.endsWith("/dates")) {
+                      const resumeUrl = courseInRun
+                        ? pathname.includes("/dates")
+                          ? courseInRun?.url
+                          : urlToPath(url)
+                        : resumeCourse?.url;
+                      const to = index === 0 ? resumeUrl : urlToPath(url);
+                      if (index !== 0) {
+                        return (
+                          // <NavLink
+                          //   key={slug}
+                          //   className={classNames(
+                          //     "nav-item flex-shrink-0 nav-link",
+                          //     {
+                          //       active: slug === activeTabSlug,
+                          //     }
+                          //   )}
+                          //   to={to}
+                          // >
+                          //   {title}
+                          // </NavLink>
+                          <a></a>
+                        );
+                      } else {
+                        return (
+                          <a
+                            key={slug}
+                            className={classNames(
+                              "nav-item flex-shrink-0 nav-link",
+                              {
+                                active: slug === activeTabSlug,
+                              }
+                            )}
+                            href={to}
+                            onClick={(e) => {
+                              if (to === "#") {
+                                e.preventDefault();
+                              }
+                            }}
+                          >
+                            {title}
+                          </a>
+                        );
+                      }
+                    }
+
+                    return (
+                      // <a
+                      //   key={slug}
+                      //   className={classNames("nav-item flex-shrink-0 nav-link", {
+                      //     active: slug === activeTabSlug,
+                      //   })}
+                      //   href={url}
+                      // >
+                      //   {title}
+                      // </a>
+                      <a></a>
+                    );
+                  })}
+            </Tabs>
+          </div>
+        )}
         {/* sub Header - done */}
-        <div className="sub-header-container">
-          <Tabs
-            className="nav-underline-tabs d-flex sub-header-content"
-            aria-label={intl.formatMessage(messages.courseMaterial)}
-          >
-            {!tabs
-              ? SkeletonTabs
-              : tabs.map(({ url, title, slug }, index) => {
-                  if (url.endsWith("/home") || url.endsWith("/dates")) {
-                    const resumeUrl = courseInRun
-                      ? pathname.includes("/dates")
-                        ? courseInRun?.url
-                        : urlToPath(url)
-                      : resumeCourse?.url;
-                    const to = index === 0 ? resumeUrl : urlToPath(url);
-                    if (index !== 0) {
-                      return (
-                        <NavLink
-                          key={slug}
-                          className={classNames(
-                            "nav-item flex-shrink-0 nav-link",
-                            {
-                              active: slug === activeTabSlug,
-                            }
-                          )}
-                          to={to}
-                        >
-                          {title}
-                        </NavLink>
-                      );
-                    } else {
-                      return (
-                        <a
-                          key={slug}
-                          className={classNames(
-                            "nav-item flex-shrink-0 nav-link",
-                            {
-                              active: slug === activeTabSlug,
-                            }
-                          )}
-                          href={to}
-                          onClick={(e) => {
-                            if (to === "#") {
-                              e.preventDefault();
-                            }
-                          }}
-                        >
-                          {title}
-                        </a>
-                      );
-                    }
-                  }
-
-                  return (
-                    <a
-                      key={slug}
-                      className={classNames("nav-item flex-shrink-0 nav-link", {
-                        active: slug === activeTabSlug,
-                      })}
-                      href={url}
-                    >
-                      {title}
-                    </a>
-                  );
-                })}
-          </Tabs>
-
-          {/* sub header Icon */}
-          {!hideMenu && (
-            <div className="sub-header-icon d-flex">
-              {/* <div className="sub-header-icon-item tool-tip-1">
-              <img
-                onMouseOver={() => {
-                  if (!isShowRightMenu) {
-                    setRightMenuSrc(RightMenuHover);
-                  }
-                }}
-                onMouseOut={() => {
-                  if (!isShowRightMenu) {
-                    setRightMenuSrc(RightMenu);
-                  }
-                }}
-                src={rightMenuSrc}
-                alt={`RightMenu`}
-                onClick={() => {
-                  setRightMenuSrc(RightMenuActive);
-                  setFeedbackSrc(Feedback);
-                  setChatbotSrc(Chatbot);
-                  dispatch(toggleShowLesson());
-                }}
-              />
-            </div> */}
-
-              <div className="sub-header-icon-item tool-tip-3">
-                <img
-                  onMouseOver={() => {
-                    if (!isShowChatbot) {
-                      setChatbotSrc(ChatbotHover);
-                    }
-                  }}
-                  onMouseOut={() => {
-                    if (!isShowChatbot) {
-                      setChatbotSrc(Chatbot);
-                    } else {
-                      setChatbotSrc(ChatbotActive);
-                    }
-                  }}
-                  src={chatbotSrc}
-                  alt={`Chatbot`}
-                  onClick={() => {
-                    setRightMenuSrc(RightMenu);
-                    setFeedbackSrc(Feedback);
-                    setChatbotSrc(ChatbotActive);
-                    dispatch(toggleShowChatbot());
-                  }}
-                />
-              </div>
-              <div className="sub-header-icon-item tool-tip-2">
-                <img
-                  onMouseOver={() => {
-                    setFeedbackSrc(FeedbackHover);
-                  }}
-                  onMouseOut={() => {
-                    if (!isShowFeedback) {
-                      setFeedbackSrc(Feedback);
-                    } else {
-                      setFeedbackSrc(FeedbackActive);
-                    }
-                  }}
-                  src={feedbackSrc}
-                  alt={`Feedback`}
-                  onClick={() => {
-                    setRightMenuSrc(RightMenu);
-                    setFeedbackSrc(FeedbackActive);
-                    setChatbotSrc(Chatbot);
-                    dispatch(toggleShowFeedback());
-                  }}
-                />
-              </div>
-            </div>
-          )}
-        </div>
       </div>
     </>
   );

@@ -129,12 +129,12 @@ body {
         display: block;
         height: 4px;
         width: 100%;
-        background-color: var(--color-hover);
+        background-color: #8097b1;
         bottom: 0;
         border-top-left-radius: 0.75rem;
         border-top-right-radius: 0.75rem;
       }
-      color: var(--color-hover) !important;
+      color: #8097b1 !important;
       // border-bottom-color: var(--color-hover) !important;
     }
     &.active {
@@ -144,12 +144,12 @@ body {
         display: block;
         height: 4px;
         width: 100%;
-        background-color: var(--color-active);
+        background-color: var(--color-text-default);
         bottom: 0;
         border-top-left-radius: 0.75rem;
         border-top-right-radius: 0.75rem;
       }
-      color: var(--color-active) !important;
+      color: var(--color-text-default) !important;
     }
   }
 }
@@ -286,21 +286,27 @@ body {
     // min-width 0 prevents the flex item from overflowing the parent container
     // https://dev.to/martyhimmel/quick-tip-to-stop-flexbox-from-overflowing-peb
     position: relative;
+    background-color: white;
   }
 
   .sequence-navigation-tabs {
     position: absolute;
+    left: 100%;
+    transform: translateX(0);
+    height: 100%;
+    background-color: var(--background-content);
 
     flex-direction: column;
     align-items: flex-start;
     overflow: hidden;
-    transform: translateX(18.75rem);
+    // transform: translateX(18.75rem);
     width: 18.75rem;
-    margin-left: 35rem;
+    // margin-left: 35rem;
     transition: all 0.3s ease;
 
     &.active {
-      transform: translateX(0);
+      // transform: translateX(0);
+      transform: translateX(-100%);
 
       margin-left: 0;
       transition: all 0.3s ease;
@@ -314,7 +320,7 @@ body {
     }
 
     &.active.feedback {
-      width: auto;
+      width: 100%;
     }
     &.active.chatbot {
       width: 18.75rem;
@@ -379,12 +385,13 @@ body {
 
     //Feedback
     .feedback {
-      width: 18.75rem;
+      background: var(--background-content);
+      width: 19.75rem;
       padding: 1rem 1rem 0 1rem;
-      & .feedback-title {
+      .feedback-title {
         margin-bottom: 0;
         display: flex;
-        padding: 0rem 1rem 0.5rem 0rem;
+        padding: 0rem 0 0.5rem 0rem;
         align-items: center;
         gap: 0.5rem;
         align-self: stretch;
@@ -398,6 +405,27 @@ body {
 
         font-weight: 500;
         line-height: 150%;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        button {
+          border: none;
+          outline: none;
+          background: white;
+          width: 2rem;
+          height: 2rem;
+          border: 1px solid white;
+          border-radius: 4px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          &:hover {
+            border: 1px solid var(--color-stroke);
+          }
+        }
       }
       select {
         -webkit-appearance: none;
@@ -756,8 +784,8 @@ body {
   //   padding-right: 40px;
   // }
   background-color: var(--color-white);
-  width: 47.75rem;
-  padding: 0 2rem !important;
+  width: 49.75rem;
+  padding: 0 3rem !important;
   margin-left: auto;
   margin-right: auto;
   position: relative;
@@ -811,12 +839,12 @@ body {
 
       font-weight: 500;
       line-height: 150%;
-      & svg.left {
-        margin-right: 0.5rem;
-      }
-      & svg.right {
-        margin-left: 0.5rem;
-      }
+      // & svg.left {
+      //   margin-right: 0.5rem;
+      // }
+      // & svg.right {
+      //   margin-left: 0.5rem;
+      // }
     }
     &.show {
       background-color: var(--color-active);
@@ -1070,7 +1098,8 @@ body {
     top: 0px;
     right: 0;
     z-index: 5;
-    width: calc((100% - 47.75rem) / 2);
+    width: calc((100% - 49.75rem) / 2);
+    max-width: 19.75rem;
     height: 100%;
     margin-bottom: 3rem !important;
     background-color: var(--color-white);

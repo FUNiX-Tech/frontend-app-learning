@@ -3,6 +3,8 @@ import { getAuthenticatedHttpClient } from "@edx/frontend-platform/auth";
 import { getAuthenticatedUser } from "@edx/frontend-platform/auth";
 
 import { getConfig } from "@edx/frontend-platform";
+import { useDispatch } from "react-redux";
+import { toggleShowFeedback } from "../../../../../header/data/slice";
 
 const Feedback = ({ isShowFeedback, shouldDisplayDropdown }) => {
   //get user
@@ -15,6 +17,8 @@ const Feedback = ({ isShowFeedback, shouldDisplayDropdown }) => {
   const [errorContentMessage, setErrorContentMessage] = useState("");
   const [errorSelectMessage, setErrorSelectMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+
+  const dispatch = useDispatch();
 
   //file state
   const [file, setFile] = useState(undefined);
@@ -132,6 +136,7 @@ const Feedback = ({ isShowFeedback, shouldDisplayDropdown }) => {
     e.preventDefault();
     setDragging(false);
   }, []);
+
   //handle drop file
   const handleDrop = useCallback((e) => {
     e.preventDefault();
@@ -164,6 +169,10 @@ const Feedback = ({ isShowFeedback, shouldDisplayDropdown }) => {
     //handle drop file
     handleFile(droppedFile);
   }, []);
+
+  function hideFeedback() {
+    dispatch(toggleShowFeedback());
+  }
   return (
     <div
       className={`${
@@ -174,7 +183,23 @@ const Feedback = ({ isShowFeedback, shouldDisplayDropdown }) => {
       style={shouldDisplayDropdown ? null : null}
     >
       <div className="feedback">
-        <h2 className="feedback-title">Phản hồi</h2>
+        <h2 className="feedback-title">
+          <span>Phản hồi</span>
+          <button onClick={hideFeedback}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+            >
+              <path
+                d="m15.834 5.343-1.175-1.175L10 8.826 5.342 4.168 4.167 5.343l4.658 4.658-4.658 4.659 1.175 1.175L10 11.176l4.659 4.659 1.175-1.175L11.175 10l4.659-4.658z"
+                fill="#2D2F31"
+              />
+            </svg>
+          </button>
+        </h2>
         <form onSubmit={handlerSubmit}>
           <h3 className="feedback-question-title">Phản hồi của bạn là gì?</h3>
 

@@ -1,7 +1,9 @@
 .header-title {
   flex-grow: 0;
-  font-family: "Roboto Serif", serif;
-  font-size: 2rem;
+  // font-family: "Roboto Serif", serif;
+  font-family: "Roboto", sans-serif;
+  // font-size: 2rem;
+  font-size: 33px;
   font-weight: 500;
   font-stretch: normal;
   line-height: 1.5;
@@ -55,10 +57,12 @@
   top: 0;
   z-index: 5;
   left: 0;
-  width: calc((100% - 47.75rem) / 2);
+  width: 19.75rem;
+
   background-color: var(--color-white);
 
-  &.right-side {
+  &.left-side {
+    border-right: 1px solid var(--color-stroke);
     background-color: var(--background-content);
   }
   & .content {
@@ -71,8 +75,8 @@
   // border-color: var(--chakra-colors-gray-300);
 
   #courseHome-utline {
-    width: 18.75rem;
-    transform: translateX(-18.75rem);
+    width: 19.75rem;
+    transform: translateX(-20.625rem);
     max-height: calc(100% - 6rem);
     transition: all 0.35s ease;
     position: relative;
@@ -81,23 +85,51 @@
     &.show-leftbar {
       transform: translateX(0);
       overflow-y: scroll;
-      margin-left: auto;
+      overflow-x: hidden;
       z-index: 100;
       transition: all 0.35s ease;
+      .bg-light {
+        width: 19.75rem;
+        animation: border-right forwards linear;
+        animation-duration: 0.625s;
+      }
+      @keyframes border-right {
+        from {
+          border-right: 0;
+        }
+        to {
+          border-right: 1px solid var(--color-stroke);
+        }
+      }
+
+      &:hover {
+        width: 20.25rem;
+        &::-webkit-scrollbar {
+          display: block;
+          width: 0.5rem;
+        }
+        &::-webkit-scrollbar-thumb {
+          background: var(--color-disable);
+
+          border-radius: 999px;
+        }
+      }
       &::-webkit-scrollbar {
-        width: 0.5rem;
+        width: 0;
+        display: none;
       }
       /* Track */
 
       /* Handle */
       &::-webkit-scrollbar-thumb {
-        background: #888;
+        background: transparent;
+
         border-radius: 999px;
       }
 
       /* Handle on hover */
       &::-webkit-scrollbar-thumb:hover {
-        background: #555;
+        background: var(--color-disable);
       }
     }
 
@@ -110,54 +142,66 @@
   }
 
   .show-menu-lesson {
-    position: absolute;
     z-index: 2000;
     cursor: pointer;
-    margin-top: 1rem;
-    right: -1rem;
+    right: 1rem;
     transition-duration: var(--chakra-transition-duration-normal);
-    transition: 0.15s all ease;
+    transition: 0.35s all ease;
 
-    &.right-side {
-      border-color: var(--color-text-inactive);
-      right: -1rem;
+    &.left-side {
       z-index: 2000;
+      border-left-width: 0;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
     }
-    &.hover:hover {
-      border: 1px solid var(--color-hover);
+    &:hover {
+      background-color: var(--color-active);
+      border: 1px solod var(--color-active);
+    }
+    &:active {
+      background-color: var(--color-hover);
+      border: 1px solod var(--color-hover);
     }
     display: flex;
     width: 2rem;
     height: 2rem;
-    padding: 0.6875rem 0.5rem 0.6875rem 0.5625rem;
+    padding: 0.25rem;
     justify-content: center;
     align-items: center;
-    border-radius: 1.875rem;
-    border: 1px solid var(--color-active);
-    background: var(--color-white);
+    border: 1px solid #576f8a;
+    border-radius: 0.25rem;
 
+    background: var(--color-white);
     img {
       display: block;
-      width: 100%;
-      object-fit: cover;
+      min-width: 24px;
+      height: 24px;
     }
   }
 }
 
 .menu-lesson {
-  width: 18.75rem;
+  width: 19.75rem;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 1rem;
   line-height: 1.5;
-  transform: translateX(-18.75rem);
+  transform: translateX(-16.75rem);
   transition: all 0.35s ease;
   position: relative;
-  z-index: -100;
+  & .icon-left-menu-wrapper {
+    & svg:hover {
+      path {
+        fill: var(--color-white);
+      }
+    }
+  }
   &.show-leftbar {
     transform: translateX(0);
-    margin-left: auto;
     z-index: 100;
     transition: all 0.35s ease;
+    border-bottom: 1px solid #d1d7dc;
   }
 
   .menu-lesson-title {
@@ -168,7 +212,7 @@
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
-
+    margin-top: 0.25rem;
     letter-spacing: normal;
     text-align: left;
     margin-bottom: 0;
@@ -184,7 +228,6 @@
     z-index: 2000;
   }
 }
-
 // rightbar
 :root {
   --unit-width: 700px;
@@ -208,24 +251,97 @@
   bottom: 0;
   z-index: 9999;
   max-width: calc(300px + 1rem);
-  left: 100vw;
+  right: 0;
+  transform: translateX(calc(100% + 1rem));
   top: 0;
-  transition: 0.2s;
-  margin-right: 1rem;
+  transition: transform 0.2s;
+  // margin-right: 1rem;
+  width: 100%;
+
+  // bad fixing
+  &::after {
+    left: 100%;
+    width: 2rem;
+    height: 10%;
+    background: var(--background-content);
+    position: absolute;
+    display: block;
+    content: "";
+    top: 0;
+    height: 100vh;
+  }
+
+  #chatbot-feedback-btns {
+    position: absolute;
+    left: -4rem;
+    display: flex;
+    top: 1rem;
+    flex-direction: column;
+    gap: 1rem;
+    transition: 0.2s;
+
+    button {
+      outline: none;
+      background: white;
+      border-radius: 4px;
+      width: 2rem;
+      height: 2rem;
+      padding: 0;
+
+      svg {
+        transition: 0.2s;
+        fill: #576f8a;
+      }
+
+      &:hover {
+        border: 1px solid var(--color-active);
+        background: var(--color-active);
+        svg {
+          fill: white;
+        }
+      }
+
+      &:active {
+        border: 1px solid var(--color-active);
+
+        svg {
+          fill: white;
+        }
+      }
+
+      border: 1px solid #7f7f7f;
+      &:hover {
+        border: 1px solid var(--color-active);
+      }
+    }
+  }
+
+  &.is-show-chatbot {
+    #chatbot-feedback-btns {
+      left: calc(100% + 2rem);
+    }
+  }
+
+  &.is-show-feedback {
+    #chatbot-feedback-btns {
+      left: 2rem;
+    }
+  }
 
   &.is-show {
-    left: calc(100vw / 2 + var(--unit-width) / 2 + var(--unit-side-padding));
+    // left: calc(100vw / 2 + var(--unit-width) / 2 + var(--unit-side-padding));
+    transform: translateX(0%);
 
-    @media screen and (max-width: 992px) {
-      left: 60vw;
-    }
+    // @media screen and (max-width: 992px) {
+    //   left: 60vw;
+    // }
 
-    @media screen and (max-width: 768px) {
-      left: 50vw;
-    }
+    // @media screen and (max-width: 768px) {
+    //   left: 50vw;
+    // }
 
-    @media screen and (max-width: 320px) {
-      left: 0;
-    }
+    // @media screen and (max-width: 320px) {
+    //   left: 0;
+    // }
   }
 }

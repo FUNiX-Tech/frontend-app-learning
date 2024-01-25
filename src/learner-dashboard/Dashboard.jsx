@@ -9,10 +9,13 @@ import { injectIntl, intlShape } from "@edx/frontend-platform/i18n";
 import CourseLoading from "./CourseLoading";
 import iconVector from "../assets/icon/Vector.png";
 import Footer from "../footer/Footer";
+import { useModel } from "../generic/model-store";
+import { useSelector } from "react-redux";
 
 const Dashboard = ({ intl }) => {
   const [listCourse, setListCourse] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { courseId } = useSelector((state) => state.courseHome);
 
   //icon src
   const [iconVectorSrc, setIconVectorSrc] = useState(iconVector);
@@ -30,7 +33,6 @@ const Dashboard = ({ intl }) => {
 
     fetchData();
   }, []);
-
   return (
     <>
       <HeaderLearning isDashoard />
