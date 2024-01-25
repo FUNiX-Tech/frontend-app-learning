@@ -110,6 +110,7 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
           "fixed-position"
         )}
       >
+
         {window.innerWidth > 992 && (
           <div className="sub-header-container">
             <Tabs
@@ -182,6 +183,7 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
           </div>
         )}
         {/* sub Header - done */}
+
       </div>
     </>
   );

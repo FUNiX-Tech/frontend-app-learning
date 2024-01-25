@@ -19,6 +19,7 @@ import messages from "./messages";
 // import genericMessages from '../../generic/messages';
 import "./CollapsibleSequenceLink.scss";
 import { subTextSuquence } from "../data/index";
+import { useSelector } from "react-redux";
 
 function handleHistoryClick(e, courseId, sequenceId, unitId) {
   e.preventDefault();

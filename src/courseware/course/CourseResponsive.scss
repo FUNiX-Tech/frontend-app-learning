@@ -108,6 +108,7 @@
       }
     }
     .menu-lesson {
+
       transform: translateX(-1rem);
       border-bottom: 0;
       h2 {
@@ -117,6 +118,7 @@
         h2 {
           display: block;
         }
+
         transform: translateX(0);
 
         border-bottom: 1px solid #d1d7dc;
@@ -158,7 +160,9 @@
       width: 19.75rem;
     }
     .menu-lesson {
+
       transform: translateX(-1rem);
+
       border-bottom: 0;
       &.show-leftbar {
         transform: translateX(0);
@@ -210,10 +214,12 @@
   }
 
   .unit-left-sidebar {
+
     &.left-side {
       width: 19.75rem;
 
       min-width: 19.75rem;
+
     }
 
     @keyframes hide-leftbar {
@@ -246,6 +252,15 @@
         h2 {
           display: block;
         }
+        transform: translateX(0);
+
+        border-bottom: 1px solid #d1d7dc;
+      }
+    }
+    .menu-lesson {
+      transform: translateX(-3.25rem);
+      border-bottom: 0;
+      &.show-leftbar {
         transform: translateX(0);
 
         border-bottom: 1px solid #d1d7dc;
@@ -296,6 +311,7 @@
   }
 
   .unit-left-sidebar {
+
     &.left-side {
       width: 100% !important;
       z-index: 1000000;
@@ -303,6 +319,7 @@
     }
     .icon-toggle {
       right: 1.5rem !important;
+
     }
 
     @keyframes hide-leftbar {
@@ -333,7 +350,9 @@
       }
     }
     .menu-lesson {
+
       border-bottom: 0;
+
 
       h2 {
         display: none;
@@ -408,10 +427,12 @@
   }
 
   .unit-left-sidebar {
+
     &.left-side {
       width: 100% !important;
       z-index: 1000000;
       padding-top: 0 !important;
+
     }
     .icon-toggle {
       right: 1.5rem !important;
@@ -443,7 +464,9 @@
       }
     }
     .menu-lesson {
+
       border-bottom: 0;
+
 
       h2 {
         display: none;

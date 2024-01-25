@@ -498,3 +498,10 @@ export async function getLearnerHomeInit (){
 
   return data
 }
+
+export async function getAboutCourse (courseId){
+  const url = `${getConfig().LMS_BASE_URL}/api/overview/about/${courseId}`
+  const {data} = await getAuthenticatedHttpClient().get(url);
+  // console.log(data)
+  return data
+}
