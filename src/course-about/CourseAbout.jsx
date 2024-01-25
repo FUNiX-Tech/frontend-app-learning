@@ -104,7 +104,7 @@ const CourseAbout = (props) => {
       ) : (
         <div
           className="d-flex justify-content-between align-items-center"
-          style={{ padding: "10px 16px" , borderBottom : '1px solid #D7D7D7'}}
+          style={{ padding: "10px 16px" , borderBottom : '1px solid #D7D7D7', height:'64px'}}
         >
           <a
             href={`${getConfig().LMS_BASE_URL}/courses`}
