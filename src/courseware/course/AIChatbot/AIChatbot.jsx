@@ -197,7 +197,7 @@ function AIChatbot() {
   }, [connection.retry]);
 
   useEffect(() => {
-    setChatbotCourseId(courseId);
+    dispatch(setChatbotCourseId(courseId));
   }, [courseId]);
 
   return (
