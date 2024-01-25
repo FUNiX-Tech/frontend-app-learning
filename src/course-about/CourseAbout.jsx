@@ -100,7 +100,7 @@ const CourseAbout = (props) => {
           <title>{data.display_name}</title>
         </Helmet>
       {auth ? (
-        <HeaderLearning isDashoard />
+        <HeaderLearning isDashoard about />
       ) : (
         <div
           className="d-flex justify-content-between align-items-center"
