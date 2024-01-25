@@ -110,6 +110,7 @@ const AuthenticatedUserDropdown = ({
     };
     fetchCourse();
   }, []);
+
   return (
     <>
       {!isLoading && (
@@ -133,7 +134,13 @@ const AuthenticatedUserDropdown = ({
           <SelectLanguage username={username} /> */}
         </div>
       )}
-      <Dropdown className="user-dropdown position-relative z-index-100000">
+      <Dropdown
+        onToggle={(isOpen, event, metadata) =>
+          console.log("debug", "onToggle", { isOpen, event, metadata })
+        }
+        onScroll={(e) => e.preventDefault()}
+        className="user-dropdown position-relative z-index-100000"
+      >
         <Dropdown.Toggle
           variant="outline-primary "
           className="toggle-mobile-icon-1"
