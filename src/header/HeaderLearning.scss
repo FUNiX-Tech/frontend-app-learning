@@ -2,7 +2,6 @@
   min-width: 0;
 
   .course-title-lockup.header-dashboard {
-    margin-right: -1.5rem;
     width: 47.75rem;
     span {
       padding-left: 0;
@@ -113,8 +112,9 @@
 
   // new header 1  - done
   .header1-container {
-    margin-left: 1.25rem;
-    margin-right: 1.25rem;
+    height: 4rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
 
     .logo-container {
       flex: 1;
@@ -163,6 +163,7 @@
 
   // new header 2  - done
   .header2-container {
+    height: 4rem;
     padding: 1rem;
     .course-title-lockup {
       width: 49.75rem;
@@ -399,16 +400,25 @@
   content: "";
   display: none;
 }
+.dropdown-toggle {
+  background: none;
+}
 
 .dropdown-menu-right {
-  transform: translate3d(0px, 44.8889px, 0px) !important;
+  width: 12.875rem;
   padding: 0;
   border: 1px solid var(--color-stroke);
+  inset: unset !important;
+  top: 3rem !important;
+  right: calc(100% - 2rem) !important;
+  transform: translate3d(0, 0, 0) !important;
+
   & .menu-user {
     display: flex;
     padding: 1rem;
     column-gap: 1rem;
     align-items: flex-start;
+    border-bottom: 1px solid var(--color-stroke);
     & > p {
       color: var(--color-white);
       background: #4667a8;
@@ -427,12 +437,14 @@
         font-feature-settings: "clig" off, "liga" off;
         font-family: Roboto;
         font-size: 1rem;
+        word-wrap: break-word;
         font-style: normal;
         font-weight: 500;
         line-height: 150%;
       }
 
       & > p {
+        word-wrap: break-word;
         color: #576f8a;
         font-family: Roboto;
         font-size: 0.6875rem;
