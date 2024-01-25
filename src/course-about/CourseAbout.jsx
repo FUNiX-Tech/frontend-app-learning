@@ -116,15 +116,15 @@ const CourseAbout = (props) => {
               className="d-block"
               src={getConfig().LOGO_URL}
               alt="logo"
-              width="88px"
-              height="36px"
+              width="60px"
+              height="25px"
             />
           </a>
 
           <div>
             <button
               onClick={handlerLogin}
-              className="btn btn-login"
+              className="primary-btn-small  btn-modify custom-btn-default"
             >
               <span>Đăng nhập</span>
             </button>
