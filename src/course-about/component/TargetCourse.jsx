@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react"
 import CollapsibleCustom from "./CollapsibleCustom"
+import { Skeleton} from '@edx/paragon'
 import '../courseAbout.scss'
 
-const TargetCourse = ({target})=>{
+const TargetCourse = ({target, loading})=>{
     const [liElements, setLilements] = useState([])
     useEffect(()=>{
         const parser = new DOMParser()
@@ -23,7 +24,7 @@ const TargetCourse = ({target})=>{
               
                  {/* <div dangerouslySetInnerHTML={{ __html: target }}></div> */}
                  <h2 className="title-target">Mục tiêu môn học</h2>
-                 <div className="row target-course-about " >
+                {loading ? <Skeleton count={5} /> :  <div className="row target-course-about " >
                     {liElements.map((half, index) => (
                     <ul className="col" key={index} >
                         {half.map((li, liIndex) => (
@@ -31,7 +32,7 @@ const TargetCourse = ({target})=>{
                         ))}
                     </ul>
                     ))}
-                </div>
+                </div>}
             </div>
             
   
