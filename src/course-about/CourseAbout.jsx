@@ -93,11 +93,13 @@ const CourseAbout = (props) => {
         <title>{data.display_name}</title>
       </Helmet>
       {auth ? (
-        <HeaderLearning isDashoard />
+
+        <HeaderLearning  />
       ) : (
         <div
           className="d-flex justify-content-between align-items-center"
-          style={{ padding: "10px 16px", borderBottom: "1px solid #D7D7D7" }}
+          style={{ padding: "10px 16px" , borderBottom : '1px solid #D7D7D7', height:'64px'}}
+
         >
           <a
             href={`${getConfig().LMS_BASE_URL}/courses`}
@@ -108,13 +110,20 @@ const CourseAbout = (props) => {
               className="d-block"
               src={getConfig().LOGO_URL}
               alt="logo"
-              width="88px"
-              height="36px"
+
+              width="77px"
+              height="32px"
+
             />
           </a>
 
           <div>
-            <button onClick={handlerLogin} className="btn btn-login">
+
+            <button
+              onClick={handlerLogin}
+              className="btn btn-login"
+            >
+
               <span>Đăng nhập</span>
             </button>
           </div>
@@ -217,7 +226,7 @@ const CourseAbout = (props) => {
             </div>
           )}
         </div>
-        <div className="pt-5">
+        <div className="py-5">
           {!isDesktop && (
             <div
               className="about-section section-target d-flex flex-column "
