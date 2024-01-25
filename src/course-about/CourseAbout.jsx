@@ -14,6 +14,7 @@ import InputRequired from "./component/InputRequired";
 import { useMediaQuery } from "react-responsive";
 import StartTeacher from "./component/StartTeacher";
 import ExpertTeacher from "./component/ExpertTeacher";
+import Footer from "../footer/Footer";
 
 const CourseAbout = (props) => {
   const { fetch } = props;
@@ -98,11 +99,11 @@ const CourseAbout = (props) => {
         <HeaderLearning about />
       ) : (
         <div
-          className="d-flex justify-content-between"
-          style={{ padding: "10px 16px" }}
+          className="d-flex justify-content-between align-items-center"
+          style={{ padding: "10px 16px" , borderBottom : '1px solid #D7D7D7'}}
         >
           <a
-            href={`${getConfig().LMS_BASE_URL}/dashboard`}
+            href={`${getConfig().LMS_BASE_URL}/courses`}
             className="logo logo_img"
             width="100%"
           >
@@ -143,10 +144,11 @@ const CourseAbout = (props) => {
                   width="100%"
                 />
               </div>
-              <div>
+              <div style={{paddingTop:'14px'}}>
                 {!isMobile ? <h2>{data.display_name}</h2> : <h1>{data.display_name}</h1> }
                 
                 <span
+                  style={{fontSize:'16px',  lineHeight:'24px'}}
                   dangerouslySetInnerHTML={{ __html: data?.overview }}
                 ></span>
               </div>
@@ -178,6 +180,7 @@ const CourseAbout = (props) => {
                         {data.display_name}
                       </h1>
                       <span
+                        style={{fontSize:'16px', lineHeight:'24px'}}
                         dangerouslySetInnerHTML={{ __html: data?.overview }}
                       ></span>
                     </>
@@ -272,6 +275,7 @@ const CourseAbout = (props) => {
           </div>
         </div>
       </div>
+     <Footer />
     </div>
   );
 };

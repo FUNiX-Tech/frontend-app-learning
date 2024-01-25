@@ -21,7 +21,7 @@ const CourseTree = ({lessonTree})=>{
                         const lessonValue = Object.values(lesson);
                         return (
                             <div key={indexLesson}>
-                                <Collapsible.Advanced className=" block-lesson collapsible-card">
+                                <Collapsible.Advanced  className={` block-lesson collapsible-card ${indexLesson == 0 ? 'lesson-first' : ''} ${indexLesson == lessonTree.length-1 ? 'lesson-last' : ''}`}>
                                     <Collapsible.Trigger className="collapsible-trigger d-flex">
                                         <span className="flex-grow-1 collapsible-title">{lessonKeys[0]}</span>
                                         <Collapsible.Visible whenClosed> <img src={arrowIcon} alt='arrowIcon' /> </Collapsible.Visible>
