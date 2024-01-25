@@ -100,7 +100,7 @@ const CourseAbout = (props) => {
           <title>{data.display_name}</title>
         </Helmet>
       {auth ? (
-        <HeaderLearning isDashoard about />
+        <HeaderLearning  />
       ) : (
         <div
           className="d-flex justify-content-between align-items-center"
@@ -116,8 +116,8 @@ const CourseAbout = (props) => {
               className="d-block"
               src={getConfig().LOGO_URL}
               alt="logo"
-              width="88px"
-              height="36px"
+              width="77px"
+              height="32px"
             />
           </a>
 
@@ -224,7 +224,7 @@ const CourseAbout = (props) => {
             </div>
           )}
         </div>
-        <div className="pt-5">
+        <div className="py-5">
           {!isDesktop && (
             <div
               className="about-section section-target d-flex flex-column "
