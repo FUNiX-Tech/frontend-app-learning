@@ -15,6 +15,7 @@ import {
   getLiveTabIframe,
   getSubtextSequence,
   getLearnerHomeInit,
+  getAboutCourse
 } from "./api";
 
 import { addModel } from "../../generic/model-store";
@@ -98,7 +99,7 @@ export function fetchProgressTab(courseId, targetUserId) {
 }
 
 export function fetchStaticTab(courseId) {
-  console.log("fetching static", courseId);
+
   return fetchTab(courseId, "static", async () => ({}));
 }
 
@@ -188,4 +189,10 @@ export async function subTextSuquence(sequenceId) {
 
 export async function fetchDashboard() {
   return getLearnerHomeInit();
+}
+
+
+export async  function fetchAboutCourse(courseId) {
+
+  return getAboutCourse(courseId)
 }

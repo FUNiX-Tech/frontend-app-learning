@@ -42,6 +42,7 @@ function CollapsibleSequenceLinkUnit({
   // complete,
 }) {
   const sequence = sequences[id];
+
   // let newSequence;
   // if (Object.keys(newSequences).length > 0) {
   //   newSequence = newSequences[id];
@@ -108,7 +109,9 @@ function CollapsibleSequenceLinkUnit({
       onClick={(e) => {
         e.preventDefault();
       }}
+
       // href="#"
+
     >
       {newTitle}
     </a>
@@ -144,7 +147,9 @@ function CollapsibleSequenceLinkUnit({
           onClick={(e) => {
             e.preventDefault();
           }}
+
           // href="#"
+
         >
           {newTitle}
         </a>
@@ -171,7 +176,9 @@ function CollapsibleSequenceLinkUnit({
           onClick={(e) => {
             e.preventDefault();
           }}
+
           // href="#"
+
         >
           {newTitle}
         </a>
@@ -373,16 +380,20 @@ function CollapsibleSequenceLinkUnit({
                         <svg
                           onClick={(e) => e.preventDefault()}
                           className="check-icon complete"
+
                           xmlns="http://www.w3.org/2000/svg"
+
                           width="16"
                           height="17"
                           viewBox="0 0 16 17"
                           fill="none"
+
                         >
                           <path
                             d="M15.75 4.65008C15.75 4.91674 15.6567 5.14341 15.47 5.33008L8.23 12.5701L6.87 13.9301C6.68333 14.1167 6.45667 14.2101 6.19 14.2101C5.92333 14.2101 5.69667 14.1167 5.51 13.9301L4.15 12.5701L0.53 8.95008C0.343333 8.76341 0.25 8.53674 0.25 8.27008C0.25 8.00341 0.343333 7.77674 0.53 7.59008L1.89 6.23008C2.07667 6.04341 2.30333 5.95008 2.57 5.95008C2.83667 5.95008 3.06333 6.04341 3.25 6.23008L6.19 9.18008L12.75 2.61008C12.9367 2.42341 13.1633 2.33008 13.43 2.33008C13.6967 2.33008 13.9233 2.42341 14.11 2.61008L15.47 3.97008C15.6567 4.15674 15.75 4.38341 15.75 4.65008Z"
                             fill="#5AA447"
                           />
+
                         </svg>
                       ) : (
                         <svg
@@ -394,10 +405,12 @@ function CollapsibleSequenceLinkUnit({
                           viewBox="0 0 16 17"
                           fill="none"
                         >
+
                           <path
                             d="M15.75 4.65008C15.75 4.91674 15.6567 5.14341 15.47 5.33008L8.23 12.5701L6.87 13.9301C6.68333 14.1167 6.45667 14.2101 6.19 14.2101C5.92333 14.2101 5.69667 14.1167 5.51 13.9301L4.15 12.5701L0.53 8.95008C0.343333 8.76341 0.25 8.53674 0.25 8.27008C0.25 8.00341 0.343333 7.77674 0.53 7.59008L1.89 6.23008C2.07667 6.04341 2.30333 5.95008 2.57 5.95008C2.83667 5.95008 3.06333 6.04341 3.25 6.23008L6.19 9.18008L12.75 2.61008C12.9367 2.42341 13.1633 2.33008 13.43 2.33008C13.6967 2.33008 13.9233 2.42341 14.11 2.61008L15.47 3.97008C15.6567 4.15674 15.75 4.38341 15.75 4.65008Z"
                             fill="#C5C5C5"
                           />
+
                         </svg>
                       )}
                       {sequenceData.display_name}

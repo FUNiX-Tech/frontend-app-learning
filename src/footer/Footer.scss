@@ -6,7 +6,9 @@
   padding: 2rem 0;
   .footer-container {
     margin: 0;
+
     padding: 0 1rem;
+
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -22,7 +24,9 @@
     .footer-bottom {
       margin-bottom: 0;
       color: var(--color-text-default);
-      font-feature-settings: "clig" off, "liga" off;
+
+      font-feature-settings: 'clig' off, 'liga' off;
+
       font-family: Roboto;
       font-size: 12px;
       font-style: normal;
