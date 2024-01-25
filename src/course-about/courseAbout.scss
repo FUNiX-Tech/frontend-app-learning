@@ -18,6 +18,9 @@
             color:  #2C3744 ;
     
         }
+        h2{
+            color:  #2C3744 ;
+        }
         @media only screen and (max-width: 1440px) {
             width: 613px; 
         }     
@@ -44,6 +47,11 @@
         .about-card-body{
             padding:24px;
         }
+        @media only screen and (max-width: 1440px) {
+            width: 303px; 
+            min-height: 450px;
+        }     
+
 
 
     }
