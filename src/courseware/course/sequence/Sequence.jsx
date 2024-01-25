@@ -49,6 +49,10 @@ function Sequence({
   isCompleteCourse,
   isPassedProject,
 }) {
+  const isShowChatbot = useSelector((state) => state.header.isShowChatbot);
+  const isShowFeedback = useSelector((state) => state.header.isShowFeedback);
+  const isShowLeftbar = useSelector((state) => state.header.isShowLeftbar);
+
   const course = useModel("coursewareMeta", courseId);
   const { isStaff, originalUserIsStaff } = useModel("courseHomeMeta", courseId);
   const sequence = useModel("sequences", sequenceId);
@@ -281,7 +285,13 @@ function Sequence({
         />
         {shouldDisplayNotificationTriggerInSequence && <SidebarTriggers />}
 
-        <div className="unit-container flex-grow-1">
+        <div
+          className={
+            isShowChatbot || isShowFeedback
+              ? "unit-container push-left flex-grow-1"
+              : `${isShowLeftbar && "push-right"} unit-container flex-grow-1`
+          }
+        >
           {/* unit navigation buttons top  */}
           <UnitNavigation
             isPassedProject={isPassedProject}

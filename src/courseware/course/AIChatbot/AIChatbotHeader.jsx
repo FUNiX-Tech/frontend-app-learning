@@ -1,3 +1,4 @@
+
 import { useSelector } from "react-redux";
 import { svgClose, svgMessage, svgHamburger, svgPlus } from "./AIChabotAssets";
 import "./AIChatbotHeader.scss";
@@ -24,6 +25,7 @@ function AIChatbotHeader({ startNewSession, toggleMode, hideChatbot, mode }) {
         Chat GPT
         <span className={lightClasses}></span>
       </p>
+
       <div>
         <button
           title="New chat"

@@ -50,7 +50,6 @@ body {
   header {
     flex: 0 0 auto;
     .logo {
-      margin-left: 0.75rem;
       display: block;
       box-sizing: content-box;
       position: relative;
@@ -320,7 +319,7 @@ body {
     }
 
     &.active.feedback {
-      width: auto;
+      width: 100%;
     }
     &.active.chatbot {
       width: 18.75rem;
@@ -386,7 +385,9 @@ body {
     //Feedback
     .feedback {
       background: var(--background-content);
-      width: 18.75rem;
+
+      width: 19.75rem;
+
       padding: 1rem 1rem 0 1rem;
       .feedback-title {
         margin-bottom: 0;
@@ -784,8 +785,8 @@ body {
   //   padding-right: 40px;
   // }
   background-color: var(--color-white);
-  width: 47.75rem;
-  padding: 0 2rem !important;
+  width: 49.75rem;
+  padding: 0 3rem !important;
   margin-left: auto;
   margin-right: auto;
   position: relative;
@@ -839,12 +840,12 @@ body {
 
       font-weight: 500;
       line-height: 150%;
-      & svg.left {
-        margin-right: 0.5rem;
-      }
-      & svg.right {
-        margin-left: 0.5rem;
-      }
+      // & svg.left {
+      //   margin-right: 0.5rem;
+      // }
+      // & svg.right {
+      //   margin-left: 0.5rem;
+      // }
     }
     &.show {
       background-color: var(--color-active);
@@ -1098,7 +1099,8 @@ body {
     top: 0px;
     right: 0;
     z-index: 5;
-    width: calc((100% - 47.75rem) / 2);
+    width: calc((100% - 49.75rem) / 2);
+    max-width: 19.75rem;
     height: 100%;
     margin-bottom: 3rem !important;
     background-color: var(--color-white);

@@ -130,6 +130,7 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
     });
   }, [loadedUnits]);
 
+
   /**
    * post message to selected iframe when it has been loaded
    * to resize it's height
@@ -146,6 +147,7 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
       ifr.contentWindow.postMessage({ type: "unit.resize" }, "*");
     }
   }, [loadedUnits.includes(unitId), unitId]);
+
 
   return (
     <div className="unit">
@@ -190,9 +192,11 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
                     style={{
                       display: isSelectedUnit ? "block" : "none",
                     }}
+
                     // height={
                     //   iframeHeightValues.find((h) => h.id === e.id)?.height
                     // }
+
                   />
                 </div>
               );

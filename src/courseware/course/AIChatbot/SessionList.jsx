@@ -2,7 +2,9 @@ import SessionItem from "./SessionItem";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchSessions } from "./slice";
+
 import ChatbotListError from "./ChatbotListError";
+
 
 function SessionList({ onSelectSession, mode }) {
   const dispatch = useDispatch();
@@ -21,7 +23,9 @@ function SessionList({ onSelectSession, mode }) {
   if (mode === "chat") classes += " d-none";
   return (
     <div className={classes}>
+
       {session.error && <ChatbotListError error={session.error} />}
+
 
       {!session.error && (
         <ul className="chatbot-messages-list">

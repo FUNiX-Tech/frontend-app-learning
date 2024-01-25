@@ -17,12 +17,14 @@ export const fetchSessions = async (skip = 0, limit = 5) => {
   return data;
 };
 
+
 export const createQueryItemToDB = async ({
   query_msg,
   session_id = undefined,
   status,
   hash,
 }) => {
+
   const url = `${baseUrl()}query/request/`;
   const { data } = await getAuthenticatedHttpClient().post(url, {
     query_msg,

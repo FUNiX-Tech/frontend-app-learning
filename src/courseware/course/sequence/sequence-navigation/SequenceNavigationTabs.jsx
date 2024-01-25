@@ -36,9 +36,9 @@ export default function SequenceNavigationTabs({
     );
     const instructorToolbar = document.querySelector("#instructor-toolbar");
     const header = document.querySelector(".learning-header");
-    const headerHeight = header.offsetHeight;
+    const headerHeight = header?.offsetHeight;
     const courseTagsNav = document.querySelector("#courseTabsNavigation");
-    const courseTagsNavHeight = courseTagsNav.offsetHeight;
+    const courseTagsNavHeight = courseTagsNav?.offsetHeight;
     let instructorToolbarHeight = 0;
     if (instructorToolbar) {
       instructorToolbarHeight = instructorToolbar.offsetHeight;

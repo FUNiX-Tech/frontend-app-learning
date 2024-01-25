@@ -6,10 +6,12 @@ import messages from "./messages";
 import { injectIntl } from "@edx/frontend-platform/i18n";
 import { fetchQueries } from "./slice";
 import AIChatbotFooter from "./AIChatbotFooter";
+
 import ChatbotListError from "./ChatbotListError";
 
 function QueryList({ intl, mode, onRetryAskChatbot, onSubmit }) {
   const { query, session } = useSelector((state) => state.chatbot);
+
   const dispatch = useDispatch();
 
   const msgContainerRef = useRef();
@@ -30,10 +32,12 @@ function QueryList({ intl, mode, onRetryAskChatbot, onSubmit }) {
 
   useEffect(() => {
     if (query.initiated) return;
+
     if (
       query.items.filter((item) => item.session_id === session.id).length === 0
     )
       return;
+
 
     const container = document.querySelector(
       ".chatbot-messages-list-container"
@@ -51,8 +55,10 @@ function QueryList({ intl, mode, onRetryAskChatbot, onSubmit }) {
 
   // need to re-position this
   if (query.status === "failed") {
+
     if (mode === "session") return null;
     return <ChatbotListError error={query.error} />;
+
   }
 
   let classes = "chatbot-messages-list-container";
@@ -85,6 +91,7 @@ function QueryList({ intl, mode, onRetryAskChatbot, onSubmit }) {
       </div>
 
       {mode === "chat" && <AIChatbotFooter mode={mode} onSubmit={onSubmit} />}
+
     </>
   );
 }

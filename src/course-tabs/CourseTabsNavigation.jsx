@@ -88,13 +88,10 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
 
     const fetchCourse = async () => {
       try {
-        // const data = await fetchDashboard();
-
         const url = `${
           getConfig().LMS_BASE_URL
         }/api/course_home/outline/${courseId}`;
         const response = await getAuthenticatedHttpClient().get(url);
-        console.log(response);
         dispatch(setCourseInRun(response.data.resume_course));
       } catch (error) {
         console.log(error);
@@ -113,76 +110,80 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
           "fixed-position"
         )}
       >
-        {/* sub Header - done */}
-        <div className="sub-header-container">
-          <Tabs
-            className="nav-underline-tabs d-flex sub-header-content"
-            aria-label={intl.formatMessage(messages.courseMaterial)}
-          >
-            {!tabs
-              ? SkeletonTabs
-              : tabs.map(({ url, title, slug }, index) => {
-                  if (url.endsWith("/home") || url.endsWith("/dates")) {
-                    const resumeUrl = courseInRun
-                      ? pathname.includes("/dates")
-                        ? courseInRun?.url
-                        : urlToPath(url)
-                      : resumeCourse?.url;
-                    const to = index === 0 ? resumeUrl : urlToPath(url);
-                    if (index !== 0) {
-                      return (
-                        // <NavLink
-                        //   key={slug}
-                        //   className={classNames(
-                        //     "nav-item flex-shrink-0 nav-link",
-                        //     {
-                        //       active: slug === activeTabSlug,
-                        //     }
-                        //   )}
-                        //   to={to}
-                        // >
-                        //   {title}
-                        // </NavLink>
-                        <a></a>
-                      );
-                    } else {
-                      return (
-                        <a
-                          key={slug}
-                          className={classNames(
-                            "nav-item flex-shrink-0 nav-link",
-                            {
-                              active: slug === activeTabSlug,
-                            }
-                          )}
-                          href={to}
-                          onClick={(e) => {
-                            if (to === "#") {
-                              e.preventDefault();
-                            }
-                          }}
-                        >
-                          {title}
-                        </a>
-                      );
-                    }
-                  }
 
-                  return (
-                    // <a
-                    //   key={slug}
-                    //   className={classNames("nav-item flex-shrink-0 nav-link", {
-                    //     active: slug === activeTabSlug,
-                    //   })}
-                    //   href={url}
-                    // >
-                    //   {title}
-                    // </a>
-                    <a></a>
-                  );
-                })}
-          </Tabs>
-        </div>
+        {window.innerWidth > 992 && (
+          <div className="sub-header-container">
+            <Tabs
+              className="nav-underline-tabs d-flex sub-header-content"
+              aria-label={intl.formatMessage(messages.courseMaterial)}
+            >
+              {!tabs
+                ? SkeletonTabs
+                : tabs.map(({ url, title, slug }, index) => {
+                    if (url.endsWith("/home") || url.endsWith("/dates")) {
+                      const resumeUrl = courseInRun
+                        ? pathname.includes("/dates")
+                          ? courseInRun?.url
+                          : urlToPath(url)
+                        : resumeCourse?.url;
+                      const to = index === 0 ? resumeUrl : urlToPath(url);
+                      if (index !== 0) {
+                        return (
+                          // <NavLink
+                          //   key={slug}
+                          //   className={classNames(
+                          //     "nav-item flex-shrink-0 nav-link",
+                          //     {
+                          //       active: slug === activeTabSlug,
+                          //     }
+                          //   )}
+                          //   to={to}
+                          // >
+                          //   {title}
+                          // </NavLink>
+                          <a></a>
+                        );
+                      } else {
+                        return (
+                          <a
+                            key={slug}
+                            className={classNames(
+                              "nav-item flex-shrink-0 nav-link",
+                              {
+                                active: slug === activeTabSlug,
+                              }
+                            )}
+                            href={to}
+                            onClick={(e) => {
+                              if (to === "#") {
+                                e.preventDefault();
+                              }
+                            }}
+                          >
+                            {title}
+                          </a>
+                        );
+                      }
+                    }
+
+                    return (
+                      // <a
+                      //   key={slug}
+                      //   className={classNames("nav-item flex-shrink-0 nav-link", {
+                      //     active: slug === activeTabSlug,
+                      //   })}
+                      //   href={url}
+                      // >
+                      //   {title}
+                      // </a>
+                      <a></a>
+                    );
+                  })}
+            </Tabs>
+          </div>
+        )}
+        {/* sub Header - done */}
+
       </div>
     </>
   );

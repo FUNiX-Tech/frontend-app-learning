@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
+
   createQueryItemToDB,
   updateQueryItemToDB,
   fetchSessions as fetchSessionsAPI,
@@ -9,6 +10,7 @@ import {
   saveChabotErrorToDB,
 } from "./AIChatbotAPI";
 import { sendMessageToChatbot } from "../../../connection/chatbot";
+
 import * as uid from "uuid";
 
 const LIMIT = 5;
@@ -21,9 +23,11 @@ export const fetchQueries = createAsyncThunk(
       const { session, query } = thunkAPI.getState().chatbot;
       const response = await fetchQueriesAPI(
         session.id,
+
         query.items.filter((item) => item.session_id === session.id).length,
         LIMIT
       );
+
 
       return response.data;
     } catch (error) {
@@ -35,6 +39,7 @@ export const fetchQueries = createAsyncThunk(
 
 export const askChatbot = createAsyncThunk(
   "chatbot/askChatbot",
+
   async (askInput, thunkAPI) => {
     try {
       const { session, courseId } = thunkAPI.getState().chatbot;
@@ -47,6 +52,7 @@ export const askChatbot = createAsyncThunk(
       });
 
       sendMessageToChatbot(askInput, session.id, courseId);
+
       return response.data;
     } catch (error) {
       console.error(error);
@@ -54,6 +60,7 @@ export const askChatbot = createAsyncThunk(
     }
   }
 );
+
 
 export const retryAskChatbot = createAsyncThunk(
   "chatbot/retryAskChatbot",
@@ -64,12 +71,14 @@ export const retryAskChatbot = createAsyncThunk(
       const queryItem = query.items.find((item) => item.id === queryId);
 
       sendMessageToChatbot(queryItem.query_msg, session.id, courseId);
+
     } catch (error) {
       console.error(error);
       return thunkAPI.rejectWithValue(_composeErrorMessage(error));
     }
   }
 );
+
 
 export const finishChatbotResponse = createAsyncThunk(
   "chatbot/finishChatbotResponse",
@@ -131,6 +140,7 @@ export const fetchSessions = createAsyncThunk(
     } catch (error) {
       console.error(error);
       return thunkAPI.rejectWithValue(_composeErrorMessage(error));
+
     }
   }
 );
@@ -175,7 +185,9 @@ const initialState = {
     input: "",
     history: [],
     current: -1,
+
     id: -1,
+
   },
 
   query: {
@@ -206,6 +218,7 @@ const initialState = {
     error: "",
   },
 
+
   connection: {
     status: "idle",
     error: "",
@@ -213,15 +226,18 @@ const initialState = {
   },
 
   courseId: null,
+
 };
 
 const chatbotSlice = createSlice({
   name: "chatbot",
   initialState,
   reducers: {
+
     reConnect: (state, action) => {
       state.connection.retry += 1;
     },
+
     setInputText: (state, action) => {
       state.ask.input = action.payload;
       state.ask.history = state.ask.history.map((item, index) => {
@@ -247,15 +263,20 @@ const chatbotSlice = createSlice({
       ];
     },
     startNewSession: (state, action) => {
+
+
       state.session.id = 0;
     },
     changeSession: (state, action) => {
       state.session.id = action.payload;
+
       // state.query.items = [];
+
       state.query.isLastPage = false;
     },
     setRetryAskChatbotStatus: (state, action) => {
       state.query.items = state.query.items.map((item) =>
+
         item.id === action.payload
           ? { ...item, status: "pending", response_msg: "" }
           : item
@@ -264,6 +285,7 @@ const chatbotSlice = createSlice({
     setChatbotCourseId: (state, action) => {
       state.courseId = action.payload || "NO_COURSE_ID";
     },
+
     showChatbotFeedbackModal: (state, action) => {
       state.feedback.isShowModal = true;
       state.feedback.queryId = action.payload;
@@ -286,6 +308,7 @@ const chatbotSlice = createSlice({
       state.ask.input = state.ask.history[newIndex];
       state.ask.current = newIndex;
     },
+
     writeChatbotResponse: (state, action) => {
       if (!action.payload) return;
 
@@ -316,6 +339,7 @@ const chatbotSlice = createSlice({
     connectionError: (state, action) => {
       state.connection.error = action.payload;
     },
+
   },
   extraReducers: (builder) => {
     builder
@@ -332,7 +356,9 @@ const chatbotSlice = createSlice({
             vote: undefined,
             status: "pending",
             hash: action.meta.requestId,
+
             session_id: state.session.id,
+
           },
         ];
 
@@ -347,18 +373,23 @@ const chatbotSlice = createSlice({
         state.ask.input = "";
       })
       .addCase(askChatbot.fulfilled, (state, action) => {
+
+
         state.query.items = state.query.items.map((item) =>
           item.hash === action.meta.requestId
             ? {
                 ...item,
+
                 id: action.payload.id,
                 created: action.payload.created,
                 session_id: action.payload.session_id,
+
               }
             : item
         );
 
         if (!state.query.initiated) state.query.initiated = true;
+
 
         if (state.session.id === 0) {
           state.session.id = action.payload.session_id;
@@ -372,16 +403,19 @@ const chatbotSlice = createSlice({
         }
 
         state.ask.id = action.payload.id;
+
       })
       .addCase(askChatbot.rejected, (state, action) => {
         state.ask.status = "failed";
         state.ask.error = action.payload;
         state.query.items = state.query.items.map((item) =>
           item.hash === action.meta.requestId
+
             ? { ...item, status: "failed", response_msg: "" }
             : item
         );
         state.ask.id = -1;
+
       })
       // fetch sessions
       .addCase(fetchSessions.pending, (state, action) => {
@@ -389,6 +423,8 @@ const chatbotSlice = createSlice({
         state.session.error = "";
       })
       .addCase(fetchSessions.fulfilled, (state, action) => {
+
+
         state.session.status = "succeeded";
         state.session.items = [
           ...state.session.items,
@@ -410,6 +446,7 @@ const chatbotSlice = createSlice({
       .addCase(fetchQueries.fulfilled, (state, action) => {
         state.query.status = "succeeded";
         action.payload.query_list.reverse();
+
         // state.query.items = [
         //   ...action.payload.query_list.map((item) =>
         //     item.status === "idle" ? { ...item, status: "failed" } : item
@@ -423,6 +460,7 @@ const chatbotSlice = createSlice({
           ),
           ...state.query.items,
         ]);
+
 
         if (action.payload.remain_page === 0) {
           state.query.isLastPage = true;
@@ -444,6 +482,7 @@ const chatbotSlice = createSlice({
       .addCase(retryAskChatbot.pending, (state, action) => {
         state.ask.status = "pending";
         state.ask.error = "";
+
         state.query.items = state.query.items.map((item) =>
           item.id === action.meta.arg
             ? { ...item, status: "pending", response_msg: "" }
@@ -463,6 +502,7 @@ const chatbotSlice = createSlice({
       //   );
       //   state.ask.error = action.payload.error;
       // })
+
       .addCase(retryAskChatbot.rejected, (state, action) => {
         //
       })
@@ -502,6 +542,7 @@ const chatbotSlice = createSlice({
       .addCase(giveFeedbackChatbot.rejected, (state, action) => {
         state.feedback.status = "failed";
         state.feedback.error = action.payload;
+
       })
       // finish
       .addCase(finishChatbotResponse.fulfilled, (state, action) => {
@@ -550,6 +591,7 @@ const chatbotSlice = createSlice({
         );
 
         state.ask.id = -1;
+
       });
   },
 });
@@ -564,12 +606,14 @@ export const {
   showChatbotFeedbackModal,
   hideChatbotFeedbackModal,
   setChatbotInputHistory,
+
   writeChatbotResponse,
   connectionClose,
   connectionOpen,
   reConnect,
   setChatbotCourseId,
   connectionError,
+
 } = chatbotSlice.actions;
 export default chatbotSlice.reducer;
 
@@ -588,6 +632,7 @@ function _composeErrorMessage(error) {
   return `${statusCode} - ${errorMsg}`;
 }
 
+
 function _removeDuplicatedQueries(queries) {
   const result = [];
 
@@ -599,3 +644,4 @@ function _removeDuplicatedQueries(queries) {
 
   return result;
 }
+
