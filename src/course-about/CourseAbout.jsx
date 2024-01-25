@@ -27,6 +27,7 @@ const CourseAbout = (props) => {
 
   //responsive
   const isDesktop = useMediaQuery({ minWidth: 1134 });
+  const isMobile = useMediaQuery({ minWidth: 744 });
 
   useEffect(async () => {
     try {
@@ -105,14 +106,14 @@ const CourseAbout = (props) => {
             className="logo logo_img"
             width="100%"
           >
-            {" "}
+       
             <img
               className="d-block"
               src={getConfig().LOGO_URL}
               alt="logo"
               width="60px"
               height="25px"
-            />{" "}
+            />
           </a>
 
           <div>
@@ -128,7 +129,7 @@ const CourseAbout = (props) => {
       <div className="container-about">
         <div className="" style={{ background: "#EEF7FF" }}>
           {!isDesktop ? (
-            <div className="" style={{ padding: "56px" }}>
+            <div className="" style={{ padding: `${!isMobile ? '32px' : "56px"}` }}>
               <div className="">
                 <img
                   style={{
@@ -143,7 +144,8 @@ const CourseAbout = (props) => {
                 />
               </div>
               <div>
-                <h1>{data.display_name}</h1>
+                {!isMobile ? <h2>{data.display_name}</h2> : <h1>{data.display_name}</h1> }
+                
                 <span
                   dangerouslySetInnerHTML={{ __html: data?.overview }}
                 ></span>
@@ -153,6 +155,7 @@ const CourseAbout = (props) => {
                   lab={data.lab}
                   quiz={data.quiz}
                   project={data.project}
+                  handlerLogin={handlerLogin}
                 />
               </div>
             </div>
@@ -208,6 +211,7 @@ const CourseAbout = (props) => {
                   lab={data.lab}
                   quiz={data.quiz}
                   project={data.project}
+                  handlerLogin={handlerLogin}
                 />
               </div>
             </div>
@@ -219,7 +223,9 @@ const CourseAbout = (props) => {
               className="about-section section-target d-flex flex-column "
               style={{ gap: "10px" }}
             >
-              <InfoAbout />
+              <InfoAbout loadin={loading}  lab={data.lab}
+                  quiz={data.quiz}
+                  project={data.project} />
             </div>
           )}
 

@@ -197,6 +197,9 @@
     border: 1px solid #D7D7D7;
     width: 227px;
     height: 325px;
+    @media only screen and (max-width: 1440px) {
+        width: 188px !important; 
+    }     
 
     .teach-name{
         padding-top: 10px;
@@ -226,6 +229,10 @@
 .swiper-slide{
     margin-right: 20px !important;
     width: 227px;
+    @media only screen and (max-width: 1440px) {
+        width: 188px !important; 
+    }     
+
 }
 
 .swiper-btn{
@@ -258,6 +265,11 @@
     border : 1px solid #D7D7D7 !important;
     border-radius: 4;
     height:120px;
+    h3{
+        font-size: 20px;
+        line-height: 30px;
+        font-weight: 500;
+    }
 }
 
 .teacher-tag{
@@ -268,8 +280,14 @@
         color : #007AE6;
         font-size: 16px;
         line-height: 24px;
-        font-family: 500;
+        font-weight: 500;
+        @media only screen and (max-width: 400px) {
+            font-size: 11px !important;
+        }  
+       
     }
+
+    
 }
 
 .bg-loading-img{

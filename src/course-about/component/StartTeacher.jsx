@@ -9,6 +9,7 @@ import '../courseAbout.scss'
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import { useMediaQuery } from "react-responsive";
 
 const StartTeacher = ({ teachers }) => {
   
@@ -17,6 +18,9 @@ const StartTeacher = ({ teachers }) => {
     prevEl: '.swiper-button-prev',
   };
 
+  const isMobile = useMediaQuery({ minWidth: 744 });
+
+
   return (
     <>
       <CollapsibleCustom title="Đội ngũ Star Teachers và Domain Experts của khoá học">
@@ -24,7 +28,7 @@ const StartTeacher = ({ teachers }) => {
 
       <Swiper
           slidesPerView={3}
-          spaceBetween={30}
+          spaceBetween={teachers?.length}
           pagination={{
             clickable: true,
             type: 'fraction',
@@ -51,13 +55,15 @@ const StartTeacher = ({ teachers }) => {
               )
             }
           })}
-           <div className="swiper-btn swiper-button-next">
+            {isMobile && <>
+              <div className="swiper-btn swiper-button-next">
             <img src={arrowRightIcon} alt='arrowtighticon'  width='20px' height='20px'/>
            </div>
            <div className="swiper-btn swiper-button-prev">
            <img src={arrowLeftIcon} alt='arrowLeftIcon'  width='20px' height='20px'/>
 
            </div>
+            </>}
         </Swiper>
 
      </div>
