@@ -6,6 +6,7 @@ import { getConfig, history } from "@edx/frontend-platform";
 import { getAuthenticatedUser } from "@edx/frontend-platform/auth";
 import "./courseAbout.scss";
 import { Collapsible, Skeleton } from "@edx/paragon";
+import { Helmet } from 'react-helmet';
 import CourseTree from "./component/CourseTree";
 import CourseCardAbout, { InfoAbout } from "./component/CourseCardAbout";
 import TargetCourse from "./component/TargetCourse";
@@ -95,6 +96,9 @@ const CourseAbout = (props) => {
 
   return (
     <div>
+          <Helmet>
+          <title>{data.display_name}</title>
+        </Helmet>
       {auth ? (
         <HeaderLearning about />
       ) : (
