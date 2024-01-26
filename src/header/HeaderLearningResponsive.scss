@@ -1,67 +1,227 @@
-//1200px -> 1364px
-@media (max-width: 85.1875rem) and (min-width: 75rem) {
+// <=1400
+@media (max-width: 87.5rem) {
   .header2-container {
     .course-title-lockup {
-      width: 41.5rem !important;
+      width: 49.75rem !important;
     }
   }
 }
 
-//992 px -> 1199px
-@media (min-width: 62rem) and (max-width: 74.9375rem) {
+// <=1200
+@media (max-width: 75rem) {
   .header2-container {
     .course-title-lockup {
-      width: 35.25rem !important;
-    }
-  }
-}
-//991px -> 768 px
-@media (min-width: 48rem) and (max-width: 61.9375rem) {
-  .header2-container {
-    .course-title-lockup {
-      width: calc(100% - 4rem) !important;
-      padding-left: 1.65rem !important;
-      padding-right: 0 !important;
+      width: 49.75rem !important;
     }
   }
 }
 
-@media (max-width: 47.9375rem) and (min-width: 36rem) {
+// <=1148
+@media (max-width: 71.75rem) {
   .header2-container {
     .course-title-lockup {
-      width: calc(100% - 8rem) !important;
-      padding-left: 1.65rem !important;
-      padding-right: 0rem !important;
-    }
-    .actions {
-      position: relative;
-      left: -1.75rem;
+      width: 41.25rem !important;
     }
   }
 }
-@media (max-width: 47.9375rem) and (min-width: 36rem) {
-  .header2-container {
-    .course-title-lockup {
-      width: calc(100% - 8rem) !important;
-      padding-left: 1.65rem !important;
-      padding-right: 0rem !important;
-    }
-    .actions {
+
+//<=992
+@media (max-width: 62rem) {
+  .learning-header .course-title-lockup.header-dashboard {
+    display: none !important;
+  }
+
+  .hide-tablet,
+  .learning-header .header2-container .actions .action-button span {
+    display: none !important;
+  }
+
+  .user-dropdown {
+    svg.open-mobile-icon {
       position: relative;
-      left: -1.75rem;
+      left: 1.5rem;
+    }
+  }
+  .course-tabs-container {
+    border-top: 0;
+    &.is-open {
+      .collapsible-trigger {
+        background-color: #f0f0f0;
+      }
+      .pgn__transition-replace-enter-done:hover {
+        background-color: #f0f0f0;
+        a {
+          background-color: #f0f0f0;
+        }
+      }
+    }
+    .collapsible-trigger {
+      padding: 1rem;
+
+      &:hover {
+        background-color: #f0f0f0;
+      }
+    }
+    .collapsible-body {
+      padding-left: 0 !important;
+      padding-top: 0.5rem !important;
+    }
+    .collapsible-icon {
+      position: relative;
+      right: 1rem;
+      svg {
+        width: 1.5rem;
+        height: 1.5rem;
+      }
+      path {
+        fill: var(--color-text-default);
+      }
+    }
+    .course-navs-title {
+      display: flex;
+      align-items: center;
+      font-family: "Roboto", sans-serif;
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 150%;
+      color: #576f8a;
+
+      svg {
+        margin-right: 0.5rem;
+      }
+    }
+    .course-tabs {
+      display: flex;
+      &:hover {
+        background-color: var(--color-white);
+      }
+      a {
+        padding-left: 3.25rem;
+        color: #576f8a;
+        font-feature-settings: "clig" off, "liga" off;
+        font-family: Roboto;
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 150%;
+        width: 100%;
+      }
+    }
+  }
+  .toggle-mobile-icon-1,
+  .toggle-mobile-icon-2 {
+    background-color: var(--color-white) !important;
+    &:active {
+      background-color: var(--color-white) !important;
+    }
+    p {
+      margin-bottom: 0;
+    }
+  }
+  .toggle-mobile-icon-2 {
+    width: 100%;
+    justify-content: flex-end;
+    right: 2rem;
+    top: 1.25rem;
+    position: relative;
+
+    & p {
+      width: 2rem;
+      height: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.25rem;
+      border: 1px solid #576f8a;
+      &:hover {
+        background-color: var(--color-active);
+        path {
+          fill: var(--color-white);
+        }
+      }
+      &:active {
+        background-color: var(--color-hover);
+        path {
+          fill: var(--color-white);
+        }
+      }
+    }
+  }
+
+  .dropdown-menu-right {
+    position: fixed !important;
+    z-index: 1000000;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100vw;
+    height: 100vh;
+
+    &.show {
+      transform: translate3d(0, 0, 0) !important;
+    }
+    overflow-x: hidden;
+  }
+  .menu-user {
+    padding-top: 1rem !important;
+    margin-top: 2rem;
+    border-top: 1px solid var(--color-stroke);
+  }
+  .user-account {
+    font-size: 1rem !important;
+    svg,
+    path {
+      width: 1.5rem !important;
+      height: 1.5rem !important;
     }
   }
 }
-@media (max-width: 35.9375rem) {
-  .header2-container {
-    .course-title-lockup {
-      width: calc(100% - 8rem) !important;
-      padding-left: 1.65rem !important;
-      padding-right: 0rem !important;
-    }
-    .actions {
-      position: relative;
-      left: -1.75rem;
-    }
-  }
-}
+
+//991px -> 768 px @media (min-width: 48rem) and (max-width: 61.9375rem) {
+// .header2-container {
+//   .course-title-lockup {
+//     width: calc(100% - 4rem) !important;
+//     padding-left: 1.65rem !important;
+//     padding-right: 0 !important;
+//   }
+// }
+
+// @media (max-width: 47.9375rem) and (min-width: 36rem) {
+//   .header2-container {
+//     .course-title-lockup {
+//       width: calc(100% - 8rem) !important;
+//       padding-left: 1.65rem !important;
+//       padding-right: 0rem !important;
+//     }
+//     .actions {
+//       position: relative;
+//       left: -1.75rem;
+//     }
+//   }
+// }
+// @media (max-width: 47.9375rem) and (min-width: 36rem) {
+//   .header2-container {
+//     .course-title-lockup {
+//       width: calc(100% - 8rem) !important;
+//       padding-left: 1.65rem !important;
+//       padding-right: 0rem !important;
+//     }
+//     .actions {
+//       position: relative;
+//       left: -1.75rem;
+//     }
+//   }
+// }
+// @media (max-width: 35.9375rem) {
+//   .header2-container {
+//     .course-title-lockup {
+//       width: calc(100% - 8rem) !important;
+//       padding-left: 1.65rem !important;
+//       padding-right: 0rem !important;
+//     }
+//     .actions {
+//       position: relative;
+//       left: -1.75rem;
+//     }
+//   }
+// }

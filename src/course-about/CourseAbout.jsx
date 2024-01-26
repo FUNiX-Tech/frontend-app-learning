@@ -68,7 +68,7 @@ const CourseAbout = (props) => {
     left: isFixed ? 0 : "auto",
     width: isFixed && "100%",
     padding: isFixed && "16px 8px 16px 80px",
-    color : '#2C3744'
+    color: "#2C3744",
   };
 
   const handlerLogin = () => {
@@ -94,13 +94,15 @@ const CourseAbout = (props) => {
         <title>{data.display_name}</title>
       </Helmet>
       {auth ? (
-
-        <HeaderLearning  />
+        <HeaderLearning />
       ) : (
         <div
           className="d-flex justify-content-between align-items-center"
-          style={{ padding: "10px 16px" , borderBottom : '1px solid #D7D7D7', height:'64px'}}
-
+          style={{
+            padding: "10px 16px",
+            borderBottom: "1px solid #D7D7D7",
+            height: "64px",
+          }}
         >
           <a
             href={`${getConfig().LMS_BASE_URL}/courses`}
@@ -111,20 +113,13 @@ const CourseAbout = (props) => {
               className="d-block"
               src={getConfig().LOGO_URL}
               alt="logo"
-
               width="77px"
               height="32px"
-
             />
           </a>
 
           <div>
-
-            <button
-              onClick={handlerLogin}
-              className="btn btn-login"
-            >
-
+            <button onClick={handlerLogin} className="btn btn-login">
               <span>Đăng nhập</span>
             </button>
           </div>
@@ -152,9 +147,9 @@ const CourseAbout = (props) => {
               </div>
               <div style={{ paddingTop: "14px" }}>
                 {!isMobile ? (
-                  <h2 style={{color : '#2C3744'}}>{data.display_name}</h2>
+                  <h2 style={{ color: "#2C3744" }}>{data.display_name}</h2>
                 ) : (
-                  <h1 style={{color : '#2C3744'}}>{data.display_name}</h1>
+                  <h1 style={{ color: "#2C3744" }}>{data.display_name}</h1>
                 )}
 
                 <span
@@ -190,7 +185,11 @@ const CourseAbout = (props) => {
                         {data.display_name}
                       </h1>
                       <span
-                        style={{ fontSize: "16px", lineHeight: "24px", color: '#2C3744 ' }}
+                        style={{
+                          fontSize: "16px",
+                          lineHeight: "24px",
+                          color: "#2C3744 ",
+                        }}
                         dangerouslySetInnerHTML={{ __html: data?.overview }}
                       ></span>
                     </>

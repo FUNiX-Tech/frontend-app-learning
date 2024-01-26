@@ -18,7 +18,10 @@
             color:  #2C3744 ;
     
         }
-        @media only screen and (max-width: 1600px) {
+        h2{
+            color:  #2C3744 ;
+        }
+        @media only screen and (max-width: 1440px) {
             width: 613px; 
             left:10.5%;
             
@@ -71,8 +74,10 @@
             box-shadow: 0px 0px 2px 0px #00000033 !important;
             border-radius: 4px !important;
         }
-   
-
+        @media only screen and (max-width: 1440px) {
+            width: 303px; 
+            min-height: 450px;
+        }     
         @media only screen and (max-width: 1600px) {
             // right:5.5%;
             right:10.5%;
@@ -99,8 +104,6 @@
           
             right:7.5%;
         } 
-      
-
 
     }
 
@@ -401,14 +404,12 @@
         line-height: 24px;
         letter-spacing: 0px;
         text-align: left;
-
     }
     &:hover {
         color : #fff;
         background-color: #025dae;
 
     }
-
 }
 
 

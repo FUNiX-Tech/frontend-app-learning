@@ -17,13 +17,38 @@ export const fetchSessions = async (skip = 0, limit = 5) => {
   return data;
 };
 
-export const askChatbot = async (query_msg, session_id = undefined, hash) => {
+
+export const createQueryItemToDB = async ({
+  query_msg,
+  session_id = undefined,
+  status,
+  hash,
+}) => {
+
   const url = `${baseUrl()}query/request/`;
   const { data } = await getAuthenticatedHttpClient().post(url, {
     query_msg,
     session_id,
+    status,
     hash,
   });
+  return data;
+};
+
+export const updateQueryItemToDB = async ({
+  status,
+  response_msg,
+  id,
+  error,
+}) => {
+  const url = `${baseUrl()}query/request/`;
+  const { data } = await getAuthenticatedHttpClient().put(url, {
+    status,
+    response_msg,
+    error,
+    id,
+  });
+  console.log("UPATE QUERY ITEM::::", response_msg);
   return data;
 };
 
@@ -55,4 +80,12 @@ export const retryAskChatbot = async (query_id) => {
 
 export const cancelQuery = () => {
   //
+};
+
+export const saveChabotErrorToDB = async (error_msg) => {
+  const url = `${baseUrl()}error/`;
+  const { data } = await getAuthenticatedHttpClient().post(url, {
+    error_msg,
+  });
+  return data;
 };

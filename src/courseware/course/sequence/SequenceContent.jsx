@@ -130,6 +130,25 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
     });
   }, [loadedUnits]);
 
+
+  /**
+   * post message to selected iframe when it has been loaded
+   * to resize it's height
+   */
+  useEffect(() => {
+    if (loadedUnits.includes(unitId)) {
+      const ifr = document.querySelector(
+        `iframe[data-unit-usage-id="${unitId}"]`
+      );
+      if (!ifr) {
+        return;
+      }
+
+      ifr.contentWindow.postMessage({ type: "unit.resize" }, "*");
+    }
+  }, [loadedUnits.includes(unitId), unitId]);
+
+
   return (
     <div className="unit">
       <div className="position-relative">
@@ -194,9 +213,11 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
                     style={{
                       display: isSelectedUnit && hasLoaded ? "block" : "none",
                     }}
-                    height={
-                      iframeHeightValues.find((h) => h.id === e.id)?.height
-                    }
+
+                    // height={
+                    //   iframeHeightValues.find((h) => h.id === e.id)?.height
+                    // }
+
                   />
                 </div>
               );

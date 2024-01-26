@@ -4,7 +4,7 @@ import CourseDashboardItem from "./CourseDashboardItem";
 const CourseList = ({ courses }) => {
   return (
     <div
-      className="d-flex flex-row flex-wrap flex-lg-column w-100"
+      className="d-flex flex-row flex-wrap flex-lg-column course_list_container_02"
       style={{ gap: "10px" }}
     >
       {courses.map((courseData) => (
