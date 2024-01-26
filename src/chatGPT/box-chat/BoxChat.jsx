@@ -9,7 +9,7 @@ const BoxChat = ()=>{
     const handleSubmit = (e) => {
       e.preventDefault();
       
-      console.log('Message submitted:', message);
+
     };
   
     const handleTextareaChange = (e) => {

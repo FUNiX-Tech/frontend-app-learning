@@ -10,8 +10,10 @@ export default function Footer() {
           <img src={logo} alt="footer-logo" />
         </div>
         <p className="footer-bottom">
-          ©2023. Đã đăng ký Bản quyền. FUNiX - Thành viên của Công ty Cổ phần
-          Galaxy Education
+          ©2023. Đã đăng ký Bản quyền.
+          <br /> 
+          FUNiX - Thành viên của Công ty Cổ phần
+          Galaxy Education.
         </p>
       </div>
     </footer>

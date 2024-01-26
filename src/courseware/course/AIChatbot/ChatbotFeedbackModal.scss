@@ -1,0 +1,33 @@
+#chatbot-feedback-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #00000075;
+  z-index: 99999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  #chatbot-feedback-modal-inner {
+    background: white;
+    width: 800px;
+    max-width: calc(100vw - 32px);
+    border-radius: 4px;
+    padding: 1rem 1rem;
+    position: relative;
+
+    #chatbot-feedback-modal-header {
+      display: flex;
+      justify-content: flex-end;
+      padding-bottom: 0.5rem;
+
+      button {
+        svg {
+          width: 1rem;
+        }
+      }
+    }
+  }
+}
