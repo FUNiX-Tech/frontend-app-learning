@@ -6,7 +6,7 @@ import { getConfig, history } from "@edx/frontend-platform";
 import { getAuthenticatedUser } from "@edx/frontend-platform/auth";
 import "./courseAbout.scss";
 import { Collapsible, Skeleton } from "@edx/paragon";
-import { Helmet } from 'react-helmet';
+import { Helmet } from "react-helmet";
 import CourseTree from "./component/CourseTree";
 import CourseCardAbout, { InfoAbout } from "./component/CourseCardAbout";
 import TargetCourse from "./component/TargetCourse";
@@ -68,6 +68,7 @@ const CourseAbout = (props) => {
     left: isFixed ? 0 : "auto",
     width: isFixed && "100%",
     padding: isFixed && "16px 8px 16px 80px",
+    color : '#2C3744'
   };
 
   const handlerLogin = () => {
@@ -84,48 +85,46 @@ const CourseAbout = (props) => {
   console.log(loading);
 
   const customWrapper = ({ children }) => {
-    return (
-      <div
-      className="bg-loading-img"
-
-      >
-        {children}
-      </div>
-    )
-  }
+    return <div className="bg-loading-img">{children}</div>;
+  };
 
   return (
     <div>
-          <Helmet>
-          <title>{data.display_name}</title>
-        </Helmet>
+      <Helmet>
+        <title>{data.display_name}</title>
+      </Helmet>
       {auth ? (
-        <HeaderLearning isDashoard about />
+
+        <HeaderLearning  />
       ) : (
         <div
           className="d-flex justify-content-between align-items-center"
-          style={{ padding: "10px 16px" , borderBottom : '1px solid #D7D7D7'}}
+          style={{ padding: "10px 16px" , borderBottom : '1px solid #D7D7D7', height:'64px'}}
+
         >
           <a
             href={`${getConfig().LMS_BASE_URL}/courses`}
             className="logo logo_img"
             width="100%"
           >
-       
             <img
               className="d-block"
               src={getConfig().LOGO_URL}
               alt="logo"
-              width="88px"
-              height="36px"
+
+              width="77px"
+              height="32px"
+
             />
           </a>
 
           <div>
+
             <button
               onClick={handlerLogin}
               className="btn btn-login"
             >
+
               <span>Đăng nhập</span>
             </button>
           </div>
@@ -134,7 +133,10 @@ const CourseAbout = (props) => {
       <div className="container-about">
         <div className="" style={{ background: "#EEF7FF" }}>
           {!isDesktop ? (
-            <div className="" style={{ padding: `${!isMobile ? '32px' : "56px"}` }}>
+            <div
+              className=""
+              style={{ padding: `${!isMobile ? "32px" : "56px"}` }}
+            >
               <div className="">
                 <img
                   style={{
@@ -148,11 +150,15 @@ const CourseAbout = (props) => {
                   width="100%"
                 />
               </div>
-              <div style={{paddingTop:'14px'}}>
-                {!isMobile ? <h2>{data.display_name}</h2> : <h1>{data.display_name}</h1> }
-                
+              <div style={{ paddingTop: "14px" }}>
+                {!isMobile ? (
+                  <h2 style={{color : '#2C3744'}}>{data.display_name}</h2>
+                ) : (
+                  <h1 style={{color : '#2C3744'}}>{data.display_name}</h1>
+                )}
+
                 <span
-                  style={{fontSize:'16px',  lineHeight:'24px'}}
+                  style={{ fontSize: "16px", lineHeight: "24px" }}
                   dangerouslySetInnerHTML={{ __html: data?.overview }}
                 ></span>
               </div>
@@ -184,7 +190,7 @@ const CourseAbout = (props) => {
                         {data.display_name}
                       </h1>
                       <span
-                        style={{fontSize:'16px', lineHeight:'24px'}}
+                        style={{ fontSize: "16px", lineHeight: "24px", color: '#2C3744 ' }}
                         dangerouslySetInnerHTML={{ __html: data?.overview }}
                       ></span>
                     </>
@@ -195,10 +201,7 @@ const CourseAbout = (props) => {
               <div className="about-card">
                 <div>
                   {loading ? (
-                    <Skeleton
-                    wrapper={customWrapper} 
-                      
-                    />
+                    <Skeleton wrapper={customWrapper} />
                   ) : (
                     <img
                       style={{
@@ -224,15 +227,18 @@ const CourseAbout = (props) => {
             </div>
           )}
         </div>
-        <div className="pt-5">
+        <div className="py-5">
           {!isDesktop && (
             <div
               className="about-section section-target d-flex flex-column "
               style={{ gap: "10px" }}
             >
-              <InfoAbout loadin={loading}  lab={data.lab}
-                  quiz={data.quiz}
-                  project={data.project} />
+              <InfoAbout
+                loadin={loading}
+                lab={data.lab}
+                quiz={data.quiz}
+                project={data.project}
+              />
             </div>
           )}
 
@@ -279,7 +285,7 @@ const CourseAbout = (props) => {
           </div>
         </div>
       </div>
-     <Footer />
+      <Footer />
     </div>
   );
 };

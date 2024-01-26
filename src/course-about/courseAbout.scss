@@ -1,11 +1,13 @@
+
 .container-about{
     position: relative;
-
+    color:  #2C3744 !important ;
     .about-section{
         position: relative;
         left:5.5%;
         height: 100%;
         width: 729px;
+        color:  #2C3744  !important;
         h1 {
         
             font-size: 32px !important;
@@ -13,6 +15,7 @@
             line-height: 48px !important;
             letter-spacing: 0px !important;
             text-align: left !important;
+            color:  #2C3744 ;
     
         }
         @media only screen and (max-width: 1440px) {
@@ -36,12 +39,15 @@
         box-shadow: 0px 2px 10px 0px #0000001A;
         box-shadow: 0px 0px 2px 0px #00000033;
         background-color: #ffff !important;
+        z-index: 99;
+        color: #2C3744 !important;
         .about-card-body{
             padding:24px;
         }
 
 
     }
+
 
     .about-card-title{
         font-size: 16px;
@@ -138,11 +144,13 @@
         border : 1px solid #D7D7D7;
         border-radius: 4px;
         padding:24px;
-    
+        color: #2C3744;
         .title-target{
             font-weight: 500;
             font-size: 24px;
             line-height: 36px;
+            color: #2C3744 !important;
+
         }
         
         .target-course-about{
@@ -281,6 +289,8 @@
             font-size: 20px;
             line-height: 30px;
             font-weight: 500;
+            color: #2C3744;
+
         }
     }
     
@@ -318,26 +328,31 @@
         border-bottom-right-radius: 4px;
     }
     
-    .btn-login{
+    
+}
+
+
+.btn-login{
         
-        background-color: #007AE6;
-        padding:10px 20px 10px 20px ;
-        color: #fff;
-        span{
-            font-size: 16px;
-            font-weight: 500;
-            line-height: 24px;
-            letter-spacing: 0px;
-            text-align: left;
-    
-        }
-        &:hover {
-            color : #fff;
-            background-color: #025dae;
-    
-        }
-    
+    background-color: #007ae6;
+    padding:0 1.25rem;
+    height:2.375rem;
+    border-radius: 4px;
+    color: #fff;
+    span{
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 24px;
+        letter-spacing: 0px;
+        text-align: left;
+
     }
+    &:hover {
+        color : #fff;
+        background-color: #025dae;
+
+    }
+
 }
 
 
