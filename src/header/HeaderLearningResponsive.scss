@@ -63,6 +63,7 @@
     }
     .collapsible-body {
       padding-left: 0 !important;
+      padding-top: 0.5rem !important;
     }
     .collapsible-icon {
       position: relative;
@@ -154,7 +155,10 @@
     right: 0 !important;
     width: 100vw;
     height: 100vh;
-    transform: translate3d(0, 0, 0) !important;
+
+    &.show {
+      transform: translate3d(0, 0, 0) !important;
+    }
     overflow-x: hidden;
   }
   .menu-user {

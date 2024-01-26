@@ -110,6 +110,7 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
           "fixed-position"
         )}
       >
+<<<<<<< HEAD
 
         {window.innerWidth > 992 && (
           <div className="sub-header-container">
@@ -164,24 +165,78 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
                           </a>
                         );
                       }
+=======
+        <div className="sub-header-container d-none d-lg-block">
+          <Tabs
+            className="nav-underline-tabs d-flex sub-header-content"
+            aria-label={intl.formatMessage(messages.courseMaterial)}
+          >
+            {!tabs
+              ? SkeletonTabs
+              : tabs.map(({ url, title, slug }, index) => {
+                  if (url.endsWith("/home") || url.endsWith("/dates")) {
+                    const resumeUrl = courseInRun
+                      ? pathname.includes("/dates")
+                        ? courseInRun?.url
+                        : urlToPath(url)
+                      : resumeCourse?.url;
+                    const to = index === 0 ? resumeUrl : urlToPath(url);
+                    if (index !== 0) {
+                      return (
+                        // <NavLink
+                        //   key={slug}
+                        //   className={classNames(
+                        //     "nav-item flex-shrink-0 nav-link",
+                        //     {
+                        //       active: slug === activeTabSlug,
+                        //     }
+                        //   )}
+                        //   to={to}
+                        // >
+                        //   {title}
+                        // </NavLink>
+                        <a></a>
+                      );
+                    } else {
+                      return (
+                        <a
+                          key={slug}
+                          className={classNames(
+                            "nav-item flex-shrink-0 nav-link",
+                            {
+                              active: slug === activeTabSlug,
+                            }
+                          )}
+                          href={to}
+                          onClick={(e) => {
+                            if (to === "#") {
+                              e.preventDefault();
+                            }
+                          }}
+                        >
+                          {title}
+                        </a>
+                      );
+>>>>>>> dev
                     }
+                  }
 
-                    return (
-                      // <a
-                      //   key={slug}
-                      //   className={classNames("nav-item flex-shrink-0 nav-link", {
-                      //     active: slug === activeTabSlug,
-                      //   })}
-                      //   href={url}
-                      // >
-                      //   {title}
-                      // </a>
-                      <a></a>
-                    );
-                  })}
-            </Tabs>
-          </div>
-        )}
+                  return (
+                    // <a
+                    //   key={slug}
+                    //   className={classNames("nav-item flex-shrink-0 nav-link", {
+                    //     active: slug === activeTabSlug,
+                    //   })}
+                    //   href={url}
+                    // >
+                    //   {title}
+                    // </a>
+                    <a></a>
+                  );
+                })}
+          </Tabs>
+        </div>
+
         {/* sub Header - done */}
 
       </div>

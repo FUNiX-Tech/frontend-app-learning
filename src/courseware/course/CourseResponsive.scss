@@ -258,7 +258,11 @@
       }
     }
     .menu-lesson {
+<<<<<<< HEAD
       transform: translateX(-3.25rem);
+=======
+      transform: translateX(-1rem);
+>>>>>>> dev
       border-bottom: 0;
       &.show-leftbar {
         transform: translateX(0);
