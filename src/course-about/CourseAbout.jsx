@@ -23,6 +23,9 @@ const CourseAbout = (props) => {
   const [data, setData] = useState([]);
   const [auth, setAuth] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [ windowWidth, setWindowWidth ] = useState(window.innerWidth);
+  const elemteConatainerRef = useRef(null);
+  const [leftCard, setLeftCard] = useState(0)
 
   const elementTitleRef = useRef(null);
   const [isFixed, setIsFixed] = useState(false);
@@ -82,7 +85,29 @@ const CourseAbout = (props) => {
     }
   }, []);
 
-  console.log(loading);
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+    if (elementTitleRef && elemteConatainerRef) {
+      const elementHeight = elementTitleRef.current ? elementTitleRef.current.clientWidth : 0;
+      const conatainerWidth = elemteConatainerRef.current ? elemteConatainerRef.current.clientWidth : 0;
+      // console.log('=======', windowWidth, conatainerWidth, elementHeight);
+      // console.log('===ket qua====', (windowWidth - conatainerWidth) / 2 + elementHeight + 100 + 48);
+      setLeftCard((windowWidth - conatainerWidth) / 2 + elementHeight + 100 + 48);
+    }
+   
+
+    
+   
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [windowWidth ]);
+
+ 
 
   const customWrapper = ({ children }) => {
     return <div className="bg-loading-img">{children}</div>;
@@ -130,7 +155,7 @@ const CourseAbout = (props) => {
           </div>
         </div>
       )}
-      <div className="container-about">
+      <div className="container-about" >
         <div className="" style={{ background: "#EEF7FF" }}>
           {!isDesktop ? (
             <div
@@ -162,18 +187,19 @@ const CourseAbout = (props) => {
                   dangerouslySetInnerHTML={{ __html: data?.overview }}
                 ></span>
               </div>
-              <div>
+              <div >
                 <CourseCardAbout
                   lab={data.lab}
                   quiz={data.quiz}
                   project={data.project}
                   handlerLogin={handlerLogin}
+                  
                 />
               </div>
             </div>
           ) : (
-            <div className="">
-              <div className="">
+            <div className=" container"  ref={elemteConatainerRef} >
+            
                 <div
                   className="about-section"
                   style={{ padding: "56px 0px" }}
@@ -196,9 +222,9 @@ const CourseAbout = (props) => {
                     </>
                   )}
                 </div>
-              </div>
+              
 
-              <div className="about-card">
+              <div className="about-card" style={{left:leftCard}}>
                 <div>
                   {loading ? (
                     <Skeleton wrapper={customWrapper} />
@@ -227,7 +253,7 @@ const CourseAbout = (props) => {
             </div>
           )}
         </div>
-        <div className="py-5">
+        <div className="py-5 container">
           {!isDesktop && (
             <div
               className="about-section section-target d-flex flex-column "
