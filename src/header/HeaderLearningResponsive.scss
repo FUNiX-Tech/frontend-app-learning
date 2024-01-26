@@ -43,6 +43,7 @@
     }
   }
   .course-tabs-container {
+    border-top: 0;
     &.is-open {
       .collapsible-trigger {
         background-color: #f0f0f0;
