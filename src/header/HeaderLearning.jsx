@@ -80,6 +80,15 @@ const HeaderLearning = ({
     titleContent = `${courseTitle}`;
   }
 
+  useEffect (()=>{
+    console.log('===========', authenticatedUser)
+    if (!authenticatedUser){
+
+      window.location.href = getConfig().LOGIN_URL;
+    }
+
+  },[])
+
   return (
     <header
       className={`${

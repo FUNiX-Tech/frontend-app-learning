@@ -77,6 +77,7 @@ const CourseAbout = (props) => {
 
   useEffect(() => {
     const authenticatedUser = getAuthenticatedUser();
+    console.log('authenticatedUser' , authenticatedUser)
     if (authenticatedUser) {
       setAuth(true);
     }
