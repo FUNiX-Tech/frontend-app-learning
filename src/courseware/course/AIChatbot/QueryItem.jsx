@@ -1,4 +1,3 @@
-
 import { svgUpVote, svgCopy, svgCopied } from "./AIChabotAssets";
 
 import PropTypes from "prop-types";
@@ -6,7 +5,6 @@ import { injectIntl, intlShape } from "@edx/frontend-platform/i18n";
 import messages from "./messages";
 import { showChatbotFeedbackModal, voteResponse } from "./slice";
 import { useDispatch } from "react-redux";
-
 import { useEffect, useRef, useState } from "react";
 
 function EllipsisAnimation() {
@@ -55,7 +53,6 @@ function QueryItem({ intl, query, onRetryAskChatbot }) {
       );
       return;
     }
-
 
     if (!query.feedback) {
       dispatch(showChatbotFeedbackModal(query.id));
@@ -107,13 +104,15 @@ function QueryItem({ intl, query, onRetryAskChatbot }) {
   }
 
   function getFeedbackDisplay(feedbackContent) {
-    if (!feedbackContent) return "Send feedback?";
+    if (!feedbackContent)
+      return intl.formatMessage(messages["sendFeedback"]) + "?";
 
-    const reasons = ["Inaccurate", "Offensive", "Unhelpful"];
+    const reasons = ["inaccurate", "offensive", "unhelpful"];
 
-    if (reasons.includes(feedbackContent)) return feedbackContent;
+    if (reasons.includes(feedbackContent))
+      return intl.formatMessage(messages[feedbackContent]);
 
-    return "Other";
+    return intl.formatMessage(messages["other"]);
   }
 
   let upvoteClassName = "upvote-btn";
