@@ -5,7 +5,7 @@ import HeaderLearning from "../header/HeaderLearning";
 import { getConfig, history } from "@edx/frontend-platform";
 import { getAuthenticatedUser } from "@edx/frontend-platform/auth";
 import "./courseAbout.scss";
-import { Collapsible, Skeleton } from "@edx/paragon";
+import { Collapsible, Skeleton, Dropdown } from "@edx/paragon";
 import { Helmet } from "react-helmet";
 import CourseTree from "./component/CourseTree";
 import CourseCardAbout, { InfoAbout } from "./component/CourseCardAbout";
@@ -16,6 +16,7 @@ import { useMediaQuery } from "react-responsive";
 import StartTeacher from "./component/StartTeacher";
 import ExpertTeacher from "./component/ExpertTeacher";
 import Footer from "../footer/Footer";
+import MenuToggle from "./component/MenuToggle";
 
 const CourseAbout = (props) => {
   const { fetch } = props;
@@ -96,7 +97,7 @@ const CourseAbout = (props) => {
       const conatainerWidth = elemteConatainerRef.current ? elemteConatainerRef.current.clientWidth : 0;
       // console.log('=======', windowWidth, conatainerWidth, elementHeight);
       // console.log('===ket qua====', (windowWidth - conatainerWidth) / 2 + elementHeight + 100 + 48);
-      setLeftCard((windowWidth - conatainerWidth) / 2 + elementHeight + 100 + 48);
+      setLeftCard((windowWidth - conatainerWidth) / 2 + elementHeight + 92 + 80);
     }
    
 
@@ -144,14 +145,14 @@ const CourseAbout = (props) => {
           </a>
 
           <div>
-
-            <button
+            {isMobile ?    <button
               onClick={handlerLogin}
               className="btn btn-login"
             >
 
               <span>Đăng nhập</span>
-            </button>
+            </button> : <MenuToggle /> }
+         
           </div>
         </div>
       )}
