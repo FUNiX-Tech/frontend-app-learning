@@ -476,7 +476,7 @@
   }
   .sequence #courseware-sequenceNavigation {
     &.active {
-      width: 100%;
+      width: 100% !important;
       max-width: unset !important;
       padding-top: 0 !important;
       z-index: 1000000;
