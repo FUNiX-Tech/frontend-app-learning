@@ -9,7 +9,7 @@ const messages = defineMessages({
   },
   sending: {
     id: "chatbot.sending",
-    defaultMessage: "Sending...",
+    defaultMessage: "Sending",
     description: "Sending message.",
   },
   failedToSend: {
@@ -26,6 +26,53 @@ const messages = defineMessages({
     id: "chatbot.sendMessage",
     defaultMessage: "Send message",
     description: "Send message placeholder.",
+  },
+  inaccurate: {
+    id: "chatbot.feedback.inaccurate",
+    defaultMessage: "Inaccurate",
+    description: "Inaccurate resposne.",
+  },
+  unhelpful: {
+    id: "chatbot.feedback.unhelpful",
+    defaultMessage: "Unhelpful",
+    description: "Unhelpful response.",
+  },
+  offensive: {
+    id: "chatbot.feedback.offensive",
+    defaultMessage: "Offensive",
+    description: "Offensive response.",
+  },
+  other: {
+    id: "chatbot.feedback.other",
+    defaultMessage: "Other",
+    description: "Other response.",
+  },
+  feedbackIntro: {
+    id: "chatbot.feedback.intro",
+    defaultMessage:
+      "Tell us why you dislike this message. Your feedback will help us improve the bots.",
+    description: "Feedback modal intro.",
+  },
+  removeDislike: {
+    id: "chatbot.feedback.removeDislike",
+    defaultMessage: "Remove dislike",
+    description: "Remove dislike.",
+  },
+  sendFeedback: {
+    id: "chatbot.feedback.sendFeedback",
+    defaultMessage: "Send feedback",
+    description: "Send feedback.",
+  },
+  sorryAboutThat: {
+    id: "chatbot.feedback.sorryAboutThat",
+    defaultMessage: "Sorry about that",
+    description: "Sorry about that.",
+  },
+  whyYouDislike: {
+    id: "chatbot.feedback.whyYouDislike",
+    defaultMessage:
+      "Can you tell us why you dislike this message? Your feedback will help us improve the bots.",
+    description: "Why do you dislike?",
   },
 });
 

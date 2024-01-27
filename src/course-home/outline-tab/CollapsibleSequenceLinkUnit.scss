@@ -52,9 +52,10 @@
   & .icon-toggle {
     position: absolute;
     cursor: pointer;
-    margin-left: 0.5rem;
+
     top: 1rem;
-    right: 0.5rem;
+    right: 1.5rem;
+
     color: var(--color-text-default);
   }
   .pgn_collapsible {
@@ -64,6 +65,9 @@
       width: 100%;
       padding: 1rem 0.5rem 1rem 1rem;
       border-bottom: 0;
+
+      border-radius: 0px;
+
       -webkit-border-radius: 0px;
     }
     .collapsible-icon {
@@ -104,7 +108,8 @@
       display: inline-block;
       text-decoration: none;
       font-family: Roboto;
-      margin-right: 1.5rem;
+
+      padding-right: 4rem;
 
       &.complete-unit {
         font-weight: 400;
@@ -121,7 +126,8 @@
         margin-right: 0;
         padding-right: 0;
         font-weight: 400;
-        padding: 1rem 0 1rem 1rem !important;
+
+        padding: 1rem 0.5rem 1rem 1rem !important;
       }
 
       font-weight: 500;
@@ -150,7 +156,8 @@
     &.active,
     &:hover {
       cursor: pointer;
-      background-color: #e8e8e8;
+
+      background-color: #f0f0f0;
     }
 
     & .check-icon {
@@ -159,8 +166,7 @@
       min-width: 1rem;
       height: 1rem;
       margin-top: 0.1rem;
-      svg {
-      }
+
       &.complete {
         path {
           fill: #5aa447 !important;

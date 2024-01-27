@@ -130,6 +130,25 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
     });
   }, [loadedUnits]);
 
+
+  /**
+   * post message to selected iframe when it has been loaded
+   * to resize it's height
+   */
+  useEffect(() => {
+    if (loadedUnits.includes(unitId)) {
+      const ifr = document.querySelector(
+        `iframe[data-unit-usage-id="${unitId}"]`
+      );
+      if (!ifr) {
+        return;
+      }
+
+      ifr.contentWindow.postMessage({ type: "unit.resize" }, "*");
+    }
+  }, [loadedUnits.includes(unitId), unitId]);
+
+
   return (
     <div className="unit">
       <div className="position-relative">
@@ -153,9 +172,30 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
         <div>
           {iframeURLS.map((e) => {
             const isSelectedUnit = unitId === e.id;
+            const hasLoaded = loadedUnits.includes(unitId)
+
             if (willLoadUnits?.includes(e.id))
               return (
                 <div key={e.id}>
+                  {!hasLoaded && isSelectedUnit && <>
+                    <br />
+                    <Skeleton width="50%" />
+                    <Skeleton width="70%" />
+                    <Skeleton width="80%" />
+                    <br />
+                    <Skeleton width="50%" />
+                    <Skeleton width="70%" />
+                    <Skeleton width="80%" />
+                    <br />
+                    <Skeleton width="50%" />
+                    <Skeleton width="70%" />
+                    <Skeleton width="80%" />
+                    <br />
+                    <Skeleton width="50%" />
+                    <Skeleton width="70%" />
+                    <Skeleton width="80%" />
+                    <br />
+                  </>}
                   <iframe
                     id="unit-iframe"
                     key={e.id}
@@ -171,11 +211,13 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
                     scrolling="no"
                     referrerPolicy="origin"
                     style={{
-                      display: isSelectedUnit ? "block" : "none",
+                      display: isSelectedUnit && hasLoaded ? "block" : "none",
                     }}
-                    height={
-                      iframeHeightValues.find((h) => h.id === e.id)?.height
-                    }
+
+                    // height={
+                    //   iframeHeightValues.find((h) => h.id === e.id)?.height
+                    // }
+
                   />
                 </div>
               );

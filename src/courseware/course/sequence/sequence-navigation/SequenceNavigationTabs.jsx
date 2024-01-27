@@ -36,9 +36,9 @@ export default function SequenceNavigationTabs({
     );
     const instructorToolbar = document.querySelector("#instructor-toolbar");
     const header = document.querySelector(".learning-header");
-    const headerHeight = header.offsetHeight;
+    const headerHeight = header?.offsetHeight;
     const courseTagsNav = document.querySelector("#courseTabsNavigation");
-    const courseTagsNavHeight = courseTagsNav.offsetHeight;
+    const courseTagsNavHeight = courseTagsNav?.offsetHeight;
     let instructorToolbarHeight = 0;
     if (instructorToolbar) {
       instructorToolbarHeight = instructorToolbar.offsetHeight;
@@ -52,51 +52,43 @@ export default function SequenceNavigationTabs({
 
     // Adjust position on scroll
     const handleScroll = () => {
-      if (window.scrollY >= 137.5) {
-        fixedElement.style.paddingTop = courseTagsNavHeight / 16 + "rem";
-        return;
-      } else if (
-        window.scrollY > courseTagsNavHeight &&
-        window.scrollY < 137.5
-      ) {
-        if (instructorToolbar) {
+      if (instructorToolbar) {
+        if (
+          window.scrollY <
+          headerHeight + courseTagsNavHeight + instructorToolbarHeight
+        ) {
           fixedElement.style.paddingTop =
-            (headerHeight +
-              courseTagsNavHeight +
-              instructorToolbarHeight -
-              window.scrollY) /
-              16 +
-            "rem";
-          return;
-        } else {
-          fixedElement.style.paddingTop = courseTagsNavHeight / 16 + "rem";
-          return;
+            headerHeight +
+            courseTagsNavHeight +
+            instructorToolbarHeight -
+            window.scrollY +
+            "px";
         }
-      } else if (window.scrollY <= courseTagsNavHeight) {
-        if (instructorToolbar) {
+        if (window.scrollY > headerHeight + instructorToolbarHeight) {
+          fixedElement.style.paddingTop = courseTagsNavHeight + "px";
+        }
+      } else {
+        if (window.scrollY < headerHeight + courseTagsNavHeight) {
           fixedElement.style.paddingTop =
-            (headerHeight +
-              courseTagsNavHeight +
-              instructorToolbarHeight -
-              window.scrollY) /
-              16 +
-            "rem";
-          return;
-        } else {
-          fixedElement.style.paddingTop =
-            (headerHeight + courseTagsNavHeight - window.scrollY) / 16 + "rem";
-          return;
+            headerHeight + courseTagsNavHeight + window.scrollY + "px";
+        }
+        if (window.scrollY > headerHeight) {
+          fixedElement.style.paddingTop = courseTagsNavHeight + "px";
         }
       }
     };
+    handleScroll();
+
+    window.addEventListener("resize", handleScroll);
 
     window.addEventListener("scroll", handleScroll);
 
     // Cleanup event listener on component unmount
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      window.addEventListener("resize", handleScroll);
     };
-  }, []);
+  }, [location.pathname, window.innerWidth]);
 
   return (
     <div style={{ flexBasis: "100%", minWidth: 0 }}>

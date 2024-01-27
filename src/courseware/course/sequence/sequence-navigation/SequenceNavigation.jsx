@@ -116,7 +116,7 @@ function SequenceNavigation({
         id="courseware-sequenceNavigation"
         className={classNames(
           `${
-            isShowChatbot || isShowFeedback
+            isShowFeedback
               ? "sequence-navigation active"
               : "sequence-navigation no-active"
           }`,

@@ -37,7 +37,7 @@ const Dashboard = ({ intl }) => {
 
       <div
         className="container container-padding"
-        style={{ width: "47.75rem", maxWidth: "100%" }}
+        // style={{ width: "47.75rem", maxWidth: "100%" }}
       >
         <div className="d-flex flex-column">
           {/* <div className=" pb-2 pr-2 pt-0 pl-0">
@@ -47,11 +47,11 @@ const Dashboard = ({ intl }) => {
           </div> */}
           <div
             className={`${
-              listCourse.length == 0 ? "w-100 background-no-course" : "w-100"
+              listCourse.length == 0 ? "w-100 background-no-course" : ""
             }`}
           >
             <div
-              className={`d-flex height-content justify-content-center w-100 ${
+              className={`d-flex height-content justify-content-center course_list_container ${
                 listCourse.length == 0 && !loading && "align-items-center"
               } `}
               style={{ minHeight: "31.25rem" }}
@@ -66,6 +66,7 @@ const Dashboard = ({ intl }) => {
                   <CourseLoading />
                 </div>
               )}
+
               {listCourse.length == 0 && !loading && (
                 <>
                   <span className="d-flex flex-column  align-items-center model-not-course ">
@@ -81,6 +82,7 @@ const Dashboard = ({ intl }) => {
                   </span>
                 </>
               )}
+
               {listCourse.length > 0 && (
                 <CourseList showFooter courses={listCourse} />
               )}

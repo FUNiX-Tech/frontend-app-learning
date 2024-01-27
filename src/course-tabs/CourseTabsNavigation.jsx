@@ -88,13 +88,10 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
 
     const fetchCourse = async () => {
       try {
-        // const data = await fetchDashboard();
-
         const url = `${
           getConfig().LMS_BASE_URL
         }/api/course_home/outline/${courseId}`;
         const response = await getAuthenticatedHttpClient().get(url);
-        console.log(response);
         dispatch(setCourseInRun(response.data.resume_course));
       } catch (error) {
         console.log(error);
@@ -107,16 +104,15 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
       <div
         id="courseTabsNavigation"
         className={classNames(
-          "course-tabs-navigation",
+          "course-tabs-navigation d-none d-lg-block",
           className,
           // `${scrollY > 50 ? "fixed-position" : ""}`
           "fixed-position"
         )}
       >
-        {/* sub Header - done */}
         <div className="sub-header-container">
           <Tabs
-            className="nav-underline-tabs d-flex sub-header-content"
+            className="nav-underline-tabs  sub-header-content"
             aria-label={intl.formatMessage(messages.courseMaterial)}
           >
             {!tabs
@@ -183,6 +179,8 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
                 })}
           </Tabs>
         </div>
+
+        {/* sub Header - done */}
       </div>
     </>
   );
