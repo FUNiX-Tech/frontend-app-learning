@@ -30,6 +30,13 @@ const HeaderLearning = ({
   //header logo
   const [headerLogoSrc, setHeaderLogoSrc] = useState(getConfig().LOGO_URL);
 
+  useEffect(() => {
+    console.log("authenticatedUser_new_header", authenticatedUser)
+    if (!authenticatedUser) {
+      window.location.href = getConfig().LOGIN_URL;
+    } 
+  }, []);
+
   // useEffect(async()=>{
   //   try {
   //     const {checkSurveyCourse, checkUserSurvey } = await fetchSurveyCourse(courseIdFromUrl)
