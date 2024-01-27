@@ -1,16 +1,45 @@
-import {
-  svgChatGPT,
-  svgUpVote,
-  svgCopy,
-  svgRetry,
-  svgCopied,
-} from "./AIChabotAssets";
+
+import { svgUpVote, svgCopy, svgCopied } from "./AIChabotAssets";
+
 import PropTypes from "prop-types";
 import { injectIntl, intlShape } from "@edx/frontend-platform/i18n";
 import messages from "./messages";
 import { showChatbotFeedbackModal, voteResponse } from "./slice";
 import { useDispatch } from "react-redux";
-import { useRef } from "react";
+
+import { useEffect, useRef, useState } from "react";
+
+function EllipsisAnimation() {
+  const [ellipsis, setEllipsis] = useState(0);
+
+  const arr = new Array(3).fill(".");
+
+  useEffect(() => {
+    function handler() {
+      setEllipsis((prev) => (prev === 4 ? 0 : prev + 1));
+    }
+
+    const interval = setInterval(handler, 1000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  return (
+    <>
+      {arr.map((item, index) => (
+        <span
+          key={index}
+          style={{
+            opacity: ellipsis - 1 > index ? 1 : 0,
+          }}
+        >
+          {item}
+        </span>
+      ))}
+    </>
+  );
+}
 
 function QueryItem({ intl, query, onRetryAskChatbot }) {
   const dispatch = useDispatch();
@@ -26,6 +55,7 @@ function QueryItem({ intl, query, onRetryAskChatbot }) {
       );
       return;
     }
+
 
     if (!query.feedback) {
       dispatch(showChatbotFeedbackModal(query.id));
@@ -97,7 +127,10 @@ function QueryItem({ intl, query, onRetryAskChatbot }) {
       <div class="ask-item">
         <div class="ask-item-content">{query.query_msg}</div>
         {query.status === "pending" && (
-          <p class="ask-item-pending">{intl.formatMessage(messages.sending)}</p>
+          <p class="ask-item-pending">
+            {intl.formatMessage(messages.sending)}
+            <EllipsisAnimation />
+          </p>
         )}
         {query.status === "failed" && (
           <p className="retry-msg">
