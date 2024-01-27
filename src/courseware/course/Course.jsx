@@ -226,7 +226,6 @@ function Course({
     let instructorToolbarHeight = 0;
     if (instructorToolbar) {
       instructorToolbarHeight = instructorToolbar.offsetHeight;
-      console.log(instructorToolbarHeight);
       fixedElement.style.paddingTop =
         headerHeight + courseTagsNavHeight + instructorToolbarHeight + "px";
     } else {
@@ -263,24 +262,33 @@ function Course({
 
     function resizeRightbar() {
       const bottomHeader = document.querySelector("#courseTabsNavigation");
-      document.querySelector(".rightbar").style.top = `${
-        bottomHeader?.getBoundingClientRect().bottom
-      }px`;
       if (window.innerWidth <= 992) {
-        if (instructorToolbar) {
-          document.querySelector(".rightbar").style.top = `${
-            instructorToolbar?.getBoundingClientRect().bottom
-          }px`;
+        if (window.scrollY === 0) {
+          if (instructorToolbar) {
+            document.querySelector(".rightbar").style.top = `${
+              instructorToolbar?.getBoundingClientRect().bottom
+            }px`;
+          } else {
+            document.querySelector(".rightbar").style.top = `${
+              header?.getBoundingClientRect().bottom
+            }px`;
+          }
         } else {
           document.querySelector(".rightbar").style.top = `${
-            headerHeight?.getBoundingClientRect().bottom
+            bottomHeader?.getBoundingClientRect().bottom
           }px`;
         }
+      } else {
+        document.querySelector(".rightbar").style.top = `${
+          bottomHeader?.getBoundingClientRect().bottom
+        }px`;
       }
     }
+
     handleScroll();
     resizeRightbar();
     window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleScroll);
 
     window.addEventListener("scroll", resizeRightbar);
     window.addEventListener("resize", resizeRightbar);
