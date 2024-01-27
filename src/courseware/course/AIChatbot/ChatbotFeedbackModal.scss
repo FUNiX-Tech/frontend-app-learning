@@ -18,6 +18,16 @@
     padding: 1rem 1rem;
     position: relative;
 
+    li {
+      width: calc((100% - 3rem) / 4);
+    }
+
+    @media screen and (max-width: 768px) {
+      li {
+        width: calc(50% - 0.5rem);
+      }
+    }
+
     #chatbot-feedback-modal-header {
       display: flex;
       justify-content: flex-end;
