@@ -34,12 +34,12 @@ export const fetchQueries = createAsyncThunk(
 
 export const askChatbot = createAsyncThunk(
   "chatbot/askChatbot",
-  async (_, thunkAPI) => {
+  async (askInput, thunkAPI) => {
     try {
       const { ask, session } = thunkAPI.getState().chatbot;
 
       const response = await askChatbotAPI(
-        ask.input,
+        askInput,
         session.id,
         thunkAPI.requestId
       );

@@ -49,7 +49,7 @@ function AIChatbotFooter({ intl, mode }) {
       alert("Too many request!");
       return;
     }
-    dispatch(askChatbot());
+    dispatch(askChatbot(ask.input));
   }
 
   useEffect(() => {
