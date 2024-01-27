@@ -104,15 +104,15 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
       <div
         id="courseTabsNavigation"
         className={classNames(
-          "course-tabs-navigation",
+          "course-tabs-navigation d-none d-lg-block",
           className,
           // `${scrollY > 50 ? "fixed-position" : ""}`
           "fixed-position"
         )}
       >
-        <div className="sub-header-container d-none d-lg-block">
+        <div className="sub-header-container">
           <Tabs
-            className="nav-underline-tabs d-flex sub-header-content"
+            className="nav-underline-tabs  sub-header-content"
             aria-label={intl.formatMessage(messages.courseMaterial)}
           >
             {!tabs

@@ -171,7 +171,7 @@ const AuthenticatedUserDropdown = ({
             </defs>
           </svg> */}
           <button className="action-button">
-            <span data-hj-suppress className="d-none d-lg-flex hide-tablet">
+            <span data-hj-suppress className="d-none d-lg-flex">
               {username.split(" ")[0][0].toUpperCase()}
             </span>
 
