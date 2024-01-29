@@ -110,6 +110,7 @@ const AuthenticatedUserDropdown = ({
     };
     fetchCourse();
   }, []);
+
   return (
     <>
       {!isLoading && (
@@ -133,7 +134,13 @@ const AuthenticatedUserDropdown = ({
           <SelectLanguage username={username} /> */}
         </div>
       )}
-      <Dropdown className="user-dropdown position-relative z-index-100000">
+      <Dropdown
+        onToggle={(isOpen, event, metadata) =>
+          console.log("debug", "onToggle", { isOpen, event, metadata })
+        }
+        onScroll={(e) => e.preventDefault()}
+        className="user-dropdown position-relative z-index-100000"
+      >
         <Dropdown.Toggle
           variant="outline-primary "
           className="toggle-mobile-icon-1"
@@ -164,7 +171,7 @@ const AuthenticatedUserDropdown = ({
             </defs>
           </svg> */}
           <button className="action-button">
-            <span data-hj-suppress className="d-none d-lg-flex hide-tablet">
+            <span data-hj-suppress className="d-none d-lg-flex">
               {username.split(" ")[0][0].toUpperCase()}
             </span>
 

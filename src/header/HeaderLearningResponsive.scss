@@ -31,7 +31,6 @@
     display: none !important;
   }
 
-  .hide-tablet,
   .learning-header .header2-container .actions .action-button span {
     display: none !important;
   }
@@ -43,6 +42,7 @@
     }
   }
   .course-tabs-container {
+    border-top: 0;
     &.is-open {
       .collapsible-trigger {
         background-color: #f0f0f0;
@@ -155,10 +155,14 @@
     right: 0 !important;
     width: 100vw;
     height: 100vh;
-    transform: translate3d(0, 0, 0) !important;
+
+    &.show {
+      transform: translate3d(0, 0, 0) !important;
+    }
     overflow-x: hidden;
   }
   .menu-user {
+    padding-top: 1rem !important;
     margin-top: 2rem;
     border-top: 1px solid var(--color-stroke);
   }
