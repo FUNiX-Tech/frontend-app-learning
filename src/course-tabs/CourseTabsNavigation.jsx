@@ -125,7 +125,7 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
                         : urlToPath(url)
                       : resumeCourse?.url;
                     const to = index === 0 ? resumeUrl : urlToPath(url);
-                    if (index !== 0) {
+                    if (index > 1) {
                       return (
                         // <NavLink
                         //   key={slug}
