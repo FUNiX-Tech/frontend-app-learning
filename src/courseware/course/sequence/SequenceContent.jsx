@@ -130,7 +130,6 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
     });
   }, [loadedUnits]);
 
-
   /**
    * post message to selected iframe when it has been loaded
    * to resize it's height
@@ -148,6 +147,24 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
     }
   }, [loadedUnits.includes(unitId), unitId]);
 
+  useEffect(() => {
+    function handler() {
+      const ifr = document.querySelector(
+        `iframe[data-unit-usage-id="${unitId}"]`
+      );
+      if (!ifr) {
+        return;
+      }
+
+      ifr.contentWindow.postMessage({ type: "unit.resize" }, "*");
+    }
+
+    window.addEventListener("resize", handler);
+
+    return () => {
+      window.removeEventListener("resize", handler);
+    };
+  }, [unitId]);
 
   return (
     <div className="unit">
@@ -172,30 +189,32 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
         <div>
           {iframeURLS.map((e) => {
             const isSelectedUnit = unitId === e.id;
-            const hasLoaded = loadedUnits.includes(unitId)
+            const hasLoaded = loadedUnits.includes(unitId);
 
             if (willLoadUnits?.includes(e.id))
               return (
                 <div key={e.id}>
-                  {!hasLoaded && isSelectedUnit && <>
-                    <br />
-                    <Skeleton width="50%" />
-                    <Skeleton width="70%" />
-                    <Skeleton width="80%" />
-                    <br />
-                    <Skeleton width="50%" />
-                    <Skeleton width="70%" />
-                    <Skeleton width="80%" />
-                    <br />
-                    <Skeleton width="50%" />
-                    <Skeleton width="70%" />
-                    <Skeleton width="80%" />
-                    <br />
-                    <Skeleton width="50%" />
-                    <Skeleton width="70%" />
-                    <Skeleton width="80%" />
-                    <br />
-                  </>}
+                  {!hasLoaded && isSelectedUnit && (
+                    <>
+                      <br />
+                      <Skeleton width="50%" />
+                      <Skeleton width="70%" />
+                      <Skeleton width="80%" />
+                      <br />
+                      <Skeleton width="50%" />
+                      <Skeleton width="70%" />
+                      <Skeleton width="80%" />
+                      <br />
+                      <Skeleton width="50%" />
+                      <Skeleton width="70%" />
+                      <Skeleton width="80%" />
+                      <br />
+                      <Skeleton width="50%" />
+                      <Skeleton width="70%" />
+                      <Skeleton width="80%" />
+                      <br />
+                    </>
+                  )}
                   <iframe
                     id="unit-iframe"
                     key={e.id}
@@ -217,7 +236,6 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
                     // height={
                     //   iframeHeightValues.find((h) => h.id === e.id)?.height
                     // }
-
                   />
                 </div>
               );
