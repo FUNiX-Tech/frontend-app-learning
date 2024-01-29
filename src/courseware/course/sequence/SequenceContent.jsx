@@ -73,41 +73,27 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
     return { id: e, url: getIframeUrl(e) };
   });
 
-  const [loadedIframeId, setLoadedIframeId] = useState(unitId);
-  const [iframeHeight, setIframeHeight] = useState(0);
-  const [iframeHeightValues, setIframeHeightValues] = useState([]);
+  function ajustUnitHeight() {
+    const ifr = document.querySelector(
+      `iframe[data-unit-usage-id="${unitId}"]`
+    );
 
-  useEffect(() => {
-    setLoadedIframeId(unitId);
-  }, [unitId]);
+    if (!ifr) return;
+
+    ifr.contentWindow.postMessage({ type: "unit.resize" }, "*");
+  }
 
   const receiveMessage = useCallback(
     ({ data }) => {
       const { type, payload } = data;
       if (type === "plugin.resize" && payload.height > 0) {
-        setIframeHeight(payload.height);
+        ajustUnitHeight();
       }
     },
-    [unitId, iframeHeight, setIframeHeight, loadedIframeId]
+    [unitId]
   );
-  useEventListener("message", receiveMessage);
 
-  useEffect(() => {
-    if (iframeHeight > 0) {
-      const existingItemIndex = iframeHeightValues.findIndex(
-        (item) => item.id === unitId
-      );
-      if (
-        existingItemIndex === -1 ||
-        iframeHeightValues[existingItemIndex].height < iframeHeight
-      ) {
-        setIframeHeightValues((prevValues) => {
-          const updatedValues = prevValues.filter((item) => item.id !== unitId);
-          return [...updatedValues, { id: unitId, height: iframeHeight }];
-        });
-      }
-    }
-  }, [iframeHeight]);
+  useEventListener("message", receiveMessage);
 
   useEffect(() => {
     if (!unitId) return;
@@ -136,33 +122,14 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
    */
   useEffect(() => {
     if (loadedUnits.includes(unitId)) {
-      const ifr = document.querySelector(
-        `iframe[data-unit-usage-id="${unitId}"]`
-      );
-      if (!ifr) {
-        return;
-      }
-
-      ifr.contentWindow.postMessage({ type: "unit.resize" }, "*");
+      ajustUnitHeight();
     }
   }, [loadedUnits.includes(unitId), unitId]);
 
   useEffect(() => {
-    function handler() {
-      const ifr = document.querySelector(
-        `iframe[data-unit-usage-id="${unitId}"]`
-      );
-      if (!ifr) {
-        return;
-      }
-
-      ifr.contentWindow.postMessage({ type: "unit.resize" }, "*");
-    }
-
-    window.addEventListener("resize", handler);
-
+    window.addEventListener("resize", ajustUnitHeight);
     return () => {
-      window.removeEventListener("resize", handler);
+      window.removeEventListener("resize", ajustUnitHeight);
     };
   }, [unitId]);
 
@@ -232,10 +199,6 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
                     style={{
                       display: isSelectedUnit && hasLoaded ? "block" : "none",
                     }}
-
-                    // height={
-                    //   iframeHeightValues.find((h) => h.id === e.id)?.height
-                    // }
                   />
                 </div>
               );
