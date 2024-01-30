@@ -50,17 +50,13 @@ export async function startChatConnection(
   };
 
   websocket.onerror = (error) => {
-    const message = `${error.code} - Error when connecting to chatbot server.`;
     console.log("CONNERROR", error);
-    onError(message);
+    onError(_parseWebsocketError(error).clientMsg);
   };
 
   websocket.onclose = (event) => {
-    let message = event.code;
     console.log("ONCLOSE", event);
-
-    if (event.reason) message += ` - ${event.reason}`;
-    onError(message);
+    onError(_parseWebsocketError(event).clientMsg);
   };
 
   websocket.onmessage = (event) => {
@@ -92,6 +88,44 @@ export function sendMessageToChatbot(query, chat_id, course_id) {
 
 function _getAccessToken() {
   // return "sAj7OgYnjzfKGIVEVEQRDmXlRZhPfF";
-  return "2XpceNcREw4A6BkjsATJd0Fxfc2Bro";
+  // return "2XpceNcREw4A6BkjsATJd0Fxfc2Bro";
   return Cookies.get("accessToken");
+}
+
+function _parseWebsocketError(error) {
+  const keys = {
+    "Symbol(kTarget)": "target",
+    "Symbol(kType)": "type",
+    "Symbol(kError)": "error",
+    "Symbol(kMessage)": "message",
+    "Symbol(kCode)": "code",
+    "Symbol(kReason)": "reason",
+  };
+
+  const symbols = Object.getOwnPropertySymbols(error);
+
+  const output = {};
+
+  symbols.forEach((symbol) => {
+    output[keys[symbol.toString()]] = error[symbol];
+  });
+
+  // compose message;
+  const type = output.error ? "error" : "close";
+  const code = output.code;
+  const reason = output.reason;
+  const message = output.message;
+
+  let clientMsg = "";
+
+  if (type === "close") {
+    clientMsg = `Connection closed: ${code} - ${reason || "no reason"}.`;
+  }
+
+  if (type === "error") {
+    clientMsg = `Error: ${message}.`;
+  }
+
+  output["clientMsg"] = clientMsg;
+  return output;
 }
