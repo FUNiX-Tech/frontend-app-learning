@@ -64,8 +64,10 @@ import PathFixesProvider from "./generic/path-fixes";
 // import CourseAccessErrorPage from "./generic/CourseAccessErrorPage";
 
 // import StaticPage from "./static-page/StaticPage";
-import Dashboard from "./learner-dashboard/Dashboard";
+// import Dashboard from "./learner-dashboard/Dashboard";
 // import CourseAbout from "./course-about/CourseAbout";
+
+import { loadFavicon, appendPreconnectLinkTag } from "./headHelpers";
 
 // lazy
 const CourseAbout = React.lazy(() => import("./course-about/CourseAbout"));
@@ -87,6 +89,10 @@ const CourseExit = React.lazy(() => import("./courseware/course/course-exit"));
 const CoursewareContainer = React.lazy(() => import("./courseware"));
 const TabContainer = React.lazy(() => import("./tab-page"));
 const StaticPage = React.lazy(() => import("./static-page/StaticPage"));
+const Dashboard = React.lazy(() => import("./learner-dashboard/Dashboard"));
+
+loadFavicon();
+appendPreconnectLinkTag();
 
 subscribe(APP_READY, () => {
   // Init chart
@@ -115,7 +121,7 @@ subscribe(APP_READY, () => {
               <PageRoute
                 path="/dashboard"
                 render={(props) => (
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <Suspense fallback={<div></div>}>
                     <Dashboard {...props} />
                   </Suspense>
                 )}
@@ -124,7 +130,7 @@ subscribe(APP_READY, () => {
               <PageRoute
                 path="/:courseId/about"
                 render={(props) => (
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <Suspense fallback={<div></div>}>
                     <CourseAbout fetch={fetchAboutCourse} {...props} />
                   </Suspense>
                 )}
@@ -134,7 +140,7 @@ subscribe(APP_READY, () => {
                 exact
                 path="/goal-unsubscribe/:token"
                 render={(props) => (
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <Suspense fallback={<div></div>}>
                     <GoalUnsubscribe {...props} />
                   </Suspense>
                 )}
@@ -142,7 +148,7 @@ subscribe(APP_READY, () => {
               <PageRoute
                 path="/redirect"
                 render={(props) => (
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <Suspense fallback={<div></div>}>
                     <CoursewareRedirectLandingPage {...props} />
                   </Suspense>
                 )}
@@ -151,14 +157,14 @@ subscribe(APP_READY, () => {
               <PageRoute
                 path="/course/:courseId/access-denied"
                 render={(props) => (
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <Suspense fallback={<div></div>}>
                     <CourseAccessErrorPage {...props} />
                   </Suspense>
                 )}
               />
 
               <PageRoute path="/course/:courseId/home">
-                <Suspense fallback={<div>Loading...</div>}>
+                <Suspense fallback={<div></div>}>
                   <TabContainer
                     tab="outline"
                     fetch={fetchOutlineTab}
@@ -179,7 +185,7 @@ subscribe(APP_READY, () => {
                   "/course/:courseId/dates",
                 ]}
                 render={({ match }) => (
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <Suspense fallback={<div></div>}>
                     <TabContainer
                       tab="dates"
                       fetch={(courseId) => {
@@ -201,7 +207,7 @@ subscribe(APP_READY, () => {
                   "/course/:courseId/progress",
                 ]}
                 render={({ match }) => (
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <Suspense fallback={<div></div>}>
                     <TabContainer
                       tab="progress"
                       fetch={(courseId) => {
@@ -219,7 +225,7 @@ subscribe(APP_READY, () => {
               />
 
               <PageRoute path="/course/:courseId/course-end">
-                <Suspense fallback={<div>Loading...</div>}>
+                <Suspense fallback={<div></div>}>
                   <TabContainer
                     tab="courseware"
                     fetch={fetchCourse}
@@ -233,7 +239,7 @@ subscribe(APP_READY, () => {
               <PageRoute
                 path={["/course/:courseId/static/:staticId"]}
                 render={({ match }) => (
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <Suspense fallback={<div></div>}>
                     <TabContainer
                       tab={`static_tab_${match.params.staticId}`}
                       fetch={(courseId) => fetchStaticTab(courseId)}
@@ -255,7 +261,7 @@ subscribe(APP_READY, () => {
                   "/course/:courseId",
                 ]}
                 render={(props) => (
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <Suspense fallback={<div></div>}>
                     <CoursewareContainer {...props} />
                   </Suspense>
                 )}
