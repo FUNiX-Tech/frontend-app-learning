@@ -31,6 +31,7 @@ import { urlToPath } from "../utils";
 import { setCourseInRun } from "../course-home/data/slice";
 import { getAuthenticatedHttpClient } from "@edx/frontend-platform/auth";
 import { useModel } from "./../generic/model-store";
+import { fetchCourseResumeUrl } from "../learner-dashboard/api";
 
 function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
   //icon src state
@@ -38,6 +39,9 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
   const [feedbackSrc, setFeedbackSrc] = useState(Feedback);
   const [chatbotSrc, setChatbotSrc] = useState(Chatbot);
   const [hideMenu, setHideMenu] = useState(false);
+  const [urlResume, setUrlResume] = useState();
+
+  let Component = urlResume ? NavLink : "a";
 
   //redux state from header
   const isShowRightMenu = useSelector(
@@ -92,7 +96,14 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
           getConfig().LMS_BASE_URL
         }/api/course_home/outline/${courseId}`;
         const response = await getAuthenticatedHttpClient().get(url);
-        dispatch(setCourseInRun(response.data.resume_course));
+        const data = await fetchCourseResumeUrl(
+          courseId,
+          response?.data?.resume_course.url.split("/jump_to/")[1]
+        );
+
+        setUrlResume(data?.data?.redirect_url);
+
+        dispatch(setCourseInRun(response?.data?.resume_course));
       } catch (error) {
         console.log(error);
       }
@@ -124,7 +135,12 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
                         ? courseInRun?.url
                         : urlToPath(url)
                       : resumeCourse?.url;
-                    const to = index === 0 ? resumeUrl : urlToPath(url);
+                    const to =
+                      index === 0
+                        ? urlResume
+                          ? urlToPath(urlResume)
+                          : resumeUrl
+                        : urlToPath(url);
                     if (index > 1) {
                       return (
                         // <NavLink
@@ -142,8 +158,29 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
                         <a></a>
                       );
                     } else {
+                      if (index === 1) {
+                        return (
+                          <NavLink
+                            key={slug}
+                            className={classNames(
+                              "nav-item flex-shrink-0 nav-link",
+                              {
+                                active: slug === activeTabSlug,
+                              }
+                            )}
+                            to={to}
+                            onClick={(e) => {
+                              if (pathname.includes("/dates")) {
+                                e.preventDefault();
+                              }
+                            }}
+                          >
+                            {title}
+                          </NavLink>
+                        );
+                      }
                       return (
-                        <a
+                        <Component
                           key={slug}
                           className={classNames(
                             "nav-item flex-shrink-0 nav-link",
@@ -151,15 +188,16 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
                               active: slug === activeTabSlug,
                             }
                           )}
-                          href={to}
+                          href={Component === "a" ? to : undefined}
+                          to={Component === NavLink ? to : undefined}
                           onClick={(e) => {
-                            if (to === "#") {
+                            if (!pathname.includes("/dates")) {
                               e.preventDefault();
                             }
                           }}
                         >
                           {title}
-                        </a>
+                        </Component>
                       );
                     }
                   }

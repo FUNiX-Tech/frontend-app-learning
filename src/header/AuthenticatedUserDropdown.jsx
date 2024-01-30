@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { getAuthenticatedHttpClient } from "@edx/frontend-platform/auth";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
@@ -21,7 +22,8 @@ import avatar_icon from "./assets/avatar.svg";
 import avatar_hover_icon from "./assets/avatar_hover.svg";
 import { urlToPath } from "../utils";
 import { setCourseInRun } from "../course-home/data/slice";
-import { useLocation } from "react-router-dom";
+import { useLocation, NavLink } from "react-router-dom";
+import { fetchCourseResumeUrl } from "../learner-dashboard/api";
 
 const AuthenticatedUserDropdown = ({
   intl,
@@ -33,6 +35,9 @@ const AuthenticatedUserDropdown = ({
 }) => {
   const { resumeCourse } = useModel("outline", courseId);
   const courseInRun = useSelector((state) => state.courseHome.courseInRun);
+  const [urlResume, setUrlResume] = useState();
+
+  let Component = urlResume ? NavLink : "a";
 
   const { celebrations, org, originalUserIsStaff, tabs, title, verifiedMode } =
     useModel("courseHomeMeta", courseId);
@@ -102,7 +107,14 @@ const AuthenticatedUserDropdown = ({
           getConfig().LMS_BASE_URL
         }/api/course_home/outline/${courseId}`;
         const response = await getAuthenticatedHttpClient().get(url);
-        console.log(response);
+        const data = await fetchCourseResumeUrl(
+          courseId,
+          response?.data?.resume_course.url.split("/jump_to/")[1]
+        );
+
+        console.log(data);
+
+        setUrlResume(data?.data?.redirect_url);
         dispatch(setCourseInRun(response.data.resume_course));
       } catch (error) {
         console.log(error);
@@ -232,7 +244,7 @@ const AuthenticatedUserDropdown = ({
               className="course-tabs-container d-block d-lg-none"
               title={courseNavsTitle}
             >
-              <div className="course-tabs">
+              <div className="course-tabs d-flex flex-column">
                 {tabs &&
                   tabs.map(({ url, title, slug }, index) => {
                     if (url.endsWith("/home") || url.endsWith("/dates")) {
@@ -240,40 +252,52 @@ const AuthenticatedUserDropdown = ({
                         ? courseInRun?.url
                         : urlToPath(url);
                       resumeCourse?.url;
-                      const to = index === 0 ? resumeUrl : urlToPath(url);
+                      const to =
+                        index === 0
+                          ? urlResume
+                            ? urlToPath(urlResume)
+                            : resumeUrl
+                          : urlToPath(url);
 
-                      if (index !== 0) {
-                        return <a></a>;
+                      if (index > 1) {
+                        return;
                       } else {
+                        if (index === 1) {
+                          return (
+                            <NavLink
+                              key={slug}
+                              className={"nav-item flex-shrink-0 nav-link"}
+                              activeClassName="active"
+                              to={to}
+                              onClick={(e) => {
+                                if (pathname.includes("/dates")) {
+                                  e.preventDefault();
+                                }
+                              }}
+                            >
+                              {title}
+                            </NavLink>
+                          );
+                        }
                         return (
-                          <a
+                          <Component
                             key={slug}
                             className={"nav-item flex-shrink-0 nav-link"}
-                            href={to}
+                            href={Component === "a" ? to : undefined}
+                            to={Component === NavLink ? to : undefined}
                             onClick={(e) => {
-                              if (!pathname.includes("/home")) {
+                              if (!pathname.includes("/dates")) {
                                 e.preventDefault();
                               }
                             }}
                           >
                             {title}
-                          </a>
+                          </Component>
                         );
                       }
                     }
 
-                    return (
-                      // <a
-                      //   key={slug}
-                      //   className={classNames("nav-item flex-shrink-0 nav-link", {
-                      //     active: slug === activeTabSlug,
-                      //   })}
-                      //   href={url}
-                      // >
-                      //   {title}
-                      // </a>
-                      <a></a>
-                    );
+                    return;
                   })}
               </div>
             </Collapsible>

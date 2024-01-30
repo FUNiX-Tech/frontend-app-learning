@@ -234,57 +234,53 @@ function Course({
 
     // Adjust position on scroll
     const handleScroll = () => {
-      if (instructorToolbar) {
-        if (
-          window.scrollY <
-          headerHeight + courseTagsNavHeight + instructorToolbarHeight
-        ) {
-          fixedElement.style.paddingTop =
-            headerHeight +
-            courseTagsNavHeight +
-            instructorToolbarHeight -
-            window.scrollY +
-            "px";
-        }
-        if (window.scrollY > headerHeight + instructorToolbarHeight) {
-          fixedElement.style.paddingTop = courseTagsNavHeight + "px";
-        }
+      if (window.innerWidth > 992) {
+        fixedElement.style.paddingTop = `${
+          courseTagsNav?.getBoundingClientRect().bottom
+        }px`;
       } else {
-        if (window.scrollY < headerHeight + courseTagsNavHeight) {
-          fixedElement.style.paddingTop =
-            headerHeight + courseTagsNavHeight + window.scrollY + "px";
-        }
-        if (window.scrollY > headerHeight) {
-          fixedElement.style.paddingTop = courseTagsNavHeight + "px";
+        if (instructorToolbar) {
+          fixedElement.style.paddingTop = `${
+            instructorToolbar?.getBoundingClientRect().bottom
+          }px`;
+          if (window.scrollY > headerHeight) {
+            fixedElement.style.paddingTop = 0;
+          }
+        } else {
+          fixedElement.style.paddingTop = `${
+            header?.getBoundingClientRect().bottom
+          }px`;
+          if (window.scrollY > headerHeight) {
+            fixedElement.style.paddingTop = 0;
+          }
         }
       }
     };
 
     function resizeRightbar() {
       const bottomHeader = document.querySelector("#courseTabsNavigation");
-      if (window.innerWidth <= 992) {
-        if (window.scrollY === 0) {
-          if (instructorToolbar) {
-            document.querySelector(".rightbar").style.top = `${
-              instructorToolbar?.getBoundingClientRect().bottom
-            }px`;
-          } else {
-            document.querySelector(".rightbar").style.top = `${
-              header?.getBoundingClientRect().bottom
-            }px`;
-          }
-        } else {
-          document.querySelector(".rightbar").style.top = `${
-            bottomHeader?.getBoundingClientRect().bottom
-          }px`;
-        }
-      } else {
+      if (window.innerWidth > 992) {
         document.querySelector(".rightbar").style.top = `${
           bottomHeader?.getBoundingClientRect().bottom
         }px`;
+      } else {
+        if (instructorToolbar) {
+          document.querySelector(".rightbar").style.top = `${
+            instructorToolbar?.getBoundingClientRect().bottom
+          }px`;
+          if (window.scrollY > headerHeight) {
+            document.querySelector(".rightbar").style.top = 0;
+          }
+        } else {
+          document.querySelector(".rightbar").style.top = `${
+            header?.getBoundingClientRect().bottom
+          }px`;
+          if (window.scrollY > headerHeight) {
+            document.querySelector(".rightbar").style.top = 0;
+          }
+        }
       }
     }
-
     handleScroll();
     resizeRightbar();
     window.addEventListener("scroll", handleScroll);
@@ -292,22 +288,38 @@ function Course({
 
     window.addEventListener("scroll", resizeRightbar);
     window.addEventListener("resize", resizeRightbar);
-
     // Cleanup event listener on component unmount
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      window.addEventListener("resize", handleScroll);
+      window.removeEventListener("resize", handleScroll);
 
       window.removeEventListener("scroll", resizeRightbar);
       window.removeEventListener("resize", resizeRightbar);
     };
   }, [location.pathname, window.innerWidth]);
 
+  //Off default menu
   useEffect(() => {
     if (window.innerWidth <= 1300) {
       dispatch(setOffMenuState());
     }
   }, []);
+
+  //Resize hide  menu
+  useEffect(() => {
+    function handleMenuResize() {
+      if (window.innerWidth <= 1300) {
+        if (isShowLeftbar) {
+          dispatch(setOffRight());
+        }
+      }
+    }
+
+    window.addEventListener("resize", handleMenuResize);
+    return () => {
+      window.removeEventListener("resize", handleMenuResize);
+    };
+  }, [isShowLeftbar, isShowChatbot, isShowFeedback]);
 
   let rightBarClasses = "rightbar";
 
@@ -322,7 +334,6 @@ function Course({
   if (isShowFeedback) {
     rightBarClasses += " is-show-feedback";
   }
-
   return (
     <SidebarProvider courseId={courseId} unitId={unitId}>
       <Helmet>
