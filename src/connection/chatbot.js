@@ -92,6 +92,6 @@ export function sendMessageToChatbot(query, chat_id, course_id) {
 
 function _getAccessToken() {
   // return "sAj7OgYnjzfKGIVEVEQRDmXlRZhPfF";
-  // return "uT1uK4xbFygDmZI5YGJ0jXfGkH8Ymr";
+  return "2XpceNcREw4A6BkjsATJd0Fxfc2Bro";
   return Cookies.get("accessToken");
 }

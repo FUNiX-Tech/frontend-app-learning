@@ -87,7 +87,7 @@ function QueryItem({ intl, query, onRetryAskChatbot }) {
   }
 
   function writeResponseToClipboard() {
-    let tmp = document.createElement("DIV");
+    let tmp = document.createElement("div");
     tmp.innerHTML = query.response_msg;
     const textContent = tmp.textContent || tmp.innerText || "";
 
