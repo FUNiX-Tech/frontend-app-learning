@@ -11,6 +11,6 @@ export function loadFavicon() {
 export function appendPreconnectLinkTag() {
   const linkTag = document.createElement("link");
   linkTag.rel = "preconnect";
-  linkTag.href = process.env.LMS_BASE_URL;
+  linkTag.href = getConfig().LMS_BASE_URL;
   document.head.appendChild(linkTag);
 }
