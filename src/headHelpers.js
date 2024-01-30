@@ -1,13 +1,11 @@
 import { getConfig } from "@edx/frontend-platform";
 
 export function loadFavicon() {
-  window.addEventListener("load", () => {
-    const linkTag = document.createElement("link");
-    linkTag.rel = "shortcut icon";
-    linkTag.href = getConfig().FAVICON_URL;
-    linkTag.type = "image/x-icon";
-    document.head.appendChild(linkTag);
-  });
+  const linkTag = document.createElement("link");
+  linkTag.rel = "shortcut icon";
+  linkTag.href = getConfig().FAVICON_URL;
+  linkTag.type = "image/x-icon";
+  document.head.appendChild(linkTag);
 }
 
 export function appendPreconnectLinkTag() {

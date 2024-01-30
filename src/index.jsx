@@ -3,6 +3,7 @@ import "regenerator-runtime/runtime";
 
 import {
   APP_INIT_ERROR,
+  APP_CONFIG_INITIALIZED,
   APP_READY,
   subscribe,
   initialize,
@@ -90,9 +91,6 @@ const CoursewareContainer = React.lazy(() => import("./courseware"));
 const TabContainer = React.lazy(() => import("./tab-page"));
 const StaticPage = React.lazy(() => import("./static-page/StaticPage"));
 const Dashboard = React.lazy(() => import("./learner-dashboard/Dashboard"));
-
-loadFavicon();
-appendPreconnectLinkTag();
 
 subscribe(APP_READY, () => {
   // Init chart
@@ -273,6 +271,8 @@ subscribe(APP_READY, () => {
     </AppProvider>,
     document.getElementById("root")
   );
+
+  loadFavicon();
 });
 
 subscribe(APP_INIT_ERROR, (error) => {
@@ -280,6 +280,10 @@ subscribe(APP_INIT_ERROR, (error) => {
     <ErrorPage message={error.message} />,
     document.getElementById("root")
   );
+});
+
+subscribe(APP_CONFIG_INITIALIZED, () => {
+  appendPreconnectLinkTag();
 });
 
 initialize({
