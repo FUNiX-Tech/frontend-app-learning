@@ -91,7 +91,7 @@ function QueryItem({ intl, query, onRetryAskChatbot }) {
     tmp.innerHTML = query.response_msg;
     const textContent = tmp.textContent || tmp.innerText || "";
 
-    navigator.clipboard.writeText(textContent);
+    window.navigator.clipboard.writeText(textContent);
 
     copyBtnRef.current?.classList.add("copied");
     setTimeout(() => {
