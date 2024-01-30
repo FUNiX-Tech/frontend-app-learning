@@ -477,5 +477,7 @@
   "chatbot.feedback.removeDislike": "Bỏ không thích",
   "chatbot.feedback.sendFeedback": "Gửi phản hồi",
   "chatbot.feedback.sorryAboutThat": "Thành thật xin lỗi",
-  "chatbot.feedback.whyYouDislike": "Bạn có thể cho chúng tôi biết lý do bạn không thích tin nhắn này không? Phản hồi của bạn sẽ giúp chúng tôi cải thiện chatbot."
+  "chatbot.feedback.whyYouDislike": "Bạn có thể cho chúng tôi biết lý do bạn không thích tin nhắn này không? Phản hồi của bạn sẽ giúp chúng tôi cải thiện chatbot.",
+  "chatbot.error.connectionClosed": "Kết nối đã đóng",
+  "chatbot.error.connectionError": "Lỗi kết nối"
 }

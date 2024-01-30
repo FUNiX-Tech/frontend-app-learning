@@ -74,6 +74,16 @@ const messages = defineMessages({
       "Can you tell us why you dislike this message? Your feedback will help us improve the bots.",
     description: "Why do you dislike?",
   },
+  connectionClosed: {
+    id: "chatbot.error.connectionClosed",
+    defaultMessage: "Connection closed",
+    description: "Connection closed",
+  },
+  connectionError: {
+    id: "chatbot.error.connectionError",
+    defaultMessage: "Connection error",
+    description: "Connection error",
+  },
 });
 
 export default messages;
