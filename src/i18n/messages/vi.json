@@ -468,5 +468,16 @@
   "chatbot.sending": "Đang gửi",
   "chatbot.failedToSend": "Tin nhắn không gửi được.",
   "chatbot.retry": "Thử lại.",
-  "chatbot.sendMessage": "Gửi tin nhắn"
+  "chatbot.sendMessage": "Gửi tin nhắn",
+  "chatbot.feedback.inaccurate": "Không thích hợp",
+  "chatbot.feedback.unhelpful": "Không hữu ích",
+  "chatbot.feedback.offensive": "Phản cảm",
+  "chatbot.feedback.other": "Khác",
+  "chatbot.feedback.intro": "Hãy cho chúng tôi biết lý do tại sao bạn không thích tin nhắn này. Phản hồi của bạn sẽ giúp chúng tôi cải thiện chatbot.",
+  "chatbot.feedback.removeDislike": "Bỏ không thích",
+  "chatbot.feedback.sendFeedback": "Gửi phản hồi",
+  "chatbot.feedback.sorryAboutThat": "Thành thật xin lỗi",
+  "chatbot.feedback.whyYouDislike": "Bạn có thể cho chúng tôi biết lý do bạn không thích tin nhắn này không? Phản hồi của bạn sẽ giúp chúng tôi cải thiện chatbot.",
+  "chatbot.error.connectionClosed": "Kết nối đã đóng",
+  "chatbot.error.connectionError": "Lỗi kết nối"
 }

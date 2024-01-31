@@ -50,17 +50,13 @@ export async function startChatConnection(
   };
 
   websocket.onerror = (error) => {
-    const message = `${error.code} - Error when connecting to chatbot server.`;
     console.log("CONNERROR", error);
-    onError(message);
+    onError(_parseWebsocketError(error));
   };
 
   websocket.onclose = (event) => {
-    let message = event.code;
     console.log("ONCLOSE", event);
-
-    if (event.reason) message += ` - ${event.reason}`;
-    onError(message);
+    onError(_parseWebsocketError(event));
   };
 
   websocket.onmessage = (event) => {
@@ -91,7 +87,19 @@ export function sendMessageToChatbot(query, chat_id, course_id) {
 }
 
 function _getAccessToken() {
-  // return "sAj7OgYnjzfKGIVEVEQRDmXlRZhPfF";
-  // return "uT1uK4xbFygDmZI5YGJ0jXfGkH8Ymr";
   return Cookies.get("accessToken");
+}
+
+function _parseWebsocketError(error) {
+  let clientMsg = "";
+
+  if (error.type === "close") {
+    clientMsg = `${error.code}${error.reason ? " - " + error.reason : ""}`;
+  }
+
+  if (error.type === "error") {
+    clientMsg = `${error.message}`;
+  }
+
+  return clientMsg;
 }
