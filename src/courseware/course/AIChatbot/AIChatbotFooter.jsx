@@ -10,18 +10,15 @@ function AIChatbotFooter({ intl, mode, onSubmit }) {
   const [hasScrollBar, setHasScrollBar] = useState(false);
   const { ask, connection } = useSelector((state) => state.chatbot);
 
-
   const dispatch = useDispatch();
 
   const submitBtnRef = useRef();
   const inputRef = useRef();
   const inputWrapperRef = useRef();
 
-
   function retryConnect() {
     dispatch(reConnect());
   }
-
 
   function onInputKeyUp(e) {
     if (e.keyCode === 13 || e.which == 13) {
@@ -48,8 +45,6 @@ function AIChatbotFooter({ intl, mode, onSubmit }) {
   function onChangeInput(e) {
     dispatch(setInputText(e.target.value));
   }
-
-
 
   useEffect(() => {
     if (!inputRef.current) return;
@@ -84,13 +79,10 @@ function AIChatbotFooter({ intl, mode, onSubmit }) {
     chatbotFooterClasses += " d-none";
   }
 
-
   if (connection.error) {
     return (
       <div className="border-top py-2">
-        <p className="text-center">
-          {connection.error} - Cannot connect to chatbot.
-        </p>
+        <p className="text-center">{connection.error}</p>
         <div className="d-flex justify-content-center">
           <button
             onClick={retryConnect}
@@ -100,21 +92,18 @@ function AIChatbotFooter({ intl, mode, onSubmit }) {
               color: "var(--color-active)",
             }}
           >
-            Retry
+            {intl.formatMessage(messages.retry)}
           </button>
         </div>
       </div>
     );
   }
 
-
   return (
     <form onSubmit={onSubmit} className={chatbotFooterClasses}>
       <div ref={inputWrapperRef} className="chatbot-input-wrapper">
         <textarea
-
           className="chatbot-input"
-
           type="text"
           placeholder={intl.formatMessage(messages.sendMessage)}
           value={ask.input}

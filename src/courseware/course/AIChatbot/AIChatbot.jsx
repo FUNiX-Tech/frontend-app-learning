@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -6,6 +5,8 @@ import QueryList from "./QueryList";
 import { toggleShowChatbot } from "../../../header/data/slice";
 import SessionList from "./SessionList";
 import AIChatbotHeader from "./AIChatbotHeader";
+import { injectIntl } from "@edx/frontend-platform/i18n";
+import messages from "./messages";
 
 import { useParams } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -15,7 +16,6 @@ import {
   startNewSession as startNewSessionAction,
   fetchQueries,
   retryAskChatbot,
-
   writeChatbotResponse,
   finishChatbotResponse,
   connectionOpen,
@@ -35,7 +35,7 @@ import "./AIChatbot.scss";
 
 const MAX_RETRY_TIMES = 2;
 
-function AIChatbot() {
+function AIChatbot({ intl }) {
   // toggle giữa chat messages list và session list
   const [mode, setMode] = useState("chat"); // chat | session
 
@@ -50,14 +50,12 @@ function AIChatbot() {
 
   const { courseId } = useParams();
 
-
   const isShowChatbot = useSelector((state) => state.header.isShowChatbot);
   const { session, ask, query, connection } = useSelector(
     (state) => state.chatbot
   );
 
   const dispatch = useDispatch();
-
 
   function startNewSession() {
     // set mode = chat => set session.id = 0
@@ -123,13 +121,11 @@ function AIChatbot() {
   let chatbotContainerClasses = "chatbot-container";
   if (isShowChatbot) {
     chatbotContainerClasses += " active";
-
   }
 
   if (navigator.userAgent.toLowerCase().indexOf("firefox") != -1) {
     chatbotContainerClasses += " is-firefox";
   }
-
 
   useEffect(() => {
     if (
@@ -137,7 +133,6 @@ function AIChatbot() {
       waitToAsk === MAX_RETRY_TIMES ||
       connection.status === "succeeded"
     )
-
       return;
     dispatch(reConnect());
   }, [waitToAsk, connection.status]);
@@ -151,7 +146,6 @@ function AIChatbot() {
       setWaitToAsk(0);
     }
   }, [waitToAsk, connection.status]);
-
 
   useEffect(() => {
     if (
@@ -186,15 +180,17 @@ function AIChatbot() {
     }
 
     function onWebSocketError(msg) {
-      dispatch(finishChatbotResponse(msg));
+      const clientMsg = `${intl.formatMessage(
+        messages.connectionError
+      )}: ${msg}`;
+      dispatch(finishChatbotResponse(clientMsg));
       dispatch(connectionClose());
-      dispatch(connectionError(msg));
+      dispatch(connectionError(clientMsg));
     }
 
     function onConnect() {
       dispatch(connectionOpen());
     }
-
 
     startChatConnection(
       onResponse,
@@ -224,10 +220,8 @@ function AIChatbot() {
 
         <QueryList
           mode={mode}
-
           onRetryAskChatbot={onRetryAskChatbot}
           onSubmit={onSubmit}
-
         />
         <SessionList mode={mode} onSelectSession={onSelectSession} />
       </div>
@@ -235,4 +229,4 @@ function AIChatbot() {
   );
 }
 
-export default AIChatbot;
+export default injectIntl(AIChatbot);
