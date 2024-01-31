@@ -31,7 +31,6 @@
     display: none !important;
   }
 
-  .hide-tablet,
   .learning-header .header2-container .actions .action-button span {
     display: none !important;
   }
@@ -49,10 +48,7 @@
         background-color: #f0f0f0;
       }
       .pgn__transition-replace-enter-done:hover {
-        background-color: #f0f0f0;
-        a {
-          background-color: #f0f0f0;
-        }
+        background-color: var(--color-white);
       }
     }
     .collapsible-trigger {
@@ -63,8 +59,15 @@
       }
     }
     .collapsible-body {
-      padding-left: 0 !important;
-      padding-top: 0.5rem !important;
+      padding: 0 !important;
+      a {
+        display: block;
+
+        padding: 1rem 0;
+      }
+      & a:hover {
+        background-color: #f0f0f0;
+      }
     }
     .collapsible-icon {
       position: relative;

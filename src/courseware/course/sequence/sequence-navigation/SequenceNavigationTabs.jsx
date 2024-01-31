@@ -40,6 +40,7 @@ export default function SequenceNavigationTabs({
     const courseTagsNav = document.querySelector("#courseTabsNavigation");
     const courseTagsNavHeight = courseTagsNav?.offsetHeight;
     let instructorToolbarHeight = 0;
+
     if (instructorToolbar) {
       instructorToolbarHeight = instructorToolbar.offsetHeight;
       fixedElement.style.paddingTop =
@@ -52,51 +53,39 @@ export default function SequenceNavigationTabs({
 
     // Adjust position on scroll
     const handleScroll = () => {
-      if (window.scrollY >= 137.5) {
-        fixedElement.style.paddingTop = courseTagsNavHeight / 16 + "rem";
-        return;
-      } else if (
-        window.scrollY > courseTagsNavHeight &&
-        window.scrollY < 137.5
-      ) {
+      if (window.innerWidth > 992) {
+        fixedElement.style.paddingTop = `${
+          courseTagsNav?.getBoundingClientRect().bottom
+        }px`;
+      } else {
         if (instructorToolbar) {
-          fixedElement.style.paddingTop =
-            (headerHeight +
-              courseTagsNavHeight +
-              instructorToolbarHeight -
-              window.scrollY) /
-              16 +
-            "rem";
-          return;
+          fixedElement.style.paddingTop = `${
+            instructorToolbar?.getBoundingClientRect().bottom
+          }px`;
+          if (window.scrollY > headerHeight) {
+            fixedElement.style.paddingTop = 0;
+          }
         } else {
-          fixedElement.style.paddingTop = courseTagsNavHeight / 16 + "rem";
-          return;
-        }
-      } else if (window.scrollY <= courseTagsNavHeight) {
-        if (instructorToolbar) {
-          fixedElement.style.paddingTop =
-            (headerHeight +
-              courseTagsNavHeight +
-              instructorToolbarHeight -
-              window.scrollY) /
-              16 +
-            "rem";
-          return;
-        } else {
-          fixedElement.style.paddingTop =
-            (headerHeight + courseTagsNavHeight - window.scrollY) / 16 + "rem";
-          return;
+          fixedElement.style.paddingTop = `${
+            header?.getBoundingClientRect().bottom
+          }px`;
+          if (window.scrollY > headerHeight) {
+            fixedElement.style.paddingTop = 0;
+          }
         }
       }
     };
 
+    handleScroll();
+    window.addEventListener("resize", handleScroll);
     window.addEventListener("scroll", handleScroll);
 
     // Cleanup event listener on component unmount
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
     };
-  }, []);
+  }, [location.pathname, window.innerWidth]);
 
   return (
     <div style={{ flexBasis: "100%", minWidth: 0 }}>

@@ -108,7 +108,7 @@
       }
     }
     .menu-lesson {
-      transform: translateX(-1rem);
+      transform: translateX(-16px);
       border-bottom: 0;
       h2 {
         display: none;
@@ -239,7 +239,7 @@
       }
     }
     .menu-lesson {
-      transform: translateX(-1rem);
+      transform: translateX(-16px);
       border-bottom: 0;
       h2 {
         display: none;
@@ -304,6 +304,11 @@
     top: 0 !important;
     z-index: 1000000;
     min-width: 100%;
+    margin-right: 0;
+
+    .chatbot-container {
+      padding: 1rem 2rem 1rem 2rem;
+    }
   }
 
   .unit-left-sidebar {
@@ -363,7 +368,6 @@
     &.active {
       width: 100%;
       max-width: unset !important;
-      padding-top: 0 !important;
       z-index: 1000000;
     }
     &.no-active {
@@ -471,7 +475,7 @@
   }
   .sequence #courseware-sequenceNavigation {
     &.active {
-      width: 100%;
+      width: 100% !important;
       max-width: unset !important;
       padding-top: 0 !important;
       z-index: 1000000;
@@ -507,10 +511,15 @@
   }
 }
 
-//<= 500
+//<= 768
 
-@media (max-width: 31.25) {
+@media (max-width: 48rem) {
   .unit-container {
-    width: calc(100% - 2rem);
+    padding: 0 !important;
+  }
+  .rightbar {
+    #chatbot-feedback-btns {
+      left: -32px !important;
+    }
   }
 }

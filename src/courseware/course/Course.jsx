@@ -37,10 +37,8 @@ import {
   setOffMenuState,
   toggleShowFeedback,
   toggleShowChatbot,
-
   setOffLeft,
   setOffRight,
-
 } from "../../header/data/slice";
 import AIChatbot from "./AIChatbot/AIChatbot";
 import { getSequenceMetadata } from "../data/api";
@@ -215,18 +213,6 @@ function Course({
     );
   }, [sequenceId]);
 
-  // useEffect(() => {
-  //   setStyling(
-  //     show
-  //       ? isShowChatGPT
-  //         ? "css-14u8e49"
-  //         : "css-jygthk"
-  //       : isShowChatGPT
-  //       ? "css-1mjee9h"
-  //       : "css-yeymkw"
-  //   );
-  // }, [show, isShowChatGPT]);
-
   //Left side bar scrolling hander
   useEffect(() => {
     // Get the fixed element
@@ -241,78 +227,99 @@ function Course({
     if (instructorToolbar) {
       instructorToolbarHeight = instructorToolbar.offsetHeight;
       fixedElement.style.paddingTop =
-        (headerHeight + courseTagsNavHeight + instructorToolbarHeight) / 16 +
-        "rem";
+        headerHeight + courseTagsNavHeight + instructorToolbarHeight + "px";
     } else {
-      fixedElement.style.paddingTop =
-        (headerHeight + courseTagsNavHeight) / 16 + "rem";
+      fixedElement.style.paddingTop = headerHeight + courseTagsNavHeight + "px";
     }
 
     // Adjust position on scroll
     const handleScroll = () => {
-      if (window.scrollY >= 137.5) {
-        fixedElement.style.paddingTop = courseTagsNavHeight / 16 + "rem";
-        return;
-      } else if (
-        window.scrollY > courseTagsNavHeight &&
-        window.scrollY < 137.5
-      ) {
+      if (window.innerWidth > 992) {
+        fixedElement.style.paddingTop = `${
+          courseTagsNav?.getBoundingClientRect().bottom
+        }px`;
+      } else {
         if (instructorToolbar) {
-          fixedElement.style.paddingTop =
-            (headerHeight +
-              courseTagsNavHeight +
-              instructorToolbarHeight -
-              window.scrollY) /
-              16 +
-            "rem";
-          return;
+          fixedElement.style.paddingTop = `${
+            instructorToolbar?.getBoundingClientRect().bottom
+          }px`;
+          if (window.scrollY > headerHeight) {
+            fixedElement.style.paddingTop = 0;
+          }
         } else {
-          fixedElement.style.paddingTop = courseTagsNavHeight / 16;
-          return;
-        }
-      } else if (window.scrollY <= courseTagsNavHeight) {
-        if (instructorToolbar) {
-          fixedElement.style.paddingTop =
-            (headerHeight +
-              courseTagsNavHeight +
-              instructorToolbarHeight -
-              window.scrollY) /
-              16 +
-            "rem";
-          return;
-        } else {
-          fixedElement.style.paddingTop =
-            (headerHeight + courseTagsNavHeight - window.scrollY) / 16 + "rem";
-          return;
+          fixedElement.style.paddingTop = `${
+            header?.getBoundingClientRect().bottom
+          }px`;
+          if (window.scrollY > headerHeight) {
+            fixedElement.style.paddingTop = 0;
+          }
         }
       }
     };
 
     function resizeRightbar() {
       const bottomHeader = document.querySelector("#courseTabsNavigation");
-      document.querySelector(".rightbar").style.top = `${
-        bottomHeader.getBoundingClientRect().bottom
-      }px`;
+      if (window.innerWidth > 992) {
+        document.querySelector(".rightbar").style.top = `${
+          bottomHeader?.getBoundingClientRect().bottom
+        }px`;
+      } else {
+        if (instructorToolbar) {
+          document.querySelector(".rightbar").style.top = `${
+            instructorToolbar?.getBoundingClientRect().bottom
+          }px`;
+          if (window.scrollY > headerHeight) {
+            document.querySelector(".rightbar").style.top = 0;
+          }
+        } else {
+          document.querySelector(".rightbar").style.top = `${
+            header?.getBoundingClientRect().bottom
+          }px`;
+          if (window.scrollY > headerHeight) {
+            document.querySelector(".rightbar").style.top = 0;
+          }
+        }
+      }
     }
-
+    handleScroll();
     resizeRightbar();
     window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleScroll);
+
     window.addEventListener("scroll", resizeRightbar);
     window.addEventListener("resize", resizeRightbar);
-
     // Cleanup event listener on component unmount
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+
       window.removeEventListener("scroll", resizeRightbar);
       window.removeEventListener("resize", resizeRightbar);
     };
-  }, [location.pathname]);
+  }, [location.pathname, window.innerWidth]);
 
+  //Off default menu
   useEffect(() => {
     if (window.innerWidth <= 1300) {
       dispatch(setOffMenuState());
     }
   }, []);
+
+  //Resize hide  menu
+  useEffect(() => {
+    function handleMenuResize() {
+      if (window.innerWidth <= 1300) {
+        if (isShowLeftbar) {
+          dispatch(setOffRight());
+        }
+      }
+    }
+
+    window.addEventListener("resize", handleMenuResize);
+    return () => {
+      window.removeEventListener("resize", handleMenuResize);
+    };
+  }, [isShowLeftbar, isShowChatbot, isShowFeedback]);
 
   let rightBarClasses = "rightbar";
 
@@ -327,7 +334,6 @@ function Course({
   if (isShowFeedback) {
     rightBarClasses += " is-show-feedback";
   }
-
   return (
     <SidebarProvider courseId={courseId} unitId={unitId}>
       <Helmet>
@@ -339,7 +345,6 @@ function Course({
 
       <div
         className={`${
-
           isShowLeftbar
             ? isShowChatbot || isShowFeedback
               ? "unit-left-sidebar left-side hide"
@@ -347,7 +352,6 @@ function Course({
             : isShowChatbot || isShowFeedback
             ? "unit-left-sidebar hide"
             : "unit-left-sidebar"
-
         }`}
       >
         <div class="content">
@@ -360,7 +364,6 @@ function Course({
               <h2 className="menu-lesson-title">Mục lục bài học</h2>
               <div
                 className="icon-left-menu-wrapper"
-
                 onClick={() => {
                   if (window.innerWidth <= 1300) {
                     dispatch(setOffRight());
@@ -369,7 +372,6 @@ function Course({
                     dispatch(toggleShowLeftbar());
                   }
                 }}
-
               >
                 {!isShowLeftbar && (
                   <svg
@@ -396,9 +398,7 @@ function Course({
                     fill="none"
                   >
                     <path
-
                       d="M12.0008 13.4008L7.10078 18.3008C6.91745 18.4841 6.68411 18.5758 6.40078 18.5758C6.11745 18.5758 5.88411 18.4841 5.70078 18.3008C5.51745 18.1174 5.42578 17.8841 5.42578 17.6008C5.42578 17.3174 5.51745 17.0841 5.70078 16.9008L10.6008 12.0008L5.70078 7.10078C5.51745 6.91745 5.42578 6.68411 5.42578 6.40078C5.42578 6.11745 5.51745 5.88411 5.70078 5.70078C5.88411 5.51745 6.11745 5.42578 6.40078 5.42578C6.68411 5.42578 6.91745 5.51745 7.10078 5.70078L12.0008 10.6008L16.9008 5.70078C17.0841 5.51745 17.3174 5.42578 17.6008 5.42578C17.8841 5.42578 18.1174 5.51745 18.3008 5.70078C18.4841 5.88411 18.5758 6.11745 18.5758 6.40078C18.5758 6.68411 18.4841 6.91745 18.3008 7.10078L13.4008 12.0008L18.3008 16.9008C18.4841 17.0841 18.5758 17.3174 18.5758 17.6008C18.5758 17.8841 18.4841 18.1174 18.3008 18.3008C18.1174 18.4841 17.8841 18.5758 17.6008 18.5758C17.3174 18.5758 17.0841 18.4841 16.9008 18.3008L12.0008 13.4008Z"
-
                       fill="#576F8A"
                     />
                   </svg>
@@ -444,7 +444,6 @@ function Course({
           id="chatbot-feedback-btns"
           // className={!isShowChatbot && !isShowFeedback ? "is-show" : ""}
         >
-
           <button
             onClick={() => {
               if (window.innerWidth <= 1300) {
@@ -455,7 +454,6 @@ function Course({
               }
             }}
           >
-
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -477,7 +475,6 @@ function Course({
               }
             }}
           >
-
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="14"
