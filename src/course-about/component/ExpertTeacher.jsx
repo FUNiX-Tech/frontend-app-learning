@@ -7,7 +7,7 @@ const ExpertTeacher = ({teachers})=>{
     const isMobile = useMediaQuery({ minWidth: 744 });
 
     return <div>
-        <CollapsibleCustom title='Chuyên gia thiết kế và phản biện môn học'>
+        <CollapsibleCustom title='Đội ngũ xây dựng khoá học'>
             <div className="d-flex flex-column" style={{gap:'8px'}}>
 
                 {
