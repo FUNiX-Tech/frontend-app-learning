@@ -212,7 +212,7 @@ function CertificateStatus({ intl }) {
     return null;
   }
 
-  const header = intl.formatMessage(messages[`${certCase}Header`]);
+  // const header = intl.formatMessage(messages[`${certCase}Header`]);
 
   const logCertificateStatusButtonClicked = () => {
     sendTrackEvent('edx.ui.lms.course_progress.certificate_status.clicked', {
@@ -235,7 +235,7 @@ function CertificateStatus({ intl }) {
   return (
     <section data-testid="certificate-status-component" className="text-dark-700 mb-4">
       <Card className="bg-light-200 raised-card">
-        <Card.Header title={header} />
+        {/* <Card.Header title={header} /> */}
         <Card.Section className="small text-gray-700">
           {body}
         </Card.Section>

@@ -25,9 +25,9 @@ function ResultPage({ courseTitle, error, intl }) {
     />
   );
 
-  const header = error
-    ? intl.formatMessage(messages.errorHeader)
-    : intl.formatMessage(messages.header);
+  // const header = error
+  //   ? intl.formatMessage(messages.errorHeader)
+  //   : intl.formatMessage(messages.header);
   const description = error
     ? errorDescription
     : intl.formatMessage(messages.description, { courseTitle });
@@ -35,7 +35,9 @@ function ResultPage({ courseTitle, error, intl }) {
   return (
     <>
       <UnsubscribeIcon className="text-primary" alt="" />
-      <div role="heading" aria-level="1" className="h2">{header}</div>
+      {/* <div role="heading" aria-level="1" className="h2">{header}</div> */}
+      <div role="heading" aria-level="1" className="h2">HEADER</div>
+
       <div className="row justify-content-center">
         <div className="col-xl-7 col-12 p-0">{description}</div>
       </div>

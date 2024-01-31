@@ -76,7 +76,7 @@ const AuthenticatedUserDropdown = ({
   const [avatarSrc, setAvatarSrc] = useState(avatar_icon);
 
   const isShowGlobalChatGPT = useSelector(
-    (state) => state.header.isShowGlobalChatGPT
+    (state) => state.header?.isShowGlobalChatGPT
   );
   const dispatch = useDispatch();
 

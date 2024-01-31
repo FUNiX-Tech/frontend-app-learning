@@ -45,10 +45,10 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
 
   //redux state from header
   const isShowRightMenu = useSelector(
-    (state) => state.header.isShowLessonContent
+    (state) => state.header?.isShowLessonContent
   );
-  const isShowFeedback = useSelector((state) => state.header.isShowFeedback);
-  const isShowChatbot = useSelector((state) => state.header.isShowChatbot);
+  const isShowFeedback = useSelector((state) => state.header?.isShowFeedback);
+  const isShowChatbot = useSelector((state) => state.header?.isShowChatbot);
   const courseInRun = useSelector((state) => state.courseHome.courseInRun);
   const { courseId } = useSelector((state) => state.courseHome);
 

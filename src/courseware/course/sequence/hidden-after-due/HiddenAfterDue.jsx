@@ -24,7 +24,7 @@ function HiddenAfterDue({ courseId, intl }) {
 
   return (
     <Alert variant="info" icon={Info}>
-      <h3>{intl.formatMessage(messages.header)}</h3>
+      {/* <h3>{intl.formatMessage(messages.header)}</h3> */}
       <p>
         {intl.formatMessage(messages.description)}
         {progressLink && (

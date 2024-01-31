@@ -157,7 +157,7 @@ function CertificateStatusAlert({ intl, payload }) {
         buttonVisible,
         iconClassName,
         icon,
-        header,
+        // header,
         body,
         buttonAction,
         buttonLink,
@@ -167,7 +167,7 @@ function CertificateStatusAlert({ intl, payload }) {
           <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center">
             <div className={buttonVisible ? 'col-lg-8' : 'col-auto'}>
               <FontAwesomeIcon icon={icon} className={iconClassName} />
-              <Alert.Heading>{header}</Alert.Heading>
+              {/* <Alert.Heading>{header}</Alert.Heading> */}
               {body}
             </div>
             {buttonVisible && (

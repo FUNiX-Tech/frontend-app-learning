@@ -52,9 +52,9 @@ function LoadedTabPage({
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const [styling, setStyling] = useState("css-yeymkw");
-  const isShowChatGPT = useSelector(
-    (state) => state.header.isShowGlobalChatGPT
-  );
+  // const isShowChatGPT = useSelector(
+  //   (state) => state.header?.isShowGlobalChatGPT
+  // );
 
   function getTabFromPathname(pathname) {
     if (pathname.endsWith("/dates")) return "dates";

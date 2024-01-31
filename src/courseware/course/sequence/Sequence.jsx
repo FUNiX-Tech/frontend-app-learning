@@ -49,9 +49,9 @@ function Sequence({
   isCompleteCourse,
   isPassedProject,
 }) {
-  const isShowChatbot = useSelector((state) => state.header.isShowChatbot);
-  const isShowFeedback = useSelector((state) => state.header.isShowFeedback);
-  const isShowLeftbar = useSelector((state) => state.header.isShowLeftbar);
+  const isShowChatbot = useSelector((state) => state.header?.isShowChatbot);
+  const isShowFeedback = useSelector((state) => state.header?.isShowFeedback);
+  const isShowLeftbar = useSelector((state) => state.header?.isShowLeftbar);
 
   const course = useModel("coursewareMeta", courseId);
   const { isStaff, originalUserIsStaff } = useModel("courseHomeMeta", courseId);
@@ -161,8 +161,8 @@ function Sequence({
         }
 
         if (event.data.scroll) {
-          const header =
-            document.querySelector("header.learning-header")?.offsetHeight || 0;
+          // const header =
+          //   document.querySelector("header.learning-header")?.offsetHeight || 0;
 
           const instructorToolbar =
             document.getElementById("instructor-toolbar")?.offsetHeight || 0;
@@ -174,7 +174,8 @@ function Sequence({
             window.scroll({
               top:
                 event.data.scroll.top +
-                header +
+                // header +
+                0 +
                 instructorToolbar +
                 courseTabsNavigation,
               left: 0,

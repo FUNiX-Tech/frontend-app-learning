@@ -23,11 +23,11 @@ export default function SequenceNavigationTabs({
   const shouldDisplayDropdown = indexOfLastVisibleChild === -1;
 
   //get state
-  const isShowRightMenu = useSelector(
-    (state) => state.header.isShowLessonContent
-  );
+  // const isShowRightMenu = useSelector(
+  //   (state) => state.header.isShowLessonContent
+  // );
 
-  const isShowFeedback = useSelector((state) => state.header.isShowFeedback);
+  const isShowFeedback = useSelector((state) => state.header?.isShowFeedback);
 
   return (
     <div style={{ flexBasis: "100%", minWidth: 0 }}>
