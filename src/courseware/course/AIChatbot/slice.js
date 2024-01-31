@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
-
   createQueryItemToDB,
   updateQueryItemToDB,
   fetchSessions as fetchSessionsAPI,
@@ -27,7 +26,6 @@ export const fetchQueries = createAsyncThunk(
         query.items.filter((item) => item.session_id === session.id).length,
         LIMIT
       );
-
 
       return response.data;
     } catch (error) {
@@ -61,7 +59,6 @@ export const askChatbot = createAsyncThunk(
   }
 );
 
-
 export const retryAskChatbot = createAsyncThunk(
   "chatbot/retryAskChatbot",
   async (queryId, thunkAPI) => {
@@ -71,14 +68,12 @@ export const retryAskChatbot = createAsyncThunk(
       const queryItem = query.items.find((item) => item.id === queryId);
 
       sendMessageToChatbot(queryItem.query_msg, session.id, courseId);
-
     } catch (error) {
       console.error(error);
       return thunkAPI.rejectWithValue(_composeErrorMessage(error));
     }
   }
 );
-
 
 export const finishChatbotResponse = createAsyncThunk(
   "chatbot/finishChatbotResponse",
@@ -140,7 +135,6 @@ export const fetchSessions = createAsyncThunk(
     } catch (error) {
       console.error(error);
       return thunkAPI.rejectWithValue(_composeErrorMessage(error));
-
     }
   }
 );
@@ -187,7 +181,6 @@ const initialState = {
     current: -1,
 
     id: -1,
-
   },
 
   query: {
@@ -218,26 +211,13 @@ const initialState = {
     error: "",
   },
 
-
-  connection: {
-    status: "idle",
-    error: "",
-    retry: 0,
-  },
-
   courseId: null,
-
 };
 
 const chatbotSlice = createSlice({
   name: "chatbot",
   initialState,
   reducers: {
-
-    reConnect: (state, action) => {
-      state.connection.retry += 1;
-    },
-
     setInputText: (state, action) => {
       state.ask.input = action.payload;
       state.ask.history = state.ask.history.map((item, index) => {
@@ -263,8 +243,6 @@ const chatbotSlice = createSlice({
       ];
     },
     startNewSession: (state, action) => {
-
-
       state.session.id = 0;
     },
     changeSession: (state, action) => {
@@ -276,7 +254,6 @@ const chatbotSlice = createSlice({
     },
     setRetryAskChatbotStatus: (state, action) => {
       state.query.items = state.query.items.map((item) =>
-
         item.id === action.payload
           ? { ...item, status: "pending", response_msg: "" }
           : item
@@ -329,17 +306,6 @@ const chatbotSlice = createSlice({
           : item
       );
     },
-    connectionClose: (state, action) => {
-      state.connection.status = "failed";
-    },
-    connectionOpen: (state, action) => {
-      state.connection.error = "";
-      state.connection.status = "succeeded";
-    },
-    connectionError: (state, action) => {
-      state.connection.error = action.payload;
-    },
-
   },
   extraReducers: (builder) => {
     builder
@@ -358,7 +324,6 @@ const chatbotSlice = createSlice({
             hash: action.meta.requestId,
 
             session_id: state.session.id,
-
           },
         ];
 
@@ -373,8 +338,6 @@ const chatbotSlice = createSlice({
         state.ask.input = "";
       })
       .addCase(askChatbot.fulfilled, (state, action) => {
-
-
         state.query.items = state.query.items.map((item) =>
           item.hash === action.meta.requestId
             ? {
@@ -383,13 +346,11 @@ const chatbotSlice = createSlice({
                 id: action.payload.id,
                 created: action.payload.created,
                 session_id: action.payload.session_id,
-
               }
             : item
         );
 
         if (!state.query.initiated) state.query.initiated = true;
-
 
         if (state.session.id === 0) {
           state.session.id = action.payload.session_id;
@@ -403,19 +364,16 @@ const chatbotSlice = createSlice({
         }
 
         state.ask.id = action.payload.id;
-
       })
       .addCase(askChatbot.rejected, (state, action) => {
         state.ask.status = "failed";
         state.ask.error = action.payload;
         state.query.items = state.query.items.map((item) =>
           item.hash === action.meta.requestId
-
             ? { ...item, status: "failed", response_msg: "" }
             : item
         );
         state.ask.id = -1;
-
       })
       // fetch sessions
       .addCase(fetchSessions.pending, (state, action) => {
@@ -423,8 +381,6 @@ const chatbotSlice = createSlice({
         state.session.error = "";
       })
       .addCase(fetchSessions.fulfilled, (state, action) => {
-
-
         state.session.status = "succeeded";
         state.session.items = [
           ...state.session.items,
@@ -460,7 +416,6 @@ const chatbotSlice = createSlice({
           ),
           ...state.query.items,
         ]);
-
 
         if (action.payload.remain_page === 0) {
           state.query.isLastPage = true;
@@ -542,7 +497,6 @@ const chatbotSlice = createSlice({
       .addCase(giveFeedbackChatbot.rejected, (state, action) => {
         state.feedback.status = "failed";
         state.feedback.error = action.payload;
-
       })
       // finish
       .addCase(finishChatbotResponse.fulfilled, (state, action) => {
@@ -591,7 +545,6 @@ const chatbotSlice = createSlice({
         );
 
         state.ask.id = -1;
-
       });
   },
 });
@@ -608,12 +561,8 @@ export const {
   setChatbotInputHistory,
 
   writeChatbotResponse,
-  connectionClose,
-  connectionOpen,
   reConnect,
   setChatbotCourseId,
-  connectionError,
-
 } = chatbotSlice.actions;
 export default chatbotSlice.reducer;
 
@@ -632,7 +581,6 @@ function _composeErrorMessage(error) {
   return `${statusCode} - ${errorMsg}`;
 }
 
-
 function _removeDuplicatedQueries(queries) {
   const result = [];
 
@@ -644,4 +592,3 @@ function _removeDuplicatedQueries(queries) {
 
   return result;
 }
-

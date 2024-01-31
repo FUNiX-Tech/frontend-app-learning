@@ -1,30 +1,10 @@
-
-import { useSelector } from "react-redux";
 import { svgClose, svgMessage, svgHamburger, svgPlus } from "./AIChabotAssets";
 import "./AIChatbotHeader.scss";
 
 function AIChatbotHeader({ startNewSession, toggleMode, hideChatbot, mode }) {
-  const { connection } = useSelector((state) => state.chatbot);
-  let lightClasses = "light";
-
-  if (connection.status === "succeeded") {
-    lightClasses += " connected";
-  }
-
-  if (connection.status === "idle") {
-    lightClasses += " idle";
-  }
-
-  if (connection.status === "failed") {
-    lightClasses += " closed";
-  }
-
   return (
     <div className="chatbot-header">
-      <p class="chatbot-name">
-        Chat GPT
-        <span className={lightClasses}></span>
-      </p>
+      <p class="chatbot-name">Chat GPT</p>
 
       <div>
         <button

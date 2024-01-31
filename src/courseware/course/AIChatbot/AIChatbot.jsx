@@ -6,10 +6,7 @@ import { toggleShowChatbot } from "../../../header/data/slice";
 import SessionList from "./SessionList";
 import AIChatbotHeader from "./AIChatbotHeader";
 import { injectIntl } from "@edx/frontend-platform/i18n";
-import messages from "./messages";
-
 import { useParams } from "react-router-dom";
-import Cookies from "js-cookie";
 
 import {
   changeSession,
@@ -18,12 +15,8 @@ import {
   retryAskChatbot,
   writeChatbotResponse,
   finishChatbotResponse,
-  connectionOpen,
-  connectionClose,
-  reConnect,
   askChatbot,
   setChatbotCourseId,
-  connectionError,
 } from "./slice";
 
 import {
@@ -51,9 +44,7 @@ function AIChatbot({ intl }) {
   const { courseId } = useParams();
 
   const isShowChatbot = useSelector((state) => state.header.isShowChatbot);
-  const { session, ask, query, connection } = useSelector(
-    (state) => state.chatbot
-  );
+  const { session, ask, query } = useSelector((state) => state.chatbot);
 
   const dispatch = useDispatch();
 
@@ -97,10 +88,6 @@ function AIChatbot({ intl }) {
       return;
     }
 
-    if (connection.status !== "succeeded") {
-      setWaitToAsk(1);
-      return;
-    }
     dispatch(askChatbot(ask.input));
   }
 
@@ -109,11 +96,7 @@ function AIChatbot({ intl }) {
       alert("Too many request!");
       return;
     }
-    if (connection.status !== "succeeded") {
-      setWaitToReask(1);
-      setRetryQueryId(queryId);
-      return;
-    }
+
     dispatch(retryAskChatbot(queryId));
   }
 
@@ -126,83 +109,6 @@ function AIChatbot({ intl }) {
   if (navigator.userAgent.toLowerCase().indexOf("firefox") != -1) {
     chatbotContainerClasses += " is-firefox";
   }
-
-  useEffect(() => {
-    if (
-      waitToAsk === 0 ||
-      waitToAsk === MAX_RETRY_TIMES ||
-      connection.status === "succeeded"
-    )
-      return;
-    dispatch(reConnect());
-  }, [waitToAsk, connection.status]);
-
-  useEffect(() => {
-    if (
-      waitToAsk === MAX_RETRY_TIMES ||
-      !(waitToAsk === 0 || connection.status !== "succeeded")
-    ) {
-      dispatch(askChatbot(ask.input));
-      setWaitToAsk(0);
-    }
-  }, [waitToAsk, connection.status]);
-
-  useEffect(() => {
-    if (
-      waitToReask === 0 ||
-      waitToReask === MAX_RETRY_TIMES ||
-      connection.status === "succeeded"
-    )
-      return;
-    dispatch(reConnect());
-  }, [waitToReask, connection.status]);
-
-  useEffect(() => {
-    if (
-      waitToReask === MAX_RETRY_TIMES ||
-      !(waitToReask === 0 || connection.status !== "succeeded")
-    ) {
-      dispatch(retryAskChatbot(retryQueryId));
-      setWaitToReask(0);
-      setRetryQueryId(null);
-    }
-  }, [waitToReask, connection.status]);
-
-  useEffect(() => {
-    if (connection.status === "succeeded") return;
-
-    function onResponse(msg) {
-      dispatch(writeChatbotResponse(msg));
-    }
-
-    function onResponseFinished() {
-      dispatch(finishChatbotResponse());
-    }
-
-    function onWebSocketError(msg) {
-      const clientMsg = `${intl.formatMessage(
-        messages.connectionError
-      )}: ${msg}`;
-      dispatch(finishChatbotResponse(clientMsg));
-      dispatch(connectionClose());
-      dispatch(connectionError(clientMsg));
-    }
-
-    function onConnect() {
-      dispatch(connectionOpen());
-    }
-
-    startChatConnection(
-      onResponse,
-      onResponseFinished,
-      onWebSocketError,
-      onConnect
-    ).catch(console.error);
-
-    return () => {
-      stopChatConnection();
-    };
-  }, [connection.retry]);
 
   useEffect(() => {
     dispatch(setChatbotCourseId(courseId));

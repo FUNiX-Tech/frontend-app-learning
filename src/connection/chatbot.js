@@ -6,6 +6,7 @@ import { getAuthenticatedHttpClient } from "@edx/frontend-platform/auth";
 // const CHATBOT_HOST = "ws://localhost:9999";
 
 let websocket = null;
+let CHATBOT_HOST = "";
 
 export function stopChatConnection() {
   if (!websocket) return;
@@ -37,17 +38,6 @@ export async function startChatConnection(
   if (!websocket) {
     websocket = new WebSocket(CHATBOT_HOST);
   }
-  websocket.onopen = () => {
-    if (websocket.readyState === WebSocket.OPEN) {
-      onConnect();
-      const accessToken = _getAccessToken();
-      if (!accessToken) {
-        websocket.close(1000, "Not found accessToken.");
-        return;
-      }
-      websocket.send(accessToken);
-    }
-  };
 
   websocket.onerror = (error) => {
     console.log("CONNERROR", error);
@@ -69,21 +59,39 @@ export async function startChatConnection(
 }
 
 export function sendMessageToChatbot(query, chat_id, course_id) {
-  if (!websocket) throw new Error("Chatbot connection has not started.");
+  return new Promise(async (res, rej) => {
+    const accessToken = _getAccessToken();
 
-  const accessToken = _getAccessToken();
-  if (!accessToken) {
-    websocket.close(1000, "Not found accessToken.");
-    return;
-  }
-  const payload = {
-    query,
-    chat_id,
-    course_id,
-  };
+    if (!accessToken) return rej("Missing accessToken");
 
-  const message = `${accessToken}<END>${JSON.stringify(payload)}`;
-  websocket.send(message);
+    const payload = {
+      query,
+      chat_id,
+      course_id,
+    };
+
+    const message = `${accessToken}<END>${JSON.stringify(payload)}`;
+
+    if (!CHATBOT_HOST) {
+      CHATBOT_HOST = await _getChatbotHost();
+
+      if (!CHATBOT_HOST) {
+        return rej("Cannot get chatbot host");
+      }
+    }
+
+    websocket = new WebSocket(CHATBOT_HOST);
+
+    websocket.onopen = () => {
+      if (websocket.readyState === WebSocket.OPEN) {
+        websocket.send(accessToken);
+        websocket.send(message);
+        return res(true);
+      } else {
+        return rej("Failed to connect to chatbot server");
+      }
+    };
+  });
 }
 
 function _getAccessToken() {
@@ -102,4 +110,24 @@ function _parseWebsocketError(error) {
   }
 
   return clientMsg;
+}
+
+function _getChatbotHost() {
+  return new Promise(async (res, _) => {
+    const site_config_url = `${getConfig().LMS_BASE_URL}/api/site_config/`;
+
+    try {
+      const response = await getAuthenticatedHttpClient().get(site_config_url);
+      CHATBOT_HOST = response?.data?.data?.CHATBOT_HOST || "";
+
+      if (!CHATBOT_HOST) {
+        console.error("Not found CHATBOT_HOST in site config response");
+      }
+
+      return CHATBOT_HOST;
+    } catch (error) {
+      console.error("Failed to get chatbot host: ", error);
+      return res("");
+    }
+  });
 }
