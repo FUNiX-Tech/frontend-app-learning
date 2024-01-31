@@ -7,6 +7,7 @@ import Alert from "../generic/user-messages/Alert";
 import MasqueradeWidget from "./masquerade-widget";
 import { useAccessExpirationMasqueradeBanner } from "../alerts/access-expiration-alert";
 import { useCourseStartMasqueradeBanner } from "../alerts/course-start-alert";
+import { useSelector } from "react-redux";
 
 function getInsightsUrl(courseId) {
   const urlBase = getConfig().INSIGHTS_BASE_URL;
@@ -66,11 +67,16 @@ export default function InstructorToolbar(props) {
     tab
   );
 
+  const isShowFeedback = useSelector((state) => state.header.isShowFeedback);
+
   return !didMount ? null : (
     <div
       data-testid="instructor-toolbar"
       id="instructor-toolbar"
-      style={{ zIndex: "27000", position: "relative" }}
+      style={{
+        zIndex: `${isShowFeedback && window.innerWidth <= 992 ? "1" : "27000"}`,
+        position: "relative",
+      }}
     >
       <div className="bg-primary text-white" style={{ zIndex: "10" }}>
         <div className="container-xl py-3 d-md-flex justify-content-end align-items-start">

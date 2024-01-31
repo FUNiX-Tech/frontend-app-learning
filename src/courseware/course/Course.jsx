@@ -216,70 +216,32 @@ function Course({
   //Left side bar scrolling hander
   useEffect(() => {
     // Get the fixed element
-    const fixedElement = document.querySelector(".unit-left-sidebar");
+    const unitLeftBar = document.querySelector(".unit-left-sidebar");
+    const courseSequence = document.querySelector(
+      "#courseware-sequenceNavigation"
+    );
     const instructorToolbar = document.querySelector("#instructor-toolbar");
     const header = document.querySelector(".learning-header");
     const headerHeight = header?.offsetHeight;
     const courseTagsNav = document.querySelector("#courseTabsNavigation");
-    const courseTagsNavHeight = courseTagsNav?.offsetHeight;
-
-    let instructorToolbarHeight = 0;
-    if (instructorToolbar) {
-      instructorToolbarHeight = instructorToolbar.offsetHeight;
-      fixedElement.style.paddingTop =
-        headerHeight + courseTagsNavHeight + instructorToolbarHeight + "px";
-    } else {
-      fixedElement.style.paddingTop = headerHeight + courseTagsNavHeight + "px";
-    }
 
     // Adjust position on scroll
     const handleScroll = () => {
+      unitLeftBar.style.paddingTop =
+        courseTagsNav.getBoundingClientRect().bottom + "px";
       if (window.innerWidth > 992) {
-        fixedElement.style.paddingTop = `${
-          courseTagsNav?.getBoundingClientRect().bottom
-        }px`;
+        courseSequence.style.paddingTop =
+          courseTagsNav.getBoundingClientRect().bottom + "px";
       } else {
-        if (instructorToolbar) {
-          fixedElement.style.paddingTop = `${
-            instructorToolbar?.getBoundingClientRect().bottom
-          }px`;
-          if (window.scrollY > headerHeight) {
-            fixedElement.style.paddingTop = 0;
-          }
-        } else {
-          fixedElement.style.paddingTop = `${
-            header?.getBoundingClientRect().bottom
-          }px`;
-          if (window.scrollY > headerHeight) {
-            fixedElement.style.paddingTop = 0;
-          }
-        }
+        courseSequence.style.paddingTop = 0;
       }
     };
 
     function resizeRightbar() {
       const bottomHeader = document.querySelector("#courseTabsNavigation");
-      if (window.innerWidth > 992) {
-        document.querySelector(".rightbar").style.top = `${
-          bottomHeader?.getBoundingClientRect().bottom
-        }px`;
-      } else {
-        if (instructorToolbar) {
-          document.querySelector(".rightbar").style.top = `${
-            instructorToolbar?.getBoundingClientRect().bottom
-          }px`;
-          if (window.scrollY > headerHeight) {
-            document.querySelector(".rightbar").style.top = 0;
-          }
-        } else {
-          document.querySelector(".rightbar").style.top = `${
-            header?.getBoundingClientRect().bottom
-          }px`;
-          if (window.scrollY > headerHeight) {
-            document.querySelector(".rightbar").style.top = 0;
-          }
-        }
-      }
+      document.querySelector(".rightbar").style.top = `${
+        bottomHeader?.getBoundingClientRect().bottom
+      }px`;
     }
     handleScroll();
     resizeRightbar();
