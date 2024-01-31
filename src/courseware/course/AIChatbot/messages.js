@@ -9,7 +9,7 @@ const messages = defineMessages({
   },
   sending: {
     id: "chatbot.sending",
-    defaultMessage: "Sending...",
+    defaultMessage: "Sending",
     description: "Sending message.",
   },
   failedToSend: {
