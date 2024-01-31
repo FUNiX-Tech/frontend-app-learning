@@ -23,7 +23,7 @@ const StartTeacher = ({ teachers }) => {
 
   return (
     <>
-      <CollapsibleCustom title="Đội ngũ Star Teachers và Domain Experts của khoá học">
+      <CollapsibleCustom title="Danh sách diễn giả">
      <div >
 
       <Swiper
