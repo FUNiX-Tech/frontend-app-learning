@@ -154,7 +154,6 @@ function Sequence({
             `iframe[data-unit-usage-id='${event.data.unit_usage_id}']`
           );
           if (!iframe) {
-            console.log("not fond iframe");
             return;
           }
           iframe.style.transition = event.data.resize.transition;

@@ -28,64 +28,6 @@ export default function SequenceNavigationTabs({
   );
 
   const isShowFeedback = useSelector((state) => state.header.isShowFeedback);
-  //Right side bar scrolling hander
-  useEffect(() => {
-    // Get the fixed element
-    const fixedElement = document.querySelector(
-      "#courseware-sequenceNavigation"
-    );
-    const instructorToolbar = document.querySelector("#instructor-toolbar");
-    const header = document.querySelector(".learning-header");
-    const headerHeight = header?.offsetHeight;
-    const courseTagsNav = document.querySelector("#courseTabsNavigation");
-    const courseTagsNavHeight = courseTagsNav?.offsetHeight;
-    let instructorToolbarHeight = 0;
-
-    if (instructorToolbar) {
-      instructorToolbarHeight = instructorToolbar.offsetHeight;
-      fixedElement.style.paddingTop =
-        (headerHeight + courseTagsNavHeight + instructorToolbarHeight) / 16 +
-        "rem";
-    } else {
-      fixedElement.style.paddingTop =
-        (headerHeight + courseTagsNavHeight) / 16 + "rem";
-    }
-
-    // Adjust position on scroll
-    const handleScroll = () => {
-      if (window.innerWidth > 992) {
-        fixedElement.style.paddingTop = `${
-          courseTagsNav?.getBoundingClientRect().bottom
-        }px`;
-      } else {
-        if (instructorToolbar) {
-          fixedElement.style.paddingTop = `${
-            instructorToolbar?.getBoundingClientRect().bottom
-          }px`;
-          if (window.scrollY > headerHeight) {
-            fixedElement.style.paddingTop = 0;
-          }
-        } else {
-          fixedElement.style.paddingTop = `${
-            header?.getBoundingClientRect().bottom
-          }px`;
-          if (window.scrollY > headerHeight) {
-            fixedElement.style.paddingTop = 0;
-          }
-        }
-      }
-    };
-
-    handleScroll();
-    window.addEventListener("resize", handleScroll);
-    window.addEventListener("scroll", handleScroll);
-
-    // Cleanup event listener on component unmount
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
-    };
-  }, [location.pathname, window.innerWidth]);
 
   return (
     <div style={{ flexBasis: "100%", minWidth: 0 }}>

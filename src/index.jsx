@@ -3,6 +3,7 @@ import "regenerator-runtime/runtime";
 
 import {
   APP_INIT_ERROR,
+  APP_CONFIG_INITIALIZED,
   APP_READY,
   subscribe,
   initialize,
@@ -14,13 +15,17 @@ import {
   ErrorPage,
   PageRoute,
 } from "@edx/frontend-platform/react";
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom";
 import { Switch } from "react-router-dom";
 
 import { messages as footerMessages } from "@edx/frontend-component-footer";
 import { Helmet } from "react-helmet";
-import { fetchAboutCourse, fetchDiscussionTab, fetchLiveTab } from "./course-home/data/thunks";
+import {
+  fetchAboutCourse,
+  fetchDiscussionTab,
+  fetchLiveTab,
+} from "./course-home/data/thunks";
 import DiscussionTab from "./course-home/discussion-tab/DiscussionTab";
 
 import {
@@ -36,14 +41,14 @@ import appMessages from "./i18n";
 import { UserMessagesProvider } from "./generic/user-messages";
 
 import "./index.scss";
-import OutlineTab from "./course-home/outline-tab";
-import { CourseExit } from "./courseware/course/course-exit";
-import CoursewareContainer from "./courseware";
-import CoursewareRedirectLandingPage from "./courseware/CoursewareRedirectLandingPage";
-import DatesTab from "./course-home/dates-tab";
-import GoalUnsubscribe from "./course-home/goal-unsubscribe";
-import ProgressTab from "./course-home/progress-tab/ProgressTab";
-import { TabContainer } from "./tab-page";
+// import OutlineTab from "./course-home/outline-tab";
+// import { CourseExit } from "./courseware/course/course-exit";
+// import CoursewareContainer from "./courseware";
+// import CoursewareRedirectLandingPage from "./courseware/CoursewareRedirectLandingPage";
+// import DatesTab from "./course-home/dates-tab";
+// import GoalUnsubscribe from "./course-home/goal-unsubscribe";
+// import ProgressTab from "./course-home/progress-tab/ProgressTab";
+// import { TabContainer } from "./tab-page";
 
 import {
   fetchDatesTab,
@@ -57,11 +62,35 @@ import NoticesProvider from "./generic/notices";
 import PathFixesProvider from "./generic/path-fixes";
 
 // import LiveTab from './course-home/live-tab/LiveTab';
-import CourseAccessErrorPage from "./generic/CourseAccessErrorPage";
+// import CourseAccessErrorPage from "./generic/CourseAccessErrorPage";
 
-import StaticPage from "./static-page/StaticPage";
-import Dashboard from "./learner-dashboard/Dashboard";
-import CourseAbout from "./course-about/CourseAbout";
+// import StaticPage from "./static-page/StaticPage";
+// import Dashboard from "./learner-dashboard/Dashboard";
+// import CourseAbout from "./course-about/CourseAbout";
+
+import { loadFavicon, appendPreconnectLinkTag } from "./headHelpers";
+
+// lazy
+const CourseAbout = React.lazy(() => import("./course-about/CourseAbout"));
+const GoalUnsubscribe = React.lazy(() =>
+  import("./course-home/goal-unsubscribe")
+);
+const CoursewareRedirectLandingPage = React.lazy(() =>
+  import("./courseware/CoursewareRedirectLandingPage")
+);
+const CourseAccessErrorPage = React.lazy(() =>
+  import("./generic/CourseAccessErrorPage")
+);
+const OutlineTab = React.lazy(() => import("./course-home/outline-tab"));
+const DatesTab = React.lazy(() => import("./course-home/dates-tab"));
+const ProgressTab = React.lazy(() =>
+  import("./course-home/progress-tab/ProgressTab")
+);
+const CourseExit = React.lazy(() => import("./courseware/course/course-exit"));
+const CoursewareContainer = React.lazy(() => import("./courseware"));
+const TabContainer = React.lazy(() => import("./tab-page"));
+const StaticPage = React.lazy(() => import("./static-page/StaticPage"));
+const Dashboard = React.lazy(() => import("./learner-dashboard/Dashboard"));
 
 subscribe(APP_READY, () => {
   // Init chart
@@ -77,44 +106,71 @@ subscribe(APP_READY, () => {
   ReactDOM.render(
     <AppProvider store={initializeStore()}>
       <Helmet>
-        <link
+        {/* <link
           rel="shortcut icon"
           href={getConfig().FAVICON_URL}
           type="image/x-icon"
-        />
+        /> */}
       </Helmet>
       <PathFixesProvider>
         <NoticesProvider>
           <UserMessagesProvider>
             <Switch>
-              <PageRoute path="/dashboard" component={Dashboard} />
-              <PageRoute path='/:courseId/about' 
-                  >
-                    
-                
-                  <CourseAbout  fetch={fetchAboutCourse} />
-              </PageRoute>
+              <PageRoute
+                path="/dashboard"
+                render={(props) => (
+                  <Suspense fallback={<div></div>}>
+                    <Dashboard {...props} />
+                  </Suspense>
+                )}
+              />
+
+              <PageRoute
+                path="/:courseId/about"
+                render={(props) => (
+                  <Suspense fallback={<div></div>}>
+                    <CourseAbout fetch={fetchAboutCourse} {...props} />
+                  </Suspense>
+                )}
+              />
+
               <PageRoute
                 exact
                 path="/goal-unsubscribe/:token"
-                component={GoalUnsubscribe}
+                render={(props) => (
+                  <Suspense fallback={<div></div>}>
+                    <GoalUnsubscribe {...props} />
+                  </Suspense>
+                )}
               />
               <PageRoute
                 path="/redirect"
-                component={CoursewareRedirectLandingPage}
+                render={(props) => (
+                  <Suspense fallback={<div></div>}>
+                    <CoursewareRedirectLandingPage {...props} />
+                  </Suspense>
+                )}
               />
+
               <PageRoute
                 path="/course/:courseId/access-denied"
-                component={CourseAccessErrorPage}
+                render={(props) => (
+                  <Suspense fallback={<div></div>}>
+                    <CourseAccessErrorPage {...props} />
+                  </Suspense>
+                )}
               />
+
               <PageRoute path="/course/:courseId/home">
-                <TabContainer
-                  tab="outline"
-                  fetch={fetchOutlineTab}
-                  slice="courseHome"
-                >
-                  <OutlineTab />
-                </TabContainer>
+                <Suspense fallback={<div></div>}>
+                  <TabContainer
+                    tab="outline"
+                    fetch={fetchOutlineTab}
+                    slice="courseHome"
+                  >
+                    <OutlineTab />
+                  </TabContainer>
+                </Suspense>
               </PageRoute>
               {/* <PageRoute path="/course/:courseId/dates">
                 <TabContainer tab="dates" fetch={fetchDatesTab} slice="courseHome">
@@ -127,16 +183,20 @@ subscribe(APP_READY, () => {
                   "/course/:courseId/dates",
                 ]}
                 render={({ match }) => (
-                  <TabContainer
-                    tab="dates"
-                    fetch={(courseId) => {
-               
-                      return fetchDatesTab(courseId, match.params.targetUserId);
-                    }}
-                    slice="courseHome"
-                  >
-                    <DatesTab />
-                  </TabContainer>
+                  <Suspense fallback={<div></div>}>
+                    <TabContainer
+                      tab="dates"
+                      fetch={(courseId) => {
+                        return fetchDatesTab(
+                          courseId,
+                          match.params.targetUserId
+                        );
+                      }}
+                      slice="courseHome"
+                    >
+                      <DatesTab />
+                    </TabContainer>
+                  </Suspense>
                 )}
               />
               <PageRoute
@@ -145,51 +205,64 @@ subscribe(APP_READY, () => {
                   "/course/:courseId/progress",
                 ]}
                 render={({ match }) => (
-                  <TabContainer
-                    tab="progress"
-                    fetch={(courseId) => {
-                      return fetchProgressTab(
-                        courseId,
-                        match.params.targetUserId
-                      );
-                    }}
-                    slice="courseHome"
-                  >
-                    <ProgressTab />
-                  </TabContainer>
+                  <Suspense fallback={<div></div>}>
+                    <TabContainer
+                      tab="progress"
+                      fetch={(courseId) => {
+                        return fetchProgressTab(
+                          courseId,
+                          match.params.targetUserId
+                        );
+                      }}
+                      slice="courseHome"
+                    >
+                      <ProgressTab />
+                    </TabContainer>
+                  </Suspense>
                 )}
               />
+
               <PageRoute path="/course/:courseId/course-end">
-                <TabContainer
-                  tab="courseware"
-                  fetch={fetchCourse}
-                  slice="courseware"
-                >
-                  <CourseExit />
-                </TabContainer>
+                <Suspense fallback={<div></div>}>
+                  <TabContainer
+                    tab="courseware"
+                    fetch={fetchCourse}
+                    slice="courseware"
+                  >
+                    <CourseExit />
+                  </TabContainer>
+                </Suspense>
               </PageRoute>
+
               <PageRoute
                 path={["/course/:courseId/static/:staticId"]}
                 render={({ match }) => (
-                  <TabContainer
-                    tab={`static_tab_${match.params.staticId}`}
-                    fetch={(courseId) => fetchStaticTab(courseId)}
-                    slice="courseHome"
-                  >
-                    <StaticPage
-                      courseId={match.params.courseId}
-                      staticId={match.params.staticId}
-                    />
-                  </TabContainer>
+                  <Suspense fallback={<div></div>}>
+                    <TabContainer
+                      tab={`static_tab_${match.params.staticId}`}
+                      fetch={(courseId) => fetchStaticTab(courseId)}
+                      slice="courseHome"
+                    >
+                      <StaticPage
+                        courseId={match.params.courseId}
+                        staticId={match.params.staticId}
+                      />
+                    </TabContainer>
+                  </Suspense>
                 )}
               />
+
               <PageRoute
                 path={[
                   "/course/:courseId/:sequenceId/:unitId",
                   "/course/:courseId/:sequenceId",
                   "/course/:courseId",
                 ]}
-                component={CoursewareContainer}
+                render={(props) => (
+                  <Suspense fallback={<div></div>}>
+                    <CoursewareContainer {...props} />
+                  </Suspense>
+                )}
               />
             </Switch>
           </UserMessagesProvider>
@@ -198,6 +271,8 @@ subscribe(APP_READY, () => {
     </AppProvider>,
     document.getElementById("root")
   );
+
+  loadFavicon();
 });
 
 subscribe(APP_INIT_ERROR, (error) => {
@@ -205,6 +280,10 @@ subscribe(APP_INIT_ERROR, (error) => {
     <ErrorPage message={error.message} />,
     document.getElementById("root")
   );
+});
+
+subscribe(APP_CONFIG_INITIALIZED, () => {
+  appendPreconnectLinkTag();
 });
 
 initialize({
