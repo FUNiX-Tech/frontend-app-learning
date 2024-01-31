@@ -88,13 +88,10 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
 
     const fetchCourse = async () => {
       try {
-        // const data = await fetchDashboard();
-
         const url = `${
           getConfig().LMS_BASE_URL
         }/api/course_home/outline/${courseId}`;
         const response = await getAuthenticatedHttpClient().get(url);
-        console.log(response);
         dispatch(setCourseInRun(response.data.resume_course));
       } catch (error) {
         console.log(error);
@@ -113,8 +110,7 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
           "fixed-position"
         )}
       >
-        {/* sub Header - done */}
-        <div className="sub-header-container">
+        <div className="sub-header-container d-none d-lg-block">
           <Tabs
             className="nav-underline-tabs d-flex sub-header-content"
             aria-label={intl.formatMessage(messages.courseMaterial)}
@@ -183,6 +179,8 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
                 })}
           </Tabs>
         </div>
+
+        {/* sub Header - done */}
       </div>
     </>
   );

@@ -6,10 +6,12 @@ import {
   voteResponse,
 } from "./slice";
 import "./ChatbotFeedbackModal.scss";
+import { injectIntl } from "@edx/frontend-platform/i18n";
+import message from "./messages";
 
-const reasons = ["Inaccurate", "Unhelpful", "Offensive", "Other"];
+const reasons = ["inaccurate", "unhelpful", "offensive", "other"];
 
-function ChatbotFeedbackModal() {
+function ChatbotFeedbackModal({ intl }) {
   const [isOther, setIsOther] = useState(false);
   const [text, setText] = useState("");
 
@@ -40,7 +42,10 @@ function ChatbotFeedbackModal() {
   }
 
   function onClickReasonItem(reason) {
-    if (reason === "Other") {
+    if (
+      intl.formatMessage(message[reason]) ===
+      intl.formatMessage(message["other"])
+    ) {
       setIsOther(true);
       return;
     }
@@ -94,21 +99,17 @@ function ChatbotFeedbackModal() {
         </div>
         {!isOther && (
           <p className="text-center">
-            Tell us why you dislike this message. Your feedback will help us
-            improve the bots.
+            {intl.formatMessage(message["feedbackIntro"])}
           </p>
         )}
 
         {isOther && (
           <div>
             <p className="text-center">
-              <strong>Sorry about that</strong>
+              <strong>{intl.formatMessage(message["sorryAboutThat"])}</strong>
             </p>
 
-            <p>
-              Can you tell us why you dislike this message? Your feedback will
-              help us improve the bots.
-            </p>
+            <p>{intl.formatMessage(message["whyYouDislike"])}</p>
           </div>
         )}
 
@@ -140,7 +141,7 @@ function ChatbotFeedbackModal() {
                 }}
                 key={item}
               >
-                {item}
+                {intl.formatMessage(message[item])}
               </li>
             ))}
           </ul>
@@ -176,7 +177,7 @@ function ChatbotFeedbackModal() {
                 letterSpacing: ".3px",
               }}
             >
-              Send feedback
+              {intl.formatMessage(message["sendFeedback"])}
             </button>
           </>
         )}
@@ -196,7 +197,7 @@ function ChatbotFeedbackModal() {
               letterSpacing: ".3px",
             }}
           >
-            Remove dislike
+            {intl.formatMessage(message["removeDislike"])}
           </button>
         )}
 
@@ -206,4 +207,4 @@ function ChatbotFeedbackModal() {
   );
 }
 
-export default ChatbotFeedbackModal;
+export default injectIntl(ChatbotFeedbackModal);

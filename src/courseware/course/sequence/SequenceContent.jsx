@@ -73,41 +73,27 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
     return { id: e, url: getIframeUrl(e) };
   });
 
-  const [loadedIframeId, setLoadedIframeId] = useState(unitId);
-  const [iframeHeight, setIframeHeight] = useState(0);
-  const [iframeHeightValues, setIframeHeightValues] = useState([]);
+  function ajustUnitHeight() {
+    const ifr = document.querySelector(
+      `iframe[data-unit-usage-id="${unitId}"]`
+    );
 
-  useEffect(() => {
-    setLoadedIframeId(unitId);
-  }, [unitId]);
+    if (!ifr) return;
+
+    ifr.contentWindow.postMessage({ type: "unit.resize" }, "*");
+  }
 
   const receiveMessage = useCallback(
     ({ data }) => {
       const { type, payload } = data;
       if (type === "plugin.resize" && payload.height > 0) {
-        setIframeHeight(payload.height);
+        ajustUnitHeight();
       }
     },
-    [unitId, iframeHeight, setIframeHeight, loadedIframeId]
+    [unitId]
   );
-  useEventListener("message", receiveMessage);
 
-  useEffect(() => {
-    if (iframeHeight > 0) {
-      const existingItemIndex = iframeHeightValues.findIndex(
-        (item) => item.id === unitId
-      );
-      if (
-        existingItemIndex === -1 ||
-        iframeHeightValues[existingItemIndex].height < iframeHeight
-      ) {
-        setIframeHeightValues((prevValues) => {
-          const updatedValues = prevValues.filter((item) => item.id !== unitId);
-          return [...updatedValues, { id: unitId, height: iframeHeight }];
-        });
-      }
-    }
-  }, [iframeHeight]);
+  useEventListener("message", receiveMessage);
 
   useEffect(() => {
     if (!unitId) return;
@@ -129,6 +115,23 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
       return prev;
     });
   }, [loadedUnits]);
+
+  /**
+   * post message to selected iframe when it has been loaded
+   * to resize it's height
+   */
+  useEffect(() => {
+    if (loadedUnits.includes(unitId)) {
+      ajustUnitHeight();
+    }
+  }, [loadedUnits.includes(unitId), unitId]);
+
+  useEffect(() => {
+    window.addEventListener("resize", ajustUnitHeight);
+    return () => {
+      window.removeEventListener("resize", ajustUnitHeight);
+    };
+  }, [unitId]);
 
   return (
     <div className="unit">
@@ -153,9 +156,32 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
         <div>
           {iframeURLS.map((e) => {
             const isSelectedUnit = unitId === e.id;
+            const hasLoaded = loadedUnits.includes(unitId);
+
             if (willLoadUnits?.includes(e.id))
               return (
                 <div key={e.id}>
+                  {!hasLoaded && isSelectedUnit && (
+                    <>
+                      <br />
+                      <Skeleton width="50%" />
+                      <Skeleton width="70%" />
+                      <Skeleton width="80%" />
+                      <br />
+                      <Skeleton width="50%" />
+                      <Skeleton width="70%" />
+                      <Skeleton width="80%" />
+                      <br />
+                      <Skeleton width="50%" />
+                      <Skeleton width="70%" />
+                      <Skeleton width="80%" />
+                      <br />
+                      <Skeleton width="50%" />
+                      <Skeleton width="70%" />
+                      <Skeleton width="80%" />
+                      <br />
+                    </>
+                  )}
                   <iframe
                     id="unit-iframe"
                     key={e.id}
@@ -171,11 +197,8 @@ function SequenceContent({ gated, intl, courseId, sequenceId, unitId }) {
                     scrolling="no"
                     referrerPolicy="origin"
                     style={{
-                      display: isSelectedUnit ? "block" : "none",
+                      display: isSelectedUnit && hasLoaded ? "block" : "none",
                     }}
-                    height={
-                      iframeHeightValues.find((h) => h.id === e.id)?.height
-                    }
                   />
                 </div>
               );

@@ -51,6 +51,13 @@ const slice = createSlice({
       state.isShowChatbot = true;
       state.isShowLeftbar = true;
     },
+    setOffLeft: (state) => {
+      state.isShowLeftbar = false;
+    },
+    setOffRight: (state) => {
+      state.isShowChatbot = false;
+      state.isShowFeedback = false;
+    },
   },
 });
 
@@ -64,6 +71,8 @@ export const {
   setOffMenuState,
   toggleShowLeftbar,
   setOnMenuState,
+  setOffLeft,
+  setOffRight,
 } = slice.actions;
 
 export const { reducer } = slice;

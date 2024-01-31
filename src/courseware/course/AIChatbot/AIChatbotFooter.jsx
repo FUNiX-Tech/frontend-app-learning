@@ -1,19 +1,24 @@
 import { useRef, useEffect, useState } from "react";
 import { svgSubmitActive, svgSubmit } from "./AIChabotAssets";
 import { useSelector, useDispatch } from "react-redux";
-import { setInputText, askChatbot, setChatbotInputHistory } from "./slice";
+
+import { setInputText, setChatbotInputHistory, reConnect } from "./slice";
 import { injectIntl } from "@edx/frontend-platform/i18n";
 import messages from "./messages";
 
-function AIChatbotFooter({ intl, mode }) {
+function AIChatbotFooter({ intl, mode, onSubmit }) {
   const [hasScrollBar, setHasScrollBar] = useState(false);
-  const { ask, query } = useSelector((state) => state.chatbot);
+  const { ask, connection } = useSelector((state) => state.chatbot);
 
   const dispatch = useDispatch();
 
   const submitBtnRef = useRef();
   const inputRef = useRef();
   const inputWrapperRef = useRef();
+
+  function retryConnect() {
+    dispatch(reConnect());
+  }
 
   function onInputKeyUp(e) {
     if (e.keyCode === 13 || e.which == 13) {
@@ -39,17 +44,6 @@ function AIChatbotFooter({ intl, mode }) {
 
   function onChangeInput(e) {
     dispatch(setInputText(e.target.value));
-  }
-
-  function onSubmit(e) {
-    e.preventDefault();
-    if (query.status === "pending") return;
-    if (!ask.input.trim()) return;
-    if (ask.status === "pending") {
-      alert("Too many request!");
-      return;
-    }
-    dispatch(askChatbot());
   }
 
   useEffect(() => {
@@ -85,11 +79,31 @@ function AIChatbotFooter({ intl, mode }) {
     chatbotFooterClasses += " d-none";
   }
 
+  if (connection.error) {
+    return (
+      <div className="border-top py-2">
+        <p className="text-center">{connection.error}</p>
+        <div className="d-flex justify-content-center">
+          <button
+            onClick={retryConnect}
+            style={{
+              background: "transparent",
+              border: "none",
+              color: "var(--color-active)",
+            }}
+          >
+            {intl.formatMessage(messages.retry)}
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <form onSubmit={onSubmit} className={chatbotFooterClasses}>
       <div ref={inputWrapperRef} className="chatbot-input-wrapper">
         <textarea
-          class="chatbot-input"
+          className="chatbot-input"
           type="text"
           placeholder={intl.formatMessage(messages.sendMessage)}
           value={ask.input}
