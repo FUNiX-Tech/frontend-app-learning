@@ -8,7 +8,7 @@ import messages from "./messages";
 
 function AIChatbotFooter({ intl, mode, onSubmit }) {
   const [hasScrollBar, setHasScrollBar] = useState(false);
-  const { ask, connection } = useSelector((state) => state.chatbot);
+  const { ask } = useSelector((state) => state.chatbot);
 
   const dispatch = useDispatch();
 
@@ -77,26 +77,6 @@ function AIChatbotFooter({ intl, mode, onSubmit }) {
   }
   if (mode === "session") {
     chatbotFooterClasses += " d-none";
-  }
-
-  if (connection.error) {
-    return (
-      <div className="border-top py-2">
-        <p className="text-center">{connection.error}</p>
-        <div className="d-flex justify-content-center">
-          <button
-            onClick={retryConnect}
-            style={{
-              background: "transparent",
-              border: "none",
-              color: "var(--color-active)",
-            }}
-          >
-            {intl.formatMessage(messages.retry)}
-          </button>
-        </div>
-      </div>
-    );
   }
 
   return (
