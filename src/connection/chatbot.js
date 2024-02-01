@@ -2,12 +2,8 @@ import Cookies from "js-cookie";
 import { getConfig } from "@edx/frontend-platform";
 import { getAuthenticatedHttpClient } from "@edx/frontend-platform/auth";
 
-// const CHATBOT_HOST = "ws://172.188.64.77:8001/v01_dev/chat";
-// const CHATBOT_HOST = "ws://localhost:9999";
-
 export let websocket = null;
 let CHATBOT_HOST = "";
-CHATBOT_HOST = "ws://localhost:9999";
 
 export function stopChatConnection(reason) {
   if (!websocket) return;
@@ -52,7 +48,6 @@ export function sendMessageToChatbot(query, chat_id, course_id) {
 }
 
 function _getAccessToken() {
-  return 'ACCESS_TOKEN'
   return Cookies.get("accessToken");
 }
 
