@@ -1,12 +1,4 @@
-import { useDispatch } from "react-redux";
-import { reConnect } from "./slice";
-
 function ConnectionError() {
-  const dispatch = useDispatch();
-
-  function retryConnectingToChatbot() {
-    dispatch(reConnect());
-  }
   return (
     <div
       style={{

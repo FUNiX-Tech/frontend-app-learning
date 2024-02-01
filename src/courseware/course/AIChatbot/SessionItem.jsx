@@ -17,9 +17,6 @@ function SessionItem({ session, onSelectSession }) {
     <li className={classes} onClick={onClickHandler}>
       <div className="session_item_header">
         <span>{new Date(session.created).toLocaleString(LANGUAGE_CODE)}</span>
-
-        <strong>{session.session_id}</strong>
-
       </div>
       <div className="session_item_ask">
         <span>{session.query_msg}</span>
