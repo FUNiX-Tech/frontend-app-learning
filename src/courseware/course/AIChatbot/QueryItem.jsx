@@ -1,5 +1,4 @@
 import { svgUpVote, svgCopy, svgCopied } from "./AIChabotAssets";
-
 import PropTypes from "prop-types";
 import { injectIntl, intlShape } from "@edx/frontend-platform/i18n";
 import messages from "./messages";
@@ -148,7 +147,6 @@ function QueryItem({ intl, query, onRetryAskChatbot }) {
           <div class="answer-item-inner">
             <div
               class="answer-item-content"
-              // dangerouslySetInnerHTML={{ __html: query.response_msg }}
             >
             <Markdown>{query.response_msg}</Markdown>
             </div>
