@@ -27,7 +27,7 @@ function AIChatbot() {
   // toggle giữa chat messages list và session list
   const [mode, setMode] = useState("chat"); // chat | session
   const { courseId } = useParams();
-  const isShowChatbot = useSelector((state) => state.header.isShowChatbot);
+  const isShowChatbot = useSelector((state) => state.header?.isShowChatbot);
   const { session, ask, query } = useSelector((state) => state.chatbot);
 
   const dispatch = useDispatch();

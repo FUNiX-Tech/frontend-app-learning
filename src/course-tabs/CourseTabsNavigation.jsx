@@ -45,10 +45,10 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
 
   //redux state from header
   const isShowRightMenu = useSelector(
-    (state) => state.header.isShowLessonContent
+    (state) => state.header?.isShowLessonContent
   );
-  const isShowFeedback = useSelector((state) => state.header.isShowFeedback);
-  const isShowChatbot = useSelector((state) => state.header.isShowChatbot);
+  const isShowFeedback = useSelector((state) => state.header?.isShowFeedback);
+  const isShowChatbot = useSelector((state) => state.header?.isShowChatbot);
   const courseInRun = useSelector((state) => state.courseHome.courseInRun);
   const { courseId } = useSelector((state) => state.courseHome);
 
@@ -115,13 +115,13 @@ function CourseTabsNavigation({ activeTabSlug, className, tabs, intl }) {
       <div
         id="courseTabsNavigation"
         className={classNames(
-          "course-tabs-navigation d-none d-lg-block",
+          "course-tabs-navigation",
           className,
           // `${scrollY > 50 ? "fixed-position" : ""}`
           "fixed-position"
         )}
       >
-        <div className="sub-header-container">
+        <div className="sub-header-container d-none d-lg-block">
           <Tabs
             className="nav-underline-tabs  sub-header-content"
             aria-label={intl.formatMessage(messages.courseMaterial)}

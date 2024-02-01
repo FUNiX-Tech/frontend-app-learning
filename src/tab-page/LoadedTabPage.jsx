@@ -53,7 +53,7 @@ function LoadedTabPage({
   const [show, setShow] = useState(false);
   const [styling, setStyling] = useState("css-yeymkw");
   const isShowChatGPT = useSelector(
-    (state) => state.header.isShowGlobalChatGPT
+    (state) => state.header?.isShowGlobalChatGPT
   );
 
   function getTabFromPathname(pathname) {

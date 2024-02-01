@@ -107,8 +107,8 @@ function SequenceNavigation({
 
   const prevArrow = isRtl(getLocale()) ? ChevronRight : ChevronLeft;
 
-  const isShowFeedback = useSelector((state) => state.header.isShowFeedback);
-  const isShowChatbot = useSelector((state) => state.header.isShowChatbot);
+  const isShowFeedback = useSelector((state) => state.header?.isShowFeedback);
+  const isShowChatbot = useSelector((state) => state.header?.isShowChatbot);
 
   return (
     sequenceStatus === LOADED && (
