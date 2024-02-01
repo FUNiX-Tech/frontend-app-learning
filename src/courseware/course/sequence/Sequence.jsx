@@ -49,9 +49,9 @@ function Sequence({
   isCompleteCourse,
   isPassedProject,
 }) {
-  const isShowChatbot = useSelector((state) => state.header.isShowChatbot);
-  const isShowFeedback = useSelector((state) => state.header.isShowFeedback);
-  const isShowLeftbar = useSelector((state) => state.header.isShowLeftbar);
+  const isShowChatbot = useSelector((state) => state.header?.isShowChatbot);
+  const isShowFeedback = useSelector((state) => state.header?.isShowFeedback);
+  const isShowLeftbar = useSelector((state) => state.header?.isShowLeftbar);
 
   const course = useModel("coursewareMeta", courseId);
   const { isStaff, originalUserIsStaff } = useModel("courseHomeMeta", courseId);
