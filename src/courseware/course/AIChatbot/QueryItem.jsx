@@ -6,6 +6,7 @@ import messages from "./messages";
 import { showChatbotFeedbackModal, voteResponse } from "./slice";
 import { useDispatch } from "react-redux";
 import { useEffect, useRef, useState } from "react";
+import Markdown from 'markdown-to-jsx'
 
 function EllipsisAnimation() {
   const [ellipsis, setEllipsis] = useState(0);
@@ -147,8 +148,10 @@ function QueryItem({ intl, query, onRetryAskChatbot }) {
           <div class="answer-item-inner">
             <div
               class="answer-item-content"
-              dangerouslySetInnerHTML={{ __html: query.response_msg }}
-            ></div>
+              // dangerouslySetInnerHTML={{ __html: query.response_msg }}
+            >
+            <Markdown>{query.response_msg}</Markdown>
+            </div>
 
             <div class="answer-item-buttons">
               <button
