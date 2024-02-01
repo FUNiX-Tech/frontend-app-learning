@@ -19,30 +19,14 @@ import {
   setChatbotCourseId,
 } from "./slice";
 
-import {
-  startChatConnection,
-  stopChatConnection,
-} from "../../../connection/chatbot";
+import { websocket, stopChatConnection } from "../../../connection/chatbot";
 
 import "./AIChatbot.scss";
 
-const MAX_RETRY_TIMES = 2;
-
-function AIChatbot({ intl }) {
+function AIChatbot() {
   // toggle giữa chat messages list và session list
   const [mode, setMode] = useState("chat"); // chat | session
-
-  // dùng để handle/trigger reconnect - send message khi có error / disconnect
-  const [waitToAsk, setWaitToAsk] = useState(0);
-
-  // dùng để handle/trigger reconnect - retry asking khi có error / disconnect
-  const [waitToReask, setWaitToReask] = useState(0);
-
-  // Lưu query id dùng để retry
-  const [retryQueryId, setRetryQueryId] = useState(null);
-
   const { courseId } = useParams();
-
   const isShowChatbot = useSelector((state) => state.header.isShowChatbot);
   const { session, ask, query } = useSelector((state) => state.chatbot);
 
@@ -113,6 +97,39 @@ function AIChatbot({ intl }) {
   useEffect(() => {
     dispatch(setChatbotCourseId(courseId));
   }, [courseId]);
+
+  useEffect(() => {
+    if (ask.status === 'pending' && websocket) {
+      websocket.onmessage = (response) => {
+        const message = response.data;
+        dispatch(writeChatbotResponse(message));
+
+        if (message === '<<Response Finished>>') {
+          stopChatConnection('RESPONSE_FINISHED');
+        }
+      }
+
+      websocket.onerror = error => {
+        console.error('WEBSOCKET ERROR: ', error);
+        dispatch(finishChatbotResponse("Websocket error."))
+      }
+
+      websocket.onclose = event => {
+        console.log('WEBSOCKET CLOSED: ', event)
+        if (event.reason === 'RESPONSE_FINISHED') {
+          dispatch(finishChatbotResponse())
+        } else {
+          dispatch(finishChatbotResponse(`Websocket closed with code ${event.code} and reason ${event.reason}`))
+        }
+      }
+    }
+  }, [ask.status, websocket])
+
+  useEffect(() => {
+    return () => {
+      stopChatConnection('Connection closed because the user has exit AIChatbot component.');
+    }
+  }, [])
 
   return (
     <>

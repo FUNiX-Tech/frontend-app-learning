@@ -5,57 +5,14 @@ import { getAuthenticatedHttpClient } from "@edx/frontend-platform/auth";
 // const CHATBOT_HOST = "ws://172.188.64.77:8001/v01_dev/chat";
 // const CHATBOT_HOST = "ws://localhost:9999";
 
-let websocket = null;
+export let websocket = null;
 let CHATBOT_HOST = "";
+CHATBOT_HOST = "ws://localhost:9999";
 
-export function stopChatConnection() {
+export function stopChatConnection(reason) {
   if (!websocket) return;
-  websocket.close();
+  websocket.close(1000, reason);
   websocket = null;
-}
-
-export async function startChatConnection(
-  onResponse,
-  onResponseFinished,
-  onError,
-  onConnect
-) {
-  const site_config_url = `${getConfig().LMS_BASE_URL}/api/site_config/`;
-
-  let response;
-  try {
-    response = await getAuthenticatedHttpClient().get(site_config_url);
-  } catch (error) {
-    throw new Error("Failed to get Chatbot host.");
-  }
-
-  let CHATBOT_HOST = response?.data?.data?.CHATBOT_HOST;
-  // CHATBOT_HOST = "wss://172.188.64.77:8001/v01_dev/chat";
-
-  if (!CHATBOT_HOST)
-    throw new Error("Not found CHATBOT_HOST in site config response.");
-
-  if (!websocket) {
-    websocket = new WebSocket(CHATBOT_HOST);
-  }
-
-  websocket.onerror = (error) => {
-    console.log("CONNERROR", error);
-    onError(_parseWebsocketError(error));
-  };
-
-  websocket.onclose = (event) => {
-    console.log("ONCLOSE", event);
-    onError(_parseWebsocketError(event));
-  };
-
-  websocket.onmessage = (event) => {
-    if (event.data !== "<<Response Finished>>") {
-      onResponse(event.data);
-    } else {
-      onResponseFinished();
-    }
-  };
 }
 
 export function sendMessageToChatbot(query, chat_id, course_id) {
@@ -95,6 +52,7 @@ export function sendMessageToChatbot(query, chat_id, course_id) {
 }
 
 function _getAccessToken() {
+  return 'ACCESS_TOKEN'
   return Cookies.get("accessToken");
 }
 

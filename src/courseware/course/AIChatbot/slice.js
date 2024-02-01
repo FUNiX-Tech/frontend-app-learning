@@ -86,6 +86,7 @@ export const finishChatbotResponse = createAsyncThunk(
 
       let status;
 
+      console.log('FINIS CHAT BOT RESPOSNE', queryItem ? '1' : '0')
       if (queryItem) {
         status = errorMsg ? "failed" : "succeeded";
         await updateQueryItemToDB({
@@ -247,9 +248,6 @@ const chatbotSlice = createSlice({
     },
     changeSession: (state, action) => {
       state.session.id = action.payload;
-
-      // state.query.items = [];
-
       state.query.isLastPage = false;
     },
     setRetryAskChatbotStatus: (state, action) => {
@@ -262,7 +260,6 @@ const chatbotSlice = createSlice({
     setChatbotCourseId: (state, action) => {
       state.courseId = action.payload || "NO_COURSE_ID";
     },
-
     showChatbotFeedbackModal: (state, action) => {
       state.feedback.isShowModal = true;
       state.feedback.queryId = action.payload;
@@ -285,7 +282,6 @@ const chatbotSlice = createSlice({
       state.ask.input = state.ask.history[newIndex];
       state.ask.current = newIndex;
     },
-
     writeChatbotResponse: (state, action) => {
       if (!action.payload) return;
 
@@ -298,10 +294,7 @@ const chatbotSlice = createSlice({
                 (action.payload === "<<Response Finished>>"
                   ? ""
                   : action.payload),
-              status:
-                action.payload !== "<<Response Finished>>"
-                  ? "writing"
-                  : "succeeded",
+              status: 'writing',
             }
           : item
       );
@@ -444,23 +437,6 @@ const chatbotSlice = createSlice({
             : item
         );
       })
-      // .addCase(retryAskChatbot.fulfilled, (state, action) => {
-      //   state.ask.status = action.payload.status;
-      //   state.query.items = state.query.items.map((item) =>
-      //     item.id === action.payload.queryId
-      //       ? {
-      //           ...item,
-      //           response_msg: action.payload.response_msg,
-      //           status: action.payload.status,
-      //         }
-      //       : item
-      //   );
-      //   state.ask.error = action.payload.error;
-      // })
-
-      .addCase(retryAskChatbot.rejected, (state, action) => {
-        //
-      })
       .addCase(voteResponse.pending, (state, action) => {
         // handle pending status
       })
@@ -520,7 +496,10 @@ const chatbotSlice = createSlice({
         });
         state.ask.status = action.payload;
         state.session.items = state.session.items.map((item) =>
-          item.session_id === updatedItem.session_id ? updatedItem : item
+          {
+            console.log(item)
+            return item.session_id === updatedItem?.session_id ? updatedItem : item
+          }
         );
 
         state.ask.id = -1;
@@ -541,7 +520,10 @@ const chatbotSlice = createSlice({
         state.ask.status = "failed";
 
         state.session.items = state.session.items.map((item) =>
-          item.session_id === updatedItem.session_id ? updatedItem : item
+          {
+            console.log(item)
+            return item.session_id === updatedItem.session_id ? updatedItem : item
+          }
         );
 
         state.ask.id = -1;
