@@ -57,8 +57,8 @@ function Course({
   windowWidth,
 }) {
   ///////////////////// chatbot /////////////////////////
-  const isShowChatbot = useSelector((state) => state.header.isShowChatbot);
-  const isShowFeedback = useSelector((state) => state.header.isShowFeedback);
+  const isShowChatbot = useSelector((state) => state.header?.isShowChatbot);
+  const isShowFeedback = useSelector((state) => state.header?.isShowFeedback);
   const { feedback } = useSelector((state) => state.chatbot);
   ///////////////////// chatbot end /////////////////////
   const dispatch = useDispatch();
@@ -69,7 +69,7 @@ function Course({
   const authenticatedUser = getAuthenticatedUser();
   const location = useLocation();
   const [styling, setStyling] = useState("css-yeymkw");
-  const isShowLeftbar = useSelector((state) => state.header.isShowLeftbar);
+  const isShowLeftbar = useSelector((state) => state.header?.isShowLeftbar);
 
   const course = useModel("coursewareMeta", courseId);
   const {
@@ -220,9 +220,6 @@ function Course({
     const courseSequence = document.querySelector(
       "#courseware-sequenceNavigation"
     );
-    const instructorToolbar = document.querySelector("#instructor-toolbar");
-    const header = document.querySelector(".learning-header");
-    const headerHeight = header?.offsetHeight;
     const courseTagsNav = document.querySelector("#courseTabsNavigation");
 
     // Adjust position on scroll

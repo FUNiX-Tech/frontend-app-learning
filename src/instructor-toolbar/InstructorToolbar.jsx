@@ -67,7 +67,7 @@ export default function InstructorToolbar(props) {
     tab
   );
 
-  const isShowFeedback = useSelector((state) => state.header.isShowFeedback);
+  const isShowFeedback = useSelector((state) => state.header?.isShowFeedback);
 
   return !didMount ? null : (
     <div

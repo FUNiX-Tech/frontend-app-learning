@@ -50,7 +50,7 @@ function AIChatbot({ intl }) {
 
   const { courseId } = useParams();
 
-  const isShowChatbot = useSelector((state) => state.header.isShowChatbot);
+  const isShowChatbot = useSelector((state) => state.header?.isShowChatbot);
   const { session, ask, query, connection } = useSelector(
     (state) => state.chatbot
   );
