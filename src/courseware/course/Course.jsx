@@ -216,11 +216,14 @@ function Course({
   //Left side bar scrolling hander
   useEffect(() => {
     // Get the fixed element
+
     const unitLeftBar = document.querySelector(".unit-left-sidebar");
+    const courseTagsNav = document.querySelector("#courseTabsNavigation");
     const courseSequence = document.querySelector(
       "#courseware-sequenceNavigation"
     );
-    const courseTagsNav = document.querySelector("#courseTabsNavigation");
+    
+    if (!courseSequence || !unitLeftBar || !courseTagsNav) return
 
     // Adjust position on scroll
     const handleScroll = () => {
