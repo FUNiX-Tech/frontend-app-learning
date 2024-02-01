@@ -296,6 +296,30 @@ function Course({
   if (isShowFeedback) {
     rightBarClasses += " is-show-feedback";
   }
+
+  // Call API to complete sequence khi chỉ có text
+  useEffect ( async () => {
+    const url = new URL(`${getConfig().LMS_BASE_URL}/api/funix_mfe/complete_text_unit`);
+ 
+    const locationArr = global.location.href.split('/');
+    const locationStr = locationArr[locationArr.length - 1];
+  
+    try {
+      const response = await getAuthenticatedHttpClient().post(url.href, {
+        courseId: courseId,
+        sequenceId: sequenceId,
+        unitId: unitId,
+        location: locationStr
+      });
+      console.log('course_load_test_response', response);
+    } catch (error) {
+      console.log('course_load_test_error', error);
+    }
+
+  }, []);
+  
+
+
   return (
     <SidebarProvider courseId={courseId} unitId={unitId}>
       <Helmet>
